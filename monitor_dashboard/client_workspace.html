@@ -2043,9 +2043,703 @@
       box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
     }
 
-    @media (max-width: 900px) {
-      .departments-grid-3 {
-        grid-template-columns: repeat(2, 1fr);
+    /* Department Card Hover & Deliverable Button */
+    .dept-card {
+      cursor: pointer;
+    }
+    .dept-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .btn-view-deliverable {
+      margin-top: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #93C5FD;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      width: fit-content;
+    }
+    .dept-card:hover .btn-view-deliverable {
+      background: rgba(37, 99, 235, 0.25);
+      border-color: #3B82F6;
+      color: #FFFFFF;
+    }
+
+    /* Deliverable Inspection Modal */
+    .deliverable-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 7, 16, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeInModal 0.2s ease;
+    }
+    .deliverable-modal-panel {
+      background: #0B1120;
+      border: 1px solid #1E293B;
+      border-top: 2px solid #38BDF8;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+    }
+    .deliverable-modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0E1629;
+    }
+    .deliverable-head-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .deliverable-head-sub {
+      font-size: 0.78rem;
+      color: #94A3B8;
+    }
+    .btn-close-deliv-modal {
+      background: transparent;
+      border: none;
+      color: #64748B;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.15s;
+    }
+    .btn-close-deliv-modal:hover {
+      color: #FFFFFF;
+    }
+    .deliverable-modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      color: #CBD5E1;
+    }
+    .deliv-section-box {
+      background: #080D1A;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .deliv-section-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #38BDF8;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .deliv-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .deliv-spec-item {
+      background: #0D1424;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .deliv-spec-label {
+      font-size: 0.68rem;
+      color: #64748B;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .deliv-spec-val {
+      font-size: 0.82rem;
+      color: #F8FAFC;
+      font-weight: 600;
+    }
+    .code-snippet-box {
+      background: #040711;
+      border: 1px solid #1A2438;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #38BDF8;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+    .testcase-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.74rem;
+    }
+    .testcase-table th {
+      text-align: left;
+      padding: 8px 10px;
+      background: #111A2E;
+      color: #94A3B8;
+      font-weight: 700;
+      border-bottom: 1px solid #1E293B;
+    }
+    .testcase-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #CBD5E1;
+    }
+    .pass-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 0.64rem;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Product Detail / Quick View Modal */
+    .product-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 7, 16, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeInModal 0.2s ease;
+    }
+    .product-modal-panel {
+      background: #0B1120;
+      border: 1px solid #1E293B;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 920px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr;
+      position: relative;
+    }
+    .product-modal-img-col {
+      background: #070B14;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+    .product-modal-big-img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .product-modal-info-col {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .p-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94A3B8;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.15s;
+    }
+    .p-modal-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #EF4444;
+      border-color: #EF4444;
+    }
+    .p-modal-cat-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #38BDF8;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .p-modal-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+    .p-modal-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .p-modal-price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #38BDF8;
+      font-family: var(--font-mono);
+    }
+    .p-modal-orig-price {
+      font-size: 0.9rem;
+      color: #64748B;
+      text-decoration: line-through;
+    }
+    .p-modal-meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .p-meta-chip {
+      background: #111A2E;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      color: #94A3B8;
+    }
+    .p-modal-size-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .p-size-pills {
+      display: flex;
+      gap: 8px;
+    }
+    .size-pill {
+      background: #090E1A;
+      border: 1px solid #1E293B;
+      color: #94A3B8;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .size-pill.active, .size-pill:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38BDF8;
+      color: #FFFFFF;
+    }
+    .p-modal-desc {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      line-height: 1.55;
+    }
+    .p-modal-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+      background: #080D1A;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .p-modal-specs-table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .p-modal-actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 14px;
+    }
+    .btn-pmodal-cart {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-pmodal-cart:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .btn-pmodal-buy {
+      flex: 1.3;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      border: none;
+      color: #FFFFFF;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    }
+    .btn-pmodal-buy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+    }
+
+    /* Storefront Multi-View Container */
+    .store-view-section {
+      display: none;
+      animation: fadeInStoreView 0.25s ease;
+    }
+    .store-view-section.active {
+      display: block;
+    }
+    @keyframes fadeInStoreView {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Order Tracking View */
+    .tracking-page-container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+    .tracking-search-card {
+      background: #0D1527;
+      border: 1px solid #1E293B;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      margin-bottom: 24px;
+    }
+    .tracking-input-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tracking-input-field {
+      flex: 1;
+      background: #080D1A;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      font-family: var(--font-mono);
+      outline: none;
+    }
+    .tracking-input-field:focus {
+      border-color: #38BDF8;
+    }
+    .btn-search-order {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      border: none;
+      color: #FFFFFF;
+      padding: 0 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+    .demo-order-chips {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .demo-order-btn {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px dashed rgba(56, 189, 248, 0.3);
+      color: #38BDF8;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+    }
+    .demo-order-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+    }
+    .tracking-timeline-card {
+      background: #0D1527;
+      border: 1px solid #1E293B;
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .tracking-steps-row {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 30px 0 20px;
+    }
+    .tracking-steps-row::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 30px;
+      right: 30px;
+      height: 3px;
+      background: #1E293B;
+      z-index: 1;
+    }
+    .tracking-step-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 140px;
+    }
+    .step-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #090E1A;
+      border: 2px solid #334155;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.78rem;
+      margin-bottom: 8px;
+      transition: all 0.3s;
+    }
+    .tracking-step-node.done .step-circle {
+      background: #10B981;
+      border-color: #10B981;
+      color: #FFFFFF;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+    }
+    .tracking-step-node.active .step-circle {
+      background: #2563EB;
+      border-color: #38BDF8;
+      color: #FFFFFF;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+    .step-name {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 2px;
+    }
+    .step-sub {
+      font-size: 0.66rem;
+      color: #64748B;
+    }
+
+    /* Showrooms View */
+    .showrooms-page-container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+    .showroom-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .showroom-card {
+      background: #0D1527;
+      border: 1px solid #1E293B;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .showroom-thumb {
+      height: 160px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .showroom-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .showroom-city {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #38BDF8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .showroom-name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .showroom-info-line {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      line-height: 1.45;
+    }
+    .btn-showroom-action {
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #F8FAFC;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .btn-showroom-action:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38BDF8;
+      color: #38BDF8;
+    }
+
+    /* Policy View */
+    .policy-page-container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+    .policy-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .policy-box {
+      background: #0D1527;
+      border: 1px solid #1E293B;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .policy-box h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .policy-box p {
+      font-size: 0.76rem;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
+    /* Industry Theme Classes */
+    .theme-fashion {
+      --store-accent: #E2BA72;
+      --store-accent-rgb: 226, 186, 114;
+    }
+    .theme-fashion .store-hero-title,
+    .theme-fashion .store-title-text,
+    .theme-fashion .p-modal-title {
+      font-family: "Playfair Display", Georgia, serif !important;
+      letter-spacing: 0.2px;
+    }
+    .theme-fashion .btn-hero-primary,
+    .theme-fashion .btn-buy-instant,
+    .theme-fashion .btn-pmodal-buy {
+      background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%) !important;
+      color: #0B0F17 !important;
+      font-weight: 800 !important;
+    }
+    .theme-fashion .item-price,
+    .theme-fashion .p-modal-price,
+    .theme-fashion .percent-number {
+      color: #E2BA72 !important;
+    }
+
+    .theme-ceramic {
+      --store-accent: #F59E0B;
+    }
+    .theme-ceramic .btn-hero-primary,
+    .theme-ceramic .btn-buy-instant,
+    .theme-ceramic .btn-pmodal-buy {
+      background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+    }
+
+    .theme-coffee {
+      --store-accent: #F59E0B;
+    }
+    .theme-coffee .btn-hero-primary,
+    .theme-coffee .btn-buy-instant,
+    .theme-coffee .btn-pmodal-buy {
+      background: linear-gradient(135deg, #B45309 0%, #78350F 100%) !important;
+    }
+
+    .theme-medical {
+      --store-accent: #0D9488;
+    }
+    .theme-medical .btn-hero-primary,
+    .theme-medical .btn-buy-instant,
+    .theme-medical .btn-pmodal-buy {
+      background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important;
+    }
+
+    @media (max-width: 768px) {
+      .product-modal-panel {
+        grid-template-columns: 1fr;
+      }
+      .showroom-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .policy-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .tracking-steps-row {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .tracking-steps-row::before {
+        display: none;
+      }
+      .tracking-step-node {
+        flex-direction: row;
+        width: 100%;
+        text-align: left;
+        gap: 14px;
       }
     }
     @media (max-width: 640px) {
@@ -2241,11 +2935,11 @@
             </a>
 
             <div class="store-nav-links">
-              <a href="#storeScreenCanvas" class="store-nav-a active">Trang Chủ</a>
-              <a href="#storeCatalogSection" class="store-nav-a">Bộ Sưu Tập</a>
-              <a href="#storeValuesSection" class="store-nav-a">Cam Kết Chất Lượng</a>
-              <a href="#storeReviewsSection" class="store-nav-a">Đánh Giá</a>
-              <a href="#storeFooterSection" class="store-nav-a">Liên Hệ & Bảo Hành</a>
+              <a href="javascript:void(0)" class="store-nav-a active" onclick="switchStoreView('home', this)">Trang Chủ</a>
+              <a href="javascript:void(0)" class="store-nav-a" onclick="switchStoreView('catalog', this)">Cửa Hàng &amp; Sản Phẩm</a>
+              <a href="javascript:void(0)" class="store-nav-a" onclick="switchStoreView('tracking', this)">Tra Cứu Đơn Hàng</a>
+              <a href="javascript:void(0)" class="store-nav-a" onclick="switchStoreView('showrooms', this)">Hệ Thống Showroom</a>
+              <a href="javascript:void(0)" class="store-nav-a" onclick="switchStoreView('policy', this)">Chính Sách &amp; Bảo Hành</a>
             </div>
 
             <div class="store-nav-actions">
@@ -2261,86 +2955,310 @@
             </div>
           </div>
 
-          <!-- Hero Banner Section -->
-          <div class="store-hero-section">
-            <div class="hero-badge-pill">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              <span>BỘ SƯU TẬP CAO CẤP 2026 &bull; PHÂN PHỐI CHÍNH HÃNG</span>
-            </div>
-            <h2 class="store-hero-title" id="storeBannerTitle">Bộ Sưu Tập Xuất Khẩu 2026 - Tinh Hoa Thủ Công Tinh Xảo</h2>
-            <p class="store-hero-desc" id="storeBannerSubtitle">Thanh toán quét mã VietQR Napas 247 nhận diện tiền về tức thì trong 0.8 giây, tự động kích hoạt bảo hành điện tử chính hãng.</p>
-            
-            <div class="store-hero-cta-row">
-              <button type="button" class="btn-hero-primary" onclick="scrollToSection('storeCatalogSection')">Khám Phá Danh Mục</button>
-              <button type="button" class="btn-hero-outline" onclick="scrollToSection('storeValuesSection')">Chính Sách & Bảo Hành</button>
+          <!-- ========================================================
+               STORE SUB-VIEW 1: TRANG CHỦ (HOME SHOWCASE)
+               ======================================================== -->
+          <div class="store-view-section active" id="storeViewHome">
+            <!-- Hero Banner Section -->
+            <div class="store-hero-section">
+              <div class="hero-badge-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>BỘ SƯU TẬP CAO CẤP 2026 &bull; PHÂN PHỐI CHÍNH HÃNG</span>
+              </div>
+              <h2 class="store-hero-title" id="storeBannerTitle">Bộ Sưu Tập Xuất Khẩu 2026 - Tinh Hoa Thủ Công Tinh Xảo</h2>
+              <p class="store-hero-desc" id="storeBannerSubtitle">Thanh toán quét mã VietQR Napas 247 nhận diện tiền về tức thì trong 0.8 giây, tự động kích hoạt bảo hành điện tử chính hãng.</p>
+              
+              <div class="store-hero-cta-row">
+                <button type="button" class="btn-hero-primary" onclick="switchStoreView('catalog', document.querySelectorAll('.store-nav-a')[1])">Khám Phá Cửa Hàng</button>
+                <button type="button" class="btn-hero-outline" onclick="switchStoreView('showrooms', document.querySelectorAll('.store-nav-a')[3])">Hệ Thống Showroom</button>
+              </div>
+
+              <div class="store-hero-trust-bar">
+                <div class="trust-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <span>Đóng gói chuyên dụng an toàn</span>
+                </div>
+                <div class="trust-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <span>Kiểm tra hàng trước khi nhận</span>
+                </div>
+                <div class="trust-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <span>Quét VietQR đối soát trong 0.8s</span>
+                </div>
+              </div>
             </div>
 
-            <div class="store-hero-trust-bar">
-              <div class="trust-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span>Đóng gói chuyên dụng chống nứt vỡ</span>
+            <!-- Featured Highlights Grid on Home -->
+            <div style="padding: 20px 24px 0;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px;">
+                <div>
+                  <div style="font-size: 0.68rem; font-weight: 800; color: #60A5FA; letter-spacing: 0.5px;">BỘ SƯU TẬP TIÊU BIỂU</div>
+                  <h3 style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin-top: 2px;">Sản Phẩm Đang Được Quan Tâm Nhất</h3>
+                </div>
+                <a href="javascript:void(0)" onclick="switchStoreView('catalog', document.querySelectorAll('.store-nav-a')[1])" style="font-size: 0.76rem; color: #38BDF8; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                  <span>Xem Tất Cả</span> &rarr;
+                </a>
               </div>
-              <div class="trust-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span>Kiểm tra hàng trước khi thanh toán</span>
+              <div class="catalog-grid" id="homeStoreProductGrid">
+                <!-- Dynamically populated top 3 items -->
               </div>
-              <div class="trust-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span>Quét VietQR Napas 247 đối soát 1 giây</span>
+            </div>
+
+            <!-- Brand Value Pillars Section -->
+            <div class="store-values-section" id="storeValuesSection">
+              <div class="values-grid">
+                <div class="value-card">
+                  <div class="value-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <div class="value-card-title">Chính Hãng & Kiểm Định Chuẩn Mực</div>
+                  <div class="value-card-desc">100% chế tác tinh xảo theo tiêu chuẩn chất lượng cao, có tem chứng thực và chứng chỉ nguồn gốc xuất xứ.</div>
+                </div>
+                <div class="value-card">
+                  <div class="value-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                  </div>
+                  <div class="value-card-title">Đóng Gói Chuyên Dụng An Toàn</div>
+                  <div class="value-card-desc">Hộp gỗ hoặc thùng mút xốp định hình 5 lớp, bảo hiểm rủi ro hư hỏng hoặc nứt vỡ trong suốt quá trình giao nhận.</div>
+                </div>
+                <div class="value-card">
+                  <div class="value-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                  </div>
+                  <div class="value-card-title">1 Đổi 1 Trong Vòng 30 Ngày</div>
+                  <div class="value-card-desc">Hỗ trợ đổi mới tận nhà nhanh chóng nếu có bất kỳ lỗi kỹ thuật nào từ nhà sản xuất, hoàn toàn miễn phí.</div>
+                </div>
+                <div class="value-card">
+                  <div class="value-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                  </div>
+                  <div class="value-card-title">Thanh Toán VietQR Napas 247</div>
+                  <div class="value-card-desc">Quét mã đối soát tự động trong 0.8 giây, tiền chuyển thẳng tài khoản không qua trung gian gián đoạn.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Reviews Section -->
+            <div class="store-reviews-section" id="storeReviewsSection">
+              <div class="reviews-top-row">
+                <div class="reviews-title-block">
+                  <h3>Đánh Giá Thực Tế Từ Khách Hàng</h3>
+                  <p>100% nhận xét từ người mua đã được xác thực đơn hàng qua hệ thống Web Động</p>
+                </div>
+              </div>
+              <div class="reviews-grid" id="previewStoreReviewsGrid">
+                <!-- Rendered dynamically matching industry -->
               </div>
             </div>
           </div>
 
-          <!-- Category Filter Bar & Product Catalog Grid -->
-          <div class="store-cat-bar" id="storeCatalogSection">
-            <div class="store-section-label">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-              <span>Danh Mục Sản Phẩm</span>
+          <!-- ========================================================
+               STORE SUB-VIEW 2: CỬA HÀNG / DANH MỤC SẢN PHẨM (CATALOG SHOP)
+               ======================================================== -->
+          <div class="store-view-section" id="storeViewCatalog">
+            <div class="store-cat-bar" id="storeCatalogSection">
+              <div class="store-section-label">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <span>Cửa Hàng Trực Tuyến &bull; Toàn Bộ Danh Mục</span>
+              </div>
+              <div class="store-cat-pills">
+                <button type="button" class="cat-pill active" onclick="filterCatalog('ALL', this)">Tất Cả Sản Phẩm</button>
+                <button type="button" class="cat-pill" onclick="filterCatalog('BEST', this)">Bán Chạy Nhất</button>
+                <button type="button" class="cat-pill" onclick="filterCatalog('NEW', this)">Mới Xuất Xưởng</button>
+                <button type="button" class="cat-pill" onclick="filterCatalog('PROMO', this)">Ưu Đãi Đặc Biệt</button>
+              </div>
             </div>
-            <div class="store-cat-pills">
-              <button type="button" class="cat-pill active" onclick="filterCatalog('ALL', this)">Tất Cả Sản Phẩm</button>
-              <button type="button" class="cat-pill" onclick="filterCatalog('BEST', this)">Bán Chạy Nhất</button>
-              <button type="button" class="cat-pill" onclick="filterCatalog('NEW', this)">Mới Xuất Xưởng</button>
-              <button type="button" class="cat-pill" onclick="filterCatalog('PROMO', this)">Ưu Đãi Đặc Biệt</button>
+
+            <div style="padding: 0 24px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div style="font-size: 0.74rem; color: #94A3B8;">
+                Hiển thị: <strong id="catalogResultsCount" style="color: #FFFFFF;">0</strong> sản phẩm chính hãng
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <label style="font-size: 0.72rem; color: #64748B;">Sắp xếp theo:</label>
+                <select id="catalogSortSelect" class="text-input" style="padding: 5px 10px; font-size: 0.74rem; width: auto;" onchange="handleSortChange(this.value)">
+                  <option value="DEFAULT">Mặc định của bộ sưu tập</option>
+                  <option value="PRICE_ASC">Giá: Từ thấp đến cao</option>
+                  <option value="PRICE_DESC">Giá: Từ cao đến thấp</option>
+                  <option value="NAME">Tên sản phẩm (A-Z)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="store-catalog-wrapper">
+              <div class="catalog-grid" id="previewStoreProductGrid">
+                <!-- Populated dynamically with real photography -->
+              </div>
             </div>
           </div>
 
-          <div class="store-catalog-wrapper">
-            <div class="catalog-grid" id="previewStoreProductGrid">
-              <!-- Populated dynamically with real photography -->
+          <!-- ========================================================
+               STORE SUB-VIEW 3: TRA CỨU ĐƠN HÀNG (LIVE ORDER TRACKING)
+               ======================================================== -->
+          <div class="store-view-section" id="storeViewTracking">
+            <div class="tracking-page-container">
+              <div class="tracking-search-card">
+                <div style="font-size: 0.68rem; font-weight: 800; color: #38BDF8; letter-spacing: 0.5px;">CỔNG DỊCH VỤ KHÁCH HÀNG</div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF; margin-top: 4px;">Tra Cứu Tiến Trình Vận Chuyển Đơn Hàng</h3>
+                <p style="font-size: 0.78rem; color: #94A3B8; margin-top: 4px;">Nhập mã đơn hàng (bắt đầu bằng DH-2026-...) để theo dõi trạng thái đối soát VietQR Napas 247, quy trình đóng gói và lộ trình giao hàng thời gian thực.</p>
+
+                <div class="tracking-input-row">
+                  <input type="text" class="tracking-input-field" id="trackingSearchInput" placeholder="Nhập mã đơn hàng của bạn (VD: DH-2026-881752)...">
+                  <button type="button" class="btn-search-order" onclick="handleSearchOrderTracking()">Tra Cứu Ngay</button>
+                </div>
+
+                <div class="demo-order-chips">
+                  <span style="font-size: 0.7rem; color: #64748B;">Mã mẫu thử nghiệm:</span>
+                  <button type="button" class="demo-order-btn" onclick="quickFillTracking('DH-2026-881752')">DH-2026-881752 (Đang Giao)</button>
+                  <button type="button" class="demo-order-btn" onclick="quickFillTracking('DH-2026-394201')">DH-2026-394201 (Đang Đóng Gói)</button>
+                  <button type="button" class="demo-order-btn" onclick="quickFillTracking('DH-2026-551094')">DH-2026-551094 (Đã Bàn Giao)</button>
+                </div>
+              </div>
+
+              <!-- Live Order Progress Timeline -->
+              <div class="tracking-timeline-card" id="trackingResultPanel">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 16px;">
+                  <div>
+                    <span style="font-size: 0.68rem; color: #64748B; font-weight: 700;">MÃ ĐƠN HÀNG:</span>
+                    <h4 id="trackOrderIdDisplay" style="font-size: 1.15rem; font-weight: 800; color: #38BDF8; font-family: var(--font-mono); margin-top: 2px;">DH-2026-881752</h4>
+                  </div>
+                  <div style="text-align: right;">
+                    <span class="status-tag-badge badge-done" id="trackStatusBadge">ĐANG GIAO HỎA TỐC</span>
+                    <div style="font-size: 0.68rem; color: #64748B; margin-top: 4px;" id="trackTimeDisplay">Hôm nay, 14:15</div>
+                  </div>
+                </div>
+
+                <div class="tracking-steps-row">
+                  <div class="tracking-step-node done" id="stepNode1">
+                    <div class="step-circle">&#10003;</div>
+                    <div class="step-name">Đã Đặt &amp; Quét VietQR</div>
+                    <div class="step-sub">Đối soát Napas 247 tức thì</div>
+                  </div>
+                  <div class="tracking-step-node done" id="stepNode2">
+                    <div class="step-circle">&#10003;</div>
+                    <div class="step-name">Kiểm Định &amp; Đóng Gói</div>
+                    <div class="step-sub">Đóng hộp mút xốp 5 lớp</div>
+                  </div>
+                  <div class="tracking-step-node active" id="stepNode3">
+                    <div class="step-circle">3</div>
+                    <div class="step-name">Bàn Giao Vận Chuyển</div>
+                    <div class="step-sub">ViettelPost Hỏa Tốc</div>
+                  </div>
+                  <div class="tracking-step-node" id="stepNode4">
+                    <div class="step-circle">4</div>
+                    <div class="step-name">Giao Tận Nơi</div>
+                    <div class="step-sub">Đồng kiểm nhận hàng</div>
+                  </div>
+                </div>
+
+                <div class="deliv-grid-2" style="margin-top: 20px;">
+                  <div class="deliv-spec-item">
+                    <div class="deliv-spec-label">Người Nhận &amp; Địa Chỉ Giao Hàng:</div>
+                    <div class="deliv-spec-val" id="trackCustomerVal">Nguyễn Tuấn Dũng &bull; 0988.***.892 (Landmark 72, Hà Nội)</div>
+                  </div>
+                  <div class="deliv-spec-item">
+                    <div class="deliv-spec-label">Kênh Thanh Toán:</div>
+                    <div class="deliv-spec-val" style="color: #34D399;">VietQR Napas 247 (Đã thanh toán 100%)</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Brand Value Pillars Section -->
-          <div class="store-values-section" id="storeValuesSection">
-            <div class="values-grid">
-              <div class="value-card">
-                <div class="value-icon-box">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div class="value-card-title">Chính Hãng & Kiểm Định Chuẩn Mực</div>
-                <div class="value-card-desc">100% chế tác tinh xảo theo tiêu chuẩn chất lượng cao, có tem chứng thực và chứng chỉ nguồn gốc xuất xứ.</div>
+          <!-- ========================================================
+               STORE SUB-VIEW 4: HỆ THỐNG SHOWROOM / CHI NHÁNH
+               ======================================================== -->
+          <div class="store-view-section" id="storeViewShowrooms">
+            <div class="showrooms-page-container">
+              <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <div style="font-size: 0.68rem; font-weight: 800; color: #60A5FA; letter-spacing: 0.5px;">HỆ THỐNG CHI NHÁNH TOÀN QUỐC</div>
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin-top: 4px;">Không Gian Trải Nghiệm &amp; Tư Vấn Trực Tiếp</h3>
+                <p style="font-size: 0.78rem; color: #94A3B8; margin-top: 6px;">Quý khách có thể ghé thăm các trung tâm trải nghiệm để trực tiếp kiểm tra chất lượng sản phẩm và nhận tư vấn chuyên sâu.</p>
               </div>
-              <div class="value-card">
-                <div class="value-icon-box">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+
+              <div class="showroom-grid-3">
+                <div class="showroom-card">
+                  <img class="showroom-thumb" src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=600&q=80" alt="Showroom Hà Nội" loading="lazy">
+                  <div class="showroom-body">
+                    <div class="showroom-city">HÀ NỘI &bull; FLAGSHIP</div>
+                    <div class="showroom-name">Trung Tâm Trải Nghiệm Landmark 72</div>
+                    <div class="showroom-info-line">Tòa nhà Keangnam Landmark 72, Đường Phạm Hùng, Nam Từ Liêm, Hà Nội.</div>
+                    <div class="showroom-info-line">Hotline: <strong>024.7300.6868</strong></div>
+                    <div class="showroom-info-line">Giờ mở cửa: 08:30 - 21:30 (Cả tuần)</div>
+                    <button type="button" class="btn-showroom-action" onclick="window.showSystemDialog({ title: 'Chỉ Đường Showroom', message: 'Địa chỉ: Tòa nhà Keangnam Landmark 72, Phạm Hùng, Hà Nội. Hotline: 024.7300.6868.', type: 'info', confirmText: 'Đã Hiểu' })">Chỉ Đường Google Maps</button>
+                  </div>
                 </div>
-                <div class="value-card-title">Đóng Gói Chuyên Dụng An Toàn</div>
-                <div class="value-card-desc">Hộp gỗ hoặc thùng mút xốp định hình 5 lớp, bảo hiểm rủi ro hư hỏng hoặc nứt vỡ trong suốt quá trình giao nhận.</div>
+
+                <div class="showroom-card">
+                  <img class="showroom-thumb" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80" alt="Showroom TP.HCM" loading="lazy">
+                  <div class="showroom-body">
+                    <div class="showroom-city">TP. HỒ CHÍ MINH &bull; FLAGSHIP</div>
+                    <div class="showroom-name">Showroom Vincom Center Đồng Khởi</div>
+                    <div class="showroom-info-line">Tầng 2, Vincom Center, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, TP. Hồ Chí Minh.</div>
+                    <div class="showroom-info-line">Hotline: <strong>028.7300.6868</strong></div>
+                    <div class="showroom-info-line">Giờ mở cửa: 09:00 - 22:00 (Cả tuần)</div>
+                    <button type="button" class="btn-showroom-action" onclick="window.showSystemDialog({ title: 'Chỉ Đường Showroom', message: 'Địa chỉ: Tầng 2, Vincom Center, 72 Lê Thánh Tôn, Quận 1, TP.HCM. Hotline: 028.7300.6868.', type: 'info', confirmText: 'Đã Hiểu' })">Chỉ Đường Google Maps</button>
+                  </div>
+                </div>
+
+                <div class="showroom-card">
+                  <img class="showroom-thumb" src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=600&q=80" alt="Showroom Đà Nẵng" loading="lazy">
+                  <div class="showroom-body">
+                    <div class="showroom-city">ĐÀ NẴNG &bull; CHI NHÁNH</div>
+                    <div class="showroom-name">Showroom Bạch Đằng Riverside</div>
+                    <div class="showroom-info-line">Số 186 Đường Bạch Đằng, Phường Hải Châu 1, Quận Hải Châu, TP. Đà Nẵng.</div>
+                    <div class="showroom-info-line">Hotline: <strong>0236.7300.6868</strong></div>
+                    <div class="showroom-info-line">Giờ mở cửa: 08:30 - 21:00 (Cả tuần)</div>
+                    <button type="button" class="btn-showroom-action" onclick="window.showSystemDialog({ title: 'Chỉ Đường Showroom', message: 'Địa chỉ: 186 Bạch Đằng, Quận Hải Châu, Đà Nẵng. Hotline: 0236.7300.6868.', type: 'info', confirmText: 'Đã Hiểu' })">Chỉ Đường Google Maps</button>
+                  </div>
+                </div>
               </div>
-              <div class="value-card">
-                <div class="value-icon-box">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                </div>
-                <div class="value-card-title">1 Đổi 1 Trong Vòng 30 Ngày</div>
-                <div class="value-card-desc">Hỗ trợ đổi mới tận nhà nhanh chóng nếu có bất kỳ lỗi kỹ thuật nào từ nhà sản xuất, hoàn toàn miễn phí.</div>
+            </div>
+          </div>
+
+          <!-- ========================================================
+               STORE SUB-VIEW 5: CHÍNH SÁCH & BẢO HÀNH
+               ======================================================== -->
+          <div class="store-view-section" id="storeViewPolicy">
+            <div class="policy-page-container">
+              <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <div style="font-size: 0.68rem; font-weight: 800; color: #34D399; letter-spacing: 0.5px;">CAM KẾT DỊCH VỤ 2026</div>
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; margin-top: 4px;">Chính Sách Khách Hàng &amp; Bảo Vệ Quyền Lợi</h3>
+                <p style="font-size: 0.78rem; color: #94A3B8; margin-top: 6px;">Mọi đơn hàng thanh toán qua Web Động đều được đảm bảo 100% bằng văn bản và hợp đồng điện tử theo pháp luật Việt Nam.</p>
               </div>
-              <div class="value-card">
-                <div class="value-icon-box">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+
+              <div class="policy-grid-2">
+                <div class="policy-box">
+                  <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>1 Đổi 1 Trong Vòng 30 Ngày</span>
+                  </h4>
+                  <p>Nếu sản phẩm có bất kỳ lỗi kỹ thuật nào từ nhà sản xuất hoặc nứt vỡ trong khâu vận chuyển, chúng tôi cử nhân viên đổi sản phẩm mới tận nhà hoàn toàn miễn phí trong vòng 24 giờ.</p>
                 </div>
-                <div class="value-card-title">Thanh Toán VietQR Napas 247</div>
-                <div class="value-card-desc">Quét mã đối soát tự động trong 0.8 giây, tiền chuyển thẳng tài khoản không qua trung gian gián đoạn.</div>
+
+                <div class="policy-box">
+                  <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Kiểm Hàng Đồng Kiểm Trước Khi Nhận</span>
+                  </h4>
+                  <p>Khách hàng có toàn quyền mở kiện hàng kiểm tra đúng mẫu mã, màu sắc và độ hoàn thiện trước khi xác nhận. Không có tình trạng ép nhận hàng không đúng mô tả.</p>
+                </div>
+
+                <div class="policy-box">
+                  <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    <span>Thanh Toán VietQR Napas 247 Minh Bạch</span>
+                  </h4>
+                  <p>Hệ thống tự động sinh mã VietQR liên kết thẳng với tài khoản ngân hàng chính thức của doanh nghiệp. Sau khi quét mã, hệ thống đối soát trong 0.8 giây và kích hoạt biên nhận điện tử tức thì.</p>
+                </div>
+
+                <div class="policy-box">
+                  <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>Xuất Hóa Đơn VAT Điện Tử Tự Động</span>
+                  </h4>
+                  <p>100% đơn hàng doanh nghiệp hoặc cá nhân đều có thể nhận hóa đơn giá trị gia tăng (VAT) hợp lệ gửi trực tiếp qua email đã đăng ký ngay sau khi đơn hàng được giao thành công.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -2606,6 +3524,96 @@
       </div>
     </section>
 
+    <!-- ========================================================
+         MODAL: DEPARTMENT DELIVERABLE & SPECIFICATIONS INSPECTOR
+         ======================================================== -->
+    <div class="deliverable-modal-backdrop" id="deptDeliverableModal" style="display: none;">
+      <div class="deliverable-modal-panel">
+        <div class="deliverable-modal-head">
+          <div>
+            <div style="font-size: 0.68rem; font-weight: 800; color: #38BDF8; letter-spacing: 0.5px;" id="delivModalSubtag">01. PM &bull; BAN QUẢN TRỊ DỰ ÁN</div>
+            <h3 class="deliverable-head-title" id="delivModalTitle">Hồ Sơ Nghiệm Thu &amp; Đặc Tả Kỹ Thuật</h3>
+            <div class="deliverable-head-sub" id="delivModalLead">Trưởng Bộ Phận: TPM Lead &bull; Trạng thái: <span class="pass-tag" id="delivModalStatus">ĐÃ NGHIỆM THU</span></div>
+          </div>
+          <button type="button" class="btn-close-deliv-modal" onclick="closeDeptDeliverable()">&times;</button>
+        </div>
+
+        <div class="deliverable-modal-body" id="delivModalContent">
+          <!-- Populated dynamically with rich technical deliverables -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL: PRODUCT QUICK VIEW & ATTRIBUTE SELECTOR
+         ======================================================== -->
+    <div class="product-modal-backdrop" id="productDetailModal" style="display: none;">
+      <div class="product-modal-panel">
+        <button type="button" class="p-modal-close" onclick="closeProductDetail()">&times;</button>
+        <div class="product-modal-img-col">
+          <img class="product-modal-big-img" id="pModalImg" src="" alt="Product" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80'">
+          <div style="font-size: 0.68rem; color: #64748B; margin-top: 10px; display: flex; align-items: center; gap: 6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Ảnh chụp thực tế sản phẩm chính hãng</span>
+          </div>
+        </div>
+
+        <div class="product-modal-info-col">
+          <div class="p-modal-cat-tag" id="pModalCategory">DANH MỤC CHÍNH HÃNG</div>
+          <h2 class="p-modal-title" id="pModalTitle">Tên Sản Phẩm</h2>
+          
+          <div class="p-modal-price-row">
+            <span class="p-modal-price" id="pModalPrice">0 đ</span>
+            <span class="p-modal-orig-price" id="pModalOrigPrice">0 đ</span>
+            <span class="pass-tag" style="background: rgba(239, 68, 68, 0.15); color: #F87171; border-color: rgba(239, 68, 68, 0.3);">-18% ƯU ĐÃI</span>
+          </div>
+
+          <div class="p-modal-meta-row">
+            <span class="p-meta-chip" id="pModalSku">Mã: SKU-01</span>
+            <span class="p-meta-chip" id="pModalStock">Tồn kho: Còn 35 món</span>
+            <span class="p-meta-chip" style="color: #34D399;">Bảo hành chính hãng 12 tháng</span>
+          </div>
+
+          <div class="p-modal-size-row" id="pModalSizeContainer">
+            <label style="font-size: 0.72rem; color: #94A3B8; font-weight: 700;">Tùy Chọn Kích Cỡ / Phiên Bản:</label>
+            <div class="p-size-pills" id="pModalSizePills">
+              <button type="button" class="size-pill active" onclick="selectProductSize(this)">Size S</button>
+              <button type="button" class="size-pill" onclick="selectProductSize(this)">Size M</button>
+              <button type="button" class="size-pill" onclick="selectProductSize(this)">Size L</button>
+              <button type="button" class="size-pill" onclick="selectProductSize(this)">Size XL</button>
+            </div>
+          </div>
+
+          <div class="p-modal-desc" id="pModalDesc">
+            Chế tác tinh xảo, chất lượng cao cấp đáp ứng tiêu chuẩn nghiêm ngặt. Phù hợp cho nhu cầu sử dụng thực tế và làm quà biếu trang trọng.
+          </div>
+
+          <table class="p-modal-specs-table">
+            <tr>
+              <td style="color: #64748B; width: 140px;">Tiêu chuẩn kiểm định:</td>
+              <td style="color: #FFFFFF;" id="pModalSpecQuality">ISO 9001:2026 &bull; Đã kiểm định QA</td>
+            </tr>
+            <tr>
+              <td style="color: #64748B;">Quy cách đóng gói:</td>
+              <td style="color: #FFFFFF;">Hộp chuyên dụng 5 lớp bảo hiểm nứt vỡ</td>
+            </tr>
+            <tr>
+              <td style="color: #64748B;">Thanh toán:</td>
+              <td style="color: #38BDF8;">Quét mã VietQR Napas 247 đối soát 0.8 giây</td>
+            </tr>
+          </table>
+
+          <div class="p-modal-actions-row">
+            <button type="button" class="btn-pmodal-cart" id="btnModalAddToCart" onclick="handleAddToCartFromModal()">+ Thêm Vào Giỏ</button>
+            <button type="button" class="btn-pmodal-buy" id="btnModalBuyNow" onclick="handleBuyNowFromModal()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Mua Ngay &bull; Quét VietQR</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Universal System Notification & Confirmation Dialog (No Native Alert/Confirm) -->
     <div class="system-dialog-backdrop" id="systemDialogModal" style="display: none;">
       <div class="system-dialog-box">
@@ -2865,7 +3873,7 @@
       }
 
       // Fashion / Novawear / Apparel / Quần Áo / Váy Đầm
-      if (raw.includes("thời trang") || raw.includes("quần áo") || raw.includes("blazer") || raw.includes("vest") || raw.includes("cashmere") || raw.includes("đầm") || raw.includes("váy") || raw.includes("lụa") || raw.includes("giày") || raw.includes("ví") || raw.includes("túi") || raw.includes("fashion") || raw.includes("nova") || raw.includes("sơ mi") || raw.includes("khoác")) {
+      if (raw.includes("thời trang") || raw.includes("quần áo") || raw.includes("blazer") || raw.includes("vest") || raw.includes("cashmere") || raw.includes("đầm") || raw.includes("váy") || raw.includes("lụa") || raw.includes("giày") || raw.includes("ví") || raw.includes("túi") || raw.includes("fashion") || raw.includes("nova") || raw.includes("sơ mi") || raw.includes("khoác") || raw.includes("atelier")) {
         if (raw.includes("đầm") || raw.includes("váy") || raw.includes("lụa") || raw.includes("nữ")) {
           return "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80"; // elegant dress
         }
@@ -2882,64 +3890,43 @@
       }
 
       // Furniture / Home Decor
-      if (raw.includes("sofa") || raw.includes("nội thất")) {
-        return "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80"; // modern couch
+      if (raw.includes("sofa") || raw.includes("nội thất") || raw.includes("living")) {
+        return "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80";
       }
       if (raw.includes("bàn") || raw.includes("ghế")) {
-        return "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80"; // dining table
-      }
-      if (raw.includes("giường") || raw.includes("tủ")) {
-        return "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80"; // minimalist bed
+        return "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80";
       }
 
       // Coffee / Bakery / F&B
-      if (raw.includes("cold brew") || raw.includes("cà phê") || raw.includes("cafe")) {
-        return "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80"; // cold brew
-      }
-      if (raw.includes("latte") || raw.includes("cappuccino")) {
-        return "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"; // latte
-      }
-      if (raw.includes("hạt") || raw.includes("bean") || raw.includes("arabica")) {
-        return "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=80"; // roasted beans
-      }
-      if (raw.includes("trà") || raw.includes("tea")) {
-        return "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"; // tea drink
-      }
-
-      // Dental / Clinic
-      if (raw.includes("nha") || raw.includes("răng") || raw.includes("khám") || raw.includes("y tế")) {
-        return "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80"; // clinic care
+      if (raw.includes("cold brew") || raw.includes("cà phê") || raw.includes("cafe") || raw.includes("coffee") || raw.includes("roastery")) {
+        if (raw.includes("cold brew")) return "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80";
+        if (raw.includes("latte") || raw.includes("cappuccino")) return "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80";
+        return "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=80";
       }
 
       // Default Clean Product Shot
       return "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80";
     }
 
-    // Helper: Crisp Vector Logo SVG by Brand / Domain
+    // Crisp Vector Logo SVG
     function getBrandLogoSvg(brand) {
       const lower = (brand || "").toLowerCase();
       if (lower.includes("gốm") || lower.includes("bát tràng") || lower.includes("mỹ nghệ") || lower.includes("thủ công")) {
-        // Traditional Amphora / Vase Crest
         return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M8 2h8M9 2v4a3 3 0 0 1-3 3H5a2 2 0 0 0-2 2v2a5 5 0 0 0 5 5h1a4 4 0 0 1 4 4v0M15 2v4a3 3 0 0 0 3 3h1a2 2 0 0 1 2 2v2a5 5 0 0 1-5 5h-1a4 4 0 0 0-4 4v0M8 22h8"/></svg>`;
       }
-      if (lower.includes("thời trang") || lower.includes("fashion") || lower.includes("nova") || lower.includes("wear")) {
-        // Luxury Diamond Crest
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/></svg>`;
+      if (lower.includes("thời trang") || lower.includes("fashion") || lower.includes("nova") || lower.includes("wear") || lower.includes("atelier") || lower.includes("may mặc")) {
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E2BA72" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/></svg>`;
       }
       if (lower.includes("cafe") || lower.includes("cà phê") || lower.includes("f&b") || lower.includes("tea")) {
-        // Coffee Cup Crest
         return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`;
       }
-      if (lower.includes("nội thất") || lower.includes("living") || lower.includes("nordic")) {
-        // Furniture Minimalist House Crest
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
-      }
-      // High-Tech Modern Crest
       return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
     }
 
     let activeCatalogFilter = "ALL";
+    let activeCatalogSort = "DEFAULT";
     let rawCatalogItems = [];
+    let currentSelectedProduct = null;
 
     function renderAll() {
       const cfg = currentProject.clientConfig || {};
@@ -2955,13 +3942,27 @@
         pipelineTitleEl.textContent = `Khởi Tạo & Triển Khai: ${brand}`;
       }
 
+      // Dynamic Industry Theming on Canvas
+      const canvasEl = document.getElementById("storeScreenCanvas");
+      canvasEl.classList.remove("theme-fashion", "theme-ceramic", "theme-coffee", "theme-medical");
+      const lowerBrand = brand.toLowerCase();
+      if (lowerBrand.includes("thời trang") || lowerBrand.includes("fashion") || lowerBrand.includes("wear") || lowerBrand.includes("atelier") || lowerBrand.includes("quần áo")) {
+        canvasEl.classList.add("theme-fashion");
+      } else if (lowerBrand.includes("gốm") || lowerBrand.includes("bát tràng") || lowerBrand.includes("mỹ nghệ")) {
+        canvasEl.classList.add("theme-ceramic");
+      } else if (lowerBrand.includes("cafe") || lowerBrand.includes("cà phê") || lowerBrand.includes("coffee")) {
+        canvasEl.classList.add("theme-coffee");
+      } else if (lowerBrand.includes("nha khoa") || lowerBrand.includes("y tế") || lowerBrand.includes("khám")) {
+        canvasEl.classList.add("theme-medical");
+      }
+
       // Storefront Navbar & Branding
       document.getElementById("storeBrandName").textContent = brand.toUpperCase();
       document.getElementById("storeLogoEmblem").innerHTML = getBrandLogoSvg(brand);
       
-      const subLabel = brand.toLowerCase().includes("gốm") 
+      const subLabel = lowerBrand.includes("gốm") 
         ? "DI SẢN NGHỆ THUẬT & GỐM SỨ BÁT TRÀNG"
-        : (brand.toLowerCase().includes("cafe") ? "ROASTERY & COFFEE FLAGSHIP" : "OFFICIAL FLAGSHIP STORE");
+        : (lowerBrand.includes("cafe") ? "ROASTERY & COFFEE FLAGSHIP" : "OFFICIAL FLAGSHIP STORE");
       document.getElementById("storeBrandSub").textContent = subLabel;
 
       // Banner text
@@ -2986,11 +3987,52 @@
         { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, sku: "WLT-CRK-07", stock: 15 }
       ];
 
+      renderHomeFeaturedHighlights(brand);
       renderCatalog();
       renderCustomerReviews(brand);
       renderTickets();
     }
 
+    // Render Home Top 3 Featured Items
+    function renderHomeFeaturedHighlights(brand) {
+      const grid = document.getElementById("homeStoreProductGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+      const topItems = rawCatalogItems.slice(0, 3);
+
+      topItems.forEach((p, idx) => {
+        const priceNum = Number(p.price) || 0;
+        const formattedPrice = priceNum.toLocaleString("vi-VN") + " đ";
+        const origPrice = Math.round(priceNum * 1.18).toLocaleString("vi-VN") + " đ";
+        const sku = p.sku || ("SKU-" + (idx + 1).toString().padStart(2, "0"));
+        const imgUrl = getProductImage(p, brand);
+
+        const card = document.createElement("div");
+        card.className = "catalog-card";
+        card.innerHTML = `
+          <div class="catalog-thumb" onclick="openProductDetail('${p.id || sku}')">
+            <span class="sku-badge">${escapeHtml(sku)}</span>
+            <span class="stock-chip" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);">TIÊU BIỂU</span>
+            <img class="product-real-img" src="${escapeHtml(imgUrl)}" alt="${escapeHtml(p.name)}" loading="lazy">
+          </div>
+          <div class="catalog-card-body">
+            <div class="item-cat">${escapeHtml(p.category || "Chính Hãng")}</div>
+            <div class="item-name" title="${escapeHtml(p.name)}" onclick="openProductDetail('${p.id || sku}')">${escapeHtml(p.name)}</div>
+            <div class="item-price-row">
+              <span class="price-original">${origPrice}</span>
+              <span class="item-price">${formattedPrice}</span>
+            </div>
+            <div class="catalog-btn-row">
+              <button type="button" class="btn-add-item" onclick="openProductDetail('${p.id || sku}')">Chi Tiết</button>
+              <button type="button" class="btn-buy-instant" onclick="handleAddToCart('${p.id || sku}', true)">Mua Ngay</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Render Full Catalog Grid with Multi-Filter and Sorting
     function renderCatalog() {
       const grid = document.getElementById("previewStoreProductGrid");
       if (!grid) return;
@@ -3012,17 +4054,29 @@
 
       // Tab filter
       if (activeCatalogFilter === "BEST") {
-        list = list.slice(0, 2);
+        list = list.slice(0, 3);
       } else if (activeCatalogFilter === "NEW") {
-        list = list.slice(-2);
+        list = list.slice(-3);
       } else if (activeCatalogFilter === "PROMO") {
         list = list.filter(p => (Number(p.price) || 0) < 5000000);
       }
 
+      // Sorting
+      if (activeCatalogSort === "PRICE_ASC") {
+        list.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+      } else if (activeCatalogSort === "PRICE_DESC") {
+        list.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+      } else if (activeCatalogSort === "NAME") {
+        list.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      }
+
+      const countBadge = document.getElementById("catalogResultsCount");
+      if (countBadge) countBadge.textContent = list.length;
+
       if (list.length === 0) {
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; color: #64748B; padding: 40px; font-size: 0.84rem;">
-            Không tìm thấy sản phẩm phù hợp với từ khóa "${escapeHtml(searchWord)}".
+            Không tìm thấy sản phẩm phù hợp với bộ lọc hiện tại.
           </div>
         `;
         return;
@@ -3039,20 +4093,20 @@
         const card = document.createElement("div");
         card.className = "catalog-card";
         card.innerHTML = `
-          <div class="catalog-thumb">
+          <div class="catalog-thumb" onclick="openProductDetail('${p.id || sku}')">
             <span class="sku-badge">${escapeHtml(sku)}</span>
             <span class="stock-chip">Còn ${stock} món</span>
             <img class="product-real-img" src="${escapeHtml(imgUrl)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80'">
           </div>
           <div class="catalog-card-body">
             <div class="item-cat">${escapeHtml(p.category || "Chính Hãng")}</div>
-            <div class="item-name" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</div>
+            <div class="item-name" title="${escapeHtml(p.name)}" onclick="openProductDetail('${p.id || sku}')">${escapeHtml(p.name)}</div>
             <div class="item-price-row">
               <span class="price-original">${origPrice}</span>
               <span class="item-price">${formattedPrice}</span>
             </div>
             <div class="catalog-btn-row">
-              <button type="button" class="btn-add-item" onclick="handleAddToCart('${p.id || sku}', false)">+ Thêm</button>
+              <button type="button" class="btn-add-item" onclick="openProductDetail('${p.id || sku}')">Chi Tiết</button>
               <button type="button" class="btn-buy-instant" onclick="handleAddToCart('${p.id || sku}', true)">Mua Ngay</button>
             </div>
           </div>
@@ -3069,16 +4123,193 @@
       renderCatalog();
     };
 
-    // Live Search in Storefront
-    document.getElementById("storeSearchInput")?.addEventListener("input", () => {
+    window.handleSortChange = function(sortKey) {
+      activeCatalogSort = sortKey;
       renderCatalog();
+    };
+
+    // Storefront Multi-View Switcher
+    window.switchStoreView = function(viewKey, navEl) {
+      document.querySelectorAll(".store-nav-a").forEach(a => a.classList.remove("active"));
+      if (navEl) navEl.classList.add("active");
+
+      document.querySelectorAll(".store-view-section").forEach(sec => sec.classList.remove("active"));
+      const viewMap = {
+        home: "storeViewHome",
+        catalog: "storeViewCatalog",
+        tracking: "storeViewTracking",
+        showrooms: "storeViewShowrooms",
+        policy: "storeViewPolicy"
+      };
+
+      const targetId = viewMap[viewKey] || "storeViewHome";
+      const targetSec = document.getElementById(targetId);
+      if (targetSec) targetSec.classList.add("active");
+
+      // Auto scroll to top of store canvas
+      const canvas = document.getElementById("storeScreenCanvas");
+      if (canvas) canvas.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      if (viewKey === "catalog") {
+        renderCatalog();
+      }
+    };
+
+    // ========================================================
+    // PRODUCT DETAIL & QUICK VIEW MODAL CONTROLLER
+    // ========================================================
+    window.openProductDetail = function(productId) {
+      const product = rawCatalogItems.find(p => (p.id || p.sku) === productId);
+      if (!product) return;
+
+      currentSelectedProduct = product;
+      const brand = currentProject.clientConfig?.brandName || currentProject.name || "";
+      const priceNum = Number(product.price) || 0;
+      const origNum = Math.round(priceNum * 1.18);
+      const sku = product.sku || "SKU-01";
+      const imgUrl = getProductImage(product, brand);
+      const stock = product.stock || 30;
+
+      document.getElementById("pModalImg").src = imgUrl;
+      document.getElementById("pModalCategory").textContent = (product.category || "CHÍNH HÃNG").toUpperCase();
+      document.getElementById("pModalTitle").textContent = product.name;
+      document.getElementById("pModalPrice").textContent = priceNum.toLocaleString("vi-VN") + " đ";
+      document.getElementById("pModalOrigPrice").textContent = origNum.toLocaleString("vi-VN") + " đ";
+      document.getElementById("pModalSku").textContent = `Mã: ${sku}`;
+      document.getElementById("pModalStock").textContent = `Tồn kho: Còn ${stock} món`;
+      document.getElementById("pModalDesc").textContent = `Sản phẩm ${product.name} được kiểm soát nghiêm ngặt bởi quy trình QA/QC 24 bước. Tích hợp tem chứng thực điện tử và bảo hành chính hãng. Quét mã VietQR Napas 247 nhận diện tiền về tài khoản trong 0.8 giây.`;
+
+      // Customized Size / Attributes by Industry
+      const lower = ((product.name || "") + " " + (product.category || "") + " " + brand).toLowerCase();
+      const sizePillsContainer = document.getElementById("pModalSizePills");
+      if (lower.includes("gốm") || lower.includes("bát tràng")) {
+        sizePillsContainer.innerHTML = `
+          <button type="button" class="size-pill active" onclick="selectProductSize(this)">Cỡ Tiêu Chuẩn (28cm)</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Cỡ Đại (42cm)</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Bản Kèm Hộp Gỗ Quà Tặng</button>
+        `;
+      } else if (lower.includes("cafe") || lower.includes("cà phê")) {
+        sizePillsContainer.innerHTML = `
+          <button type="button" class="size-pill active" onclick="selectProductSize(this)">Túi 250g</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Túi 500g (Tiết Kiệm)</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Hộp Quà Thượng Hạng</button>
+        `;
+      } else {
+        sizePillsContainer.innerHTML = `
+          <button type="button" class="size-pill active" onclick="selectProductSize(this)">Size S (45 - 55kg)</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Size M (56 - 65kg)</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Size L (66 - 75kg)</button>
+          <button type="button" class="size-pill" onclick="selectProductSize(this)">Size XL (76 - 88kg)</button>
+        `;
+      }
+
+      document.getElementById("productDetailModal").style.display = "flex";
+    };
+
+    window.closeProductDetail = function() {
+      document.getElementById("productDetailModal").style.display = "none";
+      currentSelectedProduct = null;
+    };
+
+    window.selectProductSize = function(btn) {
+      document.querySelectorAll("#pModalSizePills .size-pill").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+    };
+
+    window.handleAddToCartFromModal = function() {
+      if (!currentSelectedProduct) return;
+      const pid = currentSelectedProduct.id || currentSelectedProduct.sku;
+      handleAddToCart(pid, false);
+      closeProductDetail();
+      window.showSystemDialog({
+        title: "Đã Thêm Vào Giỏ Hàng",
+        message: `Đã thêm "${currentSelectedProduct.name}" vào giỏ hàng thành công! Bạn có thể tiếp tục mua sắm hoặc bấm Giỏ Hàng để quét VietQR.`,
+        type: "success",
+        confirmText: "Đã Hiểu"
+      });
+    };
+
+    window.handleBuyNowFromModal = function() {
+      if (!currentSelectedProduct) return;
+      const pid = currentSelectedProduct.id || currentSelectedProduct.sku;
+      handleAddToCart(pid, true);
+      closeProductDetail();
+    };
+
+    // Close on click outside modal panel
+    document.getElementById("productDetailModal")?.addEventListener("click", (e) => {
+      if (e.target.id === "productDetailModal") closeProductDetail();
     });
 
-    // Smooth Scroll Helper
-    window.scrollToSection = function(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // ========================================================
+    // ORDER TRACKING CONTROLLER
+    // ========================================================
+    window.handleSearchOrderTracking = function() {
+      const input = document.getElementById("trackingSearchInput");
+      const code = (input?.value || "").trim().toUpperCase();
+      if (!code) {
+        window.showSystemDialog({
+          title: "Thiếu Mã Đơn Hàng",
+          message: "Vui lòng nhập mã đơn hàng (VD: DH-2026-881752) để tra cứu trạng thái vận chuyển.",
+          type: "warning",
+          confirmText: "Đã Hiểu"
+        });
+        return;
+      }
+
+      document.getElementById("trackOrderIdDisplay").textContent = code;
+      const badge = document.getElementById("trackStatusBadge");
+      const step1 = document.getElementById("stepNode1");
+      const step2 = document.getElementById("stepNode2");
+      const step3 = document.getElementById("stepNode3");
+      const step4 = document.getElementById("stepNode4");
+
+      if (code.includes("394") || code.includes("PACK")) {
+        badge.textContent = "ĐANG ĐÓNG GÓI";
+        badge.className = "status-tag-badge badge-prog";
+        step1.className = "tracking-step-node done";
+        step2.className = "tracking-step-node active";
+        step3.className = "tracking-step-node";
+        step4.className = "tracking-step-node";
+      } else if (code.includes("551") || code.includes("DONE")) {
+        badge.textContent = "ĐÃ GIAO THÀNH CÔNG";
+        badge.className = "status-tag-badge badge-done";
+        step1.className = "tracking-step-node done";
+        step2.className = "tracking-step-node done";
+        step3.className = "tracking-step-node done";
+        step4.className = "tracking-step-node done";
+      } else {
+        badge.textContent = "ĐANG GIAO HỎA TỐC";
+        badge.className = "status-tag-badge badge-done";
+        step1.className = "tracking-step-node done";
+        step2.className = "tracking-step-node done";
+        step3.className = "tracking-step-node active";
+        step4.className = "tracking-step-node";
+      }
+
+      window.showSystemDialog({
+        title: "Tra Cứu Vận Đơn Thành Công",
+        message: `Đơn hàng ${code} đã được đối soát qua VietQR Napas 247. Hàng đang trong quy trình vận chuyển hỏa tốc đến địa chỉ của bạn!`,
+        type: "success",
+        confirmText: "Xem Tiến Trình"
+      });
     };
+
+    window.quickFillTracking = function(orderId) {
+      const input = document.getElementById("trackingSearchInput");
+      if (input) {
+        input.value = orderId;
+        handleSearchOrderTracking();
+      }
+    };
+
+    // Live Search in Storefront
+    document.getElementById("storeSearchInput")?.addEventListener("input", () => {
+      // Auto switch to catalog view if currently on home
+      const catalogTab = document.querySelectorAll('.store-nav-a')[1];
+      switchStoreView('catalog', catalogTab);
+      renderCatalog();
+    });
 
     // Reviews Renderer
     function renderCustomerReviews(brand) {
@@ -3190,7 +4421,6 @@
       if (openDrawerImmediate) {
         openCartDrawer();
       } else {
-        // Visual indicator on header button
         const btn = document.getElementById("btnCartHeader");
         if (btn) {
           btn.style.transform = "scale(1.08)";
@@ -3219,10 +4449,7 @@
       const totalCount = cartItems.reduce((acc, i) => acc + i.qty, 0);
       const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
 
-      // Header Badge
       document.getElementById("cartCountBadge").textContent = totalCount;
-
-      // Drawer Content
       const listContainer = document.getElementById("drawerCartItemsContainer");
       if (!listContainer) return;
 
@@ -3285,12 +4512,10 @@
       if (backdrop) backdrop.classList.remove("active");
     };
 
-    // Close on click outside panel
     document.getElementById("storeCartBackdrop")?.addEventListener("click", (e) => {
       if (e.target.id === "storeCartBackdrop") closeCartDrawer();
     });
 
-    // Simulate Instant Webhook / VietQR Payment
     window.simulateConfirmPayment = function() {
       if (cartItems.length === 0) {
         window.showSystemDialog({
@@ -3312,7 +4537,6 @@
         document.getElementById("drawerOrderSuccess").style.display = "block";
         btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Đã Thanh Toán Thành Công!</span>`;
 
-        // Clear cart after confirmation
         setTimeout(() => {
           cartItems = [];
           updateCartUI();
@@ -3370,7 +4594,6 @@
       });
     }
 
-    // Submit Feedback
     document.getElementById("workspaceFeedbackForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const cat = document.getElementById("fbCategoryInput").value.trim();
@@ -3394,7 +4617,6 @@
       if (!currentProject.feedbacks) currentProject.feedbacks = [];
       currentProject.feedbacks.unshift(newFb);
 
-      // Post to backend server
       fetch(API_BASE + "/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -3417,7 +4639,6 @@
       });
     });
 
-    // Copy Helper
     window.copyToClipboard = function(elementId, btn) {
       const el = document.getElementById(elementId);
       if (!el) return;
@@ -3441,71 +4662,318 @@
     };
 
     // ========================================================
-    // 9-DEPARTMENT AUTOMATED ORCHESTRATION PIPELINE ENGINE
+    // 9-DEPARTMENT DETAILED DELIVERABLES & ORCHESTRATION ENGINE
     // ========================================================
     const DEPARTMENTS_DATA = [
       {
         code: "01. PM",
         name: "Ban Quản Trị & Điều Phối Dự Án",
         lead: "TPM Lead",
+        deliverableSummary: "Bảng Dự Toán & Kế Hoạch WBS",
         action: "Tiếp nhận hồ sơ ý tưởng khách hàng, phân bổ tài nguyên máy chủ & phân luồng công việc tới 8 phòng ban kỹ thuật.",
-        log: "Tiếp nhận hồ sơ yêu cầu. Khởi tạo mã dự án và phân bổ hạ tầng máy chủ cục bộ."
+        log: "Tiếp nhận hồ sơ yêu cầu. Khởi tạo mã dự án và phân bổ hạ tầng máy chủ cục bộ.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Hồ Sơ Dự Án & Kế Hoạch Bàn Giao (WBS)</div>
+            <div class="deliv-grid-2">
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Mã Dự Án & Định Danh:</div>
+                <div class="deliv-spec-val">${p.id || "PRJ-TRIAL-2026"} &bull; ${p.code || "TRIAL"}</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Hạn Mức Ngân Sách:</div>
+                <div class="deliv-spec-val" style="color: #34D399;">${p.budget || "Gói Dùng Thử Trải Nghiệm (0 VNĐ)"}</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Hạ Tầng Vận Hành:</div>
+                <div class="deliv-spec-val">${p.infraStrategy || "Localhost Hybrid Container + Redis Cache"}</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Cam Kết Tiến Độ (SLA):</div>
+                <div class="deliv-spec-val">Hoàn tất bàn giao nghiệm thu trong 7 - 10 ngày làm việc</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Cam Kết Nghiệm Thu Của TPM Lead</div>
+            <p style="font-size: 0.76rem; color: #CBD5E1; line-height: 1.55;">
+              1. Bàn giao 100% mã nguồn sạch, tài liệu bàn giao không mã hóa.<br>
+              2. Không phát sinh chi phí duy trì ẩn, cam kết kiểm thử đạt 24/24 tiêu chuẩn trước khi nghiệm thu.<br>
+              3. Điều phối trực tiếp các kỹ sư trưởng hỗ trợ 1:1 qua kênh Góp ý &amp; Hotline nội bộ.
+            </p>
+          </div>
+        `
       },
       {
         code: "02. BA",
         name: "Bộ Phận Phân Tích Nghiệp Vụ",
         lead: "Lead BA",
+        deliverableSummary: "Sơ Đồ Luồng Nghiệp Vụ & FRD",
         action: "Bóc tách sơ đồ luồng người dùng (User Journey), quy trình thêm giỏ hàng và quét mã VietQR tự động.",
-        log: "Bóc tách 3 luồng nghiệp vụ cốt lõi: Xem danh mục -> Thêm giỏ hàng -> Quét mã VietQR 0.8s."
+        log: "Bóc tách 3 luồng nghiệp vụ cốt lõi: Xem danh mục -> Thêm giỏ hàng -> Quét mã VietQR 0.8s.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">3 Luồng Nghiệp Vụ Cốt Lõi (Core User Journeys)</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="deliv-spec-item">
+                <strong style="color: #38BDF8;">Luồng 1 - Xem & Chọn Sản Phẩm:</strong>
+                <div style="font-size: 0.74rem; color: #94A3B8; margin-top: 2px;">Khách truy cập danh mục &rarr; Lọc giá / Sắp xếp &rarr; Mở xem chi tiết phóng to &rarr; Chọn kích cỡ/phiên bản &rarr; Bấm "Thêm vào giỏ"</div>
+              </div>
+              <div class="deliv-spec-item">
+                <strong style="color: #38BDF8;">Luồng 2 - Thanh Toán VietQR Tự Động:</strong>
+                <div style="font-size: 0.74rem; color: #94A3B8; margin-top: 2px;">Mở Drawer giỏ hàng &rarr; Hệ thống tự tính tổng tiền & sinh mã VietQR Napas 247 &rarr; Quét mã trên App Ngân Hàng &rarr; Đối soát trong 0.8 giây</div>
+              </div>
+              <div class="deliv-spec-item">
+                <strong style="color: #38BDF8;">Luồng 3 - Tra Cứu Vận Đơn Thời Gian Thực:</strong>
+                <div style="font-size: 0.74rem; color: #94A3B8; margin-top: 2px;">Khách nhập mã đơn hàng (DH-2026-...) tại trang Tra Cứu &rarr; Hệ thống hiển thị 4 bước vận chuyển & thông tin đơn vị hỏa tốc</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Ma Trận Phân Quyền (RBAC Matrix)</div>
+            <table class="testcase-table">
+              <tr><th>Vai Trò</th><th>Xem Sản Phẩm</th><th>Đặt Hàng & Quét QR</th><th>Tra Cứu Vận Đơn</th><th>Quản Lý Giá/Kho</th></tr>
+              <tr><td>Khách Vãng Lai</td><td><span class="pass-tag">CÓ</span></td><td><span class="pass-tag">CÓ</span></td><td><span class="pass-tag">CÓ</span></td><td>KHÔNG</td></tr>
+              <tr><td>Admin Doanh Nghiệp</td><td><span class="pass-tag">CÓ</span></td><td><span class="pass-tag">CÓ</span></td><td><span class="pass-tag">CÓ</span></td><td><span class="pass-tag">TOÀN QUYỀN</span></td></tr>
+            </table>
+          </div>
+        `
       },
       {
         code: "03. ARCH",
         name: "Kiến Trúc Sư Hệ Thống",
         lead: "Solution Architect",
+        deliverableSummary: "Kiến Trúc Web Động & Redis",
         action: "Thiết kế kiến trúc Web Động tải dưới 0.5s, kết nối Redis Cache và cơ sở dữ liệu phân vùng an toàn.",
-        log: "Thiết lập kiến trúc Web Động kết hợp Express.js, Docker và cơ chế đệm Redis tốc độ cao."
+        log: "Thiết lập kiến trúc Web Động kết hợp Express.js, Docker và cơ chế đệm Redis tốc độ cao.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Sơ Đồ Kiến Trúc Hệ Thống (Architecture Blueprint)</div>
+            <div class="code-snippet-box">
+[Client (Mobile 390px / Desktop)] 
+      &darr; HTTP/2 (TLS 1.3)
+[Nginx Reverse Proxy & Static Asset Compression]
+      &darr; Proxy Pass
+[Node.js 22 LTS Express Server] (Port 5000)
+   &boxur;&boxh;&boxh; [Redis 7.2 In-Memory Cache] (Port 6379 - Session & Catalog TTL 300s)
+   &boxur;&boxh;&boxh; [PostgreSQL 16 Relational Engine] (Port 5432 - ACID Transactions)
+   &boxur;&boxh;&boxh; [Napas 247 Webhook Gateway Engine] (0.8s Payment Reconciliation)
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">RESTful API Endpoints Đã Triển Khai</div>
+            <table class="testcase-table">
+              <tr><th>Phương Thức</th><th>Đường Dẫn Endpoint</th><th>Mô Tả Chức Năng</th><th>Độ Trễ Phản Hồi</th></tr>
+              <tr><td>GET</td><td>/api/projects/:id</td><td>Lấy cấu hình Web Động thời gian thực</td><td>&lt; 15ms (Redis Hit)</td></tr>
+              <tr><td>POST</td><td>/api/orders</td><td>Khởi tạo đơn hàng & tạo mã VietQR</td><td>&lt; 45ms</td></tr>
+              <tr><td>POST</td><td>/api/orders/:id/pay</td><td>Nhận diện biến động số dư Napas 247</td><td>&lt; 0.8s (Instant)</td></tr>
+              <tr><td>GET</td><td>/api/health</td><td>Kiểm định CPU, RAM, Redis & Postgres</td><td>&lt; 5ms</td></tr>
+            </table>
+          </div>
+        `
       },
       {
         code: "04. UI/UX",
         name: "Thiết Kế Trải Nghiệm Khách Hàng",
         lead: "Senior UI/UX Designer",
+        deliverableSummary: "Design System & Palette Tối Giản",
         action: "Thiết kế giao diện Dark Navy sang trọng, chọn lọc hình ảnh sản phẩm độ nét cao và bố cục chuẩn tỷ lệ vàng.",
-        log: "Dựng hệ thống màu Dark Navy tối giản, hoàn thiện typography và tuyển chọn ảnh sản phẩm HD."
+        log: "Dựng hệ thống màu Dark Navy tối giản, hoàn thiện typography và tuyển chọn ảnh sản phẩm HD.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Bảng Màu Design Tokens Ngành Nghề</div>
+            <div class="deliv-grid-2">
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Màu Chủ Đạo (Primary Brand):</div>
+                <div class="deliv-spec-val" style="display: flex; align-items: center; gap: 8px;">
+                  <span style="display: inline-block; width: 14px; height: 14px; background: #0F172A; border: 1px solid #334155; border-radius: 3px;"></span>
+                  <span>Deep Navy Slate (#0F172A)</span>
+                </div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Màu Nhấn (Accent Gold / Azure):</div>
+                <div class="deliv-spec-val" style="display: flex; align-items: center; gap: 8px;">
+                  <span style="display: inline-block; width: 14px; height: 14px; background: #E2BA72; border-radius: 3px;"></span>
+                  <span>Champagne Luxury (#E2BA72 / #38BDF8)</span>
+                </div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Độ Tương Phản WCAG AAA:</div>
+                <div class="deliv-spec-val" style="color: #34D399;">7.8:1 (Đạt chuẩn tối ưu thị lực ban đêm)</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Typography Chuẩn:</div>
+                <div class="deliv-spec-val">Inter Display + Playfair Serif (Không dùng font rối rắm)</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Quy Chuẩn Chống "AI Hóa" Đã Áp Dụng</div>
+            <p style="font-size: 0.76rem; color: #CBD5E1; line-height: 1.55;">
+              &bull; Loại bỏ hoàn toàn emoji sáo rỗng trên tiêu đề và nút bấm.<br>
+              &bull; Sử dụng 100% ảnh chụp thực tế có độ sắc nét cao (High-Definition Unsplash Curation).<br>
+              &bull; Áp dụng hệ thống lưới 8-point golden ratio cho khoảng cách lề và padding đều đặn.
+            </p>
+          </div>
+        `
       },
       {
         code: "05. FE",
         name: "Lập Trình Giao Diện Người Dùng",
         lead: "Senior Web Dev",
+        deliverableSummary: "Responsive 390px & Component Tree",
         action: "Ghép giao diện Responsive mượt mà trên iPhone/Android (390px), hiệu ứng 60fps và bảng giỏ hàng trượt.",
-        log: "Lập trình responsive di động, ngăn chặn hoàn toàn lỗi tràn layout trên màn hình 390px."
+        log: "Lập trình responsive di động, ngăn chặn hoàn toàn lỗi tràn layout trên màn hình 390px.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Kiểm Định Responsive Di Động (Mobile 390px Standard)</div>
+            <div class="deliv-grid-2">
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Tràn Ngang (Horizontal Overflow):</div>
+                <div class="deliv-spec-val" style="color: #34D399;">0px (Không có thanh cuộn ngang gây lỗi vỡ UI)</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Kích Thước Vùng Chạm (Tap Targets):</div>
+                <div class="deliv-spec-val">&ge; 44x44px (Theo chuẩn Apple iOS HIG)</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Tốc Độ Cuộn Trang (Scroll FPS):</div>
+                <div class="deliv-spec-val">Ổn định 60 khung hình/giây trên màn hình cảm ứng</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Cơ Chế Tải Ảnh (Image Optimization):</div>
+                <div class="deliv-spec-val">Lazy Loading + Tự động chuyển fallback khi lỗi mạng</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">5 Phân Hệ Giao Diện Đã Hoàn Thiện</div>
+            <div style="font-size: 0.74rem; color: #94A3B8; line-height: 1.55;">
+              1. <strong>Trang Chủ:</strong> Hero Showcase &bull; Bộ sưu tập tiêu biểu &bull; Cam kết 2026 &bull; Đánh giá khách hàng<br>
+              2. <strong>Cửa Hàng:</strong> Lọc danh mục &bull; Bộ lọc giá đa mức &bull; Sắp xếp thông minh &bull; Modal xem chi tiết sản phẩm<br>
+              3. <strong>Tra Cứu Đơn Hàng:</strong> Input mã vận đơn &bull; Lộ trình 4 giai đoạn &bull; Thông tin đối soát VietQR<br>
+              4. <strong>Hệ Thống Showroom:</strong> 3 chi nhánh Hà Nội - TP.HCM - Đà Nẵng &bull; Hotline &bull; Chỉ đường Maps<br>
+              5. <strong>Chính Sách:</strong> Đổi trả 30 ngày &bull; Đồng kiểm &bull; Hóa đơn VAT điện tử tự động
+            </div>
+          </div>
+        `
       },
       {
         code: "06. BE",
         name: "Lập Trình Nghiệp Vụ Cốt Lõi",
         lead: "Backend Lead",
+        deliverableSummary: "HMAC-SHA256 & Webhook Napas 247",
         action: "Tích hợp cổng Napas 247, tự động sinh mã VietQR đối soát tiền về tài khoản ngân hàng trong 0.8 giây.",
-        log: "Tích hợp bộ giải mã HMAC-SHA256 và cổng thanh toán VietQR Napas 247 nhận tiền tức thì."
+        log: "Tích hợp bộ giải mã HMAC-SHA256 và cổng thanh toán VietQR Napas 247 nhận tiền tức thì.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Mã Xác Thực Chữ Ký Số Toàn Vẹn Dữ Liệu (HMAC-SHA256)</div>
+            <div class="code-snippet-box">
+// Bộ giải mã HMAC-SHA256 bảo vệ đơn hàng chống can thiệp giá tiền
+function verifyPaymentSignature(orderId, amount, salt, signature) {
+  const payload = \`\${orderId}::\${amount}::\${salt}\`;
+  const computedHash = crypto.createHmac("sha256", salt).update(payload).digest("hex");
+  return computedHash.toUpperCase() === signature.toUpperCase();
+}
+// Đối soát giao dịch Napas 247 trong 0.8 giây và kích hoạt hóa đơn
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Quy Trình Tự Động Hóa Dòng Tiền</div>
+            <p style="font-size: 0.76rem; color: #CBD5E1; line-height: 1.55;">
+              Khi khách hàng quét mã VietQR: Tiền được chuyển thẳng vào tài khoản ngân hàng của doanh nghiệp mà không bị đóng băng qua sàn trung gian. Webhook tự động giải mã và cập nhật trạng thái đơn hàng sang ĐÃ THANH TOÁN.
+            </p>
+          </div>
+        `
       },
       {
         code: "07. DB",
         name: "Quản Trị CSDL & An Toàn",
         lead: "Senior DBA",
+        deliverableSummary: "Schema 4 Bảng CSDL & Concurrency Lock",
         action: "Khởi tạo schema bảng đơn hàng, cơ chế khóa tồn kho chống bán trùng (Concurrency Lock).",
-        log: "Khởi tạo bảng dữ liệu sản phẩm, thiết lập khóa kiểm soát tồn kho đa luồng an toàn."
+        log: "Khởi tạo bảng dữ liệu sản phẩm, thiết lập khóa kiểm soát tồn kho đa luồng an toàn.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Cấu Trúc Bảng Dữ Liệu (Relational Tables)</div>
+            <table class="testcase-table">
+              <tr><th>Tên Bảng CSDL</th><th>Khóa Chính (PK)</th><th>Cột Nghiệp Vụ Cốt Lõi</th><th>Chỉ Mục (Indexes)</th></tr>
+              <tr><td><code>products</code></td><td>id (UUID)</td><td>name, category, price, stock, sku</td><td>idx_sku, idx_cat</td></tr>
+              <tr><td><code>orders</code></td><td>id (VARCHAR)</td><td>customer_name, total_amount, status</td><td>idx_status, idx_created</td></tr>
+              <tr><td><code>transactions</code></td><td>txn_ref</td><td>order_id, bank_code, amount, paid_at</td><td>idx_order_id (UNIQUE)</td></tr>
+              <tr><td><code>inventory_locks</code></td><td>lock_id</td><td>sku, reserved_qty, expires_at</td><td>idx_sku_expires</td></tr>
+            </table>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Khóa Kiểm Soát Tồn Kho Đồng Thời (Concurrency Locking)</div>
+            <p style="font-size: 0.76rem; color: #CBD5E1; line-height: 1.55;">
+              Áp dụng cơ chế khóa dòng hàng đợi (Pessimistic Row Lock <code>FOR UPDATE</code>) nhằm ngăn chặn tình trạng bán trùng số lượng hàng khi có nhiều khách hàng cùng lúc quét mã thanh toán cho món hàng cuối cùng.
+            </p>
+          </div>
+        `
       },
       {
         code: "08. QA",
         name: "Kiểm Thử & Đảm Bảo Chất Lượng",
         lead: "QA/QC Lead",
+        deliverableSummary: "24/24 Testcases PASS 100%",
         action: "Kiểm thử tràn chữ trên màn hình nhỏ, kiểm thử bảo mật SQL/XSS và độ phản hồi nút bấm cảm ứng.",
-        log: "Chạy kiểm thử tự động toàn diện: 24/24 kịch bản đạt chuẩn (PASS 100%)."
+        log: "Chạy kiểm thử tự động toàn diện: 24/24 kịch bản đạt chuẩn (PASS 100%).",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Báo Cáo Nghiệm Thu 24 Kịch Bản Kiểm Thử (PASS 100%)</div>
+            <table class="testcase-table">
+              <tr><th>Mã TC</th><th>Nhóm Kiểm Thử</th><th>Mục Tiêu Kiểm Định</th><th>Kết Quả</th></tr>
+              <tr><td>TC-SEC-01</td><td>Bảo Mật</td><td>Ngăn chặn tấn công SQL Injection trên ô tìm kiếm & mã đơn</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-SEC-02</td><td>Bảo Mật</td><td>Bộ lọc mã hóa XSS HTML Entity phòng chống đánh cắp cookie</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-SEC-03</td><td>Bảo Mật</td><td>Xác minh chữ ký số khóa truy cập Client Access Key</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-UI-01</td><td>Giao Diện</td><td>Độ co giãn 390px trên iPhone 15/16 và Samsung Galaxy</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-UI-02</td><td>Giao Diện</td><td>Tải toàn bộ ảnh sản phẩm chuẩn HD không bị nhòe vỡ</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-PAY-01</td><td>Thanh Toán</td><td>Tự động sinh mã VietQR Napas 247 đúng số tiền VNĐ</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-PAY-02</td><td>Thanh Toán</td><td>Thời gian phản hồi nhận diện tiền về dưới 0.8 giây</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+              <tr><td>TC-BIZ-01</td><td>Nghiệp Vụ</td><td>Đồng bộ và trừ số lượng tồn kho tự động khi hoàn tất đơn</td><td><span class="pass-tag">PASS (100%)</span></td></tr>
+            </table>
+          </div>
+        `
       },
       {
         code: "09. OPS",
         name: "Vận Hành & Hạ Tầng Máy Chủ",
         lead: "DevOps Engineer",
+        deliverableSummary: "Docker Compose Multi-Container",
         action: "Đóng gói ứng dụng vào môi trường máy chủ cục bộ, cấp chứng chỉ SSL và phát hành bản thử nghiệm.",
-        log: "Đóng gói thành công! Đã sẵn sàng mở cổng website thực tế cho khách hàng."
+        log: "Đóng gói thành công! Đã sẵn sàng mở cổng website thực tế cho khách hàng.",
+        getDeliverableHtml: (p) => `
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Hạ Tầng 3 Container Đang Trực Tuyến</div>
+            <div class="deliv-grid-2">
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Container 1 - Web Server:</div>
+                <div class="deliv-spec-val" style="color: #34D399;">it_enterprise_app (Port 5000 &bull; Healthy)</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Container 2 - Bộ Nhớ Cache:</div>
+                <div class="deliv-spec-val" style="color: #34D399;">it_enterprise_redis (Port 6379 &bull; Alpine 7.2)</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Container 3 - Cơ Sở Dữ Liệu:</div>
+                <div class="deliv-spec-val" style="color: #34D399;">it_enterprise_postgres (Port 5432 &bull; Alpine 16)</div>
+              </div>
+              <div class="deliv-spec-item">
+                <div class="deliv-spec-label">Dung Lượng Image Tối Ưu:</div>
+                <div class="deliv-spec-val">Chỉ 85MB (Khởi động tức thì trong 1.5 giây)</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliv-section-box">
+            <div class="deliv-section-title">Đường Dẫn Bàn Giao Quản Trị</div>
+            <p style="font-size: 0.76rem; color: #CBD5E1; line-height: 1.55;">
+              Cửa hàng trực tuyến: <strong>http://127.0.0.1:5000/storefront</strong><br>
+              Bảng quản trị kinh doanh: <strong>http://127.0.0.1:5000/admin</strong><br>
+              Tài khoản quản trị viên: <code>store_admin</code> &bull; Mật khẩu: <code>Store@2026MasterKey</code>
+            </p>
+          </div>
+        `
       }
     ];
 
@@ -3522,13 +4990,19 @@
         const card = document.createElement("div");
         card.className = "dept-card waiting";
         card.id = `deptCard-${idx}`;
+        card.onclick = () => openDeptDeliverable(idx);
         card.innerHTML = `
           <div class="dept-card-top">
-            <span class="dept-lead-badge">${escapeHtml(dept.lead)}</span>
-            <span class="dept-status-indicator" id="deptStatusInd-${idx}">CHỜ ĐIỀU PHỐI</span>
+            <span class="dept-code-pill">${escapeHtml(dept.code)}</span>
+            <span class="dept-status-badge waiting" id="deptStatusInd-${idx}">CHỜ ĐIỀU PHỐI</span>
           </div>
-          <div class="dept-name-title">${escapeHtml(dept.code)} &bull; ${escapeHtml(dept.name)}</div>
-          <div class="dept-desc-text">${escapeHtml(dept.action)}</div>
+          <div class="dept-title-text">${escapeHtml(dept.name)}</div>
+          <div class="dept-role-lead">${escapeHtml(dept.lead)}</div>
+          <div class="dept-action-text">${escapeHtml(dept.action)}</div>
+          <div class="btn-view-deliverable">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>${escapeHtml(dept.deliverableSummary)}</span>
+          </div>
           <div class="dept-mini-progress">
             <div class="mini-bar-fill" id="deptMiniFill-${idx}" style="width: 0%;"></div>
           </div>
@@ -3536,6 +5010,31 @@
         grid.appendChild(card);
       });
     }
+
+    // Modal: Open Department Deliverable Inspector
+    window.openDeptDeliverable = function(idx) {
+      const dept = DEPARTMENTS_DATA[idx];
+      if (!dept) return;
+
+      document.getElementById("delivModalSubtag").textContent = `${dept.code} &bull; ${dept.name.toUpperCase()}`;
+      document.getElementById("delivModalTitle").textContent = `Hồ Sơ Bàn Giao: ${dept.deliverableSummary}`;
+      document.getElementById("delivModalLead").innerHTML = `Trưởng Bộ Phận: <strong>${escapeHtml(dept.lead)}</strong> &bull; Trạng thái: <span class="pass-tag" id="delivModalStatus">ĐÃ NGHIỆM THU</span>`;
+
+      const contentBox = document.getElementById("delivModalContent");
+      if (contentBox) {
+        contentBox.innerHTML = dept.getDeliverableHtml(currentProject);
+      }
+
+      document.getElementById("deptDeliverableModal").style.display = "flex";
+    };
+
+    window.closeDeptDeliverable = function() {
+      document.getElementById("deptDeliverableModal").style.display = "none";
+    };
+
+    document.getElementById("deptDeliverableModal")?.addEventListener("click", (e) => {
+      if (e.target.id === "deptDeliverableModal") closeDeptDeliverable();
+    });
 
     function addPipelineLog(code, text) {
       const terminal = document.getElementById("pipelineTerminalBody");
@@ -3555,23 +5054,23 @@
       const fill = document.getElementById(`deptMiniFill-${idx}`);
       if (!card || !ind || !fill) return;
 
-      card.classList.remove("waiting", "running", "done");
-      card.classList.add(state);
+      card.classList.remove("waiting", "running", "done", "completed");
+      ind.classList.remove("waiting", "running", "done");
 
       if (state === "running") {
+        card.classList.add("running");
+        ind.classList.add("running");
         ind.textContent = "ĐANG THỰC THI";
-        ind.style.background = "rgba(59, 130, 246, 0.25)";
-        ind.style.color = "#93C5FD";
-        fill.style.width = "70%";
+        fill.style.width = "75%";
       } else if (state === "done") {
+        card.classList.add("completed");
+        ind.classList.add("done");
         ind.textContent = "HOÀN TẤT";
-        ind.style.background = "rgba(16, 185, 129, 0.25)";
-        ind.style.color = "#34D399";
         fill.style.width = "100%";
       } else {
+        card.classList.add("waiting");
+        ind.classList.add("waiting");
         ind.textContent = "CHỜ ĐIỀU PHỐI";
-        ind.style.background = "rgba(100, 116, 139, 0.2)";
-        ind.style.color = "#94A3B8";
         fill.style.width = "0%";
       }
     }
@@ -3599,13 +5098,14 @@
         badge.style.color = "#93C5FD";
       }
 
-      addPipelineLog("SYSTEM", "Khởi tạo quy trình điều phối 9 phòng ban kỹ thuật tự động cho dự án...");
+      const brand = currentProject.clientConfig?.brandName || currentProject.name || "Dự Án Doanh Nghiệp";
+      addPipelineLog("SYSTEM", `Khởi tạo quy trình điều phối kỹ thuật 9 phòng ban cho: "${brand}"...`);
 
+      // Realistic 1.1s progression per department
       pipelineSimulationTimer = setInterval(() => {
         if (pipelineCurrentStep < DEPARTMENTS_DATA.length) {
           const curDept = DEPARTMENTS_DATA[pipelineCurrentStep];
 
-          // Set running for current dept
           setDepartmentState(pipelineCurrentStep, "running");
           addPipelineLog(curDept.code, curDept.log);
 
@@ -3613,21 +5113,19 @@
           document.getElementById("pipelinePercentDisplay").textContent = pct + "%";
           document.getElementById("pipelineProgressFill").style.width = pct + "%";
           document.getElementById("pipelineProgressLabel").textContent = "TIẾN TRÌNH";
-          document.getElementById("pipelineLiveStatusMessage").textContent = `[${curDept.code}] ${curDept.name} đang xử lý...`;
+          document.getElementById("pipelineLiveStatusMessage").textContent = `[${curDept.code}] ${curDept.name} đang hoàn thiện: ${curDept.deliverableSummary}...`;
 
-          // Previous dept marked done
           if (pipelineCurrentStep > 0) {
             setDepartmentState(pipelineCurrentStep - 1, "done");
           }
 
           pipelineCurrentStep++;
         } else {
-          // Finished all
           clearInterval(pipelineSimulationTimer);
           pipelineSimulationTimer = null;
-          completePipeline();
+          completePipeline(true);
         }
-      }, 550);
+      }, 1100);
     }
 
     function completePipeline(recordSession = true) {
@@ -3639,7 +5137,7 @@
       document.getElementById("pipelinePercentDisplay").textContent = "100%";
       document.getElementById("pipelineProgressFill").style.width = "100%";
       document.getElementById("pipelineProgressLabel").textContent = "HOÀN TẤT";
-      document.getElementById("pipelineLiveStatusMessage").textContent = "9/9 phòng ban đã hoàn tất bàn giao website!";
+      document.getElementById("pipelineLiveStatusMessage").textContent = "9/9 phòng ban đã hoàn tất bàn giao & kiểm định an toàn!";
 
       const badge = document.getElementById("pipelineStatusBadge");
       if (badge) {
@@ -3648,8 +5146,9 @@
         badge.style.color = "#34D399";
       }
 
-      addPipelineLog("OPS", "Kiểm định hạ tầng hoàn tất. Website đã sẵn sàng bàn giao.");
-      addPipelineLog("SUCCESS", "Bàn giao Website Động thành công 100%. Khách hàng có thể trải nghiệm ngay!");
+      addPipelineLog("OPS", "Đóng gói Docker Image 85MB hoàn tất. Port 5000 đã sẵn sàng mở kết nối.");
+      addPipelineLog("QA", "Kiểm thử 24/24 tiêu chuẩn: PASS 100%. Đã phê duyệt phát hành Production.");
+      addPipelineLog("SUCCESS", "Bàn giao Website Động thành công 100%! Bấm vào các phòng ban để xem hồ sơ đặc tả chi tiết.");
 
       const completedBanner = document.getElementById("pipelineCompletedBanner");
       if (completedBanner) completedBanner.style.display = "flex";
@@ -3683,11 +5182,9 @@
 
       const isCompleted = sessionStorage.getItem("pipeline_completed_" + authorizedProjectCode) === "true";
       if (isCompleted) {
-        // Render completed state
         DEPARTMENTS_DATA.forEach(d => addPipelineLog(d.code, d.log));
         completePipeline(false);
       } else {
-        // Run full dynamic simulation
         startPipelineSimulation();
       }
     }
@@ -3705,13 +5202,11 @@
       });
     });
 
-    // Floating Button switches to Feedback tab
     document.getElementById("btnFloatingFeedback").addEventListener("click", () => {
       const fbTabBtn = document.querySelector('[data-tab="tab-feedback"]');
       if (fbTabBtn) fbTabBtn.click();
     });
 
-    // Device View Mode Switching
     document.getElementById("btnDeviceDesktop").addEventListener("click", () => {
       document.getElementById("btnDeviceDesktop").classList.add("active");
       document.getElementById("btnDeviceMobile").classList.remove("active");
