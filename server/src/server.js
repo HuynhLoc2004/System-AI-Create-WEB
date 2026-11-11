@@ -439,6 +439,7 @@ app.post("/api/trial/activate", async (req, res) => {
       tokenEfficiency: 98.0,
       isTrial: true,
       clientConfig: {
+        layoutType: genConfig?.layoutType || "general",
         brandName: genConfig?.brandName || cleanTitle,
         headline: genConfig?.headline || "Hệ Thống Web Động May Đo Trải Nghiệm Trực Tiếp",
         deployMode: "Máy Chủ Thử Nghiệm (Localhost:5000)",

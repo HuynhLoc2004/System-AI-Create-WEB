@@ -2717,7 +2717,623 @@
       background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important;
     }
 
+    .theme-education {
+      --store-accent: #2563EB;
+    }
+    .theme-education .btn-hero-primary,
+    .theme-education .btn-buy-instant,
+    .theme-education .btn-pmodal-buy {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+    }
+
+    /* ========================================================
+       AI CONSTRUCTION WORKER BOT & IN-CANVAS SCANNING GLOW
+       ======================================================== */
+    .ai-construction-bar {
+      margin: 12px 16px 0;
+      padding: 10px 16px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.15);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 30;
+    }
+    .ai-construction-bar.completed {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 12px rgba(16, 185, 129, 0.15);
+      background: rgba(15, 23, 42, 0.9);
+    }
+    .ai-worker-avatar-box {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .ai-worker-bot-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #0F172A;
+      border: 1.5px solid #38BDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: workerBob 2s ease-in-out infinite;
+    }
+    @keyframes workerBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    .ai-worker-online-dot {
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 9px;
+      height: 9px;
+      background: #10B981;
+      border-radius: 50%;
+      border: 1.5px solid #0F172A;
+      box-shadow: 0 0 6px #10B981;
+    }
+    .ai-worker-text-col {
+      flex: 1;
+      min-width: 0;
+    }
+    .ai-worker-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+    .ai-worker-phase-pill {
+      font-size: 0.64rem;
+      font-weight: 800;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .ai-worker-task-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #F8FAFC;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ai-worker-percent-label {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #38BDF8;
+      margin-left: auto;
+      font-family: monospace;
+    }
+    .ai-worker-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(51, 65, 85, 0.6);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .ai-worker-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38BDF8 0%, #2563EB 50%, #10B981 100%);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    }
+    .ai-worker-btn-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-worker-skip, .btn-worker-replay {
+      padding: 5px 11px;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 6px;
+      color: #94A3B8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .btn-worker-skip:hover, .btn-worker-replay:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38BDF8;
+      color: #38BDF8;
+    }
+
+    /* Scanning Glow on Active Construction Section */
+    .under-construction-glow {
+      position: relative;
+      outline: 2px solid #38BDF8 !important;
+      outline-offset: -2px;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.35) !important;
+      animation: blueprintPulse 1.2s ease-in-out infinite alternate !important;
+      transition: all 0.3s ease;
+    }
+    @keyframes blueprintPulse {
+      0% {
+        outline-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+      }
+      100% {
+        outline-color: rgba(56, 189, 248, 1);
+        box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
+      }
+    }
+
+    /* ========================================================
+       INDUSTRY SPECIFIC FEATURE WRAPPER STYLES
+       ======================================================== */
+    .industry-feature-wrapper {
+      margin: 20px 24px 0;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+    .ind-feature-head {
+      margin-bottom: 20px;
+    }
+    .ind-feature-subtag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #38BDF8;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ind-feature-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 4px;
+    }
+    .ind-feature-desc {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      margin-top: 4px;
+      max-width: 720px;
+      line-height: 1.5;
+    }
+
+    /* Fashion Style Studio */
+    .style-tabs-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .style-tab-btn {
+      padding: 7px 16px;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #94A3B8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .style-tab-btn.active {
+      background: rgba(226, 186, 114, 0.15);
+      border-color: #E2BA72;
+      color: #E2BA72;
+    }
+    .outfit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .outfit-card {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 10px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .outfit-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(226, 186, 114, 0.4);
+    }
+    .outfit-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #1E293B;
+    }
+    .outfit-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-top: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .outfit-price {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #E2BA72;
+      margin-top: 2px;
+    }
+    .style-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .style-total-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .style-total-label {
+      font-size: 0.75rem;
+      color: #94A3B8;
+    }
+    .style-total-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #E2BA72;
+    }
+    .btn-add-style-set {
+      padding: 9px 18px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+      color: #0F172A;
+      font-size: 0.8rem;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-add-style-set:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+    }
+    .btn-size-guide {
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #CBD5E1;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Clinic Appointment Booking */
+    .clinic-booking-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+    }
+    .clinic-form-col {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .clinic-form-group {
+      margin-bottom: 12px;
+    }
+    .clinic-form-group label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #94A3B8;
+      margin-bottom: 4px;
+    }
+    .clinic-form-group select, .clinic-form-group input {
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 8px;
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      outline: none;
+    }
+    .clinic-form-group select:focus, .clinic-form-group input:focus {
+      border-color: #0D9488;
+    }
+    .clinic-time-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .clinic-time-pill {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #CBD5E1;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .clinic-time-pill.active {
+      background: rgba(13, 148, 136, 0.25);
+      border-color: #0D9488;
+      color: #2DD4BF;
+    }
+    .btn-submit-booking {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+      color: #FFFFFF;
+      font-size: 0.82rem;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+    }
+    .clinic-doctors-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .doctor-card {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .doctor-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #0D9488;
+      background: #1E293B;
+      flex-shrink: 0;
+    }
+    .doctor-info-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .doctor-info-spec {
+      font-size: 0.72rem;
+      color: #2DD4BF;
+      margin-top: 2px;
+    }
+    .doctor-info-exp {
+      font-size: 0.68rem;
+      color: #94A3B8;
+      margin-top: 2px;
+    }
+
+    /* Course Curriculum Studio */
+    .course-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .video-preview-card {
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      height: 240px;
+    }
+    .video-preview-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.75;
+    }
+    .video-play-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 6, 23, 0.5);
+      cursor: pointer;
+      gap: 10px;
+    }
+    .video-play-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #2563EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(37, 99, 235, 0.6);
+      transition: transform 0.2s;
+    }
+    .video-play-btn:hover {
+      transform: scale(1.1);
+    }
+    .curriculum-tree {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .curr-module-item {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+    .curr-mod-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .curr-mod-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .curr-mod-badge {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(37, 99, 235, 0.2);
+      color: #60A5FA;
+      font-weight: 700;
+    }
+
+    /* Table Reservation Studio */
+    .table-res-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .roast-steps-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .roast-step-card {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .roast-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, 0.2);
+      color: #F59E0B;
+      font-weight: 800;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Ceramic 5-Stage Workshop */
+    .craft-steps-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .craft-step-tab {
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #94A3B8;
+      font-size: 0.74rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .craft-step-tab.active {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: #F59E0B;
+      color: #FBBF24;
+    }
+    .craft-detail-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .craft-photo {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Custom Service Action Dialog Backdrop */
+    .service-action-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .service-action-modal-panel {
+      width: 100%;
+      max-width: 520px;
+      background: #0B132B;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+
     @media (max-width: 768px) {
+      .clinic-booking-grid,
+      .course-grid,
+      .table-res-grid,
+      .craft-detail-panel {
+        grid-template-columns: 1fr !important;
+      }
+      .ai-construction-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .ai-worker-btn-wrap {
+        width: 100%;
+        justify-content: flex-end;
+      }
       .product-modal-panel {
         grid-template-columns: 1fr;
       }
@@ -2776,15 +3392,16 @@
 
     <!-- Centered Navigation Tabs -->
     <nav class="nav-tabs-center">
-      <button type="button" class="nav-tab-btn active" data-tab="tab-pipeline" id="tabBtnPipeline">
+      <button type="button" class="nav-tab-btn" data-tab="tab-pipeline" id="tabBtnPipeline">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>Tiến Độ 9 Phòng Ban</span>
-        <span class="tab-badge" id="pipelineStatusBadge" style="background: rgba(37, 99, 235, 0.3); color: #93C5FD;">ĐIỀU PHỐI</span>
+        <span>Báo Cáo 9 Phòng Ban</span>
+        <span class="tab-badge" id="pipelineStatusBadge" style="background: rgba(37, 99, 235, 0.3); color: #93C5FD;">KỸ THUẬT</span>
       </button>
 
-      <button type="button" class="nav-tab-btn" data-tab="tab-storefront" id="tabBtnStorefront">
+      <button type="button" class="nav-tab-btn active" data-tab="tab-storefront" id="tabBtnStorefront">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span>Xem Website</span>
+        <span class="tab-badge" id="storefrontLiveBadge" style="background: rgba(16, 185, 129, 0.25); color: #34D399;">LIVE</span>
       </button>
 
       <button type="button" class="nav-tab-btn" data-tab="tab-feedback" id="tabBtnFeedback">
@@ -2812,7 +3429,7 @@
     <!-- ========================================================
          VIEW 0: 9-DEPARTMENT PIPELINE & ORCHESTRATION CONSOLE
          ======================================================== -->
-    <section class="tab-view-panel active" id="tab-pipeline">
+    <section class="tab-view-panel" id="tab-pipeline">
       <div class="pipeline-page-container">
 
         <!-- Top Progress Header Card -->
@@ -2886,7 +3503,7 @@
     <!-- ========================================================
          VIEW 1: LIVE STOREFRONT (THE HERO CANVAS)
          ======================================================== -->
-    <section class="tab-view-panel" id="tab-storefront">
+    <section class="tab-view-panel active" id="tab-storefront">
       <div class="browser-window">
         <!-- Browser Topbar -->
         <div class="browser-header-bar">
@@ -2912,6 +3529,44 @@
 
         <!-- Store Canvas -->
         <div class="store-screen-canvas" id="storeScreenCanvas">
+
+          <!-- AI Construction Worker Bot Executive HUD -->
+          <div class="ai-construction-bar" id="aiWorkerHud">
+            <div class="ai-worker-avatar-box">
+              <div class="ai-worker-bot-avatar">
+                <svg width="26" height="26" viewBox="0 0 36 36" fill="none">
+                  <circle cx="18" cy="18" r="17" fill="#0B132B" stroke="#38BDF8" stroke-width="1.8"/>
+                  <path d="M9 16C9 11.0294 13.0294 7 18 7C22.9706 7 27 11.0294 27 16H9Z" fill="#F59E0B"/>
+                  <rect x="7" y="16" width="22" height="3" rx="1.5" fill="#D97706"/>
+                  <line x1="18" y1="8" x2="18" y2="13" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/>
+                  <rect x="11" y="21" width="14" height="6" rx="3" fill="#0284C7"/>
+                  <circle cx="15" cy="24" r="1.5" fill="#E0F2FE"/>
+                  <circle cx="21" cy="24" r="1.5" fill="#E0F2FE"/>
+                  <circle cx="27" cy="27" r="4" fill="#38BDF8"/>
+                  <path d="M26 25L28 27M28 25L26 27" stroke="#0F172A" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                <span class="ai-worker-online-dot"></span>
+              </div>
+            </div>
+
+            <div class="ai-worker-text-col">
+              <div class="ai-worker-header-meta">
+                <span class="ai-worker-phase-pill" id="aiWorkerPhaseBadge">01. KHỞI TẠO</span>
+                <span class="ai-worker-task-title" id="aiWorkerTaskText">Kỹ Sư AI Đang Thi Công: Dựng Nhận Diện Thương Hiệu &amp; Logo...</span>
+                <span class="ai-worker-percent-label" id="aiWorkerPctText">20%</span>
+              </div>
+              <div class="ai-worker-track">
+                <div class="ai-worker-bar-fill" id="aiWorkerBarFill" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <div class="ai-worker-btn-wrap" id="aiWorkerBtnWrap">
+              <button type="button" class="btn-worker-skip" id="btnWorkerSkip" onclick="fastForwardWorkerConstruction()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                <span>Xem Hoàn Tất</span>
+              </button>
+            </div>
+          </div>
           
           <!-- Announcement Bar -->
           <div class="store-announce-bar">
@@ -2987,6 +3642,14 @@
                   <span>Quét VietQR đối soát trong 0.8s</span>
                 </div>
               </div>
+            </div>
+
+            <!-- ========================================================
+                 INDUSTRY-SPECIFIC INTERACTIVE FEATURE MODULE
+                 (Differentiates every industry - Zero "10 websites look like 1")
+                 ======================================================== -->
+            <div class="industry-feature-wrapper" id="industryFeatureSection">
+              <!-- Dynamically populated according to layoutType / industry -->
             </div>
 
             <!-- Featured Highlights Grid on Home -->
@@ -3629,6 +4292,162 @@
       </div>
     </div>
 
+    <!-- Modal: Medical Booking Confirmation -->
+    <div class="service-action-modal-backdrop" id="medicalBookingModal" style="display: none;">
+      <div class="service-action-modal-panel">
+        <button type="button" class="p-modal-close" onclick="closeMedicalBookingModal()">&times;</button>
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(13, 148, 136, 0.2); border: 2px solid #0D9488; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2DD4BF" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="font-size: 0.68rem; font-weight: 800; color: #2DD4BF; letter-spacing: 0.5px;">XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG</div>
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin-top: 2px;">Phiếu Khám Chuyên Khoa Trực Tuyến</h3>
+        </div>
+        <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Mã phiếu khám:</span>
+            <span style="color: #2DD4BF; font-weight: 800; font-family: monospace;" id="medModalTicketId">MED-APPT-8421</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Họ tên bệnh nhân:</span>
+            <span style="color: #FFFFFF; font-weight: 700;" id="medModalPatientName">Nguyễn Văn An</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Dịch vụ yêu cầu:</span>
+            <span style="color: #FFFFFF; font-weight: 700;" id="medModalService">Khám &amp; Tư Vấn Nha Khoa</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Bác sĩ phụ trách:</span>
+            <span style="color: #38BDF8; font-weight: 700;" id="medModalDoctor">BS.CKII Nguyễn Văn An</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Thời gian khám:</span>
+            <span style="color: #FBBF24; font-weight: 800;" id="medModalTime">10:00 &bull; Hôm nay</span>
+          </div>
+        </div>
+        <p style="font-size: 0.72rem; color: #94A3B8; text-align: center; line-height: 1.4; margin-bottom: 16px;">
+          Hệ thống đã gửi SMS xác nhận đến số điện thoại của bạn. Quý khách vui lòng có mặt trước 10 phút. Miễn phí gửi xe và nước uống tại sảnh.
+        </p>
+        <button type="button" class="btn-submit-booking" onclick="closeMedicalBookingModal()">Hoàn Tất &amp; Đóng</button>
+      </div>
+    </div>
+
+    <!-- Modal: Table Reservation Confirmation -->
+    <div class="service-action-modal-backdrop" id="tableBookingModal" style="display: none;">
+      <div class="service-action-modal-panel">
+        <button type="button" class="p-modal-close" onclick="closeTableBookingModal()">&times;</button>
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(245, 158, 11, 0.2); border: 2px solid #F59E0B; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="font-size: 0.68rem; font-weight: 800; color: #FBBF24; letter-spacing: 0.5px;">GIỮ CHỖ THÀNH CÔNG</div>
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin-top: 2px;">Phiếu Đặt Bàn Thưởng Thức Trực Tuyến</h3>
+        </div>
+        <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Mã giữ chỗ:</span>
+            <span style="color: #FBBF24; font-weight: 800; font-family: monospace;" id="tblModalCode">FNB-RES-8821</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Không gian:</span>
+            <span style="color: #FFFFFF; font-weight: 700;" id="tblModalSpace">Sân Vườn View Thoáng</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Số khách:</span>
+            <span style="color: #FFFFFF; font-weight: 700;" id="tblModalGuests">Bàn 4-6 Người</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem;">
+            <span style="color: #94A3B8;">Khung giờ:</span>
+            <span style="color: #38BDF8; font-weight: 800;" id="tblModalTime">19:30 &bull; Tối nay</span>
+          </div>
+        </div>
+        <p style="font-size: 0.72rem; color: #94A3B8; text-align: center; line-height: 1.4; margin-bottom: 16px;">
+          Bàn của quý khách sẽ được giữ ưu tiên trong 15 phút. Xuất trình mã này cho nhân viên lễ tân khi đến để được đón tiếp nhanh nhất.
+        </p>
+        <button type="button" class="btn-submit-booking" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%);" onclick="closeTableBookingModal()">Xác Nhận &amp; Đóng</button>
+      </div>
+    </div>
+
+    <!-- Modal: Fashion Size Guide -->
+    <div class="service-action-modal-backdrop" id="sizeGuideModal" style="display: none;">
+      <div class="service-action-modal-panel">
+        <button type="button" class="p-modal-close" onclick="closeSizeGuideModal()">&times;</button>
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="font-size: 0.68rem; font-weight: 800; color: #E2BA72; letter-spacing: 0.5px;">BẢNG THÔNG SỐ CHUẨN MAY ĐO</div>
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF; margin-top: 2px;">Tra Cứu Bảng Size May Đo Chuẩn Vóc Dáng</h3>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.74rem; text-align: center; margin-bottom: 16px;">
+          <thead>
+            <tr style="background: rgba(30, 41, 59, 0.8); color: #E2BA72; border-bottom: 1px solid rgba(148, 163, 184, 0.2);">
+              <th style="padding: 8px;">Size</th>
+              <th style="padding: 8px;">Chiều Cao (cm)</th>
+              <th style="padding: 8px;">Cân Nặng (kg)</th>
+              <th style="padding: 8px;">Vòng Ngực (cm)</th>
+              <th style="padding: 8px;">Vòng Eo (cm)</th>
+            </tr>
+          </thead>
+          <tbody style="color: #CBD5E1;">
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 8px; font-weight: 800; color: #E2BA72;">S</td>
+              <td style="padding: 8px;">155 - 165</td>
+              <td style="padding: 8px;">48 - 56</td>
+              <td style="padding: 8px;">82 - 86</td>
+              <td style="padding: 8px;">66 - 72</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 8px; font-weight: 800; color: #E2BA72;">M</td>
+              <td style="padding: 8px;">165 - 172</td>
+              <td style="padding: 8px;">57 - 65</td>
+              <td style="padding: 8px;">86 - 92</td>
+              <td style="padding: 8px;">72 - 78</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <td style="padding: 8px; font-weight: 800; color: #E2BA72;">L</td>
+              <td style="padding: 8px;">170 - 178</td>
+              <td style="padding: 8px;">66 - 75</td>
+              <td style="padding: 8px;">92 - 98</td>
+              <td style="padding: 8px;">78 - 84</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; font-weight: 800; color: #E2BA72;">XL</td>
+              <td style="padding: 8px;">175 - 185</td>
+              <td style="padding: 8px;">76 - 88</td>
+              <td style="padding: 8px;">98 - 106</td>
+              <td style="padding: 8px;">84 - 92</td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="button" class="btn-submit-booking" style="background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%); color: #0F172A;" onclick="closeSizeGuideModal()">Đã Hiểu &amp; Đóng</button>
+      </div>
+    </div>
+
+    <!-- Modal: E-Learning Course Video Player -->
+    <div class="service-action-modal-backdrop" id="courseVideoModal" style="display: none;">
+      <div class="service-action-modal-panel" style="max-width: 640px;">
+        <button type="button" class="p-modal-close" onclick="closeCourseVideoModal()">&times;</button>
+        <div style="font-size: 0.68rem; font-weight: 800; color: #60A5FA; letter-spacing: 0.5px; margin-bottom: 4px;">PHÒNG HỌC THỬ TRỰC TUYẾN 1080P</div>
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">Bài 01: Thiết Lập Tư Duy &amp; Kiến Trúc Web Động Chuẩn Doanh Nghiệp</h3>
+        
+        <div style="background: #000; border-radius: 10px; overflow: hidden; position: relative; height: 260px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.5;" alt="Lecture">
+          <div style="position: absolute; text-align: center;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: #2563EB; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(37, 99, 235, 0.8); cursor: pointer;" onclick="showSystemDialog({ title: 'Phát Video Bài Giảng', message: 'Đang phát bài giảng mẫu độ phân giải 1080p...', type: 'info' })">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+            </div>
+            <div style="color: #FFFFFF; font-size: 0.78rem; font-weight: 700; margin-top: 8px;">Đang phát demo bài giảng &bull; 14:20</div>
+          </div>
+        </div>
+
+        <p style="font-size: 0.72rem; color: #94A3B8; line-height: 1.4; margin-bottom: 16px;">
+          Bạn đang xem video học thử miễn phí. Đăng ký trọn gói khóa học để mở khóa toàn bộ 4 Modules, kho tài liệu mã nguồn và bài tập thực hành được Mentor chấm điểm 1-1.
+        </p>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-hero-primary" style="flex: 1; padding: 10px; font-size: 0.8rem;" onclick="closeCourseVideoModal(); openCartDrawer();">Đăng Ký Khóa Học Toàn Diện</button>
+          <button type="button" class="btn-hero-outline" style="padding: 10px 16px; font-size: 0.8rem;" onclick="closeCourseVideoModal()">Đóng</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script>
@@ -3942,19 +4761,27 @@
         pipelineTitleEl.textContent = `Khởi Tạo & Triển Khai: ${brand}`;
       }
 
-      // Dynamic Industry Theming on Canvas
+      // Dynamic Industry Theming & Resolution on Canvas
       const canvasEl = document.getElementById("storeScreenCanvas");
-      canvasEl.classList.remove("theme-fashion", "theme-ceramic", "theme-coffee", "theme-medical");
+      canvasEl.classList.remove("theme-fashion", "theme-ceramic", "theme-coffee", "theme-medical", "theme-education");
       const lowerBrand = brand.toLowerCase();
-      if (lowerBrand.includes("thời trang") || lowerBrand.includes("fashion") || lowerBrand.includes("wear") || lowerBrand.includes("atelier") || lowerBrand.includes("quần áo")) {
-        canvasEl.classList.add("theme-fashion");
-      } else if (lowerBrand.includes("gốm") || lowerBrand.includes("bát tràng") || lowerBrand.includes("mỹ nghệ")) {
-        canvasEl.classList.add("theme-ceramic");
-      } else if (lowerBrand.includes("cafe") || lowerBrand.includes("cà phê") || lowerBrand.includes("coffee")) {
-        canvasEl.classList.add("theme-coffee");
-      } else if (lowerBrand.includes("nha khoa") || lowerBrand.includes("y tế") || lowerBrand.includes("khám")) {
-        canvasEl.classList.add("theme-medical");
+      let layoutType = cfg.layoutType || currentProject.layoutType;
+      if (!layoutType) {
+        if (lowerBrand.includes("thời trang") || lowerBrand.includes("fashion") || lowerBrand.includes("wear") || lowerBrand.includes("atelier") || lowerBrand.includes("quần áo") || lowerBrand.includes("áo")) {
+          layoutType = "fashion";
+        } else if (lowerBrand.includes("gốm") || lowerBrand.includes("bát tràng") || lowerBrand.includes("mỹ nghệ")) {
+          layoutType = "ceramic";
+        } else if (lowerBrand.includes("cafe") || lowerBrand.includes("cà phê") || lowerBrand.includes("coffee") || lowerBrand.includes("nhà hàng") || lowerBrand.includes("ẩm thực")) {
+          layoutType = "cafe";
+        } else if (lowerBrand.includes("nha khoa") || lowerBrand.includes("y tế") || lowerBrand.includes("khám") || lowerBrand.includes("bác sĩ") || lowerBrand.includes("răng")) {
+          layoutType = "clinic";
+        } else if (lowerBrand.includes("học") || lowerBrand.includes("khóa học") || lowerBrand.includes("giáo dục") || lowerBrand.includes("đào tạo") || lowerBrand.includes("e-learning")) {
+          layoutType = "education";
+        } else {
+          layoutType = "general";
+        }
       }
+      canvasEl.classList.add(`theme-${layoutType === "clinic" ? "medical" : (layoutType === "cafe" ? "coffee" : layoutType)}`);
 
       // Storefront Navbar & Branding
       document.getElementById("storeBrandName").textContent = brand.toUpperCase();
@@ -3991,6 +4818,651 @@
       renderCatalog();
       renderCustomerReviews(brand);
       renderTickets();
+      renderIndustryFeature(brand, layoutType);
+      startWorkerCanvasConstruction();
+    }
+
+    // ========================================================
+    // AI CONSTRUCTION WORKER BOT & HUD CONTROLLER
+    // ========================================================
+    let workerConstructionTimer = null;
+    let currentWorkerStep = 0;
+
+    const WORKER_CONSTRUCTION_PHASES = [
+      {
+        pct: 20,
+        badge: "01. PM & 04. UI/UX",
+        task: "Dựng nhận diện thương hiệu, Logo & Chứng chỉ SSL...",
+        targetSelector: ".store-navbar"
+      },
+      {
+        pct: 45,
+        badge: "03. ARCH & 05. FE",
+        task: "Lắp ráp Hero Banner độc bản & Thiết lập bố cục tương tác theo ngành...",
+        targetSelector: ".store-hero-section"
+      },
+      {
+        pct: 70,
+        badge: "02. BA & 05. FE",
+        task: "Kiến trúc Khối Tính Năng Tương Tác Chuyên Sâu Của Ngành...",
+        targetSelector: "#industryFeatureSection"
+      },
+      {
+        pct: 90,
+        badge: "07. DBA & 05. FE",
+        task: "Kết nối CSDL Sản Phẩm Thật & Kích hoạt giỏ hàng & Khóa kho...",
+        targetSelector: "#homeStoreProductGrid"
+      },
+      {
+        pct: 100,
+        badge: "06. BE & 08. QA",
+        task: "Tích hợp Cổng VietQR Napas 247 & Kiểm định an ninh 24/24 PASS!",
+        targetSelector: "#storeValuesSection"
+      }
+    ];
+
+    function startWorkerCanvasConstruction(force = false) {
+      const sessionKey = "canvas_built_" + authorizedProjectCode;
+      if (!force && sessionStorage.getItem(sessionKey) === "true") {
+        completeWorkerConstruction(false);
+        return;
+      }
+
+      if (workerConstructionTimer) clearInterval(workerConstructionTimer);
+      currentWorkerStep = 0;
+      applyWorkerPhase(WORKER_CONSTRUCTION_PHASES[0]);
+
+      workerConstructionTimer = setInterval(() => {
+        currentWorkerStep++;
+        if (currentWorkerStep < WORKER_CONSTRUCTION_PHASES.length) {
+          applyWorkerPhase(WORKER_CONSTRUCTION_PHASES[currentWorkerStep]);
+        } else {
+          clearInterval(workerConstructionTimer);
+          workerConstructionTimer = null;
+          completeWorkerConstruction(true);
+        }
+      }, 1200);
+    }
+
+    function applyWorkerPhase(phase) {
+      document.querySelectorAll(".under-construction-glow").forEach(el => el.classList.remove("under-construction-glow"));
+
+      const badge = document.getElementById("aiWorkerPhaseBadge");
+      const title = document.getElementById("aiWorkerTaskText");
+      const pct = document.getElementById("aiWorkerPctText");
+      const fill = document.getElementById("aiWorkerBarFill");
+
+      if (badge) badge.textContent = phase.badge;
+      if (title) title.textContent = "Kỹ Sư AI Đang Thi Công: " + phase.task;
+      if (pct) pct.textContent = phase.pct + "%";
+      if (fill) fill.style.width = phase.pct + "%";
+
+      if (phase.targetSelector) {
+        const targetEl = document.querySelector(phase.targetSelector);
+        if (targetEl) {
+          targetEl.classList.add("under-construction-glow");
+        }
+      }
+    }
+
+    window.fastForwardWorkerConstruction = function() {
+      if (workerConstructionTimer) {
+        clearInterval(workerConstructionTimer);
+        workerConstructionTimer = null;
+      }
+      completeWorkerConstruction(true);
+    };
+
+    function completeWorkerConstruction(recordSession = true) {
+      document.querySelectorAll(".under-construction-glow").forEach(el => el.classList.remove("under-construction-glow"));
+
+      const hud = document.getElementById("aiWorkerHud");
+      if (hud) {
+        hud.classList.add("completed");
+        hud.innerHTML = `
+          <div class="ai-worker-avatar-box">
+            <div class="ai-worker-bot-avatar" style="border-color: #10B981; animation: none;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="ai-worker-text-col">
+            <div style="font-size: 0.68rem; font-weight: 800; color: #34D399; letter-spacing: 0.5px;">GO-LIVE THÀNH CÔNG &bull; 100% HOÀN THIỆN</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #FFFFFF; margin-top: 1px;">Website Động Đã Sẵn Sàng Hoạt Động &bull; Đã Kiểm Định 24/24 PASS</div>
+          </div>
+          <div class="ai-worker-btn-wrap">
+            <button type="button" class="btn-worker-replay" onclick="replayWorkerConstruction()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              <span>Xem Lại Xây Dựng</span>
+            </button>
+            <button type="button" class="btn-worker-skip" style="background: rgba(37, 99, 235, 0.2); border-color: #3B82F6; color: #93C5FD;" onclick="document.getElementById('tabBtnPipeline').click()">
+              <span>Báo Cáo 9 Phòng Ban</span> &rarr;
+            </button>
+          </div>
+        `;
+      }
+
+      if (recordSession) {
+        sessionStorage.setItem("canvas_built_" + authorizedProjectCode, "true");
+      }
+    }
+
+    window.replayWorkerConstruction = function() {
+      sessionStorage.removeItem("canvas_built_" + authorizedProjectCode);
+      const hud = document.getElementById("aiWorkerHud");
+      if (hud) {
+        hud.classList.remove("completed");
+        hud.innerHTML = `
+          <div class="ai-worker-avatar-box">
+            <div class="ai-worker-bot-avatar">
+              <svg width="26" height="26" viewBox="0 0 36 36" fill="none">
+                <circle cx="18" cy="18" r="17" fill="#0B132B" stroke="#38BDF8" stroke-width="1.8"/>
+                <path d="M9 16C9 11.0294 13.0294 7 18 7C22.9706 7 27 11.0294 27 16H9Z" fill="#F59E0B"/>
+                <rect x="7" y="16" width="22" height="3" rx="1.5" fill="#D97706"/>
+                <line x1="18" y1="8" x2="18" y2="13" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="11" y="21" width="14" height="6" rx="3" fill="#0284C7"/>
+                <circle cx="15" cy="24" r="1.5" fill="#E0F2FE"/>
+                <circle cx="21" cy="24" r="1.5" fill="#E0F2FE"/>
+                <circle cx="27" cy="27" r="4" fill="#38BDF8"/>
+                <path d="M26 25L28 27M28 25L26 27" stroke="#0F172A" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              <span class="ai-worker-online-dot"></span>
+            </div>
+          </div>
+          <div class="ai-worker-text-col">
+            <div class="ai-worker-header-meta">
+              <span class="ai-worker-phase-pill" id="aiWorkerPhaseBadge">01. KHỞI TẠO</span>
+              <span class="ai-worker-task-title" id="aiWorkerTaskText">Kỹ Sư AI Đang Thi Công...</span>
+              <span class="ai-worker-percent-label" id="aiWorkerPctText">20%</span>
+            </div>
+            <div class="ai-worker-track">
+              <div class="ai-worker-bar-fill" id="aiWorkerBarFill" style="width: 20%;"></div>
+            </div>
+          </div>
+          <div class="ai-worker-btn-wrap" id="aiWorkerBtnWrap">
+            <button type="button" class="btn-worker-skip" id="btnWorkerSkip" onclick="fastForwardWorkerConstruction()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+              <span>Xem Hoàn Tất</span>
+            </button>
+          </div>
+        `;
+      }
+      startWorkerCanvasConstruction(true);
+    };
+
+    // ========================================================
+    // INDUSTRY-SPECIFIC INTERACTIVE FEATURE MODULE CONTROLLER
+    // ========================================================
+    const FASHION_STYLES_DATA = {
+      office: {
+        name: "Công Sở Quý Tộc",
+        desc: "Phong cách thanh lịch, sang trọng dành cho doanh nhân và môi trường công sở cao cấp.",
+        items: [
+          { name: "Áo Blazer Dạ Cashmere Ý", price: 2450000, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=400&q=80" },
+          { name: "Áo Sơ Mi Cotton 100S Cổ Classic", price: 1650000, img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80" },
+          { name: "Quần Tây Nam Tailored Fit Wool Blend", price: 2200000, img: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=400&q=80" },
+          { name: "Giày Oxford Da Bò Nhập Khẩu", price: 1850000, img: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=400&q=80" }
+        ]
+      },
+      party: {
+        name: "Dạ Tiệc Thượng Lưu",
+        desc: "Đẳng cấp tỏa sáng trong các đêm dạ tiệc, sự kiện thảm đỏ và lễ trao giải trang trọng.",
+        items: [
+          { name: "Đầm Dạ Hội Lụa Tơ Tằm Dáng Dài Cut-Out", price: 6200000, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80" },
+          { name: "Áo Khoác Măng Tô Nữ Cashmere Dáng Dài", price: 11500000, img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80" },
+          { name: "Ví Cầm Tay Da Cá Sấu Khóa Mạ Vàng", price: 2850000, img: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=400&q=80" }
+        ]
+      },
+      street: {
+        name: "Dạo Phố Hiện Đại",
+        desc: "Trẻ trung, năng động, mang hơi thở đương đại cho những buổi dạo phố cuối tuần.",
+        items: [
+          { name: "Áo Polo Dệt Kim Cotton Compact", price: 890000, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=400&q=80" },
+          { name: "Quần Chino Co Giãn 4 Chiều Form Slim", price: 950000, img: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=400&q=80" },
+          { name: "Giày Sneaker Da Bò Nguyên Tấm Ý", price: 1450000, img: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=400&q=80" }
+        ]
+      }
+    };
+
+    let currentFashionStyleKey = "office";
+
+    window.switchFashionStyle = function(key) {
+      currentFashionStyleKey = key;
+      document.querySelectorAll(".style-tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-style") === key);
+      });
+      renderFashionStyleContent();
+    };
+
+    function renderFashionStyleContent() {
+      const style = FASHION_STYLES_DATA[currentFashionStyleKey];
+      if (!style) return;
+
+      const container = document.getElementById("fashionStyleContentWrap");
+      if (!container) return;
+
+      let sum = 0;
+      style.items.forEach(i => sum += i.price);
+      const discountedSum = Math.round(sum * 0.9);
+
+      let cardsHtml = style.items.map(item => `
+        <div class="outfit-card">
+          <img class="outfit-img" src="${item.img}" alt="${escapeHtml(item.name)}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80'">
+          <div class="outfit-title" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</div>
+          <div class="outfit-price">${item.price.toLocaleString("vi-VN")} đ</div>
+        </div>
+      `).join("");
+
+      container.innerHTML = `
+        <p style="font-size: 0.76rem; color: #94A3B8; margin-bottom: 12px;">${style.desc}</p>
+        <div class="outfit-grid">${cardsHtml}</div>
+        <div class="style-footer-bar">
+          <div class="style-total-box">
+            <span class="style-total-label">Tổng set ${style.items.length} món:</span>
+            <span style="text-decoration: line-through; color: #64748B; font-size: 0.8rem;">${sum.toLocaleString("vi-VN")} đ</span>
+            <span class="style-total-val">${discountedSum.toLocaleString("vi-VN")} đ</span>
+            <span style="font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; background: rgba(226, 186, 114, 0.2); color: #E2BA72; font-weight: 800;">TIẾT KIỆM 10%</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-size-guide" onclick="openSizeGuideModal()">Bảng Tra Size</button>
+            <button type="button" class="btn-add-style-set" onclick="addFashionSetToCart('${currentFashionStyleKey}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>Thêm Trọn Set Vào Giỏ</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    window.addFashionSetToCart = function(styleKey) {
+      const style = FASHION_STYLES_DATA[styleKey || currentFashionStyleKey];
+      if (!style) return;
+
+      style.items.forEach((item, idx) => {
+        cartItems.push({
+          id: `set-${styleKey}-${idx}`,
+          name: item.name,
+          price: Math.round(item.price * 0.9),
+          qty: 1,
+          sku: `SET-${styleKey.toUpperCase()}-0${idx + 1}`
+        });
+      });
+      updateCartUI();
+      openCartDrawer();
+      showSystemDialog({
+        title: "Đã Thêm Trọn Set Vào Giỏ Hàng",
+        message: `Đã thêm ${style.items.length} món đồ thuộc set "${style.name}" vào giỏ hàng với ưu đãi combo giảm 10%!`,
+        type: "success"
+      });
+    };
+
+    // Ceramic Workshop Steps Data
+    const CERAMIC_STEPS_DATA = [
+      {
+        num: "01",
+        title: "Vuốt Đất Sét Cao Lanh",
+        desc: "Đất sét trắng cao lanh tinh khiết được nghệ nhân dùng tay và bàn xoay truyền thống tạo hình độ dày đồng đều 3mm.",
+        img: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=600&q=80",
+        spec: "Đất sét Cao Lanh chọn lọc &bull; Độ ẩm 18% &bull; Chuẩn tỷ lệ vàng"
+      },
+      {
+        num: "02",
+        title: "Phục Chế Men Cổ",
+        desc: "Công thức men lam và men rạn cổ thời Hậu Lê (thế kỷ 16) được bào chế từ tro trấu, đá thạch anh và oxit tự nhiên.",
+        img: "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=600&q=80",
+        spec: "Men tro trấu truyền thống &bull; Không chứa chì 100% &bull; Độ bám vĩnh cửu"
+      },
+      {
+        num: "03",
+        title: "Đắp Nổi Họa Tiết",
+        desc: "Họa tiết Tứ Linh (Long, Lân, Quy, Phụng) hoặc Thuận Buồm Xuôi Gió được nghệ nhân tỉ mỉ đắp nổi bằng tay từng chi tiết.",
+        img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80",
+        spec: "100% chế tác thủ công &bull; Thời gian đắp nổi: 16-24 giờ/tác phẩm"
+      },
+      {
+        num: "04",
+        title: "Nung Lò Gas 1300°C",
+        desc: "Sản phẩm được đưa vào lò nung gas ở nhiệt độ chuẩn 1300°C liên tục suốt 72 giờ, khử hoàn toàn tạp chất kim loại nặng.",
+        img: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80",
+        spec: "Nhiệt độ nung: 1300°C &bull; Thời gian 72 giờ &bull; Xương đất đanh chắc như ngọc"
+      },
+      {
+        num: "05",
+        title: "Thẩm Định & Hộp Gỗ",
+        desc: "Kiểm tra độ ngân vang (tiếng trong như chuông) trước khi dán tem chống hàng giả và đóng gói vào hộp gỗ bọc nhung.",
+        img: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+        spec: "Đạt chuẩn xuất khẩu Châu Âu &bull; Kèm chứng thư nghệ nhân Bát Tràng"
+      }
+    ];
+
+    window.switchCraftStep = function(idx) {
+      document.querySelectorAll(".craft-step-tab").forEach((tab, i) => {
+        tab.classList.toggle("active", i === idx);
+      });
+      const data = CERAMIC_STEPS_DATA[idx];
+      if (!data) return;
+
+      const panel = document.getElementById("ceramicCraftDetailPanel");
+      if (panel) {
+        panel.innerHTML = `
+          <div>
+            <div style="font-size: 0.68rem; font-weight: 800; color: #F59E0B; letter-spacing: 0.5px;">CÔNG ĐOẠN ${data.num} TRÊN 05</div>
+            <h4 style="font-size: 1.1rem; font-weight: 800; color: #FFFFFF; margin-top: 2px;">${data.title}</h4>
+            <p style="font-size: 0.78rem; color: #CBD5E1; line-height: 1.6; margin-top: 10px;">${data.desc}</p>
+            <div style="margin-top: 14px; padding: 10px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; font-size: 0.72rem; color: #FBBF24;">
+              ${data.spec}
+            </div>
+          </div>
+          <div>
+            <img class="craft-photo" src="${data.img}" alt="${escapeHtml(data.title)}" onerror="this.src='https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80'">
+          </div>
+        `;
+      }
+    };
+
+    // Clinic Interactive Booking Logic
+    window.selectClinicTime = function(btn) {
+      document.querySelectorAll(".clinic-time-pill").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+    };
+
+    window.submitClinicBooking = function() {
+      const name = (document.getElementById("clinicPatientName")?.value || "").trim();
+      const phone = (document.getElementById("clinicPatientPhone")?.value || "").trim();
+      const service = document.getElementById("clinicServiceSelect")?.value || "Khám & Tư Vấn Nha Khoa";
+      const doctor = document.getElementById("clinicDoctorSelect")?.value || "BS.CKII Nguyễn Văn An";
+      const timePill = document.querySelector(".clinic-time-pill.active");
+      const timeVal = timePill ? timePill.textContent : "10:00";
+
+      if (!name || !phone) {
+        showSystemDialog({
+          title: "Vui Lòng Nhập Đủ Thông Tin",
+          message: "Vui lòng nhập Họ Tên và Số Điện Thoại để nhận tin nhắn xác nhận lịch hẹn khám.",
+          type: "warning"
+        });
+        return;
+      }
+
+      const ticketId = "MED-APPT-" + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById("medModalTicketId").textContent = ticketId;
+      document.getElementById("medModalPatientName").textContent = name;
+      document.getElementById("medModalService").textContent = service;
+      document.getElementById("medModalDoctor").textContent = doctor;
+      document.getElementById("medModalTime").textContent = `${timeVal} • Hôm nay`;
+
+      document.getElementById("medicalBookingModal").style.display = "flex";
+    };
+
+    window.closeMedicalBookingModal = function() {
+      document.getElementById("medicalBookingModal").style.display = "none";
+    };
+
+    // Table Reservation Logic
+    window.submitTableReservation = function() {
+      const space = document.getElementById("tblSpaceSelect")?.value || "Sân Vườn Thoáng";
+      const guests = document.getElementById("tblGuestsSelect")?.value || "Bàn 4-6 Người";
+      const time = document.getElementById("tblTimeSelect")?.value || "19:30";
+
+      const code = "FNB-RES-" + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById("tblModalCode").textContent = code;
+      document.getElementById("tblModalSpace").textContent = space;
+      document.getElementById("tblModalGuests").textContent = guests;
+      document.getElementById("tblModalTime").textContent = `${time} • Tối nay`;
+
+      document.getElementById("tableBookingModal").style.display = "flex";
+    };
+
+    window.closeTableBookingModal = function() {
+      document.getElementById("tableBookingModal").style.display = "none";
+    };
+
+    // Modal Helpers
+    window.openSizeGuideModal = function() {
+      document.getElementById("sizeGuideModal").style.display = "flex";
+    };
+    window.closeSizeGuideModal = function() {
+      document.getElementById("sizeGuideModal").style.display = "none";
+    };
+    window.openCourseVideoModal = function() {
+      document.getElementById("courseVideoModal").style.display = "flex";
+    };
+    window.closeCourseVideoModal = function() {
+      document.getElementById("courseVideoModal").style.display = "none";
+    };
+
+    // Main Renderer for the Industry Feature
+    function renderIndustryFeature(brand, layoutType) {
+      const wrap = document.getElementById("industryFeatureSection");
+      if (!wrap) return;
+
+      if (layoutType === "fashion") {
+        wrap.innerHTML = `
+          <div class="ind-feature-head">
+            <span class="ind-feature-subtag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>STYLE STUDIO 2026</span>
+            </span>
+            <h3 class="ind-feature-title">Studio Phối Đồ Độc Bản &amp; Gợi Ý Mix-Match Theo Phong Cách</h3>
+            <p class="ind-feature-desc">Khám phá các bản phối thời trang được giám tuyển bởi Senior Stylist, tối ưu tỷ lệ vóc dáng người Việt. Đặt trọn set để nhận ngay chiết khấu 10%.</p>
+          </div>
+          <div class="style-tabs-row">
+            <button type="button" class="style-tab-btn active" data-style="office" onclick="switchFashionStyle('office')">Công Sở Quý Tộc</button>
+            <button type="button" class="style-tab-btn" data-style="party" onclick="switchFashionStyle('party')">Dạ Tiệc Thượng Lưu</button>
+            <button type="button" class="style-tab-btn" data-style="street" onclick="switchFashionStyle('street')">Dạo Phố Hiện Đại</button>
+          </div>
+          <div id="fashionStyleContentWrap"></div>
+        `;
+        renderFashionStyleContent();
+      } else if (layoutType === "clinic") {
+        wrap.innerHTML = `
+          <div class="ind-feature-head">
+            <span class="ind-feature-subtag" style="color: #2DD4BF;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span>ĐẶT LỊCH TRỰC TUYẾN 24/7</span>
+            </span>
+            <h3 class="ind-feature-title">Đặt Lịch Khám Chuyên Khoa Trực Tuyến &amp; Tư Vấn 1-1</h3>
+            <p class="ind-feature-desc">Chủ động lựa chọn Bác sĩ phụ trách, khung giờ khám thuận tiện, hồ sơ bệnh án được bảo mật chuẩn HIPAA 100%.</p>
+          </div>
+          <div class="clinic-booking-grid">
+            <div class="clinic-form-col">
+              <div class="clinic-form-group">
+                <label>Dịch Vụ Điều Trị &amp; Khám:</label>
+                <select id="clinicServiceSelect">
+                  <option value="Khám &amp; Tư Vấn Nha Khoa">Khám &amp; Tư Vấn Nha Khoa Tổng Quát (Miễn Phí)</option>
+                  <option value="Cấy Ghép Implant Thụy Sĩ">Cấy Ghép Implant Thụy Sĩ Chuẩn Kỹ Thuật Số</option>
+                  <option value="Tẩy Trắng Răng Laser">Tẩy Trắng Răng Công Nghệ Laser Zoom</option>
+                  <option value="Niềng Răng Invisalign">Niềng Răng Trong Suốt Invisalign Hoa Kỳ</option>
+                </select>
+              </div>
+              <div class="clinic-form-group">
+                <label>Bác Sĩ Phụ Trách:</label>
+                <select id="clinicDoctorSelect">
+                  <option value="BS.CKII Nguyễn Văn An">BS.CKII Nguyễn Văn An (15 năm KN - Trưởng Khoa)</option>
+                  <option value="ThS.BS Lê Thu Hà">ThS.BS Lê Thu Hà (Viện RHM TW)</option>
+                  <option value="Bác Sĩ Trực Ban">Bác Sĩ Trực Ban (Tiếp Nhận Nhanh Trong 5 Phút)</option>
+                </select>
+              </div>
+              <div class="clinic-form-group">
+                <label>Khung Giờ Khám Hôm Nay:</label>
+                <div class="clinic-time-pills">
+                  <span class="clinic-time-pill" onclick="selectClinicTime(this)">08:30</span>
+                  <span class="clinic-time-pill active" onclick="selectClinicTime(this)">10:00</span>
+                  <span class="clinic-time-pill" onclick="selectClinicTime(this)">14:00</span>
+                  <span class="clinic-time-pill" onclick="selectClinicTime(this)">15:30</span>
+                  <span class="clinic-time-pill" onclick="selectClinicTime(this)">17:00</span>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div class="clinic-form-group">
+                  <label>Họ Tên Quý Khách:</label>
+                  <input type="text" id="clinicPatientName" placeholder="Nguyễn Văn A">
+                </div>
+                <div class="clinic-form-group">
+                  <label>Số Điện Thoại:</label>
+                  <input type="text" id="clinicPatientPhone" placeholder="0909 xxx xxx">
+                </div>
+              </div>
+              <button type="button" class="btn-submit-booking" onclick="submitClinicBooking()">Xác Nhận Đặt Lịch Khám &bull; Cấp Mã Khám</button>
+            </div>
+            <div class="clinic-doctors-col">
+              <div class="doctor-card">
+                <img class="doctor-avatar" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80" alt="Doctor">
+                <div>
+                  <div class="doctor-info-title">BS.CKII Nguyễn Văn An</div>
+                  <div class="doctor-info-spec">Chuyên Gia Cấy Ghép Implant &amp; Phục Hình</div>
+                  <div class="doctor-info-exp">15 năm kinh nghiệm &bull; Tu nghiệp tại Thụy Sĩ &bull; 3.000+ ca thành công</div>
+                </div>
+              </div>
+              <div class="doctor-card">
+                <img class="doctor-avatar" src="https://images.unsplash.com/photo-1594824813589-9a0082c9f564?auto=format&fit=crop&w=200&q=80" alt="Doctor">
+                <div>
+                  <div class="doctor-info-title">ThS.BS Lê Thu Hà</div>
+                  <div class="doctor-info-spec">Chỉnh Nha Trong Suốt &amp; Thẩm Mỹ Nụ Cười</div>
+                  <div class="doctor-info-exp">10 năm kinh nghiệm &bull; Bác sĩ Viện Răng Hàm Mặt TW &bull; Top Tier Invisalign</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (layoutType === "education") {
+        wrap.innerHTML = `
+          <div class="ind-feature-head">
+            <span class="ind-feature-subtag" style="color: #60A5FA;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <span>LỘ TRÌNH ĐÀO TẠO THỰC CHIẾN</span>
+            </span>
+            <h3 class="ind-feature-title">Khung Giáo Trình Bài Bản &amp; Phòng Học Thử Trực Tuyến</h3>
+            <p class="ind-feature-desc">Được xây dựng bởi đội ngũ Kỹ sư Trưởng và Solution Architect. Học thử bài 1 miễn phí trước khi đăng ký.</p>
+          </div>
+          <div class="course-grid">
+            <div class="video-preview-card" onclick="openCourseVideoModal()">
+              <img class="video-preview-thumb" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Course Preview">
+              <div class="video-play-overlay">
+                <div class="video-play-btn">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                </div>
+                <div style="font-size: 0.8rem; font-weight: 800; color: #FFFFFF;">BẤM XEM HỌC THỬ BÀI 01 MIỄN PHÍ</div>
+                <div style="font-size: 0.7rem; color: #93C5FD;">Thời lượng: 14 phút 20 giây &bull; 1080p HD</div>
+              </div>
+            </div>
+            <div class="curriculum-tree">
+              <div class="curr-module-item">
+                <div class="curr-mod-header">
+                  <span class="curr-mod-title">Module 01: Nền Tảng Tư Duy &amp; Phân Tích Nghiệp Vụ</span>
+                  <span class="curr-mod-badge">HỌC THỬ MIỄN PHÍ</span>
+                </div>
+                <div style="font-size: 0.72rem; color: #94A3B8; margin-top: 4px;">3 bài giảng &bull; 2 bài trắc nghiệm nhanh</div>
+              </div>
+              <div class="curr-module-item">
+                <div class="curr-mod-header">
+                  <span class="curr-mod-title">Module 02: Lập Trình Tính Năng Cốt Lõi &amp; RESTful API</span>
+                  <span class="curr-mod-badge" style="background: rgba(148, 163, 184, 0.15); color: #94A3B8;">KHÓA</span>
+                </div>
+                <div style="font-size: 0.72rem; color: #94A3B8; margin-top: 4px;">6 bài giảng chuyên sâu &bull; Dự án mẫu 100% code thật</div>
+              </div>
+              <div class="curr-module-item">
+                <div class="curr-mod-header">
+                  <span class="curr-mod-title">Module 03: Tích Hợp Cổng VietQR Napas 247 &amp; Bảo Mật HMAC</span>
+                  <span class="curr-mod-badge" style="background: rgba(148, 163, 184, 0.15); color: #94A3B8;">KHÓA</span>
+                </div>
+                <div style="font-size: 0.72rem; color: #94A3B8; margin-top: 4px;">4 bài giảng &bull; Kết nối ngân hàng đối soát tự động 0.8s</div>
+              </div>
+              <div class="curr-module-item">
+                <div class="curr-mod-header">
+                  <span class="curr-mod-title">Module 04: Đóng Gói Docker Compose &amp; Cấp Chứng Chỉ</span>
+                  <span class="curr-mod-badge" style="background: rgba(16, 185, 129, 0.2); color: #34D399;">CHỨNG CHỈ ISO</span>
+                </div>
+                <div style="font-size: 0.72rem; color: #94A3B8; margin-top: 4px;">Đồ án tốt nghiệp thực tế &bull; Hỗ trợ việc làm 1-1</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (layoutType === "cafe") {
+        wrap.innerHTML = `
+          <div class="ind-feature-head">
+            <span class="ind-feature-subtag" style="color: #F59E0B;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              <span>ĐẶT BÀN &amp; KHÔNG GIAN THƯỞNG THỨC</span>
+            </span>
+            <h3 class="ind-feature-title">Đặt Bàn Trực Tuyến &amp; Trải Nghiệm Cà Phê Mộc Cầu Đất</h3>
+            <p class="ind-feature-desc">Giữ chỗ ưu tiên trong 15 phút, chọn vị trí không gian lý tưởng và thưởng thức hương vị Arabica mộc nguyên bản.</p>
+          </div>
+          <div class="table-res-grid">
+            <div class="clinic-form-col">
+              <div class="clinic-form-group">
+                <label>Khu Vực Không Gian:</label>
+                <select id="tblSpaceSelect">
+                  <option value="Sân Vườn View Thoáng">Sân Vườn View Thoáng Đãng (Nhiều cây xanh)</option>
+                  <option value="Phòng VIP Máy Lạnh">Phòng VIP Máy Lạnh (Riêng tư, yên tĩnh)</option>
+                  <option value="Rooftop Ngắm Hoàng Hôn">Rooftop Ngắm Hoàng Hôn &amp; Phố Đêm</option>
+                </select>
+              </div>
+              <div class="clinic-form-group">
+                <label>Số Lượng Khách:</label>
+                <select id="tblGuestsSelect">
+                  <option value="Bàn 2 Người">Bàn 2 Người (Hẹn hò, gặp gỡ thân mật)</option>
+                  <option value="Bàn 4-6 Người">Bàn 4-6 Người (Gia đình / Nhóm bạn)</option>
+                  <option value="Tiệc Họp Mặt 8-15 Người">Tiệc Họp Mặt 8-15 Người (Công ty / Sinh nhật)</option>
+                </select>
+              </div>
+              <div class="clinic-form-group">
+                <label>Khung Giờ Đến:</label>
+                <select id="tblTimeSelect">
+                  <option value="09:00">09:00 (Buổi sáng nắng dịu)</option>
+                  <option value="11:30">11:30 (Ăn trưa &amp; Cafe)</option>
+                  <option value="14:30">14:30 (Làm việc yên tĩnh)</option>
+                  <option value="18:30">18:30 (Ngắm hoàng hôn)</option>
+                  <option value="20:00">20:00 (Nhạc Acoustic nhẹ)</option>
+                </select>
+              </div>
+              <button type="button" class="btn-submit-booking" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%);" onclick="submitTableReservation()">Xác Nhận Giữ Bàn &bull; Nhận Mã Check-in</button>
+            </div>
+            <div class="roast-steps-col">
+              <div class="roast-step-card">
+                <div class="roast-step-num">01</div>
+                <div>
+                  <div style="font-size: 0.8rem; font-weight: 700; color: #FFFFFF;">Thu Hái Quả Chín 100% Cầu Đất</div>
+                  <div style="font-size: 0.72rem; color: #94A3B8;">Hái bằng tay từng quả chín mọng ở độ cao 1.650m so với mực nước biển.</div>
+                </div>
+              </div>
+              <div class="roast-step-card">
+                <div class="roast-step-num">02</div>
+                <div>
+                  <div style="font-size: 0.8rem; font-weight: 700; color: #FFFFFF;">Lên Men Yếm Khí &amp; Phơi Giàn</div>
+                  <div style="font-size: 0.72rem; color: #94A3B8;">Gìn giữ tối đa lượng đường và hương thơm trái cây nhiệt đới tự nhiên.</div>
+                </div>
+              </div>
+              <div class="roast-step-card">
+                <div class="roast-step-num">03</div>
+                <div>
+                  <div style="font-size: 0.8rem; font-weight: 700; color: #FFFFFF;">Rang Mộc Profile Độc Quyền</div>
+                  <div style="font-size: 0.72rem; color: #94A3B8;">Rang bằng máy hơi nóng không khói, không tẩm ướp bơ, bắp hay hóa chất.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Ceramic / Default Crafting
+        wrap.innerHTML = `
+          <div class="ind-feature-head">
+            <span class="ind-feature-subtag" style="color: #F59E0B;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>DI SẢN NGHỆ THUẬT THỦ CÔNG</span>
+            </span>
+            <h3 class="ind-feature-title">5 Công Đoạn Chế Tác Thủ Công Độc Bản - Di Sản Bát Tràng</h3>
+            <p class="ind-feature-desc">Mỗi tác phẩm gốm là một độc bản riêng biệt, nung ở nhiệt độ 1300°C khử hoàn toàn độc tố chì, kèm hộp gỗ cao cấp.</p>
+          </div>
+          <div class="craft-steps-nav">
+            <button type="button" class="craft-step-tab active" onclick="switchCraftStep(0)">01. Vuốt Đất Sét Cao Lanh</button>
+            <button type="button" class="craft-step-tab" onclick="switchCraftStep(1)">02. Phục Chế Men Cổ</button>
+            <button type="button" class="craft-step-tab" onclick="switchCraftStep(2)">03. Đắp Nổi Họa Tiết</button>
+            <button type="button" class="craft-step-tab" onclick="switchCraftStep(3)">04. Nung Lò Gas 1300°C</button>
+            <button type="button" class="craft-step-tab" onclick="switchCraftStep(4)">05. Thẩm Định &amp; Hộp Gỗ</button>
+          </div>
+          <div class="craft-detail-panel" id="ceramicCraftDetailPanel"></div>
+        `;
+        switchCraftStep(0);
+      }
     }
 
     // Render Home Top 3 Featured Items

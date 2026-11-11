@@ -395,10 +395,12 @@ QUY CHUẨN THIẾT KẾ CHỐNG "AI HÓA" (ANTI-AI-SLOP DESIGN STANDARD - BẮT
 3. BỐ CỤC ĐỒNG BỘ & THỰC TẾ: Tên sản phẩm rõ ràng, chuyên môn cao, đúng ngành nghề, mô tả súc tích.
 4. GIÁ TIỀN VNĐ CHÍNH XÁC: Giá phải là số nguyên (VNĐ) thực tế theo thị trường Việt Nam (từ vài trăm ngàn đến vài chục triệu).
 5. MÃ SKU CHUẨN CÔNG NGHIỆP: Phải có định dạng 3 chữ cái mã hóa danh mục + mã sản phẩm (VD: BLZ-CSM-01, CER-BAT-02, MED-DNT-03).
-6. Bắt buộc tạo từ 4 đến 6 sản phẩm/dịch vụ thật sát với ngành nghề.
+6. Bắt buộc xác định đúng trường "layoutType" là một trong các giá trị: "fashion" (thời trang/may mặc), "clinic" (y tế/nha khoa/phòng khám), "education" (khóa học/đào tạo), "cafe" (ẩm thực/nhà hàng/cafe), "ceramic" (gốm sứ/thủ công), hoặc "general".
+7. Bắt buộc tạo từ 4 đến 6 sản phẩm/dịch vụ thật sát với ngành nghề.
 
 Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc chính xác sau:
 {
+  "layoutType": "fashion | clinic | education | cafe | ceramic | general",
   "brandName": "Tên thương hiệu sang trọng (VD: Novawear Premium Retail)",
   "headline": "Tiêu đề định vị sản phẩm hấp dẫn (ngắn gọn, không emoji)",
   "deployMode": "Máy Chủ Độc Lập (Localhost:5000 / VPS Staging)",
@@ -447,6 +449,7 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
 
   fallbackBuilder(prompt, projectCode) {
     const lower = prompt.toLowerCase();
+    let layoutType = "general";
     let brandName = "NovaTech Solutions";
     let headline = "Hệ Thống Phần Mềm Web Động Tích Hợp Tự Động Hóa";
     let bannerTitle = "Khai Trương Trải Nghiệm Mới - Giảm 20% Đơn Đầu Tiên";
@@ -454,6 +457,7 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
     let products = [];
 
     if (lower.includes("gốm") || lower.includes("bát tràng") || lower.includes("thủ công") || lower.includes("mỹ nghệ")) {
+      layoutType = "ceramic";
       brandName = "Gốm Sứ Hoàng Gia Bát Tràng";
       headline = "Tinh Hoa Nghệ Thuật Gốm Sứ Men Lam & Men Rạn Cổ Truyền";
       bannerTitle = "Bộ Sưu Tập Gốm Sứ Xuất Khẩu 2026 - Tặng Kèm Hộp Quà Gỗ";
@@ -464,7 +468,8 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
         { id: "p3", name: "Lộc Bình Tứ Quý Xuân Hạ Thu Đông 1m6", category: "Lộc Bình", price: 12500000, stock: 6, sku: "GOM-BINH-03", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80" },
         { id: "p4", name: "Tượng Di Lặc Cầm Gậy Như Ý Men Hỏa Biến", category: "Tượng Nghệ Thuật", price: 2900000, stock: 20, sku: "GOM-TUONG-04", image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" }
       ];
-    } else if (lower.includes("thời trang") || lower.includes("quần áo") || lower.includes("váy") || lower.includes("đầm") || lower.includes("blazer") || lower.includes("fashion")) {
+    } else if (lower.includes("thời trang") || lower.includes("quần áo") || lower.includes("váy") || lower.includes("đầm") || lower.includes("blazer") || lower.includes("fashion") || lower.includes("áo")) {
+      layoutType = "fashion";
       brandName = "Novawear Premium Retail";
       headline = "Thời Trang Thiết Kế Hiện Đại - Chuẩn Mực May Đo Cao Cấp";
       bannerTitle = "Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên";
@@ -475,7 +480,32 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
         { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, stock: 60, sku: "SHS-OXF-03", image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80" },
         { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, stock: 15, sku: "WLT-CRK-07", image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80" }
       ];
+    } else if (lower.includes("nha khoa") || lower.includes("y tế") || lower.includes("khám") || lower.includes("bác sĩ") || lower.includes("răng") || lower.includes("phòng khám")) {
+      layoutType = "clinic";
+      brandName = "Nha Khoa Quốc Tế CarePlus";
+      headline = "Hệ Thống Phòng Khám Nha Khoa Kỹ Thuật Số & Cấy Ghép Tiêu Chuẩn Thụy Sĩ";
+      bannerTitle = "Đặt Lịch Khám Trực Tuyến - Miễn Phí Chụp Phim CT Cone Beam";
+      bannerSubtitle = "Thanh toán quét mã VietQR tự động hoặc trả góp 0% lãi suất";
+      products = [
+        { id: "p1", name: "Cấy Ghép Trụ Implant Straumann Thụy Sĩ", category: "Cấy Ghép Implant", price: 18500000, stock: 30, sku: "MED-IMP-01", image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: "Tẩy Trắng Răng Công Nghệ Laser Whitening", category: "Thẩm Mỹ Nụ Cười", price: 2200000, stock: 100, sku: "MED-WHT-02", image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: "Niềng Răng Trong Suốt Invisalign Hoa Kỳ", category: "Chỉnh Nha", price: 45000000, stock: 15, sku: "MED-ALN-03", image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: "Gói Khám Tổng Quát & Cạo Vôi Răng Siêu Âm", category: "Khám Tổng Quát", price: 450000, stock: 250, sku: "MED-GEN-04", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80" }
+      ];
+    } else if (lower.includes("học") || lower.includes("khóa học") || lower.includes("giáo dục") || lower.includes("đào tạo") || lower.includes("e-learning") || lower.includes("tiếng anh")) {
+      layoutType = "education";
+      brandName = "EduTech Academy - Viện Đào Tạo Thực Chiến";
+      headline = "Học Trực Tuyến Cùng Chuyên Gia - Cam Kết Đầu Ra & Hỗ Trợ 1-1";
+      bannerTitle = "Khởi Động Lộ Trình Mới 2026 - Giảm 35% Học Phí Khóa Mới";
+      bannerSubtitle = "Học thử bài 1 miễn phí - Quét mã VietQR kích hoạt khóa học tự động";
+      products = [
+        { id: "p1", name: "Khóa Học Lập Trình Fullstack Web Chuyên Nghiệp", category: "Công Nghệ Thông Tin", price: 6800000, stock: 80, sku: "EDU-DEV-01", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: "Khóa Học Data Analysis & Business Intelligence", category: "Dữ Liệu & AI", price: 5400000, stock: 60, sku: "EDU-DAT-02", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: "Khóa Luyện Thi IELTS 7.5+ Cấp Tốc Cùng Giáo Viên Bản Ngữ", category: "Ngoại Ngữ", price: 8200000, stock: 40, sku: "EDU-ENG-03", image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: "Khóa Học Digital Marketing & Tăng Trưởng Đa Kênh", category: "Kinh Doanh & Tiếp Thị", price: 4200000, stock: 90, sku: "EDU-MKT-04", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" }
+      ];
     } else if (lower.includes("nội thất") || lower.includes("bàn") || lower.includes("ghế") || lower.includes("sofa")) {
+      layoutType = "furniture";
       brandName = "Nordic Living - Nội Thất Bắc Âu";
       headline = "Kiến Tạo Không Gian Sống Tối Giản, Đẳng Cấp & Bền Vững";
       bannerTitle = "Ưu Đãi Thiết Kế Trọn Gói Căn Hộ - Giảm 15% Hợp Đồng";
@@ -486,7 +516,8 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
         { id: "p3", name: "Giường Ngủ Bọc Nỉ Phong Cách Minimalist", category: "Phòng Ngủ", price: 14200000, stock: 15, sku: "NT-GIUONG-03", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80" },
         { id: "p4", name: "Tủ Quần Áo Cánh Kính Đèn LED Cảm Ứng", category: "Phòng Ngủ", price: 19500000, stock: 10, sku: "NT-TU-04", image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=600&q=80" }
       ];
-    } else if (lower.includes("cafe") || lower.includes("cà phê") || lower.includes("trà") || lower.includes("f&b")) {
+    } else if (lower.includes("cafe") || lower.includes("cà phê") || lower.includes("trà") || lower.includes("f&b") || lower.includes("ẩm thực") || lower.includes("nhà hàng")) {
+      layoutType = "cafe";
       brandName = "The Highland Roastery & Cafe";
       headline = "Hương Vị Cà Phê Mộc Nguyên Bản Từ Cao Nguyên Cầu Đất";
       bannerTitle = "Đặt Bàn Trực Tuyến & Mang Đi - Tặng Ngay Voucher 30K";
@@ -498,6 +529,7 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
         { id: "p4", name: "Trà Đào Cam Sả Thảo Mộc Tươi", category: "Trà Trái Cây", price: 52000, stock: 180, sku: "CF-TEA-04", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80" }
       ];
     } else {
+      layoutType = "general";
       brandName = `${prompt.slice(0, 25)} Premium Store`;
       headline = "Giải Pháp Kinh Doanh Trực Tuyến Tự Động & Chuyên Nghiệp";
       bannerTitle = "Chào Mừng Đến Với Hệ Thống Mới - Đặt Hàng Trực Tuyến";
@@ -511,6 +543,7 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
     }
 
     return {
+      layoutType,
       brandName,
       headline,
       deployMode: "Máy Chủ Cục Bộ Nội Bộ (Localhost:5000)",
