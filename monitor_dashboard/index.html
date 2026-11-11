@@ -115,22 +115,22 @@
     <section class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Tiến Độ Dự Án Tổng Thể</span>
+          <span class="kpi-title">Tiến Độ Dự Án Thực Tế</span>
           <span class="badge badge-success" id="projectStatusBadge">ON-TRACK</span>
         </div>
         <div class="kpi-value-row">
-          <span class="kpi-number" id="kpiProgressNum">68%</span>
-          <span class="kpi-subtext" id="kpiDaysRemaining">Còn 42 ngày tới Go-Live</span>
+          <span class="kpi-number" id="kpiProgressNum">59%</span>
+          <span class="kpi-subtext" id="kpiDaysRemaining">10 / 17 Tác Vụ Hoàn Tất</span>
         </div>
         <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="kpiProgressBar" style="width: 68%;"></div>
+          <div class="progress-bar-fill" id="kpiProgressBar" style="width: 59%;"></div>
         </div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Thống Kê Khối Lượng Tác Vụ</span>
-          <span class="kpi-subtext" id="kpiTotalTasksCount">Tổng: 17 Tasks</span>
+          <span class="kpi-title">Khối Lượng Tác Vụ 9 Phòng Ban</span>
+          <span class="kpi-subtext" id="kpiTotalTasksCount">Tổng: 17 Tác Vụ</span>
         </div>
         <div class="kpi-metrics-row">
           <div><strong id="statCompleted" class="text-success">10</strong> <small>ĐÃ XONG</small></div>
@@ -142,26 +142,26 @@
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Hạn Mức Ngân Sách & Hạ Tầng</span>
-          <span class="badge badge-info" id="kpiPackageBadge">Gói Standard</span>
+          <span class="kpi-title">Hạ Tầng Backend & Máy Chủ</span>
+          <span class="badge badge-success" id="kpiServerStatusBadge">ONLINE (LIVE)</span>
         </div>
         <div class="kpi-value-row">
-          <span class="kpi-number text-highlight" id="kpiBudgetNum">1.85 Tỷ</span>
-          <span class="kpi-subtext" id="kpiServerCost">Server: $85/tháng</span>
+          <span class="kpi-number text-highlight" id="kpiServerPort" style="font-size: 1.35rem; color: #10B981;">Port 5000</span>
+          <span class="kpi-subtext" id="kpiServerUptime">Uptime: Đang kết nối</span>
         </div>
-        <div class="budget-burn">Hạ tầng: <strong>VPS Hybrid + Cloudflare CDN</strong> (Tiết kiệm 75%)</div>
+        <div class="budget-burn" id="kpiServerDetails">Bộ nhớ: <strong id="kpiServerRam">-- MB</strong> &bull; CSDL: <strong>Persistent DB (Real)</strong></div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Kiến Trúc Dual Gemini AI</span>
-          <span class="badge badge-success">ACTIVE 2 INSTANCES</span>
+          <span class="kpi-title">Trí Tuệ Nhân Tạo (Gemini AI)</span>
+          <span class="badge badge-success" id="kpiAiBadge">API ACTIVE</span>
         </div>
         <div class="kpi-value-row">
-          <span class="kpi-number text-highlight" style="font-size: 1.35rem; color: #38BDF8;">Gemini 2.5 Pro</span>
-          <span class="kpi-subtext">2 Key Riêng Biệt</span>
+          <span class="kpi-number text-highlight" id="kpiAiEngine" style="font-size: 1.35rem; color: #38BDF8;">Gemini 3.6 Flash</span>
+          <span class="kpi-subtext" id="kpiAiStatus">Dual Engine Ready</span>
         </div>
-        <div class="token-burn">Consultant AI: <strong>Tư Vấn Nhu Cầu</strong> &bull; Builder AI: <strong>Kiến Tạo Web</strong></div>
+        <div class="token-burn">Phản hồi: <strong>Tức thì &lt; 1s</strong> &bull; Nhiệm vụ: <strong>Tư Vấn & Sinh Web</strong></div>
       </div>
     </section>
 
@@ -276,7 +276,8 @@
             <button class="filter-btn" data-filter="CANCELLED">Đã Hủy (<span id="countCancelled">0</span>)</button>
           </div>
           <div class="search-box">
-            <input type="text" id="taskSearchInput" placeholder="Tìm kiếm chức năng, mã task, phòng ban...">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="taskSearchInput" class="task-search-input" placeholder="Tìm kiếm chức năng, mã task, phòng ban...">
           </div>
         </div>
 

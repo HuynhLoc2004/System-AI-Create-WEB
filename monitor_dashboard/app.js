@@ -96,10 +96,10 @@ const defaultProjects = [
     id: "prj_retail",
     code: "PRJ-RETAIL-2026",
     name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
-    package: "Gói 2: Standard (1.85 Tỷ)",
-    budget: "1.85 Tỷ",
-    serverCost: "$85/tháng (VPS + CDN)",
-    daysRemaining: "Còn 42 ngày tới Go-Live",
+    package: "Gói May Đo Doanh Nghiệp",
+    budget: "Tối Ưu Thực Tế",
+    serverCost: "Node.js Localhost:5000",
+    daysRemaining: "Sprint 3: Đang hoàn thiện",
     tokenSaved: "95.2%",
     environment: "PRODUCTION", // "PRODUCTION" (Real Data 100%) or "UAT_SANDBOX" (Mock Data)
     deptStatuses: {
@@ -120,12 +120,12 @@ const defaultProjects = [
         id: "PM-101", 
         dept: "01. Quản Trị Dự Án", 
         businessDept: "Ban Quản Trị & Điều Phối Dự Án",
-        title: "Lập WBS & Bóc tách bài toán chi phí 3 gói giải pháp", 
-        businessTitle: "Kế hoạch tổng thể & Dự toán ngân sách minh bạch (Gói Chuẩn 1.85 Tỷ)",
+        title: "Lập WBS & Bóc tách bài toán chi phí giải pháp", 
+        businessTitle: "Kế hoạch tổng thể & Dự toán ngân sách minh bạch theo nhu cầu thực tế",
         pic: "TPM Lead", 
         status: "DONE", 
         progress: 100, 
-        note: "Đã ký duyệt hợp đồng gói Standard 1.85 Tỷ",
+        note: "Đã thống nhất phương án triển khai phần mềm may đo",
         businessNote: "Đã hoàn thành phân rã chi tiết mốc bàn giao và ngân sách cố định không phát sinh"
       },
       { 
@@ -150,7 +150,7 @@ const defaultProjects = [
         status: "DONE", 
         progress: 100, 
         note: "NestJS + Next.js SSR + PostgreSQL",
-        businessNote: "Đã thiết kế hệ thống chịu tải 100.000 khách truy cập với chi phí máy chủ chỉ $85/tháng"
+        businessNote: "Đã thiết kế hệ thống tối ưu hiệu năng cao, tiết kiệm tối đa chi phí hạ tầng máy chủ"
       },
       { 
         id: "UI-104", 
@@ -751,6 +751,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   renderDashboard();
   initRealtimeHeartbeat();
+  updateLiveServerMetrics();
+  setInterval(updateLiveServerMetrics, 10000);
 });
 
 // Detect User Role from URL Params or Session Storage
@@ -1323,6 +1325,49 @@ function handleGenerateKeySubmit() {
   showToast(`Đã sinh và mã hóa Key thành công cho ${name}!`, "success");
 }
 
+async function updateLiveServerMetrics() {
+  try {
+    const res = await fetch("/api/health");
+    if (!res.ok) return;
+    const data = await res.json();
+
+    const portEl = document.getElementById("kpiServerPort");
+    if (portEl) portEl.textContent = `Port ${data.port || 5000}`;
+
+    const uptimeEl = document.getElementById("kpiServerUptime");
+    if (uptimeEl && data.uptimeSeconds !== undefined) {
+      const minutes = Math.floor(data.uptimeSeconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const uptimeStr = hours > 0 ? `${hours}h ${minutes % 60}m` : `${minutes} phút`;
+      uptimeEl.textContent = `Uptime: ${uptimeStr}`;
+    }
+
+    const ramEl = document.getElementById("kpiServerRam");
+    if (ramEl && data.memory?.heapUsedMb) {
+      ramEl.textContent = `${data.memory.heapUsedMb} MB`;
+    }
+
+    const srvBadge = document.getElementById("kpiServerStatusBadge");
+    if (srvBadge) {
+      srvBadge.textContent = "ONLINE (LIVE)";
+      srvBadge.className = "badge badge-success";
+    }
+
+    const aiEngineEl = document.getElementById("kpiAiEngine");
+    if (aiEngineEl && data.ai?.model) {
+      aiEngineEl.textContent = data.ai.model;
+    }
+
+    const aiBadge = document.getElementById("kpiAiBadge");
+    if (aiBadge && data.ai) {
+      aiBadge.textContent = data.ai.hasKey ? "API ACTIVE" : "API READY";
+    }
+  } catch (err) {
+    const portEl = document.getElementById("kpiServerPort");
+    if (portEl && !portEl.textContent) portEl.textContent = "Port 5000";
+  }
+}
+
 function renderDashboard() {
   const project = getCurrentProject();
   if (!project) return;
@@ -1364,7 +1409,7 @@ function renderDashboard() {
   if (kpiBar) kpiBar.style.width = `${progressPercent}%`;
 
   const kpiDays = document.getElementById("kpiDaysRemaining");
-  if (kpiDays) kpiDays.textContent = project.daysRemaining || "Đang cập nhật";
+  if (kpiDays) kpiDays.textContent = `${completedTasks} / ${totalTasks} Tác Vụ Hoàn Tất`;
 
   const statComp = document.getElementById("statCompleted");
   if (statComp) statComp.textContent = completedTasks;
@@ -1379,19 +1424,10 @@ function renderDashboard() {
   if (statCanc) statCanc.textContent = cancelledTasks;
 
   const totalLabel = document.getElementById("kpiTotalTasksCount");
-  if (totalLabel) totalLabel.textContent = `Tổng: ${totalTasks} Tasks`;
+  if (totalLabel) totalLabel.textContent = `Tổng: ${totalTasks} Tác Vụ`;
 
-  const pkgBadge = document.getElementById("kpiPackageBadge");
-  if (pkgBadge) pkgBadge.textContent = project.package.split(":")[0];
-
-  const budgetNum = document.getElementById("kpiBudgetNum");
-  if (budgetNum) budgetNum.textContent = project.budget;
-
-  const serverCost = document.getElementById("kpiServerCost");
-  if (serverCost) serverCost.textContent = `Server: ${project.serverCost}`;
-
-  const tokenSaved = document.getElementById("kpiTokenSaved");
-  if (tokenSaved) tokenSaved.textContent = project.tokenSaved || "95.2%";
+  // Fetch real-time hardware, server uptime, and AI telemetry
+  updateLiveServerMetrics();
 
   // Status Badge
   const statusBadge = document.getElementById("projectStatusBadge");

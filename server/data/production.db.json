@@ -5,10 +5,10 @@
       "name": "Sàn Bán Lẻ Đa Kênh & VietQR Động",
       "code": "RETAIL",
       "progress": 88,
-      "budget": "1.85 Tỷ",
+      "budget": "May đo thực tế",
       "status": "ON-TRACK",
       "stage": "Pha 3: Lập trình & CSDL",
-      "serverCost": "$85/tháng (VPS + CDN)",
+      "serverCost": "Localhost:5000",
       "infraStrategy": "VPS Hybrid + Cloudflare CDN (Tiết kiệm 75%)",
       "tokenEfficiency": 95.2,
       "clientConfig": {
