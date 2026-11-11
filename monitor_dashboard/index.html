@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT-Assignment | Trung Tâm Điều Hành & Giám Sát Phối Hợp 9 Phòng Ban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Navigation Header -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="brand-info">
+        <h1 class="logo-text">IT-ASSIGNMENT <span class="badge-tag">ENTERPRISE</span></h1>
+        <p class="sub-text">Hệ thống điều phối 9 phòng ban & quản trị đa dự án</p>
+      </div>
+    </div>
+
+    <!-- Manager Control Center & Project Selector -->
+    <div class="nav-right">
+      <!-- Quiet Meta Status -->
+      <div class="meta-group">
+        <div class="meta-item" id="roleIndicatorPill">
+          <span class="status-dot dot-admin"></span>
+          <span id="roleLabelText">Admin Master</span>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="meta-item">
+          <span class="status-dot dot-online"></span>
+          <span>Trực tuyến</span>
+        </div>
+        <div class="meta-divider"></div>
+        <button type="button" class="btn-env-toggle" id="btnToggleEnv" title="Chuyển đổi môi trường">
+          <span class="status-dot dot-prod" id="envDot"></span>
+          <span id="envLabel">Production</span>
+        </button>
+      </div>
+
+      <!-- Clean Project Selector Dropdown -->
+      <div class="project-selector-wrapper" id="projectSelectorWrapper">
+        <select id="projectSelect">
+          <!-- Dynamically populated by app.js -->
+        </select>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-btn-group">
+        <button class="btn btn-secondary" id="btnOpenFeedbackModal" title="Gửi phản hồi khách hàng về cho Project Manager">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Feedback
+        </button>
+
+        <button class="btn btn-secondary" id="btnOpenClientCmsModal" title="Quản trị nội dung website khách hàng & cấu hình sản phẩm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Quản Trị Web Khách
+        </button>
+
+        <!-- Admin-Only Directive Dispatcher -->
+        <button class="btn btn-primary" id="btnOpenDispatchModal" title="Phát lệnh kỹ thuật điều phối AI Vibe">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Phát Lệnh AI
+        </button>
+
+        <!-- Tools Dropdown Menu (Eliminates 5 colorful buttons!) -->
+        <div class="dropdown-wrapper">
+          <button class="btn btn-ghost" id="btnToggleToolsDropdown" title="Công cụ quản trị khác">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          </button>
+          <div class="dropdown-menu" id="toolsDropdownMenu">
+            <button type="button" class="dropdown-item" id="btnDropdownClientCms">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Quản Trị Web Khách Hàng (CMS)
+            </button>
+            <button type="button" class="dropdown-item" id="btnOpenKeyGenModal">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Cấp Key Khách Hàng
+            </button>
+            <button type="button" class="dropdown-item" id="btnNewProject">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Khởi Tạo Dự Án Mới
+            </button>
+            <a href="client_portal.html" class="dropdown-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Trang Client Tư Vấn
+            </a>
+            <a href="client_workspace.html" class="dropdown-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Xem Workspace Khách Hàng (Demo)
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="dashboard-container">
+    <!-- Client User Guide Banner (Shown only for Client Role) -->
+    <div class="client-guide-banner" id="clientGuideBanner" style="display: none;">
+      <div>
+        <strong id="clientGuideProjectTitle">KHÔNG GIAN THEO DÕI DỰ ÁN DÀNH CHO KHÁCH HÀNG:</strong>
+        <p>Quý khách đang theo dõi tiến độ thời gian thực của dự án mình được cấp quyền. Với vai trò người dùng, quý khách chỉ theo dõi tiến độ và gửi góp ý qua nút <strong>"Feedback Khách Hàng"</strong> để Project Manager (PM) xử lý. Quyền điều phối kỹ thuật AI Vibe và chỉnh sửa skill phòng ban do Ban Quản Trị phụ trách nhằm tối ưu chi phí và bảo vệ an toàn thông tin khách hàng tuyệt đối.</p>
+      </div>
+      <button type="button" class="btn btn-outline" id="btnLogoutClient" style="font-size: 0.75rem; white-space: nowrap;">
+        Đăng Xuất Khách Hàng
+      </button>
+    </div>
+    <!-- Top KPI Stats Row -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Tiến Độ Dự Án Tổng Thể</span>
+          <span class="badge badge-success" id="projectStatusBadge">ON-TRACK</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number" id="kpiProgressNum">68%</span>
+          <span class="kpi-subtext" id="kpiDaysRemaining">Còn 42 ngày tới Go-Live</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="kpiProgressBar" style="width: 68%;"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Thống Kê Khối Lượng Tác Vụ</span>
+          <span class="kpi-subtext" id="kpiTotalTasksCount">Tổng: 17 Tasks</span>
+        </div>
+        <div class="kpi-metrics-row">
+          <div><strong id="statCompleted" class="text-success">10</strong> <small>ĐÃ XONG</small></div>
+          <div><strong id="statInProgress" class="text-warning">4</strong> <small>ĐANG LÀM</small></div>
+          <div><strong id="statBlocked" class="text-danger">1</strong> <small>BỊ NGHẼN</small></div>
+          <div><strong id="statCancelled" class="text-muted">2</strong> <small>ĐÃ HỦY</small></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Hạn Mức Ngân Sách & Hạ Tầng</span>
+          <span class="badge badge-info" id="kpiPackageBadge">Gói Standard</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number text-highlight" id="kpiBudgetNum">1.85 Tỷ</span>
+          <span class="kpi-subtext" id="kpiServerCost">Server: $85/tháng</span>
+        </div>
+        <div class="budget-burn">Hạ tầng: <strong>VPS Hybrid + Cloudflare CDN</strong> (Tiết kiệm 75%)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Kiến Trúc Dual Gemini AI</span>
+          <span class="badge badge-success">ACTIVE 2 INSTANCES</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number text-highlight" style="font-size: 1.35rem; color: #38BDF8;">Gemini 2.5 Pro</span>
+          <span class="kpi-subtext">2 Key Riêng Biệt</span>
+        </div>
+        <div class="token-burn">Consultant AI: <strong>Tư Vấn Nhu Cầu</strong> &bull; Builder AI: <strong>Kiến Tạo Web</strong></div>
+      </div>
+    </section>
+
+    <!-- Clear, Spacious Visual Workflow Section -->
+    <section class="workflow-section">
+      <div class="section-header">
+        <div>
+          <h2>Sơ Đồ Luồng Phối Hợp Kỹ Thuật Giữa 9 Phòng Ban (Workflow & Handshakes)</h2>
+          <p class="section-desc">Theo dõi sự luân chuyển thông tin chuẩn xác theo từng pha. Bấm vào bất kỳ phòng ban nào để xem Đầu vào (Inputs), Đầu ra bàn giao (Deliverables) và trạng thái thời gian thực.</p>
+        </div>
+        <div class="workflow-legend">
+          <span class="legend-item"><span class="dot dot-success"></span> Đã hoàn tất</span>
+          <span class="legend-item"><span class="dot dot-warning pulse"></span> Đang phối hợp</span>
+          <span class="legend-item"><span class="dot dot-danger pulse"></span> Đang bị nghẽn (Blocker)</span>
+          <span class="legend-item"><span class="dot dot-idle"></span> Trong hàng đợi</span>
+        </div>
+      </div>
+
+      <!-- High-Readability SVG Workflow Canvas (Responsive Scroll Pane) -->
+      <div class="workflow-canvas-container" id="workflowCanvasWrapper">
+        <div class="workflow-scroll-pane">
+          <svg id="workflowSvg" viewBox="0 0 1440 470" width="1440" height="470">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#3B82F6" />
+              </marker>
+              <marker id="arrow-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#F59E0B" />
+              </marker>
+              <marker id="arrow-blocked" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#EF4444" />
+              </marker>
+            </defs>
+
+            <!-- Dynamic SVG Stage Columns -->
+            <g id="flowStages"></g>
+
+            <!-- Dynamic SVG flow lines -->
+            <g id="flowConnections"></g>
+
+            <!-- Dynamic SVG Stage Columns & Node cards -->
+            <g id="flowNodes"></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Department Detail Inspector Drawer -->
+      <div class="dept-inspector" id="deptInspector" style="display: none;">
+        <div class="inspector-header">
+          <div>
+            <h3 id="inspectorTitle">Chi Tiết Phòng Ban: [Tên Phòng Ban]</h3>
+            <p id="inspectorRole">Vai trò: ...</p>
+          </div>
+          <button class="btn-close" id="btnCloseInspector">&times;</button>
+        </div>
+        <div class="inspector-grid">
+          <div class="inspector-col">
+            <h4>Đầu Vào Tiếp Nhận (Inputs):</h4>
+            <ul id="inspectorInputs"></ul>
+          </div>
+          <div class="inspector-col">
+            <h4>Sản Phẩm Bàn Giao (Deliverables):</h4>
+            <ul id="inspectorDeliverables"></ul>
+          </div>
+          <div class="inspector-col">
+            <h4>Trạng Thái Hiện Tại & Quyền Cập Nhật:</h4>
+            <div id="inspectorCurrentStatus"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Column Layout: Task Management & Live Audit Timeline -->
+    <div class="dashboard-split-grid">
+      <!-- Left Column: Master Task Manager -->
+      <section class="task-management-section">
+        <div class="section-header">
+          <div>
+            <h2>Bảng Chiến Lược Quản Trị Tác Vụ (Master Task Board)</h2>
+            <p class="section-desc">Phân định rõ ràng từng đơn vị công việc, người phụ trách và tình trạng tiến độ</p>
+          </div>
+          <div class="task-actions">
+            <button class="btn btn-primary" id="btnAddTaskModal">+ Thêm Task</button>
+          </div>
+        </div>
+
+        <!-- Perspective View Switcher: Customer Friendly vs Technical IT -->
+        <div class="perspective-bar">
+          <div class="perspective-info">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Hiển thị theo: <strong id="perspectiveModeLabel">Góc Nhìn Khách Hàng (Dễ Hiểu)</strong></span>
+          </div>
+          <div class="perspective-switch-group">
+            <button type="button" class="btn-perspective active business" id="btnPerspectiveBusiness" title="Xem tên chức năng thực tế dễ hiểu, không chứa thuật ngữ khó">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Dễ Hiểu Cho Khách Hàng
+            </button>
+            <button type="button" class="btn-perspective" id="btnPerspectiveTech" title="Xem thuật ngữ mã nguồn chuyên sâu dành cho đội ngũ lập trình">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Kỹ Thuật Chuyên Sâu (IT)
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">Tất Cả (<span id="countAll">0</span>)</button>
+            <button class="filter-btn" data-filter="DONE">Đã Xong (<span id="countDone">0</span>)</button>
+            <button class="filter-btn" data-filter="IN_PROGRESS">Đang Làm (<span id="countInProgress">0</span>)</button>
+            <button class="filter-btn" data-filter="BLOCKED">Bị Nghẽn (<span id="countBlocked">0</span>)</button>
+            <button class="filter-btn" data-filter="CANCELLED">Đã Hủy (<span id="countCancelled">0</span>)</button>
+          </div>
+          <div class="search-box">
+            <input type="text" id="taskSearchInput" placeholder="Tìm kiếm chức năng, mã task, phòng ban...">
+          </div>
+        </div>
+
+        <!-- Task Table -->
+        <div class="table-responsive">
+          <table class="task-table">
+            <thead>
+              <tr>
+                <th width="85">Mã Task</th>
+                <th width="150">Phòng Ban</th>
+                <th>Tác Vụ & Chức Năng Cụ Thể</th>
+                <th width="120">Phụ Trách</th>
+                <th width="125" style="text-align: center;">Trạng Thái Thực Tế</th>
+                <th width="85">Tiến Độ</th>
+                <th width="75" style="text-align: center;">Hệ Thống</th>
+              </tr>
+            </thead>
+            <tbody id="taskTableBody">
+              <!-- Dynamically populated by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Right Column: Real-time Audit Timeline Feed -->
+      <section class="activity-history-section">
+        <div class="section-header">
+          <div>
+            <h2>Nhật Ký Điều Phối & Tiến Độ 9 Phòng Ban</h2>
+            <p class="section-desc">Theo dõi các mốc hoàn thành và báo cáo trực tiếp từ các phòng ban</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" id="btnSimulateRealtime" class="btn btn-outline" style="font-size: 0.68rem; padding: 3px 8px;" title="Kích hoạt sự kiện phòng ban báo cáo hoàn thành">Báo Cáo Tiến Độ</button>
+            <span class="live-tag">REALTIME STREAM</span>
+          </div>
+        </div>
+
+        <div class="activity-feed" id="activityFeedContainer">
+          <!-- Timeline items will be rendered by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Section: Client Feedback & Issue Tracking -->
+    <section class="feedback-section">
+      <div class="section-header">
+        <div>
+          <h2>Yêu Cầu & Góp Ý Của Khách Hàng</h2>
+          <p class="section-desc">Theo dõi các yêu cầu điều chỉnh từ khách hàng và phương án xử lý cụ thể của từng phòng ban</p>
+        </div>
+        <button class="btn btn-primary" id="btnTriggerFeedbackInline" style="font-size: 0.78rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Gửi Yêu Cầu Mới
+        </button>
+      </div>
+
+      <div class="feedback-grid" id="feedbackListContainer">
+        <!-- Dynamically rendered by app.js based on selected project -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal: Manager Directive Dispatcher (Điều Phối Từ Trên Xuống - BẢO MẬT ADMIN KEY) -->
+  <div class="modal-backdrop" id="dispatchModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div>
+            <h3>Phát Lệnh Chỉ Đạo Điều Phối Cho AI & Phòng Ban</h3>
+            <p class="modal-subtitle">Chỉ đạo được mã hóa gửi trực tiếp xuống phòng ban để AI Vibe Coding bám sát thực thi</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseDispatchModal">&times;</button>
+      </div>
+      <form id="dispatchForm">
+        <!-- Security Authorization Box -->
+        <div class="admin-key-auth-box">
+          <div class="admin-key-header">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>XÁC THỰC MẬT KHẨU QUẢN TRỊ VIÊN (ADMIN MASTER KEY)</span>
+          </div>
+          <div class="form-group" style="margin-bottom: 4px;">
+            <input type="password" id="dispatchAdminKeyInput" required placeholder="Nhập mã Admin Master Key để mở quyền phát lệnh..." autocomplete="current-password">
+          </div>
+          <p class="admin-key-note">Quyền phát lệnh AI Vibe tiêu tốn tài nguyên API và token. Chỉ người nắm giữ Master Key hợp lệ mới được thực hiện.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Phòng Ban Nhận Chỉ Đạo:</label>
+          <select id="dispatchDept" required>
+            <option value="01. Quản Trị (PM)">01. Quản Trị Dự Án (PM)</option>
+            <option value="02. Phân Tích (BA)">02. Phân Tích Nghiệp Vụ (BA)</option>
+            <option value="03. Kiến Trúc (SA)">03. Kiến Trúc & Chi Phí (SA)</option>
+            <option value="04. Thiết Kế (UI/UX)">04. Thiết Kế Trải Nghiệm (UI/UX)</option>
+            <option value="05. Lập Trình Frontend">05. Lập Trình Frontend</option>
+            <option value="06. Lập Trình Backend">06. Lập Trình Backend</option>
+            <option value="07. Cơ Sở Dữ Liệu">07. Cơ Sở Dữ Liệu (DBA)</option>
+            <option value="08. Kiểm Thử (QA)">08. Kiểm Thử Chất Lượng (QA)</option>
+            <option value="09. Hạ Tầng (DevOps)">09. Triển Khai & Hạ Tầng (DevOps)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Chức Năng Hoặc Mục Tiêu Cốt Lõi:</label>
+          <input type="text" id="dispatchTitle" required placeholder="Ví dụ: Ưu tiên tối ưu tải trang dưới 1.5s và bảo mật ô VietQR">
+        </div>
+        <div class="form-group">
+          <label>Nội Dung Hướng Dẫn Chi Tiết Cho AI & Đội Ngũ:</label>
+          <textarea id="dispatchDetails" rows="3" required placeholder="Ghi chú chi tiết yêu cầu bổ sung để AI phân tích và đưa vào phạm vi công việc..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Mức Độ Ưu Tiên:</label>
+            <select id="dispatchPriority">
+              <option value="CAO">Ưu Tiên Cao (Urgent)</option>
+              <option value="TRUNG_BINH">Trung Bình (Normal)</option>
+              <option value="TOI_HAN">Tối Hạn (Critical Blocker)</option>
+            </select>
+          </div>
+          <div class="form-group half">
+            <label>Dự Án Áp Dụng:</label>
+            <input type="text" id="dispatchTargetProjectText" readonly style="color: #60A5FA; font-weight: 600;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelDispatch">Hủy</button>
+          <button type="submit" class="btn btn-primary">Xác Thực & Phát Lệnh Cho AI</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Incident Resolution (Gỡ Nghẽn Sự Cố Kỹ Thuật Bằng Solution Của PM) -->
+  <div class="modal-backdrop" id="resolveBlockedModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill danger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <h3>Xử Lý Sự Cố Nghẽn Kỹ Thuật (Incident & Solution)</h3>
+            <p class="modal-subtitle" id="resolveBlockedSubtitle">Báo cáo sự cố và kích hoạt phương án gỡ nghẽn dự phòng</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseResolveModal">&times;</button>
+      </div>
+      <div>
+        <div class="form-group">
+          <label>Chức Năng Bị Nghẽn:</label>
+          <div id="resolveTaskTitleDisplay" style="font-weight: 700; color: #fff; background: #080C16; padding: 10px 14px; border-radius: 8px; border: 1px solid #1E283D; font-size: 0.85rem;"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Nguyên Nhân Sự Cố Kỹ Thuật (Blocker Cause):</label>
+          <div id="resolveIssueDisplay" style="color: #FCA5A5; background: rgba(239, 68, 68, 0.08); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.25); font-size: 0.82rem; line-height: 1.5;"></div>
+        </div>
+
+        <div class="form-group">
+          <label style="color: #34D399;">Phương Án Xử Lý Khẩn Cấp (PM & Solution Architect Proposal):</label>
+          <div id="resolveSolutionDisplay" style="color: #D1FAE5; background: rgba(16, 185, 129, 0.08); padding: 12px 14px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.25); font-size: 0.82rem; line-height: 1.55;"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelResolve">Đóng</button>
+          <button type="button" class="btn btn-primary" id="btnConfirmResolveSolution" style="background: #10B981; border-color: #059669;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Duyệt & Kích Hoạt Solution Gỡ Nghẽn
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add New Task -->
+  <div class="modal-backdrop" id="addTaskModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div>
+            <h3>Thêm Tác Vụ Mới Vào Dự Án</h3>
+            <p class="modal-subtitle">Bổ sung đơn vị công việc chuẩn nguyên tử vào quy trình 9 phòng ban</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseTaskModal">&times;</button>
+      </div>
+      <form id="addTaskForm">
+        <div class="form-group">
+          <label>Phòng Ban Phụ Trách (Chỉ phòng ban này có quyền cập nhật):</label>
+          <select id="modalTaskDept" required>
+            <option value="01. Quản Trị (PM)">01. Quản Trị Dự Án (PM)</option>
+            <option value="02. Phân Tích (BA)">02. Phân Tích Nghiệp Vụ (BA)</option>
+            <option value="03. Kiến Trúc (SA)">03. Kiến Trúc & Chi Phí (SA)</option>
+            <option value="04. Thiết Kế (UI/UX)">04. Thiết Kế Trải Nghiệm (UI/UX)</option>
+            <option value="05. Lập Trình Frontend">05. Lập Trình Frontend</option>
+            <option value="06. Lập Trình Backend">06. Lập Trình Backend</option>
+            <option value="07. Cơ Sở Dữ Liệu">07. Cơ Sở Dữ Liệu (DBA)</option>
+            <option value="08. Kiểm Thử (QA)">08. Kiểm Thử Chất Lượng (QA)</option>
+            <option value="09. Hạ Tầng (DevOps)">09. Triển Khai & Hạ Tầng (DevOps)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tên Tác Vụ Kỹ Thuật (Chuẩn hạt nguyên tử):</label>
+          <input type="text" id="modalTaskTitle" required placeholder="Ví dụ: Tối ưu Keyset Pagination cho bảng orders">
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Người Phụ Trách (PIC):</label>
+            <input type="text" id="modalTaskPIC" required placeholder="Ví dụ: DBA Senior">
+          </div>
+          <div class="form-group half">
+            <label>Trạng Thái Ban Đầu:</label>
+            <select id="modalTaskStatus">
+              <option value="IN_PROGRESS">Đang Làm (IN_PROGRESS)</option>
+              <option value="DONE">Đã Xong (DONE)</option>
+              <option value="BLOCKED">Bị Nghẽn (BLOCKED)</option>
+              <option value="CANCELLED">Đã Hủy Bỏ (CANCELLED)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Ghi Chú Tiến Độ / Lý Do (Nếu Bị Nghẽn Hoặc Hủy):</label>
+          <textarea id="modalTaskNote" rows="2" placeholder="Ghi chú nguyên nhân hoặc kết quả..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelModal">Hủy Bỏ</button>
+          <button type="submit" class="btn btn-primary">Xác Nhận Lưu Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Create New Project -->
+  <div class="modal-backdrop" id="newProjectModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h3>Khởi Tạo Dự Án Mới Để Giám Sát</h3>
+            <p class="modal-subtitle">Tạo không gian giám sát cô lập và kích hoạt luồng 9 phòng ban tự động</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseProjModal">&times;</button>
+      </div>
+      <form id="newProjectForm">
+        <div class="form-group">
+          <label>Tên Dự Án Thực Tế:</label>
+          <input type="text" id="modalProjName" required placeholder="Ví dụ: Nền Tảng Thương Mại Điện Tử Quốc Tế 2026">
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Mã Dự Án (Code):</label>
+            <input type="text" id="modalProjCode" required placeholder="PRJ-ECOMMERCE">
+          </div>
+          <div class="form-group half">
+            <label>Gói Giải Pháp & Chi Phí:</label>
+            <select id="modalProjPackage">
+              <option value="Gói 2: Standard (1.85 Tỷ)">Gói 2: Chuẩn Doanh Nghiệp (1.85 Tỷ)</option>
+              <option value="Gói 1: MVP Tinh Gọn (550 Triệu)">Gói 1: Khởi Động Tinh Gọn (550 Triệu)</option>
+              <option value="Gói 3: Enterprise (3.5 Tỷ)">Gói 3: Hệ Thống Quy Mô Lớn (3.5 Tỷ)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelProjModal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Khởi Tạo & Kích Hoạt 9 Phòng Ban</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Client Feedback Intake (Gửi về PM) -->
+  <div class="modal-backdrop" id="feedbackModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h3>Gửi Phản Hồi Khách Hàng (Client Feedback Intake)</h3>
+            <p class="modal-subtitle">Phản hồi được chuyển trực tiếp tới Project Manager (PM) để lập Solution kỹ thuật</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseFeedbackModal">&times;</button>
+      </div>
+      <form id="feedbackForm">
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Dự Án Áp Dụng:</label>
+            <input type="text" id="feedbackProjName" readonly style="color: #60A5FA; font-weight: 700;">
+          </div>
+          <div class="form-group half">
+            <label>Người Gửi Phản Hồi:</label>
+            <input type="text" id="feedbackSender" required placeholder="Ví dụ: Đại diện Khách Hàng / Sponsor">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Chủ Đề / Phân Loại Vấn Đề (Nhập Tự Do):</label>
+            <input type="text" id="feedbackCategory" class="form-input" required placeholder="Nhập chủ đề bất kỳ (VD: Lỗi cổng thanh toán VietQR, Phàn nàn phí ship, Đổi logo, Thắc mắc bảo mật...)">
+          </div>
+          <div class="form-group half">
+            <label>Bộ Phận Tiếp Nhận & Chủ Trì:</label>
+            <input type="text" id="feedbackAssignedDept" class="form-input" required placeholder="Phòng ban tiếp nhận (VD: 01. Quản Trị Dự Án PM điều phối, hoặc gõ phòng ban khác)" value="01. Quản Trị Dự Án (PM)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nội Dung Phản Hồi Từ Khách Hàng (Hoặc Quản Lý Nhập Vào):</label>
+          <textarea id="feedbackContent" rows="3" required placeholder="Ví dụ: Khách hàng muốn điều chỉnh chạy thử nghiệm trên VPS riêng trước khi gắn tên miền chính thức, đồng thời tinh chỉnh bảng màu Navy..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelFeedback">Hủy</button>
+          <button type="submit" class="btn btn-primary" style="background: #2563EB;">Ban Hành Solution & Điều Phối Xuống Phòng Ban</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Admin Key Generator (Cấp Key Khách Hàng) -->
+  <div class="modal-backdrop" id="keyGenModal" style="display: none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill success">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <h3>Bộ Sinh Khóa Truy Cập Dự Án (Client Project Key)</h3>
+            <p class="modal-subtitle">Mã hóa thông tin cá nhân khách hàng + Mã dự án thành Access Key bảo mật cao</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseKeyGenModal">&times;</button>
+      </div>
+      <form id="keyGenForm">
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Họ Và Tên Khách Hàng:</label>
+            <input type="text" id="modalKeyClientName" required placeholder="Ví dụ: Huỳnh Tấn Lộc">
+          </div>
+          <div class="form-group half">
+            <label>Ngày Tháng Năm Sinh:</label>
+            <input type="text" id="modalKeyClientDOB" required placeholder="Ví dụ: 15/10/1995">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Số Điện Thoại Liên Hệ:</label>
+            <input type="text" id="modalKeyClientPhone" required placeholder="Ví dụ: 0909123456">
+          </div>
+          <div class="form-group half">
+            <label>Dự Án Phân Quyền Truy Cập:</label>
+            <select id="modalKeyProjectSelect" required>
+              <!-- Dynamically populated by app.js -->
+            </select>
+          </div>
+        </div>
+
+        <div class="security-warning-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Khóa này được mã hóa bảo mật kèm mã dự án. Khách hàng chỉ xem được dự án của mình ở chế độ Dễ Hiểu và không thể can thiệp vào mã nguồn hay token AI.</span>
+        </div>
+
+        <!-- Generated Key Output Container -->
+        <div id="keyOutputContainer" style="display: none; margin-top: 14px;">
+          <label style="font-size: 0.75rem; font-weight: 700; color: #34D399;">MÃ ACCESS KEY ĐÃ MÃ HÓA (GỬI CHO KHÁCH HÀNG):</label>
+          <div class="key-display-box">
+            <span id="generatedKeyText">ITKEY-...</span>
+            <button type="button" class="btn btn-outline" id="btnCopyKey" style="font-size: 0.7rem; padding: 4px 8px;">Sao Chép</button>
+          </div>
+          <p style="font-size: 0.72rem; color: var(--text-dim); margin-top: 5px;">Khách hàng dùng key này đăng nhập tại Cổng Khách Hàng hoặc dán vào trình duyệt để vào đúng Workspace của mình.</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelKeyGen">Đóng</button>
+          <button type="submit" class="btn btn-primary">Tạo & Mã Hóa Key Khách Hàng</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Client Website & Content CMS Management Center -->
+  <div class="modal-backdrop" id="clientCmsModal" style="display: none;">
+    <div class="modal-box modal-box-large">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon-pill" style="background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3); color: #38BDF8;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Quản Trị Không Gian & Website Khách Hàng (Client CMS)</h3>
+            <p class="modal-subtitle">Toàn quyền cấu hình tên miền, đường dẫn xem trước, banner, tài khoản bàn giao và danh mục sản phẩm thật 100%</p>
+          </div>
+        </div>
+        <button class="btn-close" id="btnCloseClientCmsModal">&times;</button>
+      </div>
+
+      <form id="clientCmsForm">
+        <!-- Project Switcher in CMS -->
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label style="color: #38BDF8; font-weight: 700;">CHỌN DỰ ÁN CẦN QUẢN TRỊ NỘI DUNG:</label>
+          <select id="cmsProjectSelect" class="form-select" style="font-weight: 600;">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <!-- Section AI: Gemini Builder (Con AI thứ 2 chuyên tạo Website) -->
+        <div class="cms-section-card" style="background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+          <div class="cms-section-title" style="color: #60A5FA; margin-bottom: 6px; font-weight: 700;">
+            KIẾN TẠO WEBSITE BẰNG GEMINI BUILDER (CON AI THỨ 2)
+          </div>
+          <p style="font-size: 0.76rem; color: #94A3B8; margin-bottom: 10px; line-height: 1.45;">
+            Nhập ý tưởng/ngành nghề (VD: "Gốm sứ Bát Tràng cao cấp", "Nội thất Bắc Âu tối giản", "Chuỗi cafe rang mộc"). Gemini Builder sẽ tự động tạo tên thương hiệu, banner và danh mục sản phẩm thật 100% kèm giá tiền VND.
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="aiBuilderPromptInput" class="form-input" placeholder="Nhập ý tưởng hoặc ngành nghề kinh doanh..." style="flex: 1;">
+            <button type="button" class="btn btn-primary" id="btnRunGeminiBuilder" style="background: #2563EB; white-space: nowrap; font-size: 0.78rem; padding: 8px 14px;">
+              Gemini Tạo Web & Sản Phẩm
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 1: Domain & Preview Server -->
+        <div class="cms-section-card">
+          <div class="cms-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            1. THÔNG TIN THƯƠNG HIỆU & HẠ TẦNG XEM TRƯỚC (LIVE PREVIEW)
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tên Thương Hiệu / Cửa Hàng:</label>
+              <input type="text" id="cmsBrandName" required placeholder="Ví dụ: Novawear Premium Retail" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Môi Trường / Máy Chủ Triển Khai Thực Tế:</label>
+              <input type="text" id="cmsDeployMode" class="form-input" placeholder="VD: Localhost (127.0.0.1:5000), Cloud VPS (103.20.x.x), Docker K8s, Tên Miền Riêng SSL...">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Đường Dẫn Xem Thử Thực Tế (URL trên thanh địa chỉ giả lập):</label>
+              <input type="text" id="cmsPreviewUrl" required placeholder="http://192.168.1.108:3000 hoặc https://novawear.com.vn" class="form-input" style="font-family: var(--font-mono); font-size: 0.8rem;">
+            </div>
+            <div class="form-group">
+              <label>Tên Miền Riêng Bàn Giao (Production Domain):</label>
+              <input type="text" id="cmsCustomDomain" placeholder="https://novawear.com.vn" class="form-input" style="font-family: var(--font-mono); font-size: 0.8rem;">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Tiêu Đề Định Vị Sản Phẩm (Headline):</label>
+            <input type="text" id="cmsHeadline" placeholder="Ví dụ: Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Tự Động" class="form-input">
+          </div>
+        </div>
+
+        <!-- Section 2: Banner & Handover Credentials -->
+        <div class="cms-section-card">
+          <div class="cms-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            2. CHƯƠNG TRÌNH KHUYẾN MÃI & TÀI KHOẢN HƯỚNG DẪN BÀN GIAO CHO KHÁCH
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tiêu Đề Banner Khuyến Mãi / Giới Thiệu:</label>
+              <input type="text" id="cmsBannerTitle" placeholder="Ví dụ: Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Nội Dung Phụ Banner:</label>
+              <input type="text" id="cmsBannerSubtitle" placeholder="Ví dụ: Thanh toán quét mã VietQR tự động 1 giây - Tiền về tài khoản ngay" class="form-input">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom: 0;">
+            <div class="form-group">
+              <label>Tài Khoản Đăng Nhập Quản Trị Store (Để khách xem thử):</label>
+              <input type="text" id="cmsAdminUser" class="form-input" style="font-family: var(--font-mono);">
+            </div>
+            <div class="form-group">
+              <label>Mật Khẩu Đăng Nhập Store:</label>
+              <input type="text" id="cmsAdminPass" class="form-input" style="font-family: var(--font-mono);">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Real Products Catalog Manager -->
+        <div class="cms-section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="cms-section-title" style="margin-bottom: 0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              3. DANH MỤC SẢN PHẨM / DỊCH VỤ MẪU THỰC TẾ (100% DATA THẬT)
+            </div>
+            <button type="button" class="btn btn-outline" id="btnAddCmsProduct" style="font-size: 0.72rem; padding: 4px 10px; color: #38BDF8; border-color: rgba(56,189,248,0.3);">
+              + Thêm Sản Phẩm Mới
+            </button>
+          </div>
+
+          <div style="max-height: 220px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem;">
+              <thead>
+                <tr style="background: rgba(15,23,42,0.8); border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left;">
+                  <th style="padding: 8px 10px; color: #94A3B8;">Tên Sản Phẩm / Dịch Vụ</th>
+                  <th style="padding: 8px 10px; color: #94A3B8;">Danh Mục</th>
+                  <th style="padding: 8px 10px; color: #94A3B8;">Giá (VNĐ)</th>
+                  <th style="padding: 8px 10px; color: #94A3B8;">Tồn Kho</th>
+                  <th style="padding: 8px 10px; text-align: center; color: #94A3B8;">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody id="cmsProductsTbody">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 4: AI Model Selection -->
+        <div class="cms-section-card" style="margin-bottom: 20px;">
+          <div class="cms-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            4. CẤU HÌNH TRỢ LÝ AI TƯ VẤN KHÁCH HÀNG (CLIENT PORTAL AI ENGINE)
+          </div>
+          <div class="form-row" style="margin-bottom: 0;">
+            <div class="form-group">
+              <label>Model AI Phân Tích & Bóc Tách Nhu Cầu:</label>
+              <input type="text" id="cmsAiModel" class="form-input" placeholder="VD: Gemini 2.5 Pro, DeepSeek V3, Claude 3.5 Sonnet, GPT-4o, Custom LLM...">
+            </div>
+            <div class="form-group">
+              <label>Phong Cách Tư Vấn Của AI:</label>
+              <input type="text" value="Thực chiến, dễ hiểu (Không dùng thuật ngữ kỹ thuật khó hiểu)" disabled class="form-input" style="color: #34D399; opacity: 0.85;">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelClientCms">Hủy Bỏ</button>
+          <button type="submit" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Lưu Cấu Hình & Đồng Bộ Tức Thì Sang Web Khách Hàng
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

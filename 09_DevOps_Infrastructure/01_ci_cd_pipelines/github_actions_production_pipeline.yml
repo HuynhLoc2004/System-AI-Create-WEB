@@ -1,0 +1,85 @@
+name: Production Continuous Deployment (CD)
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Tự động kích hoạt khi gắn tag phiên bản (VD: v1.0.0)
+
+jobs:
+  quality-check:
+    name: Automated Testing & Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Linter & Typecheck
+        run: npm run lint
+
+      - name: Run Unit & Integration Tests
+        run: npm run test:cov
+
+  build-and-push:
+    name: Build & Push Docker Image
+    needs: quality-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: actions/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Production Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/backend-core:${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-production:
+    name: Rolling Deployment to Production VPS
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute Remote SSH Commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_SERVER_IP }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+          script: |
+            cd /opt/enterprise-app
+            echo "Kéo bản cập nhật Docker image mới nhất..."
+            docker compose pull backend-core
+            echo "Triển khai không gián đoạn (Rolling update)..."
+            docker compose up -d --no-deps --build backend-core
+            echo "Dọn dẹp image cũ không dùng..."
+            docker image prune -f
+
+      - name: Notify Telegram On Success
+        if: success()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="🚀 [PROD DEPLOY THÀNH CÔNG] Bản phát hành ${{ github.ref_name }} đã online an toàn trên Production Server!"
+

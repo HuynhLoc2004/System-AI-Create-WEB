@@ -1,0 +1,13 @@
+-- KỊCH BẢN ROLLBACK SCHEMA BAN ĐẦU (DOWN MIGRATION)
+-- Sử dụng khi cần khôi phục lại trạng thái ban đầu trước khi chạy 001_initial_schema.sql
+
+DROP TABLE IF EXISTS order_items CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+
+DROP EXTENSION IF EXISTS "unaccent";
+DROP EXTENSION IF EXISTS "pgcrypto";
+

@@ -1,0 +1,325 @@
+{
+  "projects": [
+    {
+      "id": "PRJ-RETAIL-2026",
+      "name": "Sàn Bán Lẻ Đa Kênh & VietQR Động",
+      "code": "RETAIL",
+      "progress": 88,
+      "budget": "1.85 Tỷ",
+      "status": "ON-TRACK",
+      "stage": "Pha 3: Lập trình & CSDL",
+      "serverCost": "$85/tháng (VPS + CDN)",
+      "infraStrategy": "VPS Hybrid + Cloudflare CDN (Tiết kiệm 75%)",
+      "tokenEfficiency": 95.2,
+      "clientConfig": {
+        "brandName": "Gốm Sứ Hoàng Gia Bát Tràng",
+        "headline": "Tinh Hoa Nghệ Thuật Gốm Sứ Men Lam & Men Rạn Cổ Truyền",
+        "deployMode": "Máy Chủ Cục Bộ Nội Bộ (Localhost:5000)",
+        "previewUrl": "http://127.0.0.1:5000/storefront",
+        "customDomain": "https://gmshonggiabttrng.com.vn",
+        "bannerTitle": "Bộ Sưu Tập Gốm Sứ Xuất Khẩu 2026 - Tặng Kèm Hộp Quà Gỗ",
+        "bannerSubtitle": "Thanh toán quét mã VietQR tự động đối soát đơn hàng tức thì",
+        "adminUser": "novawear_admin",
+        "adminPass": "Nova@2026MasterPass",
+        "aiModel": "Gemini 2.5 Pro",
+        "products": [
+          {
+            "id": "p1",
+            "name": "Bình Hút Lộc Thuận Buồm Xuôi Gió Men Lam",
+            "category": "Gốm Phong Thủy",
+            "price": 3850000,
+            "stock": 15,
+            "sku": "GOM-LOC-01"
+          },
+          {
+            "id": "p2",
+            "name": "Bộ Ấm Chén Tử Sa Đắp Nổi Rồng Men Rạn",
+            "category": "Bộ Ấm Trà",
+            "price": 1650000,
+            "stock": 40,
+            "sku": "GOM-TRA-02"
+          },
+          {
+            "id": "p3",
+            "name": "Lộc Bình Tứ Quý Xuân Hạ Thu Đông 1m6",
+            "category": "Lộc Bình",
+            "price": 12500000,
+            "stock": 6,
+            "sku": "GOM-BINH-03"
+          },
+          {
+            "id": "p4",
+            "name": "Tượng Di Lặc Cầm Gậy Như Ý Men Hỏa Biến",
+            "category": "Tượng Nghệ Thuật",
+            "price": 2900000,
+            "stock": 20,
+            "sku": "GOM-TUONG-04"
+          }
+        ],
+        "adminStoreUser": "store_admin",
+        "adminStorePass": "Store@2026MasterKey",
+        "aiEngine": "Dynamic Template Generator"
+      }
+    },
+    {
+      "id": "PRJ-FINTECH-2026",
+      "name": "Cổng Thanh Toán & Ví Điện Tử B2B",
+      "code": "FINTECH",
+      "progress": 74,
+      "budget": "3.20 Tỷ",
+      "status": "ON-TRACK",
+      "stage": "Pha 3: Lập trình & CSDL",
+      "serverCost": "$240/tháng (Kubernetes VPS)",
+      "infraStrategy": "Active-Active Multi-DC + Redis Cluster",
+      "tokenEfficiency": 92.8,
+      "clientConfig": {
+        "brandName": "PayLink Core Gateway",
+        "headline": "Hạ Tầng Thanh Toán B2B Phân Tán Đa Kênh Tốc Độ Cao",
+        "deployMode": "Cloud Staging VPS (103.20.144.52:8443)",
+        "previewUrl": "http://127.0.0.1:5000/fintech-gateway",
+        "customDomain": "https://paylink-core.vn",
+        "bannerTitle": "Cổng Thanh Toán Doanh Nghiệp Cấp 1 PCI-DSS",
+        "bannerSubtitle": "Xử lý 10,000 giao dịch/giây với độ trễ đối soát dưới 300ms",
+        "adminUser": "fintech_secops",
+        "adminPass": "PayLink#Sec2026!",
+        "aiModel": "Gemini 2.5 Pro",
+        "products": [
+          {
+            "id": "f1",
+            "name": "Gói Tích Hợp API VietQR Napas247",
+            "category": "API Gateway",
+            "price": 15000000,
+            "stock": 999,
+            "sku": "API-QR-247"
+          },
+          {
+            "id": "f2",
+            "name": "Dịch Vụ Virtual Account Định Danh",
+            "category": "Ngân Hàng Số",
+            "price": 25000000,
+            "stock": 500,
+            "sku": "VA-ID-B2B"
+          },
+          {
+            "id": "f3",
+            "name": "Module Chống Gian Lận AI Fraud Guard",
+            "category": "Bảo Mật",
+            "price": 40000000,
+            "stock": 100,
+            "sku": "SEC-FRD-AI"
+          }
+        ]
+      }
+    },
+    {
+      "id": "PRJ-ENTERPRISE-2026",
+      "name": "Hệ Thống ERP & Chuỗi Cung Ứng",
+      "code": "ENTERPRISE",
+      "progress": 92,
+      "budget": "4.50 Tỷ",
+      "status": "ON-TRACK",
+      "stage": "Pha 4: Kiểm định QA",
+      "serverCost": "$380/tháng (Private Cloud)",
+      "infraStrategy": "PostgreSQL Dedicated + ClickHouse Analytics",
+      "tokenEfficiency": 96.5,
+      "clientConfig": {
+        "brandName": "OmniSupply Enterprise ERP",
+        "headline": "Giải Pháp Quản Trị Chuỗi Cung Ứng & Vận Hành Doanh Nghiệp Toàn Diện",
+        "deployMode": "Tên Miền Riêng Khách Hàng (https://omnisupply.vn)",
+        "previewUrl": "https://omnisupply.vn",
+        "customDomain": "https://omnisupply.vn",
+        "bannerTitle": "Tự Động Hóa 100% Kho Bãi & Vận Chuyển Toàn Quốc",
+        "bannerSubtitle": "Đồng bộ đa chi nhánh, quản trị tồn kho và tối ưu lộ trình xe tải",
+        "adminUser": "erp_superadmin",
+        "adminPass": "OmniSupply@9999",
+        "aiModel": "Gemini 2.5 Pro",
+        "products": [
+          {
+            "id": "e1",
+            "name": "Module Quản Lý Kho WMS Barcode 2D",
+            "category": "Kho Vận",
+            "price": 50000000,
+            "stock": 50,
+            "sku": "WMS-BAR-01"
+          },
+          {
+            "id": "e2",
+            "name": "Module Lập Kế Hoạch Sản Xuất MRP II",
+            "category": "Sản Xuất",
+            "price": 80000000,
+            "stock": 20,
+            "sku": "MRP-PLN-02"
+          },
+          {
+            "id": "e3",
+            "name": "Module Kế Toán Tài Chính Đa Tiền Tệ",
+            "category": "Tài Chính",
+            "price": 65000000,
+            "stock": 30,
+            "sku": "ACC-CUR-03"
+          }
+        ]
+      }
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "fb_mwb1t160_joyd",
+      "projectId": "PRJ-RETAIL-2026",
+      "sender": "Khách Hàng Trải Nghiệm Thật",
+      "category": "Thử nghiệm hệ thống thanh toán VietQR và tốc độ",
+      "content": "Cần kiểm tra tốc độ phản hồi của API khi có 1000 khách cùng truy cập vào xem đồ và quét mã VietQR.",
+      "assignedDept": "01. Quản Trị Dự Án (PM)",
+      "solution": "Đang chờ PM phân tích giải pháp kỹ thuật...",
+      "solutionDept": "01. Quản Trị Dự Án (PM)",
+      "status": "IN_PROGRESS",
+      "timestamp": "Vừa xong (01:53:26)"
+    },
+    {
+      "id": "fb_001",
+      "projectId": "PRJ-RETAIL-2026",
+      "sender": "Đại Diện Khách Hàng (Sponsor)",
+      "category": "UI/UX & Nhận diện thương hiệu",
+      "content": "Giao diện website bán lẻ cần hạn chế tối đa emoji/icon màu mè, chỉ dùng font chữ sắc nét và màu Navy theo đúng bộ nhận diện thương hiệu công ty. Cuộn trang phải êm 60fps.",
+      "assignedDept": "01. Quản Trị Dự Án (PM)",
+      "solution": "PM chủ trì cùng SA & UI/UX ban hành Solution: Cập nhật tokens.json, áp dụng Dark Navy palette doanh nghiệp, tích hợp Lenis Smooth Scroll và loại bỏ 100% emoji con nít. Đã điều phối task UI-104 và FE-111.",
+      "solutionDept": "04. Thiết Kế UI/UX",
+      "status": "RESOLVED",
+      "timestamp": "Hôm qua 15:30"
+    },
+    {
+      "id": "fb_002",
+      "projectId": "PRJ-RETAIL-2026",
+      "sender": "Giám Đốc Vận Hành",
+      "category": "Web Động & API Nghiệp vụ",
+      "content": "Yêu cầu trang Checkout phải là Web động hoàn chỉnh, kết nối API VietQR thật trên Production và tự động đối soát ngân hàng ngay khi khách quét mã, không dùng trang tĩnh.",
+      "assignedDept": "01. Quản Trị Dự Án (PM)",
+      "solution": "PM phân tích: Phê duyệt giải pháp Web Động Full-Stack (Next.js + NestJS Webhook IPN). Production kết nối cổng VietQR ngân hàng thực; Local test trên Sandbox Mock DB không đụng data thật. Đã điều phối task BE-110 & QA-114.",
+      "solutionDept": "06. Lập Trình Backend",
+      "status": "IN_PROGRESS",
+      "timestamp": "Hôm nay 09:15"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "PM-001",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "01. Quản Trị (PM)",
+      "title": "Ký kết Charter & Phê duyệt điều lệ dự án bán lẻ",
+      "status": "DONE",
+      "cost": "0 Token"
+    },
+    {
+      "id": "BA-002",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "02. Phân Tích (BA)",
+      "title": "Lập tài liệu BRD/SRS luồng thanh toán VietQR động",
+      "status": "DONE",
+      "cost": "450 Token"
+    },
+    {
+      "id": "SA-003",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "03. Kiến Trúc (SA)",
+      "title": "Thiết kế kiến trúc Web Động & Hybrid Cache CSDL",
+      "status": "DONE",
+      "cost": "620 Token"
+    },
+    {
+      "id": "UI-104",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "04. Giao Diện (UI/UX)",
+      "title": "Cập nhật Brand Guideline Navy tối giản & loại bỏ emoji",
+      "status": "DONE",
+      "cost": "310 Token"
+    },
+    {
+      "id": "DB-007",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "07. CSDL (DBA)",
+      "title": "Thiết kế lược đồ CSDL & chỉ mục truy vấn tải cao",
+      "status": "DONE",
+      "cost": "550 Token"
+    },
+    {
+      "id": "BE-110",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "06. Backend (BE)",
+      "title": "Lập trình Webhook đối soát VietQR và giỏ hàng thời gian thực",
+      "status": "IN_PROGRESS",
+      "cost": "850 Token"
+    },
+    {
+      "id": "FE-111",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "05. Frontend (FE)",
+      "title": "Lập trình Web Động Responsive & cuộn mượt 60fps trên di động",
+      "status": "IN_PROGRESS",
+      "cost": "780 Token"
+    },
+    {
+      "id": "QA-114",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "08. Kiểm Định (QA)",
+      "title": "Kiểm thử bảo mật ô input, chống SQLi & giả mạo đơn hàng",
+      "status": "IN_PROGRESS",
+      "cost": "420 Token"
+    },
+    {
+      "id": "OPS-009",
+      "projectId": "PRJ-RETAIL-2026",
+      "dept": "09. Hạ Tầng (Ops)",
+      "title": "Cấu hình Docker, Redis Cache, Nginx SSL & Staging VPS",
+      "status": "IN_PROGRESS",
+      "cost": "690 Token"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-967209",
+      "projectId": "PRJ-RETAIL-2026",
+      "items": [
+        {
+          "id": "p1",
+          "name": "Áo Blazer Dạ Cashmere Ý",
+          "price": 2450000,
+          "qty": 1
+        }
+      ],
+      "totalAmount": 2450000,
+      "customerName": "Nguyễn Văn A",
+      "customerPhone": "0909000111",
+      "vietQrPayload": "00020101021238580010A000000727012600069704220112NOVAPAY888880208QRIBFTTA530370454024500005802VN62160812ORD-9672096304ABCD",
+      "status": "PAID",
+      "createdAt": "2026-11-10T18:56:07.209Z",
+      "transactionRef": "TXN-NAPAS-1794336967213",
+      "paidAt": "2026-11-10T18:56:08.029Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "log_1794336967209",
+      "action": "CREATE_ORDER",
+      "actor": "Nguyễn Văn A",
+      "details": {
+        "orderId": "ORD-967209",
+        "amount": 2450000
+      },
+      "timestamp": "2026-11-10T18:56:07.209Z"
+    },
+    {
+      "id": "log_1794336806976",
+      "action": "SUBMIT_FEEDBACK",
+      "actor": "Khách Hàng Trải Nghiệm Thật",
+      "details": {
+        "feedbackId": "fb_mwb1t160_joyd",
+        "category": "Thử nghiệm hệ thống thanh toán VietQR và tốc độ"
+      },
+      "timestamp": "2026-11-10T18:53:26.976Z"
+    }
+  ],
+  "_meta": {
+    "version": "2.0.0",
+    "lastUpdated": "2026-11-11T02:56:05.210Z"
+  }
+}

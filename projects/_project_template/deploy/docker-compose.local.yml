@@ -1,0 +1,38 @@
+version: "3.8"
+
+# CỤM DỊCH VỤ PHỤC VỤ LẬP TRÌNH & KIỂM THỬ TẠI MÁY CÁ NHÂN (LOCAL DEV)
+services:
+  # Cơ sở dữ liệu PostgreSQL Local
+  postgres:
+    image: postgres:16-alpine
+    container_name: local-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: project_local_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+
+  # Bộ nhớ đệm Redis Local
+  redis:
+    image: redis:7-alpine
+    container_name: local-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  # Giả lập hòm thư Email nội bộ để kiểm tra gửi mail không tốn phí (Mailhog)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: local-mailhog
+    restart: always
+    ports:
+      - "1025:1025" # Cổng SMTP nhận thư từ Backend
+      - "8025:8025" # Giao diện Web xem thư kiểm tra trên trình duyệt: http://localhost:8025
+
+volumes:
+  local_postgres_data:
+

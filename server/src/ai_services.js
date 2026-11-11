@@ -1,0 +1,520 @@
+/**
+ * Multi-Instance Gemini AI Architecture
+ * - Instance 1: Consultant AI (Phân tích nhu cầu & tư vấn giải pháp)
+ * - Instance 2: Builder AI (Kiến tạo & sinh toàn bộ website khách hàng)
+ */
+import { GoogleGenAI } from "@google/genai";
+import { CONFIG } from "./config.js";
+
+// ----------------------------------------------------
+// 1. GEMINI INSTANCE 1: CONSULTANT AI
+// ----------------------------------------------------
+class ConsultantAIService {
+  constructor() {
+    this.apiKey = process.env.GEMINI_CONSULT_API_KEY || process.env.GEMINI_API_KEY || "";
+    this.modelName = process.env.GEMINI_CONSULT_MODEL || "gemini-2.5-pro";
+    this.client = null;
+
+    if (this.apiKey) {
+      try {
+        this.client = new GoogleGenAI({ apiKey: this.apiKey });
+        console.log(`[Gemini Consultant AI] Initialized with model: ${this.modelName}`);
+      } catch (err) {
+        console.warn(`[Gemini Consultant AI] Initialization failed: ${err.message}`);
+      }
+    } else {
+      console.log(`[Gemini Consultant AI] No GEMINI_CONSULT_API_KEY configured. Running on Rule-Based Engine.`);
+    }
+  }
+
+  async analyze(prompt, history = []) {
+    if (!prompt || typeof prompt !== "string" || prompt.trim().length === 0) {
+      throw new Error("Vui lòng cung cấp nội dung trao đổi hoặc ý tưởng dự án.");
+    }
+
+    // If Gemini client is active and key provided, call Gemini API with multi-turn context
+    if (this.client && this.apiKey && !this.apiKey.includes("your_gemini_key")) {
+      const candidateModels = [this.modelName, "gemini-3.1-flash-lite"];
+      for (const m of candidateModels) {
+        try {
+          console.log(`[Gemini Consultant AI] Calling ${m} (multi-turn context: ${Array.isArray(history) ? history.length : 0} msgs)...`);
+          const systemInstruction = `Bạn là Trưởng Phòng Giải Pháp & Tư Vấn Dự Án Cấp Cao (Senior Solutions Consultant).
+Nhiệm vụ: Lắng nghe nhu cầu của khách hàng, diễn giải hoàn toàn bằng ngôn ngữ THƯƠNG MẠI BÌNH DÂN, DỄ HIỂU 100%, và BỐC TÁCH THÀNH CÁC HẠNG MỤC CỤ THỂ, TRỰC QUAN để khách hàng không biết kỹ thuật nhìn vào là hiểu ngay mình sẽ nhận được gì.
+
+QUY TẮC CỐT LÕI (NGƯỜI KHÔNG BIẾT IT CŨNG PHẢI HIỂU RÕ RÀNG):
+1. TUYỆT ĐỐI KHÔNG dùng từ ngữ kỹ thuật lập trình khó hiểu (CẤM dùng các từ: Full-Stack, Backend, Frontend, Webhook, API, Staging, VPS, Realtime, Gạch nợ).
+2. Không viết thành các đoạn văn dài ngoằng, nhồi nhét chữ khó đọc.
+3. Chia nhỏ tính năng thành các gạch đầu dòng hành động cụ thể, gắn liền với lợi ích bán hàng và giữ tiền của khách hàng:
+   - Giao diện: Hiển thị đẹp, bấm mua trong 5 giây, tải nhanh trên điện thoại.
+   - Thanh toán: Quét mã VietQR đúng số tiền, tiền về thẳng tài khoản ngân hàng của khách ngay tức thì.
+   - Vận hành: Tự động trừ kho theo màu/size, quản lý đơn hàng tránh nhầm lẫn thất thoát.
+
+PHÂN LOẠI XỬ LÝ:
+TRƯỜNG HỢP 1: Chào hỏi hoặc câu mở đầu ngắn (Ví dụ: "chào bạn", "hello", "hi", "alo", "bạn ơi", "test"):
+- Chào hỏi lịch thiệp, giới thiệu vai trò Trưởng Phòng Giải Pháp.
+- Hỏi mở: bạn đang dự định làm website hoặc ứng dụng cho mô hình nào (bán lẻ thời trang, giáo dục trực tuyến, phòng khám y tế, chuỗi nhà hàng cafe, bất động sản...).
+- hasSolution: false, recommendations: null, canConnectAdmin: false.
+
+TRƯỜNG HỢP 2: Khách hàng nêu ý tưởng hoặc mô hình kinh doanh (Ví dụ: làm sàn bán lẻ, mở phòng khám, web khóa học, web thời trang...):
+- hasSolution: true, canConnectAdmin: true.
+- BỐC TÁCH RÕ RÀNG 3 NHÓM HẠNG MỤC (mỗi nhóm gồm 3 gạch đầu dòng súc tích), LỘ TRÌNH 3 BƯỚC VÀ 4 CAM KẾT VẬN HÀNH:
+  + projectTitle: Tên giải pháp ngắn gọn (Ví dụ: Hệ Thống Website Động Bán Hàng Thời Trang & Quản Lý Kho)
+  + proposal1Title: Nhóm 1: Giao Diện Khách Hàng & Bán Hàng
+  + proposal1Badge: Tối Ưu Mobile
+  + proposal1Points: [3 gạch đầu dòng về giao diện, tốc độ, trải nghiệm mua]
+  + proposal2Title: Nhóm 2: Thanh Toán Tự Động & Chống Thất Thoát
+  + proposal2Badge: Tự Động 100%
+  + proposal2Points: [3 gạch đầu dòng về quét mã VietQR, tiền về thẳng tài khoản, tự trừ kho]
+  + proposal3Title: Nhóm 3: Lộ Trình Triển Khai Thực Tế
+  + proposal3Badge: 7 - 10 Ngày
+  + proposal3Points: [3 bước cụ thể: Duyệt giao diện -> Cài đặt dữ liệu & thanh toán -> Dùng thử chạy thật mới thanh toán]
+  + commitments: [4 cam kết: Bàn giao 100% mã nguồn, Không phí ẩn hàng tháng, Dùng thử thực tế trước khi thanh toán, Hướng dẫn 1-1 & Bảo hành]
+  + expertAdvice: Lời khuyên chân thành từ Trưởng phòng giúp khách tiết kiệm chi phí ban đầu (1-2 câu).
+
+TRƯỜNG HỢP 3: Khách đặt câu hỏi tiếp nối (Ví dụ: chi phí bao nhiêu, làm mất bao lâu, có kết nối POS không...):
+- Trả lời thẳng thắn, thực tế, giữ văn phong tư vấn tận tình, dễ hiểu.
+
+QUY CHUẨN BẮT BUỘC (ANTI-AI-SLOP):
+- TUYỆT ĐỐI CẤM DÙNG EMOJI trong mọi câu chữ.
+- Không viết bài luận dài dòng, sáo rỗng.
+- Bắt buộc trả về đúng định dạng JSON:
+{
+  "reply": "Lời trao đổi thân thiện, ngắn gọn của Trưởng phòng (1-2 câu)",
+  "hasSolution": true hoặc false,
+  "recommendations": {
+    "projectTitle": "Tên giải pháp",
+    "proposal1Title": "Giao Diện Khách Hàng & Bán Hàng",
+    "proposal1Badge": "Tối Ưu Mobile",
+    "proposal1Points": ["Điểm 1", "Điểm 2", "Điểm 3"],
+    "proposal2Title": "Thanh Toán & Xử Lý Đơn Hàng",
+    "proposal2Badge": "Tự Động 100%",
+    "proposal2Points": ["Điểm 1", "Điểm 2", "Điểm 3"],
+    "proposal3Title": "Lộ Trình Triển Khai Thực Tế",
+    "proposal3Badge": "7 - 10 Ngày",
+    "proposal3Points": ["Bước 1 (1 - 3 ngày): ...", "Bước 2 (4 - 7 ngày): ...", "Bước 3 (8 - 10 ngày): ..."]
+  },
+  "commitments": [
+    "Bàn giao 100% mã nguồn và toàn quyền quản trị, không phụ thuộc bên thứ ba",
+    "Cam kết không phát sinh bất kỳ khoản phí duy trì ẩn nào hàng tháng",
+    "Trải nghiệm chạy thử nghiệm thực tế trên hệ thống thật rồi mới thanh toán",
+    "Hướng dẫn 1 kèm 1 đến khi vận hành thành thạo và bảo hành kỹ thuật dài hạn"
+  ],
+  "expertAdvice": "Lời khuyên thực tế từ Trưởng phòng (1-2 câu)",
+  "canConnectAdmin": true hoặc false,
+  "suggestedQuestions": ["Gợi ý câu hỏi thực tế 1", "Gợi ý câu hỏi thực tế 2", "Gợi ý câu hỏi thực tế 3"]
+}`;
+
+          // Construct contents with conversation history
+          const contents = [];
+          if (Array.isArray(history) && history.length > 0) {
+            for (const item of history.slice(-6)) {
+              if (item.text && item.role) {
+                contents.push({
+                  role: item.role === "user" ? "user" : "model",
+                  parts: [{ text: item.text }]
+                });
+              }
+            }
+          }
+          contents.push({
+            role: "user",
+            parts: [{ text: prompt }]
+          });
+
+          const response = await this.client.models.generateContent({
+            model: m,
+            contents: contents,
+            config: {
+              systemInstruction: systemInstruction,
+              responseMimeType: "application/json"
+            }
+          });
+
+          const text = response.text?.trim() || "";
+          const parsed = JSON.parse(text);
+
+          const hasSolution = Boolean(parsed.hasSolution);
+          const recs = parsed.recommendations;
+
+          const commitments = Array.isArray(parsed.commitments) && parsed.commitments.length > 0 ? parsed.commitments : [
+            "Bàn giao 100% mã nguồn và toàn quyền quản trị, không phụ thuộc bên thứ ba",
+            "Cam kết không phát sinh bất kỳ khoản phí duy trì ẩn nào hàng tháng",
+            "Trải nghiệm chạy thử nghiệm thực tế trên hệ thống thật rồi mới thanh toán nghiệm thu",
+            "Hướng dẫn 1 kèm 1 đến khi vận hành thành thạo và bảo hành kỹ thuật dài hạn"
+          ];
+
+          return {
+            reply: parsed.reply || "Tôi đã ghi nhận ý kiến của bạn và bóc tách giải pháp thực chiến chi tiết bên dưới.",
+            hasSolution: hasSolution,
+            recommendations: hasSolution && recs ? {
+              projectTitle: recs.projectTitle || "Hệ Thống Website Động May Đo Cho Doanh Nghiệp",
+              proposal1Title: recs.proposal1Title || "Giao Diện Khách Hàng & Bán Hàng",
+              proposal1Badge: recs.proposal1Badge || "Tối Ưu Mobile",
+              proposal1Points: Array.isArray(recs.proposal1Points) && recs.proposal1Points.length > 0 
+                ? recs.proposal1Points 
+                : (recs.proposal1Desc ? [recs.proposal1Desc] : ["Giao diện chuẩn đẹp, tải siêu nhanh trên điện thoại", "Đặt hàng trong 5 giây, không cần đăng ký phức tạp"]),
+              proposal1Desc: recs.proposal1Desc || "",
+              proposal2Title: recs.proposal2Title || "Thanh Toán & Xử Lý Đơn Hàng",
+              proposal2Badge: recs.proposal2Badge || "Tự Động 100%",
+              proposal2Points: Array.isArray(recs.proposal2Points) && recs.proposal2Points.length > 0 
+                ? recs.proposal2Points 
+                : (recs.proposal2Desc ? [recs.proposal2Desc] : ["Quét mã VietQR tiền về thẳng tài khoản sau 1 giây", "Tự động trừ kho chống bán trùng"]),
+              proposal2Desc: recs.proposal2Desc || "",
+              proposal3Title: recs.proposal3Title || "Lộ Trình Triển Khai Thực Tế",
+              proposal3Badge: recs.proposal3Badge || "7 - 10 Ngày",
+              proposal3Points: Array.isArray(recs.proposal3Points) && recs.proposal3Points.length > 0 
+                ? recs.proposal3Points 
+                : (recs.proposal3Desc ? [recs.proposal3Desc] : ["Duyệt giao diện mẫu", "Cài đặt thanh toán & kho", "Dùng thử hài lòng mới thanh toán"]),
+              proposal3Desc: recs.proposal3Desc || ""
+            } : null,
+            commitments: hasSolution ? commitments : [],
+            expertAdvice: parsed.expertAdvice || (hasSolution ? "Lời khuyên từ Trưởng phòng: Bạn nên tập trung hoàn thiện Giai đoạn 1 trước để đưa sản phẩm ra bán ngay và thu hồi vốn sớm, sau đó mới đầu tư thêm các tính năng nâng cao." : ""),
+            canConnectAdmin: Boolean(parsed.canConnectAdmin),
+            suggestedQuestions: Array.isArray(parsed.suggestedQuestions) ? parsed.suggestedQuestions.slice(0, 3) : [],
+            consultantContact: "Zalo / Hotline Trực Tiếp Admin: 0909.888.999",
+            aiEngine: `Gemini (${m})`
+          };
+        } catch (err) {
+          console.warn(`[Gemini Consultant AI] ${m} Notice: ${err.message.substring(0, 100)}. Trying next option...`);
+        }
+      }
+    }
+
+    // High-performance intelligent fallback
+    return this.fallbackAnalysis(prompt, history);
+  }
+
+  fallbackAnalysis(prompt, history = []) {
+    const cleanText = prompt.trim().toLowerCase();
+    const greetings = ["chào", "chao", "hello", "hi", "alo", "ad", "admin", "bạn ơi", "test", "hey", "ê", "e ơi"];
+    const isGreetingOnly = greetings.some(g => cleanText === g || cleanText === `${g} bạn` || cleanText === `chào bạn` || (cleanText.length < 15 && cleanText.includes(g) && !cleanText.includes("web") && !cleanText.includes("app")));
+
+    if (isGreetingOnly) {
+      return {
+        reply: "Chào bạn! Tôi là Trưởng Phòng Giải Pháp & Tư Vấn Dự Án. Rất vui được đồng hành cùng bạn! Bạn đang ấp ủ mô hình kinh doanh hay muốn phát triển website / ứng dụng phần mềm trong lĩnh vực nào? Hãy chia sẻ ý tưởng của bạn, tôi sẽ chủ động đề xuất các phương án dễ hiểu và tính toán lộ trình thực tế cho bạn!",
+        hasSolution: false,
+        recommendations: null,
+        expertAdvice: "",
+        canConnectAdmin: false,
+        suggestedQuestions: [
+          "Tôi muốn làm sàn bán lẻ thời trang có quét mã VietQR",
+          "Tôi cần hệ thống đặt lịch hẹn phòng khám nha khoa",
+          "Tôi muốn làm nền tảng học online có thu học phí"
+        ],
+        consultantContact: "Zalo / Hotline Trực Tiếp Admin: 0909.888.999",
+        aiEngine: "Intelligent Consultant Engine"
+      };
+    }
+
+    // Question about cost / pricing
+    if (cleanText.includes("giá") || cleanText.includes("chi phí") || cleanText.includes("bao nhiêu tiền") || cleanText.includes("báo giá")) {
+      return {
+        reply: "Về chi phí, chúng tôi tư vấn chia nhỏ ngân sách theo từng giai đoạn thực tế để bạn không phải chịu áp lực tài chính. Bạn có thể làm bản thử nghiệm bán hàng trước (chỉ từ 7-10 ngày), trải nghiệm thực tế trên máy chủ riêng rồi mới quyết định mở rộng.",
+        hasSolution: false,
+        recommendations: null,
+        expertAdvice: "Lời khuyên từ Trưởng phòng: Không nên chi nhiều tiền làm ngay một hệ thống quá cồng kềnh. Hãy bắt đầu từ những tính năng cốt lõi sinh ra doanh thu trước.",
+        canConnectAdmin: true,
+        suggestedQuestions: [
+          "Thời gian triển khai Giai đoạn 1 mất bao lâu?",
+          "Hệ thống có tự động gửi tin nhắn báo đơn cho khách không?",
+          "Kết nối Admin để nhận báo giá may đo chi tiết"
+        ],
+        consultantContact: "Zalo / Hotline Trực Tiếp Admin: 0909.888.999",
+        aiEngine: "Intelligent Consultant Engine"
+      };
+    }
+
+    const lower = cleanText;
+    let topicName = "Kinh Doanh & Bán Hàng Trực Tuyến";
+    let projectTitle = "Hệ Thống Website Động Bán Hàng & Quản Lý Đơn Hàng Tự Động";
+    let p1Title = "Giao Diện Khách Hàng & Bán Hàng";
+    let p1Badge = "Tối Ưu Mobile";
+    let p1Points = [
+      "Giao diện điện thoại hiển thị sản phẩm nét căng, lướt mượt mà không giật lag.",
+      "Khách bấm chọn phân loại size, màu sắc và thêm vào giỏ hàng chỉ trong 5 giây.",
+      "Quy trình đặt hàng tinh gọn, không bắt buộc đăng ký tài khoản rườm rà."
+    ];
+    let p2Title = "Thanh Toán VietQR & Quản Lý Kho";
+    let p2Badge = "Tự Động 100%";
+    let p2Points = [
+      "Tự động tạo mã VietQR khớp đúng số tiền từng đơn để khách quét chuyển tiền.",
+      "Tiền về thẳng tài khoản ngân hàng của bạn ngay lập tức, không qua ví trung gian.",
+      "Tự động trừ số lượng tồn kho theo màu/size, chống bán trùng hay thiếu hàng."
+    ];
+    let p3Title = "Lộ Trình Triển Khai Thực Tế";
+    let p3Badge = "7 - 10 Ngày";
+    let p3Points = [
+      "Giai đoạn 1 (Ngày 1 - 3): Lên bản mẫu giao diện thực tế cho bạn bấm duyệt.",
+      "Giai đoạn 2 (Ngày 4 - 7): Tích hợp số tài khoản VietQR và tải danh mục sản phẩm.",
+      "Giai đoạn 3 (Ngày 8 - 10): Chạy thử nghiệm thực tế, ưng ý mới thanh toán."
+    ];
+
+    if (lower.includes("thời trang") || lower.includes("quần áo") || lower.includes("váy") || lower.includes("giày")) {
+      topicName = "Thời Trang & May Mặc Bán Lẻ";
+      projectTitle = "Hệ Thống Website Động Bán Lẻ Thời Trang Cao Cấp & Quản Lý Tồn Kho";
+      p1Points = [
+        "Trang xem mẫu áo quần sắc nét, zoom cận chất vải cực mượt trên điện thoại.",
+        "Khách chọn bảng size chuẩn và màu sắc nhanh chóng chỉ trong 5 giây.",
+        "Bộ sưu tập phân loại theo mùa, phong cách giúp khách chốt đơn nhiều món."
+      ];
+      p2Points = [
+        "Tạo mã VietQR tự động, khách quét là tiền chuyển thẳng vào tài khoản của bạn.",
+        "Tự động khóa và trừ tồn kho chính xác theo từng size và màu sắc khi khách mua.",
+        "Bảng quản trị đơn hàng rõ ràng giúp nhân viên đóng gói chuẩn xác không nhầm lẫn."
+      ];
+    } else if (lower.includes("học") || lower.includes("giáo dục") || lower.includes("khóa học") || lower.includes("tiếng anh")) {
+      topicName = "Nền Tảng Giáo Dục & Khóa Học Trực Tuyến";
+      projectTitle = "Hệ Thống Học Trực Tuyến (E-Learning) & Thu Học Phí Tự Động";
+      p1Title = "Trải Nghiệm Học Tập & Xem Bài Giảng";
+      p1Badge = "Bảo Mật Video";
+      p1Points = [
+        "Học viên xem video bài giảng mượt mà, công nghệ chống sao chép và tải lậu.",
+        "Hệ thống làm bài tập trắc nghiệm bấm giờ, tự động chấm điểm và báo kết quả.",
+        "Theo dõi lộ trình hoàn thành bài học trực quan trên cả điện thoại và máy tính."
+      ];
+      p2Title = "Kích Hoạt Khóa Học & Thu Học Phí";
+      p2Badge = "Kích Hoạt Tức Thì";
+      p2Points = [
+        "Học viên quét mã VietQR là hệ thống tự mở khóa bài học ngay sau 1 giây.",
+        "Học phí chuyển thẳng về tài khoản ngân hàng của trung tâm/giáo viên.",
+        "Tự động cấp mã kích hoạt và gửi email xác nhận học tập tự động."
+      ];
+    } else if (lower.includes("y tế") || lower.includes("phòng khám") || lower.includes("nha khoa") || lower.includes("bác sĩ")) {
+      topicName = "Hệ Thống Đặt Lịch Hẹn & Quản Lý Phòng Khám";
+      projectTitle = "Website Đặt Lịch Hẹn Khám Bệnh & Quản Lý Hồ Sơ Nha Khoa / Y Tế";
+      p1Title = "Đặt Lịch Khám & Chọn Bác Sĩ";
+      p1Badge = "Tiện Lợi 24/7";
+      p1Points = [
+        "Bệnh nhân xem thông tin bác sĩ và chọn khung giờ khám còn trống ngay trên điện thoại.",
+        "Tự động xác nhận lịch hẹn qua tin nhắn, giảm thiểu tối đa tình trạng hủy hẹn.",
+        "Giao diện chuẩn y khoa chuyên nghiệp, tạo sự tin tưởng tuyệt đối cho khách hàng."
+      ];
+      p2Title = "Quản Lý Bệnh Án & Vận Hành";
+      p2Badge = "Bảo Mật Y Tế";
+      p2Points = [
+        "Quản lý hồ sơ bệnh án điện tử an toàn, tra cứu lịch sử điều trị trong 3 giây.",
+        "Nhắc lịch tái khám tự động đến bệnh nhân theo đúng phác đồ điều trị.",
+        "Báo cáo thống kê số ca khám và doanh thu từng bác sĩ rõ ràng minh bạch."
+      ];
+    } else if (lower.includes("bất động sản") || lower.includes("nhà đất") || lower.includes("căn hộ")) {
+      topicName = "Sàn Đăng Tin Bất Động Sản & Cho Thuê Căn Hộ";
+      projectTitle = "Hệ Thống Giới Thiệu Dự Án Bất Động Sản & Tiếp Nhận Khách Hàng";
+      p1Title = "Tìm Kiếm & Xem Chi Tiết Bất Động Sản";
+      p1Badge = "Hình Ảnh Trực Quan";
+      p1Points = [
+        "Bộ lọc tìm kiếm nhà đất theo vị trí, khoảng giá và diện tích siêu nhanh.",
+        "Xem ảnh thực tế sắc nét, mặt bằng căn hộ và tiện ích xung quanh sinh động.",
+        "Khách bấm nút gọi trực tiếp hoặc gửi yêu cầu tư vấn nhận bảng giá trong 5 giây."
+      ];
+      p2Title = "Quản Lý Nguồn Hàng & Khách Nét";
+      p2Badge = "Bảo Mật Dữ Liệu";
+      p2Points = [
+        "Tự động chuyển thông tin khách có nhu cầu mua/thuê về điện thoại quản lý.",
+        "Phân quyền môi giới quản lý từng giỏ hàng và danh sách căn hộ rõ ràng.",
+        "Chống thất thoát dữ liệu khách hàng tiềm năng giữa các chuyên viên tư vấn."
+      ];
+    }
+
+    const commitments = [
+      "Bàn giao 100% mã nguồn và toàn quyền quản trị, không phụ thuộc bên thứ ba",
+      "Cam kết không phát sinh bất kỳ khoản phí duy trì ẩn nào hàng tháng",
+      "Trải nghiệm chạy thử nghiệm thực tế trên hệ thống thật rồi mới thanh toán nghiệm thu",
+      "Hướng dẫn 1 kèm 1 đến khi vận hành thành thạo và bảo hành kỹ thuật dài hạn"
+    ];
+
+    return {
+      reply: `Dưới đây là bảng bóc tách giải pháp thực chiến chi tiết cho mô hình "${topicName}" của bạn:`,
+      hasSolution: true,
+      recommendations: {
+        projectTitle: projectTitle,
+        proposal1Title: p1Title,
+        proposal1Badge: p1Badge,
+        proposal1Points: p1Points,
+        proposal1Desc: p1Points.join(" "),
+        proposal2Title: p2Title,
+        proposal2Badge: p2Badge,
+        proposal2Points: p2Points,
+        proposal2Desc: p2Points.join(" "),
+        proposal3Title: p3Title,
+        proposal3Badge: p3Badge,
+        proposal3Points: p3Points,
+        proposal3Desc: p3Points.join(" ")
+      },
+      commitments: commitments,
+      expertAdvice: "Lời khuyên từ Trưởng phòng: Bạn nên tập trung hoàn thiện Giai đoạn 1 trước để đưa hệ thống vào hoạt động sớm và có doanh thu ngay, sau đó mới mở rộng thêm các tính năng nâng cao để tối ưu chi phí đầu tư ban đầu.",
+      canConnectAdmin: true,
+      suggestedQuestions: [
+        "Chi phí trọn gói cho giai đoạn 1 là khoảng bao nhiêu?",
+        "Hệ thống có tự động gửi tin nhắn báo đơn cho khách không?",
+        "Quy trình xem bản chạy thử nghiệm thực tế diễn ra như thế nào?"
+      ],
+      consultantContact: "Zalo / Hotline Trực Tiếp Admin: 0909.888.999",
+      aiEngine: "Intelligent Strategic Engine"
+    };
+  }
+}
+
+// ----------------------------------------------------
+// 2. GEMINI INSTANCE 2: BUILDER AI (Tạo Website Khách Hàng)
+// ----------------------------------------------------
+class BuilderAIService {
+  constructor() {
+    this.apiKey = process.env.GEMINI_BUILDER_API_KEY || process.env.GEMINI_API_KEY || "";
+    this.modelName = process.env.GEMINI_BUILDER_MODEL || "gemini-2.5-pro";
+    this.client = null;
+
+    if (this.apiKey) {
+      try {
+        this.client = new GoogleGenAI({ apiKey: this.apiKey });
+        console.log(`[Gemini Builder AI] Initialized with model: ${this.modelName}`);
+      } catch (err) {
+        console.warn(`[Gemini Builder AI] Initialization failed: ${err.message}`);
+      }
+    } else {
+      console.log(`[Gemini Builder AI] No GEMINI_BUILDER_API_KEY configured. Running on Dynamic Template Generator.`);
+    }
+  }
+
+  async generateWebsite(prompt, projectCode = "RETAIL") {
+    if (!prompt || typeof prompt !== "string" || prompt.trim().length === 0) {
+      throw new Error("Vui lòng cung cấp mô tả về website hoặc thương hiệu bạn muốn tạo.");
+    }
+
+    // Call Gemini Builder API if configured with multi-model resiliency
+    if (this.client && this.apiKey && !this.apiKey.includes("your_gemini_key")) {
+      const candidateModels = [this.modelName, "gemini-3.1-flash-lite"];
+      for (const m of candidateModels) {
+        try {
+          console.log(`[Gemini Builder AI] Calling ${m} to generate website configuration...`);
+          const systemInstruction = `Bạn là Giám Đốc Kỹ Thuật & Trưởng Phòng Thiết Kế Sản Phẩm Cao Cấp (Head of Human Design & Product Engineering).
+Nhiệm vụ: Dựa vào mô tả thương hiệu của khách hàng, thiết kế cấu hình website thương mại thực chiến, chuyên nghiệp, thanh lịch với 100% dữ liệu thực tế cho các phòng ban lập trình.
+
+QUY CHUẨN THIẾT KẾ CHỐNG "AI HÓA" (ANTI-AI-SLOP DESIGN STANDARD - BẮT BUỘC):
+1. TUYỆT ĐỐI CẤM DÙNG EMOJI trong mọi trường (tên brand, headline, banner, sản phẩm, SKU).
+2. KHÔNG DÙNG TỪ NGỮ QUẢNG CÁO SÁO RỖNG, rập khuôn AI (như "tuyệt đỉnh", "đột phá vũ trụ", "kỳ tích thế kỷ").
+3. BỐ CỤC ĐỒNG BỘ & THỰC TẾ: Tên sản phẩm rõ ràng, chuyên môn cao, đúng ngành nghề, mô tả súc tích.
+4. GIÁ TIỀN VNĐ CHÍNH XÁC: Giá phải là số nguyên (VNĐ) thực tế theo thị trường Việt Nam (từ vài trăm ngàn đến vài chục triệu).
+5. MÃ SKU CHUẨN CÔNG NGHIỆP: Phải có định dạng 3 chữ cái mã hóa danh mục + mã sản phẩm (VD: BLZ-CSM-01, CER-BAT-02, MED-DNT-03).
+6. Bắt buộc tạo từ 4 đến 6 sản phẩm/dịch vụ thật sát với ngành nghề.
+
+Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc chính xác sau:
+{
+  "brandName": "Tên thương hiệu sang trọng (VD: Novawear Premium Retail)",
+  "headline": "Tiêu đề định vị sản phẩm hấp dẫn (ngắn gọn, không emoji)",
+  "deployMode": "Máy Chủ Độc Lập (Localhost:5000 / VPS Staging)",
+  "previewUrl": "http://127.0.0.1:5000/storefront",
+  "customDomain": "https://domain-thuong-hieu.com.vn",
+  "bannerTitle": "Tiêu đề banner khuyến mãi nổi bật (không emoji)",
+  "bannerSubtitle": "Nội dung phụ banner (nhấn mạnh thanh toán VietQR tự động trong 1 giây)",
+  "adminStoreUser": "admin_store",
+  "adminStorePass": "Store@2026MasterKey",
+  "products": [
+    {
+      "id": "p1",
+      "name": "Tên sản phẩm/dịch vụ thật 1",
+      "category": "Danh mục",
+      "price": 1250000,
+      "stock": 50,
+      "sku": "SKU-01"
+    }
+  ]
+}`;
+
+          const response = await this.client.models.generateContent({
+            model: m,
+            contents: `Yêu cầu tạo website: "${prompt}"`,
+            config: {
+              systemInstruction: systemInstruction,
+              responseMimeType: "application/json"
+            }
+          });
+
+          const text = response.text?.trim() || "";
+          const config = JSON.parse(text);
+          return {
+            ...config,
+            aiEngine: `Gemini Builder (${m})`
+          };
+        } catch (err) {
+          console.warn(`[Gemini Builder AI] ${m} Notice: ${err.message.substring(0, 100)}. Trying next option...`);
+        }
+      }
+    }
+
+    // Dynamic builder fallback
+    return this.fallbackBuilder(prompt, projectCode);
+  }
+
+  fallbackBuilder(prompt, projectCode) {
+    const lower = prompt.toLowerCase();
+    let brandName = "NovaTech Solutions";
+    let headline = "Hệ Thống Phần Mềm Web Động Tích Hợp Tự Động Hóa";
+    let bannerTitle = "Khai Trương Trải Nghiệm Mới - Giảm 20% Đơn Đầu Tiên";
+    let bannerSubtitle = "Thanh toán quét mã VietQR tự động trong 0.8 giây - Tiền về tài khoản tức thì";
+    let products = [];
+
+    if (lower.includes("gốm") || lower.includes("bát tràng") || lower.includes("thủ công") || lower.includes("mỹ nghệ")) {
+      brandName = "Gốm Sứ Hoàng Gia Bát Tràng";
+      headline = "Tinh Hoa Nghệ Thuật Gốm Sứ Men Lam & Men Rạn Cổ Truyền";
+      bannerTitle = "Bộ Sưu Tập Gốm Sứ Xuất Khẩu 2026 - Tặng Kèm Hộp Quà Gỗ";
+      bannerSubtitle = "Thanh toán quét mã VietQR tự động đối soát đơn hàng tức thì";
+      products = [
+        { id: "p1", name: "Bình Hút Lộc Thuận Buồm Xuôi Gió Men Lam", category: "Gốm Phong Thủy", price: 3850000, stock: 15, sku: "GOM-LOC-01" },
+        { id: "p2", name: "Bộ Ấm Chén Tử Sa Đắp Nổi Rồng Men Rạn", category: "Bộ Ấm Trà", price: 1650000, stock: 40, sku: "GOM-TRA-02" },
+        { id: "p3", name: "Lộc Bình Tứ Quý Xuân Hạ Thu Đông 1m6", category: "Lộc Bình", price: 12500000, stock: 6, sku: "GOM-BINH-03" },
+        { id: "p4", name: "Tượng Di Lặc Cầm Gậy Như Ý Men Hỏa Biến", category: "Tượng Nghệ Thuật", price: 2900000, stock: 20, sku: "GOM-TUONG-04" }
+      ];
+    } else if (lower.includes("nội thất") || lower.includes("bàn") || lower.includes("ghế") || lower.includes("sofa")) {
+      brandName = "Nordic Living - Nội Thất Bắc Âu";
+      headline = "Kiến Tạo Không Gian Sống Tối Giản, Đẳng Cấp & Bền Vững";
+      bannerTitle = "Ưu Đãi Thiết Kế Trọn Gói Căn Hộ - Giảm 15% Hợp Đồng";
+      bannerSubtitle = "Hỗ trợ trả góp 0% hoặc thanh toán VietQR nhận chiết khấu trực tiếp";
+      products = [
+        { id: "p1", name: "Sofa Góc L Da Bò Ý Nhập Khẩu Màu Nâu Cigar", category: "Phòng Khách", price: 28500000, stock: 8, sku: "NT-SOFA-01" },
+        { id: "p2", name: "Bàn Ăn Gỗ Sồi Nga Nguyên Tấm 8 Ghế", category: "Phòng Bếp", price: 16800000, stock: 12, sku: "NT-BAN-02" },
+        { id: "p3", name: "Giường Ngủ Bọc Nỉ Phong Cách Minimalist", category: "Phòng Ngủ", price: 14200000, stock: 15, sku: "NT-GIUONG-03" },
+        { id: "p4", name: "Tủ Quần Áo Cánh Kính Đèn LED Cảm Ứng", category: "Phòng Ngủ", price: 19500000, stock: 10, sku: "NT-TU-04" }
+      ];
+    } else if (lower.includes("cafe") || lower.includes("cà phê") || lower.includes("trà") || lower.includes("f&b")) {
+      brandName = "The Highland Roastery & Cafe";
+      headline = "Hương Vị Cà Phê Mộc Nguyên Bản Từ Cao Nguyên Cầu Đất";
+      bannerTitle = "Đặt Bàn Trực Tuyến & Mang Đi - Tặng Ngay Voucher 30K";
+      bannerSubtitle = "Quét mã VietQR tại quầy hoặc tại bàn, nhận đồ uống trong 3 phút";
+      products = [
+        { id: "p1", name: "Cà Phê Cold Brew Ủ Lạnh 24h Hương Cam Vàng", category: "Cà Phê Đặc Sản", price: 65000, stock: 150, sku: "CF-COLD-01" },
+        { id: "p2", name: "Latte Hạnh Nhân Sữa Yến Mạch Nóng", category: "Cà Phê Ý", price: 58000, stock: 200, sku: "CF-LATTE-02" },
+        { id: "p3", name: "Hạt Cà Phê Arabica Cầu Đất Rang Mộc 500g", category: "Hạt Đóng Gói", price: 210000, stock: 85, sku: "CF-BEAN-03" },
+        { id: "p4", name: "Trà Đào Cam Sả Thảo Mộc Tươi", category: "Trà Trái Cây", price: 52000, stock: 180, sku: "CF-TEA-04" }
+      ];
+    } else {
+      brandName = `${prompt.slice(0, 25)} Premium Store`;
+      headline = "Giải Pháp Kinh Doanh Trực Tuyến Tự Động & Chuyên Nghiệp";
+      bannerTitle = "Chào Mừng Đến Với Hệ Thống Mới - Đặt Hàng Trực Tuyến";
+      bannerSubtitle = "Thanh toán quét mã VietQR tự động 24/7";
+      products = [
+        { id: "p1", name: `Gói Dịch Vụ Cơ Bản (${prompt.slice(0, 20)})`, category: "Gói Dịch Vụ", price: 1500000, stock: 100, sku: "SRV-BAS-01" },
+        { id: "p2", name: `Gói Nâng Cao Chuyên Sâu`, category: "Gói Dịch Vụ", price: 3500000, stock: 50, sku: "SRV-PRO-02" },
+        { id: "p3", name: `Sản Phẩm Tiêu Chuẩn Doanh Nghiệp`, category: "Sản Phẩm", price: 2200000, stock: 75, sku: "PRD-STD-03" },
+        { id: "p4", name: `Phụ Kiện Đi Kèm Chính Hãng`, category: "Phụ Kiện", price: 650000, stock: 200, sku: "ACC-GEN-04" }
+      ];
+    }
+
+    return {
+      brandName,
+      headline,
+      deployMode: "Máy Chủ Cục Bộ Nội Bộ (Localhost:5000)",
+      previewUrl: "http://127.0.0.1:5000/storefront",
+      customDomain: `https://${brandName.toLowerCase().replace(/[^a-z0-9]/g, "")}.com.vn`,
+      bannerTitle,
+      bannerSubtitle,
+      adminStoreUser: "store_admin",
+      adminStorePass: "Store@2026MasterKey",
+      products,
+      aiEngine: "Dynamic Template Generator"
+    };
+  }
+}
+
+export const consultantAI = new ConsultantAIService();
+export const builderAI = new BuilderAIService();
+

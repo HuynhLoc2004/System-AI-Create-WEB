@@ -1,0 +1,103 @@
+version: "3.8"
+
+services:
+  # 1. TẦNG CỔNG VÀO: REVERSE PROXY & SSL
+  nginx-proxy:
+    image: nginx:1.25-alpine
+    container_name: enterprise-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+    depends_on:
+      - backend-core
+      - frontend-web
+    networks:
+      - enterprise-network
+
+  # 2. GIAO DIỆN FRONTEND (NEXT.JS)
+  frontend-web:
+    image: ghcr.io/org/frontend-web:latest
+    container_name: enterprise-frontend
+    restart: always
+    environment:
+      - NODE_ENV=production
+    networks:
+      - enterprise-network
+
+  # 3. LÕI BACKEND API (NESTJS)
+  backend-core:
+    image: ghcr.io/org/backend-core:latest
+    container_name: enterprise-backend
+    restart: always
+    env_file:
+      - .env.production
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+    networks:
+      - enterprise-network
+
+  # 4. WORKER XỬ LÝ HÀNG ĐỢI BẤT ĐỒNG BỘ
+  backend-worker:
+    image: ghcr.io/org/backend-core:latest
+    container_name: enterprise-worker
+    restart: always
+    command: ["node", "dist/worker.js"]
+    env_file:
+      - .env.production
+    depends_on:
+      - redis-cache
+      - postgres-db
+    networks:
+      - enterprise-network
+
+  # 5. CƠ SỞ DỮ LIỆU POSTGRESQL
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: enterprise-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: enterprise_production_db
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: StrongProductionPassword2026!
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_user -d enterprise_production_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - enterprise-network
+
+  # 6. BỘ NHỚ ĐỆM REDIS
+  redis-cache:
+    image: redis:7-alpine
+    container_name: enterprise-redis
+    restart: always
+    command: ["redis-server", "--requirepass", "StrongRedisPassword2026!", "--maxmemory", "2gb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "StrongRedisPassword2026!", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - enterprise-network
+
+networks:
+  enterprise-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Không Gian Dự Án Khách Hàng - IT-Assignment Enterprise</title>
+  
+  <!-- Modern Clean Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #090D16;
+      --bg-surface: #101626;
+      --bg-card: #151D30;
+      --bg-card-subtle: #1C263D;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-active: #3B82F6;
+      
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-sub: #64748B;
+      
+      --accent-blue: #2563EB;
+      --accent-blue-hover: #1D4ED8;
+      
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --success-text: #34D399;
+      --pending-bg: rgba(245, 158, 11, 0.12);
+      --pending-text: #FBBF24;
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Clean Header */
+    .top-header {
+      background: rgba(16, 22, 38, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-blue);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+    }
+    .brand-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .brand-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Modern Centered Tab Bar */
+    .nav-tabs-center {
+      display: flex;
+      align-items: center;
+      background: #090D16;
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .nav-tab-btn:hover {
+      color: #FFFFFF;
+    }
+    .nav-tab-btn.active {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+    }
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-pill {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-exit {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn-exit:hover {
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Main Container Views */
+    .view-content-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      width: 100%;
+      flex: 1;
+    }
+
+    .tab-view-panel {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    .tab-view-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================
+       TAB 1: LIVE STOREFRONT (THE HERO CANVAS)
+       ========================================= */
+    .browser-window {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .browser-header-bar {
+      background: #141C2E;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .browser-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .b-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-1 { background: #EF4444; }
+    .dot-2 { background: #F59E0B; }
+    .dot-3 { background: #10B981; }
+
+    .browser-url-field {
+      flex: 1;
+      max-width: 600px;
+      background: #090D16;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.74rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ssl-tag {
+      color: #10B981;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+    }
+
+    .device-switcher {
+      display: flex;
+      gap: 6px;
+    }
+    .device-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+    .device-btn:hover, .device-btn.active {
+      color: #FFFFFF;
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    /* Storefront Body */
+    .store-screen-canvas {
+      background: #0A0F1D;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin: 0 auto;
+      transition: max-width 0.25s ease;
+      width: 100%;
+    }
+    .store-screen-canvas.mobile-mode {
+      max-width: 410px;
+      border-left: 1px dashed rgba(255, 255, 255, 0.15);
+      border-right: 1px dashed rgba(255, 255, 255, 0.15);
+      padding: 18px;
+    }
+
+    .store-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 16px;
+    }
+    .store-title-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #FFFFFF;
+    }
+    .cart-summary-btn {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease;
+    }
+    .cart-summary-btn:hover {
+      background: var(--accent-blue-hover);
+    }
+
+    .promo-banner-box {
+      background: linear-gradient(135deg, #141C2E, #0D1322);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 22px 26px;
+    }
+    .promo-banner-box h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .promo-banner-box p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Product Grid */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    }
+
+    .catalog-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .catalog-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .catalog-thumb {
+      height: 110px;
+      background: #182236;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .sku-badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      background: rgba(0, 0, 0, 0.45);
+      color: #94A3B8;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .item-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      min-height: 38px;
+      line-height: 1.35;
+    }
+    .item-cat {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+    }
+    .item-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 6px;
+    }
+    .item-price {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+    }
+    .btn-add-item {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-add-item:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    /* VietQR Payment Banner inside Store */
+    .store-checkout-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .checkout-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .qr-card-white {
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 14px;
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .qr-bank-head {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #1E3A8A;
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 4px;
+    }
+    .qr-total-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #0F172A;
+      font-family: var(--font-mono);
+    }
+
+    /* Floating Feedback Trigger */
+    .floating-feedback-pill {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 40;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .floating-feedback-pill:hover {
+      transform: translateY(-2px);
+      background: var(--accent-blue-hover);
+    }
+
+    /* =========================================
+       TAB 2: FEEDBACK & RESOLUTION (CLEAN & SPACIOUS)
+       ========================================= */
+    .feedback-page-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .standard-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .box-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .box-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 600px) {
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .text-input, .text-area {
+      width: 100%;
+      background: #090D16;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: #FFFFFF;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .text-input:focus, .text-area:focus {
+      border-color: var(--border-active);
+    }
+
+    .btn-submit-action {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-submit-action:hover {
+      background: var(--accent-blue-hover);
+    }
+
+    .feedback-card-item {
+      background: #0D1322;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .feedback-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tag-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .status-tag-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .badge-done {
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    .badge-prog {
+      background: var(--pending-bg);
+      color: var(--pending-text);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .feedback-title-text {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .feedback-user-quote {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .feedback-solution-box {
+      background: #151F33;
+      border-left: 3px solid var(--accent-blue);
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: #F1F5F9;
+      line-height: 1.5;
+    }
+    .feedback-solution-box strong {
+      display: block;
+      font-size: 0.72rem;
+      color: #93C5FD;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .feedback-foot {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* =========================================
+       TAB 3: USER GUIDE & HANDOVER
+       ========================================= */
+    .guide-page-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .handover-card {
+      background: linear-gradient(135deg, #141C2E, #0D1322);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .handover-cell-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .handover-cell-val {
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #FFFFFF;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      word-break: break-all;
+    }
+    .btn-copy-inline {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 7px 11px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-copy-inline:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border-color: var(--accent-blue);
+    }
+
+    .step-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .step-guide-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .step-num {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin-bottom: 6px;
+    }
+    .step-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="top-header">
+    <div class="brand-group">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="brand-title" id="topBrandTitle">Novawear Premium Retail</div>
+        <div class="brand-meta" id="topProjectSubtitle">Không Gian Giám Sát Dự Án Khách Hàng</div>
+      </div>
+    </div>
+
+    <!-- Centered Navigation Tabs -->
+    <nav class="nav-tabs-center">
+      <button type="button" class="nav-tab-btn active" data-tab="tab-storefront">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>Xem Website</span>
+      </button>
+
+      <button type="button" class="nav-tab-btn" data-tab="tab-feedback">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Góp Ý & Xử Lý</span>
+        <span class="tab-badge" id="tabFeedbackCount">2</span>
+      </button>
+
+      <button type="button" class="nav-tab-btn" data-tab="tab-guide">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>Hướng Dẫn & Tài Khoản</span>
+      </button>
+    </nav>
+
+    <!-- User Profile & Logout -->
+    <div class="user-actions">
+      <div class="user-pill" id="clientNameBadge">Đại Diện Doanh Nghiệp</div>
+      <a href="client_portal.html" class="btn-exit">Đăng Xuất</a>
+    </div>
+  </header>
+
+  <!-- Main Views Container -->
+  <main class="view-content-wrapper">
+
+    <!-- ========================================================
+         VIEW 1: LIVE STOREFRONT (THE HERO CANVAS)
+         ======================================================== -->
+    <section class="tab-view-panel active" id="tab-storefront">
+      <div class="browser-window">
+        <!-- Browser Topbar -->
+        <div class="browser-header-bar">
+          <div class="browser-controls">
+            <span class="b-dot dot-1"></span>
+            <span class="b-dot dot-2"></span>
+            <span class="b-dot dot-3"></span>
+          </div>
+
+          <div class="browser-url-field">
+            <span class="ssl-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              SSL Bảo Mật
+            </span>
+            <span id="previewAddressUrl">http://127.0.0.1:5000/storefront</span>
+          </div>
+
+          <div class="device-switcher">
+            <button type="button" class="device-btn active" id="btnDeviceDesktop">Màn Hình Lớn</button>
+            <button type="button" class="device-btn" id="btnDeviceMobile">Điện Thoại</button>
+          </div>
+        </div>
+
+        <!-- Store Canvas -->
+        <div class="store-screen-canvas" id="storeScreenCanvas">
+          <div class="store-topbar">
+            <div class="store-title-text" id="storeBrandName">NOVAWEAR PREMIUM RETAIL</div>
+            <button type="button" class="cart-summary-btn" id="btnCartHeader">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>Giỏ Hàng (<span id="cartCountBadge">0</span>)</span>
+            </button>
+          </div>
+
+          <div class="promo-banner-box">
+            <h2 id="storeBannerTitle">Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên</h2>
+            <p id="storeBannerSubtitle">Thanh toán quét mã VietQR tự động trong 0.8 giây - Tiền về tài khoản doanh nghiệp ngay lập tức</p>
+          </div>
+
+          <!-- Product Catalog Grid -->
+          <div class="catalog-grid" id="previewStoreProductGrid">
+            <!-- Dynamically populated from real DB -->
+          </div>
+
+          <!-- VietQR Instant Checkout Block -->
+          <div class="store-checkout-block">
+            <div class="checkout-title">Cổng Thanh Toán Quét Mã VietQR Tự Động (Napas 247)</div>
+            
+            <div class="qr-card-white">
+              <div class="qr-bank-head">
+                <span>VietQR</span>
+                <span>NAPAS 247</span>
+              </div>
+              
+              <!-- Sharp SVG QR Matrix -->
+              <svg width="130" height="130" viewBox="0 0 100 100" fill="#0F172A">
+                <rect x="0" y="0" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
+                <rect x="7" y="7" width="16" height="16"/>
+                <rect x="70" y="0" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
+                <rect x="77" y="7" width="16" height="16"/>
+                <rect x="0" y="70" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
+                <rect x="7" y="77" width="16" height="16"/>
+                <rect x="38" y="8" width="6" height="6"/>
+                <rect x="48" y="18" width="6" height="6"/>
+                <rect x="38" y="28" width="6" height="6"/>
+                <rect x="18" y="38" width="6" height="6"/>
+                <rect x="28" y="48" width="6" height="6"/>
+                <rect x="38" y="48" width="6" height="6"/>
+                <rect x="48" y="48" width="6" height="6"/>
+                <rect x="58" y="38" width="6" height="6"/>
+                <rect x="68" y="48" width="6" height="6"/>
+                <rect x="78" y="38" width="6" height="6"/>
+                <rect x="88" y="48" width="6" height="6"/>
+                <rect x="38" y="68" width="6" height="6"/>
+                <rect x="48" y="78" width="6" height="6"/>
+                <rect x="58" y="68" width="6" height="6"/>
+                <rect x="68" y="78" width="6" height="6"/>
+                <rect x="78" y="68" width="6" height="6"/>
+                <rect x="88" y="78" width="6" height="6"/>
+              </svg>
+
+              <div class="qr-total-label" id="vietqrDisplayTotal">0 VNĐ</div>
+            </div>
+
+            <p style="font-size: 0.75rem; color: var(--text-muted); max-width: 480px;">
+              Khách hàng mở ứng dụng ngân hàng bất kỳ để quét mã. Tiền chuyển thẳng vào tài khoản của bạn và đơn hàng tự động kích hoạt.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Button to Open Feedback Tab -->
+      <button type="button" class="floating-feedback-pill" id="btnFloatingFeedback">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Gửi Góp Ý Về Web</span>
+      </button>
+    </section>
+
+    <!-- ========================================================
+         VIEW 2: FEEDBACK & RESOLUTION TICKETS (SPACIOUS & UNCLUTTERED)
+         ======================================================== -->
+    <section class="tab-view-panel" id="tab-feedback">
+      <div class="feedback-page-container">
+        
+        <!-- Feedback Form Box -->
+        <div class="standard-box">
+          <div class="box-title">Hộp Thư Góp Ý Gửi Ban Quản Trị</div>
+          <div class="box-desc">Khi xem website, nếu cần điều chỉnh bảng màu, sản phẩm, tính năng hay hạ tầng, hãy nhập tại đây để Admin xử lý ngay.</div>
+
+          <form id="workspaceFeedbackForm">
+            <div class="form-row-2">
+              <div class="input-group">
+                <label>Chủ Đề Yêu Cầu:</label>
+                <input type="text" class="text-input" id="fbCategoryInput" placeholder="VD: Giao diện di động, Cập nhật giá sản phẩm, Thêm ngân hàng..." required>
+              </div>
+              <div class="input-group">
+                <label>Tóm Tắt Yêu Cầu:</label>
+                <input type="text" class="text-input" id="fbTitleInput" placeholder="VD: Đổi tông màu sang Navy tối giản..." required>
+              </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label>Nội Dung Chi Tiết:</label>
+              <textarea class="text-area" id="fbContentInput" rows="3" placeholder="Mô tả cụ thể mong muốn của bạn để đội ngũ kỹ thuật xử lý đúng ý nhất..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit-action">Gửi Góp Ý Đến Ban Quản Trị</button>
+          </form>
+        </div>
+
+        <!-- Tickets List -->
+        <div class="standard-box">
+          <div class="box-title">Tiến Độ Xử Lý Các Góp Ý Của Bạn (<span id="ticketCountBadge">0</span>)</div>
+          <div class="box-desc">Lịch sử và giải pháp phản hồi trực tiếp từ Ban Quản Trị.</div>
+
+          <div id="workspaceTicketList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 3: USER GUIDE & HANDOVER
+         ======================================================== -->
+    <section class="tab-view-panel" id="tab-guide">
+      <div class="guide-page-container">
+        
+        <!-- Handover Credentials -->
+        <div class="standard-box">
+          <div class="box-title">Thông Tin Quản Trị & Bàn Giao Website</div>
+          <div class="box-desc">Tài khoản quản trị cửa hàng dành riêng cho chủ doanh nghiệp:</div>
+
+          <div class="handover-card">
+            <div>
+              <div class="handover-cell-label">Đường Dẫn Quản Trị:</div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <div class="handover-cell-val" id="guideAdminUrlVal" style="flex: 1;">http://127.0.0.1:5000/admin</div>
+                <button type="button" class="btn-copy-inline" onclick="copyToClipboard('guideAdminUrlVal', this)" title="Sao chép đường dẫn">Copy</button>
+              </div>
+            </div>
+            <div>
+              <div class="handover-cell-label">Tài Khoản Mặc Định:</div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <div class="handover-cell-val" id="guideAdminUserVal" style="flex: 1;">novawear_admin</div>
+                <button type="button" class="btn-copy-inline" onclick="copyToClipboard('guideAdminUserVal', this)" title="Sao chép tài khoản">Copy</button>
+              </div>
+            </div>
+            <div>
+              <div class="handover-cell-label">Mật Khẩu Quản Trị:</div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <div class="handover-cell-val" id="guideAdminPassVal" style="flex: 1;">Nova@2026MasterPass</div>
+                <button type="button" class="btn-copy-inline" onclick="copyToClipboard('guideAdminPassVal', this)" title="Sao chép mật khẩu">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step Guide -->
+        <div class="step-guide-grid">
+          <div class="step-guide-card">
+            <div class="step-num">BƯỚC 1</div>
+            <div class="step-title">Đăng Nhập Quản Trị</div>
+            <p class="step-desc">Đăng nhập vào đường dẫn bên trên. Vào mục <em>Cài Đặt Tài Khoản</em> để đổi mật khẩu quản trị và bật bảo mật số điện thoại của bạn.</p>
+          </div>
+
+          <div class="step-guide-card">
+            <div class="step-num">BƯỚC 2</div>
+            <div class="step-title">Quản Lý Sản Phẩm & Giá</div>
+            <p class="step-desc">Thêm sản phẩm mới, cập nhật giá tiền niêm yết (VNĐ), tải ảnh rõ nét và quản lý số lượng tồn kho tự động trừ khi có khách mua.</p>
+          </div>
+
+          <div class="step-guide-card">
+            <div class="step-num">BƯỚC 3</div>
+            <div class="step-title">Thanh Toán VietQR Tự Động</div>
+            <p class="step-desc">Tiền khách quét mã chuyển thẳng vào tài khoản ngân hàng của bạn trong 1 giây mà không bị gián đoạn hay giữ vốn trung gian.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const STORAGE_KEY = "it_assignment_projects_v8";
+    const IT_MASTER_AUTH_SALT = "IT_ASSIGNMENT_SUPER_SECRET_SALT_2026_@#!$%";
+    const API_BASE = window.location.protocol === "file:" ? "http://localhost:5000" : "";
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Read Key or Session
+    const loggedClientName = sessionStorage.getItem("it_client_name") || "Đại Diện Doanh Nghiệp";
+    const authorizedProjectCode = sessionStorage.getItem("it_authorized_project") || "PRJ-RETAIL-2026";
+    document.getElementById("clientNameBadge").textContent = escapeHtml(loggedClientName);
+
+    // Initial clean project model
+    let currentProject = {
+      id: "PRJ-RETAIL-2026",
+      code: "RETAIL",
+      name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
+      clientConfig: {
+        brandName: "Novawear Premium Retail",
+        headline: "Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Động Tự Động",
+        previewUrl: "http://127.0.0.1:5000/storefront",
+        bannerTitle: "Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên",
+        bannerSubtitle: "Thanh toán quét mã VietQR tự động trong 0.8 giây - Tiền về tài khoản doanh nghiệp ngay lập tức",
+        adminStoreUser: "novawear_admin",
+        adminStorePass: "Nova@2026MasterPass",
+        products: [
+          { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, sku: "BLZ-CSM-01" },
+          { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, sku: "DRS-SLK-09" },
+          { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, sku: "SHS-OXF-03" },
+          { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, sku: "WLT-CRK-07" }
+        ]
+      },
+      feedbacks: [
+        {
+          id: "FB-01",
+          title: "Đồng bộ nhận diện thương hiệu tối giản & Tối ưu cuộn 60fps",
+          sender: "Đại Diện Khách Hàng (Sponsor)",
+          category: "Giao diện & Trải nghiệm người dùng",
+          time: "Hôm qua 15:30",
+          content: "Giao diện website bán lẻ cần hạn chế tối đa icon màu mè, font chữ sắc nét và dùng tông màu tối giản theo đúng nhận diện thương hiệu công ty. Cuộn trang trên điện thoại phải êm và mượt.",
+          pmSolution: "Ban Quản Trị đã chỉ đạo bộ phận thiết kế tinh chỉnh lại toàn bộ bảng màu tối giản, chuyên nghiệp theo đúng nhận diện thương hiệu công ty và tối ưu trải nghiệm cuộn trang mượt mà 60fps trên điện thoại.",
+          assignedDept: "04. Thiết Kế UI/UX",
+          status: "RESOLVED"
+        },
+        {
+          id: "FB-02",
+          title: "Tích hợp Web Động & Đối soát thanh toán VietQR ngân hàng thực",
+          sender: "Giám Đốc Vận Hành",
+          category: "Thanh toán & Vận hành đơn hàng",
+          time: "Hôm nay 09:15",
+          content: "Trang Checkout phải kết nối API VietQR thật trên Production, tự động đối soát ngân hàng ngay khi khách quét mã, không dùng trang tĩnh.",
+          pmSolution: "Ban Quản Trị đã phê duyệt triển khai cổng thanh toán Web Động, kết nối hệ thống tự động nhận diện tiền về tài khoản ngân hàng và kiểm thử an toàn trước khi bàn giao.",
+          assignedDept: "06. Lập Trình Backend",
+          status: "IN_PROGRESS"
+        }
+      ]
+    };
+
+    // Purge old geek text from localStorage if present
+    function purgeStaleCache(proj) {
+      if (!proj || !proj.feedbacks) return;
+      proj.feedbacks.forEach(f => {
+        if (f.pmSolution && (f.pmSolution.includes("tokens.json") || f.pmSolution.includes("Lenis") || f.pmSolution.includes("NestJS"))) {
+          if (f.id === "FB-01" || f.category?.includes("Giao diện")) {
+            f.pmSolution = "Ban Quản Trị đã chỉ đạo bộ phận thiết kế tinh chỉnh lại toàn bộ bảng màu tối giản, chuyên nghiệp theo đúng nhận diện thương hiệu công ty và tối ưu trải nghiệm cuộn trang mượt mà 60fps trên điện thoại.";
+          } else {
+            f.pmSolution = "Ban Quản Trị đã phê duyệt triển khai cổng thanh toán Web Động, kết nối hệ thống tự động nhận diện tiền về tài khoản ngân hàng và kiểm thử an toàn trước khi bàn giao.";
+          }
+        }
+      });
+    }
+
+    // Load Data
+    function loadData() {
+      // 1. Storage
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const list = JSON.parse(saved);
+          const found = list.find(p => p.id === authorizedProjectCode || p.code === authorizedProjectCode);
+          if (found) {
+            purgeStaleCache(found);
+            currentProject = found;
+          }
+        }
+      } catch (e) {}
+
+      // 2. Fetch live project from server
+      fetch(API_BASE + "/api/projects/" + authorizedProjectCode)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.success && res.data) {
+            currentProject = res.data;
+            purgeStaleCache(currentProject);
+            renderAll();
+          }
+        }).catch(e => {});
+
+      // 3. Fetch live feedbacks
+      fetch(API_BASE + "/api/feedback?projectId=" + authorizedProjectCode)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
+            currentProject.feedbacks = res.data.map(f => ({
+              id: f.id,
+              title: f.category || "Yêu cầu từ khách hàng",
+              category: f.category || "Góp ý chung",
+              sender: f.sender,
+              content: f.content,
+              pmSolution: f.solution,
+              assignedDept: f.assignedDept || f.solutionDept,
+              status: f.status,
+              time: f.timestamp
+            }));
+            purgeStaleCache(currentProject);
+            renderTickets();
+          }
+        }).catch(e => {});
+
+      renderAll();
+    }
+
+    let cartTotal = 0;
+    let cartCount = 0;
+
+    function renderAll() {
+      const cfg = currentProject.clientConfig || {};
+      const brand = cfg.brandName || currentProject.name;
+      const previewUrl = cfg.previewUrl || "http://127.0.0.1:5000/storefront";
+
+      document.getElementById("topBrandTitle").textContent = brand;
+      document.getElementById("topProjectSubtitle").textContent = `Không Gian Giám Sát: ${brand}`;
+
+      document.getElementById("previewAddressUrl").textContent = previewUrl;
+      document.getElementById("storeBrandName").textContent = brand.toUpperCase();
+
+      if (cfg.bannerTitle) document.getElementById("storeBannerTitle").textContent = cfg.bannerTitle;
+      if (cfg.bannerSubtitle) document.getElementById("storeBannerSubtitle").textContent = cfg.bannerSubtitle;
+
+      // Guide credentials
+      document.getElementById("guideAdminUrlVal").textContent = `${previewUrl}/admin`;
+      document.getElementById("guideAdminUserVal").textContent = cfg.adminStoreUser || "novawear_admin";
+      document.getElementById("guideAdminPassVal").textContent = cfg.adminStorePass || "Nova@2026MasterPass";
+
+      renderCatalog(cfg.products);
+      renderTickets();
+    }
+
+    function renderCatalog(items) {
+      const grid = document.getElementById("previewStoreProductGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      const list = (Array.isArray(items) && items.length > 0) ? items : [
+        { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, sku: "BLZ-CSM-01" },
+        { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, sku: "DRS-SLK-09" },
+        { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, sku: "SHS-OXF-03" },
+        { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, sku: "WLT-CRK-07" }
+      ];
+
+      list.forEach((p, idx) => {
+        const priceNum = Number(p.price) || 0;
+        const formatted = priceNum.toLocaleString("vi-VN") + " đ";
+        const sku = p.sku || ("SKU-0" + (idx + 1));
+
+        const card = document.createElement("div");
+        card.className = "catalog-card";
+        card.innerHTML = `
+          <div class="catalog-thumb">
+            <span class="sku-badge">${escapeHtml(sku)}</span>
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+          </div>
+          <div class="item-name">${escapeHtml(p.name)}</div>
+          <div class="item-cat">${escapeHtml(p.category || "Sản phẩm")}</div>
+          <div class="item-bottom">
+            <span class="item-price">${formatted}</span>
+            <button type="button" class="btn-add-item" onclick="addItemToCart(${priceNum}, '${escapeHtml(p.name)}')">+ Thêm</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    window.addItemToCart = function(price, name) {
+      cartTotal += price;
+      cartCount++;
+      document.getElementById("cartCountBadge").textContent = cartCount;
+      document.getElementById("vietqrDisplayTotal").textContent = cartTotal.toLocaleString("vi-VN") + " VNĐ";
+    };
+
+    function renderTickets() {
+      const container = document.getElementById("workspaceTicketList");
+      const countBadge = document.getElementById("ticketCountBadge");
+      const tabBadge = document.getElementById("tabFeedbackCount");
+      const feedbacks = currentProject.feedbacks || [];
+
+      countBadge.textContent = feedbacks.length;
+      tabBadge.textContent = feedbacks.length;
+      container.innerHTML = "";
+
+      if (feedbacks.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: #64748B; padding: 32px 10px; font-size: 0.8rem;">
+            Chưa có góp ý nào. Hãy gửi phản hồi vào hộp thư phía trên để đội ngũ kỹ thuật xử lý ngay!
+          </div>
+        `;
+        return;
+      }
+
+      feedbacks.forEach(fb => {
+        const isDone = fb.status === "RESOLVED";
+        const badgeHtml = isDone
+          ? `<span class="status-tag-badge badge-done">ĐÃ XỬ LÝ</span>`
+          : `<span class="status-tag-badge badge-prog">ĐANG XỬ LÝ</span>`;
+
+        const title = fb.title || fb.category || "Yêu cầu điều chỉnh";
+        const solution = fb.pmSolution || "Ban Quản Trị đã tiếp nhận yêu cầu và đang chỉ đạo phòng ban kỹ thuật xử lý...";
+
+        const card = document.createElement("div");
+        card.className = "feedback-card-item";
+        card.innerHTML = `
+          <div class="feedback-card-top">
+            <span class="tag-meta">${escapeHtml(fb.id)} &bull; ${escapeHtml(fb.category || "Góp ý")}</span>
+            ${badgeHtml}
+          </div>
+          <div class="feedback-title-text">${escapeHtml(title)}</div>
+          <div class="feedback-user-quote">“${escapeHtml(fb.content)}”</div>
+          <div class="feedback-solution-box">
+            <strong>Giải pháp của Ban Quản Trị:</strong>
+            ${escapeHtml(solution)}
+          </div>
+          <div class="feedback-foot">
+            <span>Phụ trách: <strong>${escapeHtml(fb.assignedDept || "01. Quản Trị Dự Án")}</strong></span>
+            <span>${escapeHtml(fb.time || "Gần đây")}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Submit Feedback
+    document.getElementById("workspaceFeedbackForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const cat = document.getElementById("fbCategoryInput").value.trim();
+      const title = document.getElementById("fbTitleInput").value.trim();
+      const content = document.getElementById("fbContentInput").value.trim();
+
+      if (!content || !title) return;
+
+      const newFb = {
+        id: `FB-${Math.floor(10 + Math.random() * 90)}`,
+        title: title,
+        sender: loggedClientName,
+        category: cat || title,
+        time: "Vừa xong",
+        content: content,
+        pmSolution: "Ban Quản Trị đã tiếp nhận yêu cầu của bạn và phân luồng tới phòng ban phụ trách để xử lý tối ưu.",
+        assignedDept: "01. Quản Trị Dự Án (PM)",
+        status: "IN_PROGRESS"
+      };
+
+      if (!currentProject.feedbacks) currentProject.feedbacks = [];
+      currentProject.feedbacks.unshift(newFb);
+
+      // Post to backend server
+      fetch(API_BASE + "/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectId: currentProject.id,
+          sender: loggedClientName,
+          category: cat || title,
+          content: `[${title}] ${content}`,
+          assignedDept: "01. Quản Trị Dự Án (PM)"
+        })
+      }).catch(e => {});
+
+      document.getElementById("workspaceFeedbackForm").reset();
+      renderTickets();
+      alert("Góp ý của bạn đã được chuyển thẳng tới Ban Quản Trị! Đội ngũ kỹ sư sẽ cập nhật giải pháp ngay.");
+    });
+
+    // Copy Helper
+    window.copyToClipboard = function(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.textContent || el.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = "Đã chép!";
+        btn.style.color = "#34D399";
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = "";
+        }, 1500);
+      }).catch(err => {
+        alert("Đã sao chép: " + text);
+      });
+    };
+
+    // Tab Navigation Logic
+    document.querySelectorAll(".nav-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".nav-tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-view-panel").forEach(p => p.classList.remove("active"));
+
+        btn.classList.add("active");
+        const targetId = btn.getAttribute("data-tab");
+        const panel = document.getElementById(targetId);
+        if (panel) panel.classList.add("active");
+      });
+    });
+
+    // Floating Button switches to Feedback tab
+    document.getElementById("btnFloatingFeedback").addEventListener("click", () => {
+      const fbTabBtn = document.querySelector('[data-tab="tab-feedback"]');
+      if (fbTabBtn) fbTabBtn.click();
+    });
+
+    // Device View Mode Switching
+    document.getElementById("btnDeviceDesktop").addEventListener("click", () => {
+      document.getElementById("btnDeviceDesktop").classList.add("active");
+      document.getElementById("btnDeviceMobile").classList.remove("active");
+      document.getElementById("storeScreenCanvas").classList.remove("mobile-mode");
+    });
+
+    document.getElementById("btnDeviceMobile").addEventListener("click", () => {
+      document.getElementById("btnDeviceMobile").classList.add("active");
+      document.getElementById("btnDeviceDesktop").classList.remove("active");
+      document.getElementById("storeScreenCanvas").classList.add("mobile-mode");
+    });
+
+    // Init
+    loadData();
+  </script>
+</body>
+</html>

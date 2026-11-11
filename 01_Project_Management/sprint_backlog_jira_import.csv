@@ -1,0 +1,15 @@
+Issue Type,Summary,Description,Story Points,Priority,Component,Assignee
+Epic,"[EPIC-01] Hệ Thống Xác Thực & Quản Lý Phiên","Xây dựng toàn bộ phân hệ đăng nhập OTP SMS, JWT kép, và RBAC",13,High,Authentication,Backend Lead
+Story,"[US-AUTH-01] Đăng nhập bằng Số điện thoại & OTP","Khách hàng có thể nhập SĐT để nhận mã OTP qua SMS và đăng nhập nhanh",5,High,Authentication,Frontend Lead
+Story,"[US-AUTH-02] Tự động Refresh Token trong HttpOnly Cookie","Tự động làm mới Access Token khi hết hạn 15 phút mà không ngắt phiên",3,High,Authentication,Backend Lead
+Task,"[TASK-AUTH-03] Tích hợp Gateway SMS Twilio / Zalo ZNS","Cấu hình API gửi OTP và cơ chế rate limit 3 lần / 10 phút",3,Medium,DevOps,Backend Mid
+Epic,"[EPIC-02] Quản Lý Đơn Hàng & Giỏ Hàng","Phân hệ giỏ hàng, đặt hàng và khóa tồn kho",21,High,Order & Inventory,Backend Lead
+Story,"[US-ORD-01] Hiển thị giỏ hàng và cập nhật lạc quan","Người dùng thêm sửa xóa món trong giỏ hàng với Optimistic UI",5,High,Frontend,Frontend Mid
+Story,"[US-ORD-02] Khóa tạm thời tồn kho 10 phút khi Checkout","Sử dụng Pessimistic Lock và BullMQ delay job để nhả kho nếu quá hạn",8,Highest,Order & Inventory,Backend Senior
+Epic,"[EPIC-03] Tích Hợp Cổng Thanh Toán Trực Tuyến","Hỗ trợ VietQR động, VNPay và xử lý Webhook Idempotency",13,Highest,Payment,Solution Architect
+Story,"[US-PAY-01] Hiển thị mã VietQR động thanh toán","Render mã QR động có sẵn nội dung chuyển khoản duy nhất và đồng hồ 10 phút",5,High,Payment,Frontend Mid
+Story,"[US-PAY-02] Xử lý Webhook IPN ngân hàng Idempotent","Bắt Webhook ngân hàng, xác thực HMAC-SHA256 và chống xử lý trùng đơn",8,Highest,Payment,Backend Senior
+Epic,"[EPIC-04] Hạ Tầng CI/CD & Giám Sát Vận Hành","Đường ống tự động hóa Docker, Nginx SSL và Alert Bot Telegram",13,High,DevOps,DevOps Engineer
+Task,"[TASK-OPS-01] Thiết lập GitHub Actions CD nhánh Staging","Tự động build Docker và deploy rolling restart lên Staging VPS",5,High,DevOps,DevOps Engineer
+Task,"[TASK-OPS-02] Cấu hình Prometheus, Grafana và Telegram Bot","Cài đặt cảnh báo CPU > 85% và Error rate > 2% về nhóm Telegram",5,Medium,DevOps,DevOps Engineer
+

@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & Credentials (CRITICAL - DO NOT COMMIT)
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# Logs & Runtime
+*.log
+logs/
+.system_generated/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/

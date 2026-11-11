@@ -1,0 +1,2377 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cổng Tư Vấn Khách Hàng & Đặt Hàng Dự Án - IT-Assignment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ========================================================
+       PREMIUM AGENCY STYLING FOR CLIENT PORTAL
+       Clean, Trustworthy, Responsive, Zero AI-cliche
+       ======================================================== */
+
+    html, body {
+      overflow-x: hidden !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    .portal-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 32px;
+      background: rgba(17, 22, 36, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      gap: 16px;
+    }
+
+    .portal-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .portal-nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .portal-nav-links a:hover {
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+      letter-spacing: 0.4px;
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 780px;
+      margin: 0 auto 32px;
+    }
+
+    .trust-metrics-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      padding: 16px 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .metric-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .metric-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--status-done);
+    }
+
+    /* ========================================================
+       AI PROJECT IDEA STUDIO - PRIMARY HERO FEATURE
+       Clean, Non-Restrictive, Open Topic & High-Impact Prompt
+       ======================================================== */
+    .configurator-section {
+      background: linear-gradient(180deg, #0F172A 0%, #090D16 100%);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 1160px;
+      margin: 0 auto 60px;
+      position: relative;
+    }
+
+    .studio-header {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto 28px;
+    }
+
+    .studio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38BDF8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .studio-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .studio-desc {
+      font-size: 0.88rem;
+      color: #94A3B8;
+      line-height: 1.55;
+    }
+
+    /* Primary Hero Prompt Box */
+    .hero-prompt-container {
+      background: #0D1424;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      transition: all 0.2s ease;
+    }
+    .hero-prompt-container:focus-within {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25), 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .prompt-top-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #93C5FD;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    /* Multi-Turn AI Consultation Chat Studio */
+    .chat-consult-window {
+      background: #0A0F1D;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      margin-top: 10px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .chat-consult-header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .chat-consult-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-consult-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+      flex-shrink: 0;
+    }
+
+    .chat-consult-meta h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-consult-meta p {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      margin: 2px 0 0 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-reset-chat {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #CBD5E1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .btn-reset-chat:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #F87171;
+    }
+
+    /* Message Thread Container */
+    .chat-messages-container {
+      padding: 24px 24px;
+      min-height: 440px;
+      max-height: 660px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      scroll-behavior: smooth;
+      background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.03), transparent 60%);
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .chat-messages-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-messages-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 3px;
+    }
+
+    .chat-msg-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      animation: fadeIn 0.2s ease;
+      scroll-margin-top: 20px;
+    }
+
+    .chat-msg-row.user-msg {
+      flex-direction: row-reverse;
+    }
+
+    .chat-msg-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .chat-msg-avatar.ai {
+      background: #1E293B;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38BDF8;
+    }
+    .chat-msg-avatar.user {
+      background: #2563EB;
+      color: #FFFFFF;
+    }
+
+    .chat-bubble-wrap {
+      flex: 1;
+      min-width: 0;
+      max-width: calc(100% - 44px);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-sizing: border-box;
+    }
+    .chat-msg-row.ai-msg .chat-bubble-wrap {
+      flex: 1;
+      min-width: 0;
+      max-width: calc(100% - 44px);
+      width: auto;
+    }
+    .chat-msg-row.user-msg .chat-bubble-wrap {
+      align-items: flex-end;
+      flex: 1;
+      min-width: 0;
+      max-width: calc(100% - 44px);
+    }
+
+    .chat-sender-label {
+      font-size: 0.72rem;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-bubble {
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .chat-msg-row.ai-msg .chat-bubble {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 3px solid #2563EB;
+      color: #E2E8F0;
+      border-top-left-radius: 2px;
+    }
+
+    .chat-msg-row.user-msg .chat-bubble {
+      background: #1D4ED8;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      border-top-right-radius: 2px;
+    }
+
+    /* Structured Solution Breakdown & Deliverables */
+    .chat-plan-header {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .chat-plan-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #38BDF8;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .chat-plan-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .chat-solution-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 880px) {
+      .chat-solution-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chat-solution-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 2px solid #38BDF8;
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .chat-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .chat-card-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.35;
+    }
+    .chat-card-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .chat-points-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .chat-point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #CBD5E1;
+      line-height: 1.45;
+    }
+    .chat-point-icon {
+      flex-shrink: 0;
+      margin-top: 3px;
+      color: #38BDF8;
+    }
+
+    /* Milestone Stepper Timeline */
+    .chat-timeline-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+    .chat-timeline-header {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #38BDF8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chat-timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    @media (max-width: 768px) {
+      .chat-timeline-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+    .chat-step-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .chat-step-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #93C5FD;
+      display: flex;
+      justify-content: space-between;
+    }
+    .chat-step-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    .chat-step-desc {
+      font-size: 0.75rem;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    /* Commitments & Guarantees Grid */
+    .chat-commitments-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: rgba(30, 41, 59, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+    }
+    .chat-commitments-header {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #A5B4FC;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chat-commitments-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    @media (max-width: 640px) {
+      .chat-commitments-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .chat-commitment-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.77rem;
+      color: #E2E8F0;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .chat-commitment-icon {
+      color: #38BDF8;
+      flex-shrink: 0;
+    }
+
+    /* Admin Handover Action Card (Shown ONLY when solution is ready) */
+    .chat-admin-handover {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .chat-admin-handover-text {
+      font-size: 0.78rem;
+      color: #CBD5E1;
+      line-height: 1.5;
+      flex: 1;
+      min-width: 240px;
+    }
+    .chat-admin-handover-btn {
+      background: #2563EB;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+    .chat-admin-handover-btn:hover {
+      background: #1D4ED8;
+    }
+
+    /* Suggested Follow-up Questions Pills */
+    .chat-suggested-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .chat-suggested-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94A3B8;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.74rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .chat-suggested-pill:hover {
+      background: rgba(37, 99, 235, 0.15);
+      border-color: rgba(37, 99, 235, 0.35);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    /* Typing Indicator */
+    .chat-typing-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: #94A3B8;
+      padding: 6px 0;
+    }
+    .typing-dots {
+      display: inline-flex;
+      gap: 4px;
+    }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: #38BDF8;
+      border-radius: 50%;
+      animation: pulseDot 1.4s infinite ease-in-out both;
+    }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes pulseDot {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Quick Industry Starters Bar */
+    .chat-starters-bar {
+      padding: 9px 18px;
+      background: rgba(15, 23, 42, 0.7);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .chat-starters-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .chat-starters-label {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .starter-tag-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #CBD5E1;
+      padding: 5px 12px;
+      border-radius: 14px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .starter-tag-btn:hover {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: #3B82F6;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    /* Bottom Chat Input Bar */
+    .chat-input-bar {
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.85);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .chat-input-textarea {
+      flex: 1;
+      background: #090E1A;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      outline: none;
+      resize: none;
+      min-height: 48px;
+      max-height: 140px;
+      transition: border-color 0.15s ease;
+    }
+    .chat-input-textarea:focus {
+      border-color: #3B82F6;
+    }
+    .chat-input-textarea::placeholder {
+      color: #64748B;
+      font-size: 0.82rem;
+    }
+
+    .btn-chat-send {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      white-space: nowrap;
+      height: 48px;
+    }
+    .btn-chat-send:hover {
+      background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
+      transform: translateY(-1px);
+    }
+    .btn-chat-send:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* 4-Step Cooperation Process */
+    .process-section {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 16px;
+    }
+
+    .process-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .process-header h2 {
+      font-size: 1.45rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .process-header p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .process-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .process-card:hover {
+      border-color: var(--border-card);
+      transform: translateY(-2px);
+    }
+
+    .process-step-num {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-soft);
+      line-height: 1;
+    }
+
+    .process-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+    }
+
+    .process-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* 6 Values Commitment Section */
+    .values-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 36px 32px;
+      max-width: 1100px;
+      margin: 0 auto 60px;
+    }
+
+    .values-header {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto 28px;
+    }
+    .values-header h2 {
+      font-size: 1.45rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .values-header p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .value-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+    .value-card:hover {
+      border-color: var(--border-card);
+    }
+
+    .value-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .value-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .value-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .contact-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 18px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .contact-card:hover {
+      border-color: var(--border-card);
+      transform: translateY(-2px);
+    }
+    .contact-card strong {
+      font-size: 0.82rem;
+      color: #fff;
+    }
+    .contact-card small {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    .portal-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 24px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1024px) {
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .pill-selector-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      /* Mobile Global Reset */
+      html, body {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+      }
+
+      /* Mobile Nav */
+      .portal-nav {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 10px 12px !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .portal-nav-links { 
+        display: none !important; 
+      }
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100% !important;
+      }
+      .brand-info {
+        min-width: 0;
+        flex: 1;
+      }
+      .logo-text {
+        font-size: 0.92rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px;
+      }
+      .sub-text {
+        font-size: 0.68rem;
+        white-space: normal;
+      }
+      .action-btn-group {
+        width: 100% !important;
+        display: flex !important;
+        gap: 8px !important;
+      }
+      .action-btn-group .btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        padding: 8px 8px !important;
+        font-size: 0.72rem !important;
+        text-align: center !important;
+        white-space: normal !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Hero Section */
+      .hero-container {
+        padding: 24px 12px;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .hero-headline {
+        font-size: 1.35rem;
+        line-height: 1.35;
+      }
+      .hero-subtitle {
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+      .trust-metrics-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 12px 10px;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .metric-item {
+        font-size: 0.72rem;
+        padding: 4px 6px;
+      }
+
+      /* AI Consultation Studio Mobile Layout */
+      .configurator-section {
+        padding: 12px 8px !important;
+        margin: 0 auto 30px !important;
+        border-radius: 12px;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      .studio-header {
+        margin-bottom: 14px;
+        padding: 0 4px;
+      }
+      .studio-title {
+        font-size: 1.15rem;
+        line-height: 1.35;
+      }
+      .studio-desc {
+        font-size: 0.75rem;
+        line-height: 1.5;
+      }
+
+      .chat-consult-window {
+        border-radius: 10px;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      .chat-consult-header {
+        padding: 10px 10px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .chat-consult-profile {
+        width: 100% !important;
+        gap: 8px;
+      }
+      .chat-consult-avatar {
+        width: 30px;
+        height: 30px;
+      }
+      .chat-consult-avatar svg {
+        width: 16px;
+        height: 16px;
+      }
+      .chat-consult-meta {
+        min-width: 0;
+        flex: 1;
+      }
+      .chat-consult-meta h3 {
+        font-size: 0.82rem;
+        white-space: normal;
+      }
+      .chat-consult-meta p {
+        font-size: 0.66rem;
+        flex-wrap: wrap;
+      }
+      .btn-reset-chat {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        box-sizing: border-box !important;
+      }
+
+      /* Chat Messages Thread */
+      .chat-messages-container {
+        padding: 12px 8px !important;
+        min-height: 280px !important;
+        max-height: 520px !important;
+        gap: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+      }
+      .chat-msg-row {
+        gap: 6px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .chat-msg-avatar {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.6rem !important;
+        border-radius: 6px;
+        flex-shrink: 0;
+      }
+      .chat-bubble-wrap {
+        flex: 1 !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 30px) !important;
+        width: calc(100% - 30px) !important;
+        box-sizing: border-box !important;
+      }
+      .chat-msg-row.ai-msg .chat-bubble-wrap {
+        flex: 1 !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 30px) !important;
+        width: calc(100% - 30px) !important;
+      }
+      .chat-msg-row.user-msg .chat-bubble-wrap {
+        flex: 1 !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 30px) !important;
+        width: calc(100% - 30px) !important;
+      }
+      .chat-bubble {
+        padding: 10px 10px !important;
+        font-size: 0.82rem !important;
+        line-height: 1.5 !important;
+        border-radius: 10px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+      }
+
+      /* Proposals & Deliverables on Mobile */
+      .chat-plan-header {
+        margin-bottom: 8px !important;
+        padding-bottom: 6px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .chat-plan-tag {
+        font-size: 0.64rem !important;
+      }
+      .chat-plan-title {
+        font-size: 0.88rem !important;
+        line-height: 1.35 !important;
+        word-break: break-word !important;
+      }
+      .chat-solution-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .chat-solution-card {
+        padding: 10px 10px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .chat-card-top {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+      }
+      .chat-card-title {
+        font-size: 0.8rem !important;
+        word-break: break-word !important;
+      }
+      .chat-card-badge {
+        font-size: 0.64rem !important;
+        white-space: normal !important;
+        align-self: flex-start !important;
+      }
+      .chat-points-list {
+        gap: 6px !important;
+        width: 100% !important;
+      }
+      .chat-point-item {
+        font-size: 0.76rem !important;
+        line-height: 1.4 !important;
+        word-break: break-word !important;
+        gap: 6px !important;
+      }
+
+      /* Stepper Timeline on Mobile */
+      .chat-timeline-box {
+        padding: 10px 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .chat-timeline-header {
+        font-size: 0.7rem !important;
+        margin-bottom: 8px !important;
+      }
+      .chat-timeline-steps {
+        grid-template-columns: 1fr !important;
+        gap: 6px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .chat-step-item {
+        padding: 8px 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .chat-step-title {
+        font-size: 0.77rem !important;
+      }
+      .chat-step-desc {
+        font-size: 0.72rem !important;
+        word-break: break-word !important;
+      }
+
+      /* Commitments on Mobile */
+      .chat-commitments-box {
+        padding: 10px 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .chat-commitments-header {
+        font-size: 0.7rem !important;
+        margin-bottom: 6px !important;
+      }
+      .chat-commitments-grid {
+        grid-template-columns: 1fr !important;
+        gap: 6px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .chat-commitment-item {
+        font-size: 0.74rem !important;
+        padding: 6px 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        word-break: break-word !important;
+      }
+
+      /* Handover Box on Mobile */
+      .chat-admin-handover {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 12px 10px !important;
+        gap: 10px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .chat-admin-handover-text {
+        font-size: 0.74rem !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        word-break: break-word !important;
+      }
+      .chat-admin-handover-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        white-space: normal !important;
+        padding: 10px 12px !important;
+        font-size: 0.76rem !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Suggested Question Pills on Mobile */
+      .chat-suggested-row {
+        flex-direction: column !important;
+        gap: 6px !important;
+        width: 100% !important;
+      }
+      .chat-suggested-pill {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        padding: 8px 10px !important;
+        font-size: 0.74rem !important;
+        line-height: 1.4 !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Quick Topic Starters Bar on Mobile */
+      .chat-starters-bar {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        padding: 8px 8px !important;
+        gap: 6px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        white-space: nowrap !important;
+        flex-wrap: nowrap !important;
+        display: flex !important;
+      }
+      .chat-starters-label {
+        font-size: 0.68rem;
+      }
+      .starter-tag-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        flex-shrink: 0;
+      }
+
+      /* Input Bar on Mobile (Stack Textarea + Send Button) */
+      .chat-input-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 10px 8px !important;
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+      }
+      .chat-input-textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 48px !important;
+        padding: 8px 10px !important;
+        font-size: 0.82rem !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+      }
+      .btn-chat-send {
+        width: 100% !important;
+        justify-content: center !important;
+        height: 42px !important;
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Standard sections on Mobile */
+      .process-section,
+      .values-section,
+      .contact-section {
+        padding: 0 12px !important;
+        margin-bottom: 36px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .process-grid,
+      .values-grid,
+      .contact-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .process-card,
+      .value-card,
+      .contact-card {
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .pill-selector-grid,
+      .feature-checkbox-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation (Agency Header) -->
+  <header class="portal-nav">
+    <div class="nav-left">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="brand-info">
+        <h1 class="logo-text">IT-ASSIGNMENT <span class="badge-tag">CLIENT PORTAL</span></h1>
+        <p class="sub-text">Cổng tư vấn & đặt hàng dự án phần mềm chuyên nghiệp</p>
+      </div>
+    </div>
+
+    <nav class="portal-nav-links">
+      <a href="#configSection">Tư Vấn Nhu Cầu AI</a>
+      <a href="#processSection">Quy Trình Làm Việc</a>
+      <a href="#valuesSection">Cam Kết Dịch Vụ</a>
+      <a href="#contactSection">Liên Hệ Trực Tiếp Admin</a>
+    </nav>
+
+    <div class="action-btn-group">
+      <button type="button" class="btn btn-secondary" id="btnOpenClientLoginModal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Đăng Nhập Bằng Key
+      </button>
+
+      <a href="index.html" class="btn btn-ghost" title="Chuyển đến Dashboard Quản Trị Hệ Thống">
+        Admin Master
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-container">
+    <div class="hero-badge">
+      <span class="status-dot dot-online"></span>
+      TƯ VẤN DỰ ÁN 1:1 CÙNG CHUYÊN GIA TRƯỞNG PHÒNG
+    </div>
+    <h1 class="hero-headline">Hiện Thực Hóa Nhu Cầu Phần Mềm Của Bạn<br>Bằng Giải Pháp Web Động Hoàn Hảo</h1>
+    <p class="hero-subtitle">Chúng tôi không dùng thuật ngữ kỹ thuật phức tạp gây bối rối. Đội ngũ chuyên gia đồng hành lắng nghe mô hình kinh doanh, tư vấn giải pháp thực chiến, bài toán chi phí hợp lý nhất cho cả đôi bên và cam kết bảo mật tuyệt đối.</p>
+
+    <!-- Trust Metrics -->
+    <div class="trust-metrics-row">
+      <div class="metric-item">
+        <span class="metric-dot"></span>
+        Tư Vấn Giải Pháp Dễ Hiểu & Thực Chiến
+      </div>
+      <div class="metric-item">
+        <span class="metric-dot"></span>
+        100% Web Động & Kết Nối Ngân Hàng Thật
+      </div>
+      <div class="metric-item">
+        <span class="metric-dot"></span>
+        Bảo Mật Dữ Liệu Khách Hàng Tuyệt Đối
+      </div>
+      <div class="metric-item">
+        <span class="metric-dot"></span>
+        Cấp Mã Khóa Riêng Theo Dõi Tiến Độ
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Project Idea Studio - Interactive Multi-Turn Consultation Chat -->
+  <section class="configurator-section" id="configSection">
+    <div class="studio-header">
+      <div class="studio-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        AI CONSULTING STUDIO &bull; BỘ NÃO PHÂN TÍCH 9 PHÒNG BAN
+      </div>
+      <h2 class="studio-title">Khám Phá Giải Pháp & Dự Toán Cho Ý Tưởng Của Bạn</h2>
+      <p class="studio-desc">Trao đổi 1:1 trực tiếp cùng Trưởng Phòng Giải Pháp & Kỹ Thuật để bóc tách mô hình kinh doanh, kiến trúc Web Động và phương án chi phí thực chiến cho ý tưởng của bạn.</p>
+    </div>
+
+    <!-- CHAT CONSULTATION WINDOW -->
+    <div class="chat-consult-window">
+      <!-- Chat Header -->
+      <div class="chat-consult-header">
+        <div class="chat-consult-profile">
+          <div class="chat-consult-avatar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="chat-consult-meta">
+            <h3>
+              Trưởng Phòng Giải Pháp & Kỹ Thuật Dự Án
+              <span class="status-dot dot-online" title="Trực tuyến"></span>
+            </h3>
+            <p>
+              <span>Gemini 3.6 Flash</span>
+              <span>&bull;</span>
+              <span>Đối thoại 2 chiều liên tục</span>
+              <span>&bull;</span>
+              <span>Phản hồi &lt; 1s</span>
+            </p>
+          </div>
+        </div>
+
+        <button type="button" class="btn-reset-chat" id="btnResetConsultChat" title="Xóa lịch sử và bắt đầu phiên tư vấn mới">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Làm Mới Cuộc Trao Đổi
+        </button>
+      </div>
+
+      <!-- Messages Thread Window -->
+      <div class="chat-messages-container" id="chatMessagesContainer">
+        <!-- Initial Welcoming Message from Architect -->
+        <div class="chat-msg-row ai-msg">
+          <div class="chat-msg-avatar ai">AI</div>
+          <div class="chat-bubble-wrap">
+            <div class="chat-sender-label">
+              <strong>Trưởng Phòng Giải Pháp Dự Án</strong> &bull; <span>Khởi tạo phiên tư vấn</span>
+            </div>
+            <div class="chat-bubble">
+              Chào bạn! Tôi là Trưởng Phòng Giải Pháp & Chiến Lược Kỹ Thuật Dự Án. Rất vui được đồng hành cùng bạn!<br><br>
+              Bạn đang ấp ủ mô hình kinh doanh hay muốn phát triển website / ứng dụng phần mềm trong lĩnh vực nào? Hãy nhập ý tưởng hoặc câu hỏi của bạn vào khung bên dưới, tôi sẽ cùng bạn trao đổi, bóc tách giải pháp Web Động và tính toán bài toán chi phí thực chiến nhất!
+              
+              <div class="chat-suggested-row" style="margin-top: 14px;">
+                <button type="button" class="chat-suggested-pill" data-prompt="Tôi muốn làm sàn bán lẻ thời trang có thanh toán quét mã VietQR tự động">
+                  Sàn bán lẻ thời trang quét mã VietQR
+                </button>
+                <button type="button" class="chat-suggested-pill" data-prompt="Tôi cần hệ thống đặt lịch hẹn phòng khám y tế cho 3 chi nhánh">
+                  Đặt lịch phòng khám nha khoa / y tế
+                </button>
+                <button type="button" class="chat-suggested-pill" data-prompt="Tôi muốn xây dựng nền tảng học trực tuyến E-Learning có bán khóa học">
+                  Nền tảng E-Learning bán khóa học
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Topic Starters Bar -->
+      <div class="chat-starters-bar">
+        <span class="chat-starters-label">Gợi ý chủ đề nhanh:</span>
+        <button type="button" class="starter-tag-btn" data-starter="retail">Bán Lẻ & Thương Mại</button>
+        <button type="button" class="starter-tag-btn" data-starter="edtech">Giáo Dục Online</button>
+        <button type="button" class="starter-tag-btn" data-starter="medtech">Y Tế & Phòng Khám</button>
+        <button type="button" class="starter-tag-btn" data-starter="realestate">Bất Động Sản</button>
+        <button type="button" class="starter-tag-btn" data-starter="fintech">Ví & Cổng TT</button>
+        <button type="button" class="starter-tag-btn" data-starter="logistics">Logistics & Kho</button>
+        <button type="button" class="starter-tag-btn" data-starter="fnb">Nhà Hàng & F&B</button>
+        <button type="button" class="starter-tag-btn" data-starter="saas">AI SaaS</button>
+      </div>
+
+      <!-- Bottom Chat Input Area -->
+      <div class="chat-input-bar">
+        <textarea class="chat-input-textarea" id="chatInputText" placeholder="Nhập câu hỏi kỹ thuật, thắc mắc chi phí hoặc mô tả thêm ý tưởng phần mềm... (Enter để gửi, Shift+Enter để xuống dòng)"></textarea>
+        <button type="button" class="btn-chat-send" id="btnSendChatMessage">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span>Gửi Trao Đổi</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-Step Cooperation Process -->
+  <section class="process-section" id="processSection">
+    <div class="process-header">
+      <h2>Quy Trình 4 Bước Hợp Tác Cùng Admin</h2>
+      <p>Minh bạch từ khâu tư vấn, may đo chi phí đến cấp quyền theo dõi tiến độ thực tế</p>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-card">
+        <span class="process-step-num">01</span>
+        <div class="process-title">Trao Đổi 1:1 Cùng Admin</div>
+        <p class="process-desc">Khách hàng chia sẻ ý tưởng kinh doanh. Admin trực tiếp lắng nghe, tư vấn giải pháp sát sườn với ngân sách và mục tiêu lợi nhuận.</p>
+      </div>
+
+      <div class="process-card">
+        <span class="process-step-num">02</span>
+        <div class="process-title">May Đo Chi Phí Hợp Lý</div>
+        <p class="process-desc">Đề xuất phương án đầu tư tối ưu nhất cho cả đôi bên. Báo giá linh hoạt theo từng giai đoạn phát triển, tuyệt đối không chi phí ẩn.</p>
+      </div>
+
+      <div class="process-card">
+        <span class="process-step-num">03</span>
+        <div class="process-title">Cấp Mã Khóa Bảo Mật (Project Key)</div>
+        <p class="process-desc">Admin tạo và cấp riêng cho bạn một Mã Khóa Bảo Mật để đăng nhập vào Workspace theo dõi tiến độ làm việc từng ngày.</p>
+      </div>
+
+      <div class="process-card">
+        <span class="process-step-num">04</span>
+        <div class="process-title">Bàn Giao & Vận Hành Bền Vững</div>
+        <p class="process-desc">Kiểm thử nghiệm thu cẩn trọng, đưa hệ thống lên dữ liệu thật và đồng hành hỗ trợ kỹ thuật lâu dài cho doanh nghiệp.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 Values Commitment Section -->
+  <section class="values-section" id="valuesSection">
+    <div class="values-header">
+      <h2>Cam Kết Chất Lượng Dịch Vụ Vàng</h2>
+      <p>Mọi dự án đều được chăm chút kỹ lưỡng nhằm mang lại giá trị kinh doanh thực tế cao nhất cho khách hàng</p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="value-title">Tối Ưu Hóa Chi Phí Đầu Tư</div>
+        <p class="value-desc">Loại bỏ mọi tính năng rườm rà không cần thiết. Tập trung nguồn lực vào những chức năng trực tiếp sinh ra doanh thu cho bạn.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="value-title">Web Động Tự Động Hóa 100%</div>
+        <p class="value-desc">Tự động xuất mã QR thanh toán trên điện thoại, đồng bộ kho bãi và gửi thông báo đơn hàng tức thì trên môi trường thật.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="value-title">Cam Kết Đúng Tiến Độ Bàn Giao</div>
+        <p class="value-desc">Quy trình làm việc chuẩn mực, từng giai đoạn đều có mốc thời gian rõ ràng, đảm bảo đưa sản phẩm ra thị trường đúng kế hoạch.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="value-title">Bảo Mật Dữ Liệu Doanh Nghiệp</div>
+        <p class="value-desc">Thông tin khách hàng, số dư và đơn hàng được bảo vệ đa tầng nghiêm ngặt, tuyệt đối không để rò rỉ dữ liệu cho bên thứ ba.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="value-title">Giao Diện Độc Bản Sang Trọng</div>
+        <p class="value-desc">Thiết kế chuẩn nhận diện thương hiệu doanh nghiệp, font chữ tinh tế, cuộn êm mượt mà trên mọi thiết bị di động.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <div class="value-title">Đồng Hành & Hỗ Trợ 24/7</div>
+        <p class="value-desc">Luôn lắng nghe mọi góp ý của khách hàng, sẵn sàng giải đáp thắc mắc và hỗ trợ kỹ thuật tận tâm trong suốt quá trình vận hành.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Direct Contact Channels with Admin -->
+  <section class="contact-section" id="contactSection">
+    <h2 style="font-size: 1.35rem; color: #fff; font-weight: 700; margin-bottom: 6px;">Kênh Kết Nối Trực Tiếp Với Admin & Ban Quản Trị</h2>
+    <p style="font-size: 0.78rem; color: var(--text-muted);">Admin sẽ trực tiếp trao đổi 1:1, may đo giải pháp theo ngân sách và cấp Mã Khóa Bảo Mật (Project Access Key) để bạn vào xem tiến độ dự án</p>
+
+    <div class="contact-grid">
+      <a href="https://zalo.me" target="_blank" class="contact-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <strong>Zalo Official</strong>
+        <small>Nhắn tin tư vấn 1:1 trực tiếp</small>
+      </a>
+
+      <a href="tel:0909888999" class="contact-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <strong>Hotline / SĐT</strong>
+        <small>0909.888.999 (24/7)</small>
+      </a>
+
+      <a href="https://facebook.com" target="_blank" class="contact-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        <strong>Facebook Fanpage</strong>
+        <small>Trao đổi qua Messenger</small>
+      </a>
+
+      <a href="mailto:admin@enterprise-it.vn" class="contact-card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <strong>Email Quản Trị</strong>
+        <small>admin@enterprise-it.vn</small>
+      </a>
+    </div>
+  </section>
+
+  <!-- Portal Footer -->
+  <footer class="portal-footer">
+    <p>IT-Assignment Enterprise Engineering System &bull; Bảo mật thông tin khách hàng theo tiêu chuẩn ISO/IEC 27001 &bull; 2026</p>
+  </footer>
+
+  <!-- Modal: Client Key Login -->
+  <div class="modal-backdrop" id="clientLoginModal" style="display: none;">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <div>
+          <h3>Đăng Nhập Bằng Project Access Key</h3>
+          <p style="font-size: 0.72rem; color: var(--text-dim); margin-top: 2px;">Nhập mã khóa bảo mật do Admin cấp để vào workspace dự án của riêng bạn</p>
+        </div>
+        <button class="btn-close" id="btnCloseLoginModal">&times;</button>
+      </div>
+
+      <form id="clientLoginForm">
+        <div class="form-group">
+          <label>Mã Access Key Của Bạn:</label>
+          <input type="text" id="clientInputKey" required placeholder="Ví dụ: ITKEY-RETAIL-..." style="font-family: var(--font-mono); font-size: 0.82rem;">
+        </div>
+
+        <div id="loginErrorBox" style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #F87171; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; margin-bottom: 10px;"></div>
+
+        <div class="security-warning-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Khóa bảo mật được mã hóa an toàn. Mọi hành vi tấn công hoặc ký tự bất thường sẽ bị hệ thống an ninh chặn ngay lập tức.</span>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelLogin">Đóng</button>
+          <button type="submit" class="btn btn-primary">Xác Thực & Vào Workspace</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Starter Presets for Quick Idea Exploration (Non-Restrictive Prompt Templates)
+    const starterPresets = {
+      retail: "Tôi muốn xây dựng sàn thương mại điện tử bán lẻ thời trang cao cấp, có chức năng quét mã VietQR tự động trên điện thoại, đồng bộ tồn kho giữa 3 chi nhánh và thiết kế tối giản sang trọng theo nhận diện thương hiệu công ty.",
+      edtech: "Tôi muốn làm nền tảng học trực tuyến có video bài giảng bảo mật chống tải lậu, tính năng thi trắc nghiệm bấm giờ, chấm điểm tự động và học viên thanh toán học phí qua mã VietQR kích hoạt khóa học ngay.",
+      medtech: "Tôi muốn làm hệ thống quản lý phòng khám nha khoa có chức năng cho bệnh nhân đặt lịch hẹn bác sĩ theo khung giờ, nhắc lịch tự động qua Zalo/SMS và lưu trữ hồ sơ bệnh án điện tử an toàn.",
+      realestate: "Tôi muốn xây dựng sàn giao dịch bất động sản và cho thuê căn hộ, có bộ lọc tìm kiếm theo vị trí và mức giá, tích hợp bản đồ xem tiện ích xung quanh và form đăng ký tư vấn trực tiếp.",
+      fintech: "Tôi muốn phát triển cổng thanh toán và quản lý ví điện tử nội bộ, xử lý giao dịch an toàn đa tầng, bảo mật 2FA và đối soát số dư tức thời không có độ trễ.",
+      logistics: "Tôi cần hệ thống quản lý giao vận hàng hóa và chuỗi kho bãi, quét mã vạch tracking trạng thái kiện hàng thời gian thực và tự động tính cước phí vận chuyển.",
+      fnb: "Tôi muốn làm ứng dụng gọi món tại bàn bằng mã QR cho chuỗi quán cafe và nhà hàng, khách quét mã chọn món, thanh toán chuyển khoản và đơn chuyển thẳng xuống máy in bếp.",
+      saas: "Tôi muốn làm nền tảng SaaS cung cấp dịch vụ trí tuệ nhân tạo (AI), cho phép người dùng đăng ký tài khoản, chọn gói thành viên theo tháng và tích hợp Chatbot AI trả lời tự động."
+    };
+
+    // Multi-Turn Interactive Consultation Engine
+    let consultationHistory = [];
+
+    function getCurrentTimeStr() {
+      const now = new Date();
+      return now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+    }
+
+    function scrollChatToBottom() {
+      const container = document.getElementById("chatMessagesContainer");
+      if (container) {
+        container.scrollTop = container.scrollHeight;
+      }
+    }
+
+    function appendUserMessage(text) {
+      const container = document.getElementById("chatMessagesContainer");
+      const timeStr = getCurrentTimeStr();
+
+      const row = document.createElement("div");
+      row.className = "chat-msg-row user-msg";
+      row.innerHTML = `
+        <div class="chat-msg-avatar user">Bạn</div>
+        <div class="chat-bubble-wrap">
+          <div class="chat-sender-label">
+            <strong>Bạn</strong> &bull; <span>${timeStr}</span>
+          </div>
+          <div class="chat-bubble">
+            ${escapeHtml(text)}
+          </div>
+        </div>
+      `;
+      container.appendChild(row);
+      consultationHistory.push({ role: "user", text: text });
+      row.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      return row;
+    }
+
+    function showTypingIndicator() {
+      const container = document.getElementById("chatMessagesContainer");
+      const typingRow = document.createElement("div");
+      typingRow.id = "chatTypingIndicator";
+      typingRow.className = "chat-msg-row ai-msg";
+      typingRow.innerHTML = `
+        <div class="chat-msg-avatar ai">AI</div>
+        <div class="chat-bubble-wrap">
+          <div class="chat-bubble" style="padding: 10px 16px;">
+            <div class="chat-typing-row">
+              <span>Trưởng Phòng Giải Pháp đang phân tích</span>
+              <div class="typing-dots">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(typingRow);
+      typingRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function hideTypingIndicator() {
+      const ind = document.getElementById("chatTypingIndicator");
+      if (ind) ind.remove();
+    }
+
+    function appendAIMessage(data, triggerUserRow) {
+      const container = document.getElementById("chatMessagesContainer");
+      const timeStr = getCurrentTimeStr();
+      const engineLabel = escapeHtml(data.aiEngine || "Gemini 3.6 Flash");
+
+      let solutionHtml = "";
+      if (data.hasSolution) {
+        function extractBulletPoints(pointsOrDesc) {
+          if (Array.isArray(pointsOrDesc) && pointsOrDesc.length > 0) {
+            return pointsOrDesc.filter(p => typeof p === "string" && p.trim().length > 0);
+          }
+          if (typeof pointsOrDesc === "string" && pointsOrDesc.trim()) {
+            const sentences = pointsOrDesc.split(/(?<=[.?!])\s+/).map(s => s.trim()).filter(s => s.length > 3);
+            return sentences.length > 0 ? sentences : [pointsOrDesc.trim()];
+          }
+          return [];
+        }
+
+        const recs = data.recommendations || {};
+        const projectTitle = recs.projectTitle || "Kế Hoạch Bàn Giao Giải Pháp Web Động Thực Chiến";
+        
+        const p1Title = recs.proposal1Title || "Giao Diện Khách Hàng & Bán Hàng";
+        const p1Badge = recs.proposal1Badge || "Tối Ưu Mobile";
+        const p1Points = extractBulletPoints(recs.proposal1Points || recs.proposal1Desc || (data.solution ? data.solution.coreBenefit : ""));
+
+        const p2Title = recs.proposal2Title || "Thanh Toán VietQR & Quản Lý Kho";
+        const p2Badge = recs.proposal2Badge || "Tự Động 100%";
+        const p2Points = extractBulletPoints(recs.proposal2Points || recs.proposal2Desc || (data.solution ? data.solution.architecture : ""));
+
+        const p3Title = recs.proposal3Title || "Lộ Trình Triển Khai Thực Tế";
+        const p3Badge = recs.proposal3Badge || "7 - 10 Ngày";
+        const p3Points = extractBulletPoints(recs.proposal3Points || recs.proposal3Desc || (data.solution ? data.solution.pricingNote : ""));
+
+        const defaultCommitments = [
+          "Bàn giao 100% mã nguồn và toàn quyền quản trị, không phụ thuộc bên thứ ba",
+          "Cam kết không phát sinh bất kỳ khoản phí duy trì ẩn nào hàng tháng",
+          "Trải nghiệm chạy thử nghiệm thực tế trên hệ thống thật rồi mới thanh toán nghiệm thu",
+          "Hướng dẫn 1 kèm 1 đến khi vận hành thành thạo và bảo hành kỹ thuật dài hạn"
+        ];
+        const commitments = (Array.isArray(data.commitments) && data.commitments.length > 0) ? data.commitments : defaultCommitments;
+
+        solutionHtml = `
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+            
+            <div class="chat-plan-header">
+              <span class="chat-plan-tag">BẢNG BÓC TÁCH HẠNG MỤC BÀN GIAO THỰC CHIẾN</span>
+              <h4 class="chat-plan-title">${escapeHtml(projectTitle)}</h4>
+            </div>
+
+            <div class="chat-solution-grid">
+              <!-- Card 1 -->
+              <div class="chat-solution-card">
+                <div class="chat-card-top">
+                  <div class="chat-card-title">${escapeHtml(p1Title)}</div>
+                  <span class="chat-card-badge">${escapeHtml(p1Badge)}</span>
+                </div>
+                <ul class="chat-points-list">
+                  ${p1Points.map(pt => `
+                    <li class="chat-point-item">
+                      <svg class="chat-point-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>${escapeHtml(pt)}</span>
+                    </li>
+                  `).join("")}
+                </ul>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="chat-solution-card">
+                <div class="chat-card-top">
+                  <div class="chat-card-title">${escapeHtml(p2Title)}</div>
+                  <span class="chat-card-badge">${escapeHtml(p2Badge)}</span>
+                </div>
+                <ul class="chat-points-list">
+                  ${p2Points.map(pt => `
+                    <li class="chat-point-item">
+                      <svg class="chat-point-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>${escapeHtml(pt)}</span>
+                    </li>
+                  `).join("")}
+                </ul>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="chat-solution-card">
+                <div class="chat-card-top">
+                  <div class="chat-card-title">${escapeHtml(p3Title)}</div>
+                  <span class="chat-card-badge">${escapeHtml(p3Badge)}</span>
+                </div>
+                <ul class="chat-points-list">
+                  ${p3Points.map(pt => `
+                    <li class="chat-point-item">
+                      <svg class="chat-point-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>${escapeHtml(pt)}</span>
+                    </li>
+                  `).join("")}
+                </ul>
+              </div>
+            </div>
+
+            <!-- Milestone Stepper Timeline -->
+            <div class="chat-timeline-box">
+              <div class="chat-timeline-header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                LỘ TRÌNH 3 BƯỚC HỢP TÁC TRIỂN KHAI RÕ RÀNG:
+              </div>
+              <div class="chat-timeline-steps">
+                <div class="chat-step-item">
+                  <div class="chat-step-badge">
+                    <span>BƯỚC 1</span>
+                    <span style="color: #38BDF8;">Ngày 1 - 3</span>
+                  </div>
+                  <div class="chat-step-title">Duyệt Mẫu Giao Diện Thực Tế</div>
+                  <div class="chat-step-desc">Lên bản mẫu giao diện thực tế trên điện thoại để bạn bấm duyệt trước khi lập trình.</div>
+                </div>
+                <div class="chat-step-item">
+                  <div class="chat-step-badge">
+                    <span>BƯỚC 2</span>
+                    <span style="color: #38BDF8;">Ngày 4 - 7</span>
+                  </div>
+                  <div class="chat-step-title">Cài Đặt Thanh Toán & Dữ Liệu</div>
+                  <div class="chat-step-desc">Đấu nối tài khoản VietQR ngân hàng của bạn và tải danh mục hàng hóa / dịch vụ lên web.</div>
+                </div>
+                <div class="chat-step-item">
+                  <div class="chat-step-badge">
+                    <span>BƯỚC 3</span>
+                    <span style="color: #38BDF8;">Ngày 8 - 10</span>
+                  </div>
+                  <div class="chat-step-title">Dùng Thử Web Thật & Nghiệm Thu</div>
+                  <div class="chat-step-desc">Bạn dùng thử thực tế trên hệ thống chạy thật, kiểm tra mượt mà rồi mới tiến hành thanh toán.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 Commitments Box -->
+            <div class="chat-commitments-box">
+              <div class="chat-commitments-header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                CAM KẾT MINH BẠCH BẢO VỆ QUYỀN LỢI CỦA BẠN:
+              </div>
+              <div class="chat-commitments-grid">
+                ${commitments.map(c => `
+                  <div class="chat-commitment-item">
+                    <svg class="chat-commitment-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>${escapeHtml(c)}</span>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+
+            ${data.expertAdvice ? `
+              <div style="margin-top: 12px; padding: 12px 14px; background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px;">
+                <div style="font-size: 0.73rem; font-weight: 700; color: #38BDF8; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  Lời Khuyên Thực Tế Từ Trưởng Phòng:
+                </div>
+                <div style="font-size: 0.8rem; color: #CBD5E1; line-height: 1.55;">
+                  ${escapeHtml(data.expertAdvice)}
+                </div>
+              </div>
+            ` : ""}
+
+            <div class="chat-admin-handover">
+              <div class="chat-admin-handover-text">
+                Bạn thấy bảng bóc tách giải pháp này phù hợp? Bạn có thể tiếp tục hỏi các câu hỏi thắc mắc bên dưới, hoặc kết nối Admin để chốt mức giá may đo ưu đãi và nhận Mã Khóa Truy Cập Dự Án.
+              </div>
+              <a href="#contactSection" class="chat-admin-handover-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Kết Nối Admin Nhận Báo Giá May Đo & Mã Key
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      let suggestedHtml = "";
+      if (Array.isArray(data.suggestedQuestions) && data.suggestedQuestions.length > 0) {
+        suggestedHtml = `
+          <div class="chat-suggested-row">
+            ${data.suggestedQuestions.map(q => `
+              <button type="button" class="chat-suggested-pill" data-prompt="${escapeHtml(q)}">
+                ${escapeHtml(q)}
+              </button>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      const row = document.createElement("div");
+      row.className = "chat-msg-row ai-msg";
+      row.innerHTML = `
+        <div class="chat-msg-avatar ai">AI</div>
+        <div class="chat-bubble-wrap">
+          <div class="chat-sender-label">
+            <strong>Trưởng Phòng Giải Pháp Dự Án</strong> &bull; <span>${engineLabel}</span> &bull; <span>${timeStr}</span>
+          </div>
+          <div class="chat-bubble">
+            <div style="font-size: 0.95rem; font-weight: 500; color: #F8FAFC; line-height: 1.65; white-space: pre-line;">${escapeHtml(data.reply)}</div>
+            ${solutionHtml}
+            ${suggestedHtml}
+          </div>
+        </div>
+      `;
+      container.appendChild(row);
+
+      consultationHistory.push({
+        role: "model",
+        text: data.reply + (data.recommendations ? ` [Đề xuất: ${data.recommendations.proposal1Title}]` : "")
+      });
+
+      // UX: Scroll to the user's question so the user can read naturally from prompt to answer
+      setTimeout(() => {
+        if (triggerUserRow) {
+          triggerUserRow.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          row.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 50);
+    }
+
+    let isChatSubmitting = false;
+
+    async function sendChatMessage(rawText) {
+      if (isChatSubmitting) return;
+      const text = (rawText || "").trim();
+      if (!text) return;
+
+      // Anti-tamper check
+      const maliciousPattern = /(<script|javascript:|select\s+.*from|insert\s+into|union\s+select|--|;)/i;
+      if (maliciousPattern.test(text)) {
+        alert("Cảnh báo an ninh: Phát hiện ký tự độc hại trong văn bản!");
+        return;
+      }
+
+      const input = document.getElementById("chatInputText");
+      const sendBtn = document.getElementById("btnSendChatMessage");
+
+      input.value = "";
+      input.style.height = "48px";
+      sendBtn.disabled = true;
+
+      // Append user bubble to thread
+      const userRow = appendUserMessage(text);
+      showTypingIndicator();
+
+      try {
+        let aiResult = null;
+        const apiEndpoint = window.location.protocol === "file:" ? "http://localhost:5000/api/ai/consult" : "/api/ai/consult";
+
+        try {
+          const res = await fetch(apiEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              prompt: text,
+              history: consultationHistory.slice(0, -1) // send context prior to current message
+            })
+          });
+          const json = await res.json();
+          if (json.success && json.data) {
+            aiResult = json.data;
+          }
+        } catch (apiErr) {
+          console.warn("[Consultant AI] Server not reachable, falling back to local engine:", apiErr);
+        }
+
+        // Intelligent client-side fallback if server is unreachable
+        if (!aiResult) {
+          const clean = text.toLowerCase();
+          const greetings = ["chào", "chao", "hello", "hi", "alo", "ad", "admin", "bạn ơi", "test", "hey", "ê", "e ơi"];
+          const isGreeting = greetings.some(g => clean === g || clean === `${g} bạn` || clean === "chào bạn" || (clean.length < 15 && clean.includes(g) && !clean.includes("web") && !clean.includes("app")));
+
+          if (isGreeting) {
+            aiResult = {
+              reply: "Chào bạn! Tôi là Trưởng Phòng Giải Pháp & Chiến Lược Kỹ Thuật Dự Án. Rất vui được đồng hành cùng bạn! Bạn đang ấp ủ mô hình kinh doanh hay muốn phát triển website / ứng dụng phần mềm trong lĩnh vực nào? Hãy chia sẻ ý tưởng của bạn, tôi sẽ bóc tách giải pháp Web Động và tính toán chi phí thực chiến cho bạn!",
+              hasSolution: false,
+              solution: null,
+              canConnectAdmin: false,
+              suggestedQuestions: [
+                "Tôi muốn làm sàn bán lẻ thời trang có quét mã VietQR",
+                "Tôi cần hệ thống đặt lịch hẹn phòng khám nha khoa",
+                "Thời gian triển khai một dự án Web Động mất bao lâu?"
+              ],
+              aiEngine: "Gemini Consultant AI"
+            };
+          } else {
+            let domain = "Hệ Thống Web Động Doanh Nghiệp Theo Yêu Cầu";
+            let benefit = "Tự động hóa toàn diện quy trình vận hành và tối ưu hóa chuyển đổi doanh số.";
+
+            if (clean.includes("học") || clean.includes("khóa học") || clean.includes("giáo dục")) {
+              domain = "Nền Tảng Giáo Dục & E-Learning Trực Tuyến";
+              benefit = "Quản lý bài giảng video mượt mà, phân quyền học viên và tự động thu học phí qua VietQR.";
+            } else if (clean.includes("phòng khám") || clean.includes("nha khoa") || clean.includes("bác sĩ") || clean.includes("y tế")) {
+              domain = "Hệ Thống Quản Lý Y Tế & Đặt Lịch Khám";
+              benefit = "Đặt lịch khám tự động, quản lý hồ sơ bệnh án bảo mật và thông báo lịch hẹn qua Zalo/SMS.";
+            } else if (clean.includes("bán lẻ") || clean.includes("thời trang") || clean.includes("shop") || clean.includes("giày")) {
+              domain = "Sàn Bán Lẻ & Thương Mại Điện Tử Đa Kênh";
+              benefit = "Tối ưu tỷ lệ chốt đơn nhờ thanh toán VietQR động trong 1 giây và đồng bộ tồn kho thời gian thực.";
+            }
+
+            aiResult = {
+              reply: `Dưới đây là 3 đề xuất giải pháp cụ thể và lời khuyên thực tế từ Trưởng Phòng Giải Pháp cho mô hình của bạn:`,
+              hasSolution: true,
+              recommendations: {
+                proposal1Title: "Đề Xuất 1: Tính Năng Nên Làm Ngay Để Bán Hàng & Thu Tiền",
+                proposal1Desc: "Giao diện xem sản phẩm trên điện thoại siêu đẹp, thao tác đặt hàng trong 10 giây và quét mã VietQR tiền về thẳng tài khoản ngân hàng của bạn ngay lập tức không cần kiểm tra bill thủ công.",
+                proposal2Title: "Đề Xuất 2: Giải Pháp Vận Hành & Chống Thất Thoát",
+                proposal2Desc: "Tự động kiểm soát số lượng hàng tồn kho giữa các chi nhánh, khi có người mua thì kho tự giảm để tránh tình trạng bán trùng hoặc thiếu hàng.",
+                proposal3Title: "Đề Xuất 3: Lộ Trình Triển Khai & Thời Gian Ước Tính",
+                proposal3Desc: "Nên chia làm 2 giai đoạn: Giai đoạn 1 (7-10 ngày) làm web bán hàng & thanh toán để bán trước; Giai đoạn 2 (10-14 ngày) kết nối quản lý chi nhánh. Được chạy thử nghiệm thực tế trước khi nghiệm thu."
+              },
+              expertAdvice: "Lời khuyên từ Trưởng phòng: Bạn nên tập trung hoàn thiện Giai đoạn 1 trước để đưa sản phẩm ra bán ngay và thu hồi vốn sớm, sau đó mới đầu tư thêm các tính năng nâng cao.",
+              canConnectAdmin: true,
+              suggestedQuestions: [
+                "Tôi muốn làm Giai đoạn 1 trước thì chi phí dự tính thế nào?",
+                "Hệ thống có tự động gửi tin nhắn cho khách khi mua xong không?",
+                "Quy trình xem bản thử nghiệm thực tế diễn ra như thế nào?"
+              ],
+              aiEngine: "Intelligent Strategic Engine"
+            };
+          }
+        }
+
+        hideTypingIndicator();
+        appendAIMessage(aiResult, userRow);
+
+      } catch (err) {
+        hideTypingIndicator();
+        appendAIMessage({
+          reply: "Đã có trục trặc kỹ thuật tạm thời khi kết nối. Bạn vui lòng thử gửi lại câu hỏi hoặc liên hệ trực tiếp Hotline/Zalo 0909.888.999 để được hỗ trợ tức thì.",
+          hasSolution: false,
+          solution: null,
+          canConnectAdmin: true,
+          suggestedQuestions: ["Thử lại", "Liên hệ Admin"],
+          aiEngine: "System Fallback"
+        }, userRow);
+      } finally {
+        isChatSubmitting = false;
+        sendBtn.disabled = false;
+        input.focus();
+      }
+    }
+
+    // Handle Quick Topic Starters Bar Click -> Immediately send prompt to start consultation
+    document.querySelectorAll(".starter-tag-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.starter;
+        const text = starterPresets[key];
+        if (!text) return;
+        sendChatMessage(text);
+      });
+    });
+
+    // Delegate click on suggested pills inside chat
+    document.getElementById("chatMessagesContainer").addEventListener("click", (e) => {
+      const pill = e.target.closest(".chat-suggested-pill");
+      if (pill) {
+        const prompt = pill.dataset.prompt || pill.textContent.trim();
+        sendChatMessage(prompt);
+      }
+    });
+
+    // Send Button Click
+    document.getElementById("btnSendChatMessage").addEventListener("click", () => {
+      const text = document.getElementById("chatInputText").value;
+      sendChatMessage(text);
+    });
+
+    // Auto-expand textarea and handle Enter to send (Shift+Enter for newline)
+    const chatInput = document.getElementById("chatInputText");
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage(chatInput.value);
+      }
+    });
+
+    chatInput.addEventListener("input", () => {
+      chatInput.style.height = "48px";
+      chatInput.style.height = Math.min(chatInput.scrollHeight, 140) + "px";
+    });
+
+    // Reset Chat Conversation
+    document.getElementById("btnResetConsultChat").addEventListener("click", () => {
+      if (confirm("Bạn có muốn làm mới cuộc trao đổi và bắt đầu phiên tư vấn mới?")) {
+        consultationHistory = [];
+        const container = document.getElementById("chatMessagesContainer");
+        container.innerHTML = `
+          <div class="chat-msg-row ai-msg">
+            <div class="chat-msg-avatar ai">AI</div>
+            <div class="chat-bubble-wrap">
+              <div class="chat-sender-label">
+                <strong>Trưởng Phòng Giải Pháp Dự Án</strong> &bull; <span>Khởi tạo phiên tư vấn</span>
+              </div>
+              <div class="chat-bubble">
+                Chào bạn! Tôi là Trưởng Phòng Giải Pháp & Chiến Lược Kỹ Thuật Dự Án. Rất vui được đồng hành cùng bạn!<br><br>
+                Bạn đang ấp ủ mô hình kinh doanh hay muốn phát triển website / ứng dụng phần mềm trong lĩnh vực nào? Hãy nhập ý tưởng hoặc câu hỏi của bạn vào khung bên dưới, tôi sẽ cùng bạn trao đổi, bóc tách giải pháp Web Động và tính toán bài toán chi phí thực chiến nhất!
+                
+                <div class="chat-suggested-row" style="margin-top: 14px;">
+                  <button type="button" class="chat-suggested-pill" data-prompt="Tôi muốn làm sàn bán lẻ thời trang có thanh toán quét mã VietQR tự động">
+                    Sàn bán lẻ thời trang quét mã VietQR
+                  </button>
+                  <button type="button" class="chat-suggested-pill" data-prompt="Tôi cần hệ thống đặt lịch hẹn phòng khám y tế cho 3 chi nhánh">
+                    Đặt lịch phòng khám nha khoa / y tế
+                  </button>
+                  <button type="button" class="chat-suggested-pill" data-prompt="Tôi muốn xây dựng nền tảng học trực tuyến E-Learning có bán khóa học">
+                    Nền tảng E-Learning bán khóa học
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.getElementById("chatInputText").value = "";
+        document.getElementById("chatInputText").focus();
+      }
+    });
+
+    // Modal Login Logic
+    const loginModal = document.getElementById("clientLoginModal");
+    document.getElementById("btnOpenClientLoginModal").addEventListener("click", () => {
+      loginModal.style.display = "flex";
+      document.getElementById("loginErrorBox").style.display = "none";
+    });
+    document.getElementById("btnCloseLoginModal").addEventListener("click", () => {
+      loginModal.style.display = "none";
+    });
+    document.getElementById("btnCancelLogin").addEventListener("click", () => {
+      loginModal.style.display = "none";
+    });
+
+    // Master Cryptographic Engine for Client Access Keys
+    const IT_MASTER_AUTH_SALT = "IT_ASSIGNMENT_SUPER_SECRET_SALT_2026_@#!$%";
+
+    function hashString(str) {
+      let h1 = 0xdeadbeef ^ 0, h2 = 0x41c6ce57 ^ 0;
+      for (let i = 0, ch; i < str.length; i++) {
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+      return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16).padStart(14, "0");
+    }
+
+    function decryptPayload(hexStr, salt) {
+      const saltBytes = new TextEncoder().encode(salt);
+      const byteCount = hexStr.length / 2;
+      const outBytes = new Uint8Array(byteCount);
+      for (let i = 0; i < byteCount; i++) {
+        const byteVal = parseInt(hexStr.substr(i * 2, 2), 16);
+        outBytes[i] = byteVal ^ saltBytes[i % saltBytes.length] ^ ((i * 11 + 3) & 0xff);
+      }
+      return new TextDecoder().decode(outBytes);
+    }
+
+    function verifyAndDecodeClientKey(key) {
+      if (!key || typeof key !== "string") throw new Error("Khóa truy cập không hợp lệ.");
+      const parts = key.trim().split(".");
+      if (parts.length !== 4 || parts[0] !== "ITKEY") {
+        throw new Error("Định dạng khóa không hợp lệ (Phải có dạng ITKEY.<TAG>.<DATA>.<SIG>).");
+      }
+      const [prefix, tag, blob, sig] = parts;
+      const expectedSig = hashString(blob + "::" + IT_MASTER_AUTH_SALT);
+      if (sig !== expectedSig) {
+        throw new Error("Khóa bảo mật không chính xác hoặc đã bị can thiệp trái phép (Integrity Violation)!");
+      }
+      const decrypted = decryptPayload(blob, IT_MASTER_AUTH_SALT);
+      const [name, dob, phone, projectCode, timestamp, nonce] = decrypted.split("::");
+      if (!name || !projectCode) {
+        throw new Error("Dữ liệu khóa bị thiếu thông tin xác thực.");
+      }
+      return { valid: true, name, dob, phone, projectCode, timestamp: Number(timestamp) };
+    }
+
+    document.getElementById("clientLoginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const keyVal = document.getElementById("clientInputKey").value.trim();
+      const errBox = document.getElementById("loginErrorBox");
+
+      // Anti-tamper check
+      const maliciousPattern = /(<script|javascript:|select\s+.*from|insert\s+into|union\s+select|--|;|<|>)/i;
+      if (maliciousPattern.test(keyVal)) {
+        errBox.textContent = "CẢNH BÁO AN NINH: Phát hiện ký tự độc hại hoặc hành vi đánh cắp dữ liệu!";
+        errBox.style.display = "block";
+        return;
+      }
+
+      try {
+        const verified = verifyAndDecodeClientKey(keyVal);
+
+        sessionStorage.setItem("it_logged_role", "CLIENT");
+        sessionStorage.setItem("it_client_name", verified.name);
+        sessionStorage.setItem("it_authorized_project", verified.projectCode);
+        sessionStorage.setItem("it_client_key", keyVal);
+
+        window.location.href = `client_workspace.html?key=${encodeURIComponent(keyVal)}`;
+      } catch (err) {
+        errBox.textContent = err.message || "Mã Key không hợp lệ hoặc đã hết hạn!";
+        errBox.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
