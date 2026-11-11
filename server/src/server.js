@@ -115,6 +115,71 @@ app.get("/api/projects/:id", async (req, res) => {
   res.json({ success: true, data: proj });
 });
 
+app.post("/api/projects", async (req, res) => {
+  try {
+    const { name, code, budget, package: pkg, infraStrategy, serverCost, description } = req.body;
+    if (!name || !code) {
+      return res.status(400).json({ success: false, error: "Vui lòng nhập tên và mã dự án." });
+    }
+
+    const cleanName = name.trim().replace(/[<>]/g, "");
+    const cleanCode = code.trim().replace(/[<>]/g, "").toUpperCase();
+    const cleanId = cleanCode.startsWith("PRJ-") ? cleanCode : `PRJ-${cleanCode}`;
+
+    const defaultTasks = [
+      { id: `${cleanCode}-PM-01`, dept: "01. Quản Trị Dự Án", title: "Khảo sát, lập WBS và phân bổ nguồn lực", pic: "TPM Lead", status: "IN_PROGRESS", progress: 60, note: "Đang lập WBS và phân bổ nguồn lực" },
+      { id: `${cleanCode}-BA-02`, dept: "02. Phân Tích Nghiệp Vụ", title: "Phân tích User Journey & bóc tách User Stories", pic: "Lead BA", status: "IN_PROGRESS", progress: 50, note: "Đã hoàn thành sơ đồ luồng người dùng" },
+      { id: `${cleanCode}-ARCH-03`, dept: "03. Kiến Trúc & Chi Phí", title: "Thiết kế kiến trúc hệ thống & tối ưu chi phí hạ tầng", pic: "Solution Architect", status: "TODO", progress: 20, note: "Đang đánh giá Tech Stack và sizing" },
+      { id: `${cleanCode}-UI-04`, dept: "04. Thiết Kế UI/UX", title: "Xây dựng Design System, Tokens và kiểm định tương phản", pic: "Senior UI/UX", status: "TODO", progress: 10, note: "Đang wireframe luồng chính" },
+      { id: `${cleanCode}-FE-05`, dept: "05. Lập Trình Frontend", title: "Lập trình giao diện Responsive 390px, tối ưu Core Web Vitals", pic: "Senior Web Dev", status: "TODO", progress: 0, note: "Chờ nghiệm thu Design System" },
+      { id: `${cleanCode}-BE-06`, dept: "06. Lập Trình Backend", title: "Xây dựng RESTful API bảo mật HMAC, RBAC & Rate Limiting", pic: "Backend Lead", status: "TODO", progress: 0, note: "Đang chờ schema CSDL" },
+      { id: `${cleanCode}-DB-07`, dept: "07. Quản Trị CSDL", title: "Khởi tạo schema, Indexing, Concurrency Lock & Backup", pic: "Senior DBA", status: "TODO", progress: 0, note: "Thiết kế quan hệ thực thể ERD" },
+      { id: `${cleanCode}-QA-08`, dept: "08. Đảm Bảo Chất Lượng", title: "Thiết lập kịch bản kiểm thử tự động, quét lỗ hổng bảo mật", pic: "QA/QC Lead", status: "TODO", progress: 0, note: "Chuẩn bị test cases kịch bản UAT" },
+      { id: `${cleanCode}-OPS-09`, dept: "09. Vận Hành & Hạ Tầng", title: "Đóng gói Docker Compose, thiết lập CI/CD Pipeline & SSL", pic: "DevOps Engineer", status: "TODO", progress: 0, note: "Chuẩn bị môi trường staging" }
+    ];
+
+    const projectData = {
+      id: cleanId,
+      code: cleanCode,
+      name: cleanName,
+      progress: 25,
+      budget: budget || pkg || "550 Triệu (Tiêu Chuẩn)",
+      status: "ON-TRACK",
+      stage: "Giai Đoạn Khởi Tạo & Bóc Tách Nghiệp Vụ",
+      serverCost: serverCost || "$45/tháng",
+      infraStrategy: infraStrategy || "Docker Container Cục Bộ + CI/CD",
+      tokenEfficiency: 98.5,
+      deptStatuses: {
+        "client": "DONE",
+        "pm": "IN_PROGRESS",
+        "ba": "IN_PROGRESS",
+        "sa": "TODO",
+        "ui": "TODO",
+        "fe": "TODO",
+        "be": "TODO",
+        "dba": "TODO",
+        "qa": "TODO",
+        "devops": "TODO",
+        "prod": "TODO"
+      },
+      tasks: defaultTasks,
+      feedbacks: [],
+      history: [
+        { time: "Vừa xong", dept: "Hệ Thống", action: `Đã khởi tạo dự án mới: ${cleanName} (${cleanCode})`, type: "success" }
+      ]
+    };
+
+    db.addProject(projectData);
+    await cache.invalidatePattern("projects:");
+    db.logAudit("CREATE_PROJECT", "Admin Master", { projectId: cleanId, name: cleanName });
+    broadcastEvent("project:created", projectData);
+
+    res.json({ success: true, message: "Khởi tạo dự án mới thành công!", data: projectData });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 app.put("/api/projects/:id/config", async (req, res) => {
   const { id } = req.params;
   const newConfig = req.body;
@@ -513,9 +578,7 @@ app.use((req, res) => {
 app.listen(CONFIG.PORT, () => {
   console.log(`\n======================================================`);
   console.log(`🚀 PRODUCTION IT-ASSIGNMENT SERVER RUNNING ON PORT ${CONFIG.PORT}`);
-  console.log(`🌐 Dashboard URL: http://localhost:${CONFIG.PORT}`);
-  console.log(`📦 Client Portal: http://localhost:${CONFIG.PORT}/client_portal.html`);
-  console.log(`🏢 Client Workspace: http://localhost:${CONFIG.PORT}/client_workspace.html`);
+  console.log(`🌐 Executive Dashboard: http://localhost:${CONFIG.PORT}`);
   console.log(`💾 Database: Persistent JSON at ${CONFIG.DB_FILE}`);
   console.log(`⚡ Cache Layer: ${cache.metrics.mode}`);
   console.log(`⚙️  Queue System: ${jobQueue.concurrency} Concurrent Workers Active`);

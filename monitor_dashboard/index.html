@@ -51,58 +51,37 @@
 
       <!-- Action Buttons -->
       <div class="action-btn-group">
-        <button class="btn btn-secondary" id="btnOpenFeedbackModal" title="Gửi phản hồi khách hàng về cho Project Manager">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Feedback
-        </button>
-
-        <button class="btn btn-secondary" id="btnOpenClientCmsModal" title="Quản trị nội dung website khách hàng & cấu hình sản phẩm">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          Quản Trị Web Khách
+        <!-- Prominent New Project Button -->
+        <button class="btn btn-primary" id="btnHeaderNewProject" title="Khởi tạo dự án công nghệ mới và điều phối 9 phòng ban kỹ thuật" style="display: flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          + Khởi Tạo Dự Án Mới
         </button>
 
         <!-- Admin-Only Directive Dispatcher -->
-        <button class="btn btn-primary" id="btnOpenDispatchModal" title="Phát lệnh kỹ thuật điều phối AI Vibe">
+        <button class="btn btn-secondary" id="btnOpenDispatchModal" title="Phát lệnh kỹ thuật điều phối AI Vibe cho 9 phòng ban">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           Phát Lệnh AI
         </button>
 
-        <!-- Open Trial Leads Monitoring Button -->
-        <button class="btn btn-outline" id="btnOpenTrialLeadsModal" title="Xem danh sách khách hàng tự động đăng ký bản thử nghiệm Open Beta" style="font-size: 0.75rem; display: flex; align-items: center; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Khách Thử Nghiệm (<span id="topNavTrialCount">0</span>)
+        <button class="btn btn-secondary" id="btnOpenFeedbackModal" title="Gửi phản hồi yêu cầu kỹ thuật về cho Project Manager">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Feedback
         </button>
 
-        <!-- Tools Dropdown Menu (Eliminates 5 colorful buttons!) -->
+        <!-- Tools Dropdown Menu -->
         <div class="dropdown-wrapper">
           <button class="btn btn-ghost" id="btnToggleToolsDropdown" title="Công cụ quản trị khác">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
           </button>
           <div class="dropdown-menu" id="toolsDropdownMenu">
-            <button type="button" class="dropdown-item" id="btnDropdownClientCms">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-              Quản Trị Web Khách Hàng (CMS)
-            </button>
-            <button type="button" class="dropdown-item" id="btnDropdownTrialLeads">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Quản Trị Khách Thử Nghiệm (Open Trial)
-            </button>
-            <button type="button" class="dropdown-item" id="btnOpenKeyGenModal">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Cấp Key Khách Hàng
-            </button>
             <button type="button" class="dropdown-item" id="btnNewProject">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Khởi Tạo Dự Án Mới
             </button>
-            <a href="client_portal.html" class="dropdown-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Trang Client Tư Vấn
-            </a>
-            <a href="client_workspace.html" class="dropdown-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              Xem Workspace Khách Hàng (Demo)
-            </a>
+            <button type="button" class="dropdown-item" id="btnOpenKeyGenModal">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Cấp Mã Khóa Truy Cập Dự Án
+            </button>
           </div>
         </div>
       </div>
@@ -551,7 +530,7 @@
             <input type="text" id="modalProjCode" required placeholder="PRJ-ECOMMERCE">
           </div>
           <div class="form-group half">
-            <label>Gói Giải Pháp & Chi Phí:</label>
+            <label>Gói Giải Pháp & Quy Mô:</label>
             <select id="modalProjPackage">
               <option value="Gói 2: Standard (1.85 Tỷ)">Gói 2: Chuẩn Doanh Nghiệp (1.85 Tỷ)</option>
               <option value="Gói 1: MVP Tinh Gọn (550 Triệu)">Gói 1: Khởi Động Tinh Gọn (550 Triệu)</option>
@@ -559,9 +538,28 @@
             </select>
           </div>
         </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Chiến Lược Hạ Tầng & Triển Khai:</label>
+            <select id="modalProjInfra">
+              <option value="Cloud VPS Docker Container (Port 5000)">Cloud VPS Docker Container (Port 5000)</option>
+              <option value="Kubernetes Microservices Multi-Zone">Kubernetes Microservices Multi-Zone</option>
+              <option value="Serverless Edge + Distributed Cache">Serverless Edge + Distributed Cache</option>
+              <option value="On-Premise Private Datacenter">On-Premise Private Datacenter</option>
+            </select>
+          </div>
+          <div class="form-group half">
+            <label>Dự Toán Ngân Sách:</label>
+            <input type="text" id="modalProjBudget" placeholder="1.85 Tỷ VND">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mô Tả &amp; Yêu Cầu Kỹ Thuật Ban Đầu:</label>
+          <textarea id="modalProjDesc" rows="3" placeholder="Mô tả phạm vi nghiệp vụ dự án để 9 phòng ban (PM, BA, ARCH, UI/UX, FE, BE, DBA, QA, OPS) tiếp nhận triển khai..."></textarea>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline" id="btnCancelProjModal">Đóng</button>
-          <button type="submit" class="btn btn-primary">Khởi Tạo & Kích Hoạt 9 Phòng Ban</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitNewProject">+ Khởi Tạo &amp; Kích Hoạt 9 Phòng Ban</button>
         </div>
       </form>
     </div>
@@ -678,226 +676,6 @@
           <button type="submit" class="btn btn-primary">Tạo & Mã Hóa Key Khách Hàng</button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Modal: Client Website & Content CMS Management Center -->
-  <div class="modal-backdrop" id="clientCmsModal" style="display: none;">
-    <div class="modal-box modal-box-large">
-      <div class="modal-header">
-        <div class="modal-header-left">
-          <div class="modal-icon-pill" style="background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3); color: #38BDF8;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </div>
-          <div>
-            <h3 class="modal-title">Quản Trị Không Gian & Website Khách Hàng (Client CMS)</h3>
-            <p class="modal-subtitle">Toàn quyền cấu hình tên miền, đường dẫn xem trước, banner, tài khoản bàn giao và danh mục sản phẩm thật 100%</p>
-          </div>
-        </div>
-        <button class="btn-close" id="btnCloseClientCmsModal">&times;</button>
-      </div>
-
-      <form id="clientCmsForm">
-        <!-- Project Switcher in CMS -->
-        <div class="form-group" style="margin-bottom: 16px;">
-          <label style="color: #38BDF8; font-weight: 700;">CHỌN DỰ ÁN CẦN QUẢN TRỊ NỘI DUNG:</label>
-          <select id="cmsProjectSelect" class="form-select" style="font-weight: 600;">
-            <!-- Populated dynamically -->
-          </select>
-        </div>
-
-        <!-- Section AI: Gemini Builder (Con AI thứ 2 chuyên tạo Website) -->
-        <div class="cms-section-card" style="background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 14px; margin-bottom: 16px;">
-          <div class="cms-section-title" style="color: #60A5FA; margin-bottom: 6px; font-weight: 700;">
-            KIẾN TẠO WEBSITE BẰNG GEMINI BUILDER (CON AI THỨ 2)
-          </div>
-          <p style="font-size: 0.76rem; color: #94A3B8; margin-bottom: 10px; line-height: 1.45;">
-            Nhập ý tưởng/ngành nghề (VD: "Gốm sứ Bát Tràng cao cấp", "Nội thất Bắc Âu tối giản", "Chuỗi cafe rang mộc"). Gemini Builder sẽ tự động tạo tên thương hiệu, banner và danh mục sản phẩm thật 100% kèm giá tiền VND.
-          </p>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="aiBuilderPromptInput" class="form-input" placeholder="Nhập ý tưởng hoặc ngành nghề kinh doanh..." style="flex: 1;">
-            <button type="button" class="btn btn-primary" id="btnRunGeminiBuilder" style="background: #2563EB; white-space: nowrap; font-size: 0.78rem; padding: 8px 14px;">
-              Gemini Tạo Web & Sản Phẩm
-            </button>
-          </div>
-        </div>
-
-        <!-- Section 1: Domain & Preview Server -->
-        <div class="cms-section-card">
-          <div class="cms-section-title">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            1. THÔNG TIN THƯƠNG HIỆU & HẠ TẦNG XEM TRƯỚC (LIVE PREVIEW)
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Tên Thương Hiệu / Cửa Hàng:</label>
-              <input type="text" id="cmsBrandName" required placeholder="Ví dụ: Novawear Premium Retail" class="form-input">
-            </div>
-            <div class="form-group">
-              <label>Môi Trường / Máy Chủ Triển Khai Thực Tế:</label>
-              <input type="text" id="cmsDeployMode" class="form-input" placeholder="VD: Localhost (127.0.0.1:5000), Cloud VPS (103.20.x.x), Docker K8s, Tên Miền Riêng SSL...">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Đường Dẫn Xem Thử Thực Tế (URL trên thanh địa chỉ giả lập):</label>
-              <input type="text" id="cmsPreviewUrl" required placeholder="http://192.168.1.108:3000 hoặc https://novawear.com.vn" class="form-input" style="font-family: var(--font-mono); font-size: 0.8rem;">
-            </div>
-            <div class="form-group">
-              <label>Tên Miền Riêng Bàn Giao (Production Domain):</label>
-              <input type="text" id="cmsCustomDomain" placeholder="https://novawear.com.vn" class="form-input" style="font-family: var(--font-mono); font-size: 0.8rem;">
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-bottom: 0;">
-            <label>Tiêu Đề Định Vị Sản Phẩm (Headline):</label>
-            <input type="text" id="cmsHeadline" placeholder="Ví dụ: Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Tự Động" class="form-input">
-          </div>
-        </div>
-
-        <!-- Section 2: Banner & Handover Credentials -->
-        <div class="cms-section-card">
-          <div class="cms-section-title">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            2. CHƯƠNG TRÌNH KHUYẾN MÃI & TÀI KHOẢN HƯỚNG DẪN BÀN GIAO CHO KHÁCH
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Tiêu Đề Banner Khuyến Mãi / Giới Thiệu:</label>
-              <input type="text" id="cmsBannerTitle" placeholder="Ví dụ: Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên" class="form-input">
-            </div>
-            <div class="form-group">
-              <label>Nội Dung Phụ Banner:</label>
-              <input type="text" id="cmsBannerSubtitle" placeholder="Ví dụ: Thanh toán quét mã VietQR tự động 1 giây - Tiền về tài khoản ngay" class="form-input">
-            </div>
-          </div>
-
-          <div class="form-row" style="margin-bottom: 0;">
-            <div class="form-group">
-              <label>Tài Khoản Đăng Nhập Quản Trị Store (Để khách xem thử):</label>
-              <input type="text" id="cmsAdminUser" class="form-input" style="font-family: var(--font-mono);">
-            </div>
-            <div class="form-group">
-              <label>Mật Khẩu Đăng Nhập Store:</label>
-              <input type="text" id="cmsAdminPass" class="form-input" style="font-family: var(--font-mono);">
-            </div>
-          </div>
-        </div>
-
-        <!-- Section 3: Real Products Catalog Manager -->
-        <div class="cms-section-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div class="cms-section-title" style="margin-bottom: 0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-              3. DANH MỤC SẢN PHẨM / DỊCH VỤ MẪU THỰC TẾ (100% DATA THẬT)
-            </div>
-            <button type="button" class="btn btn-outline" id="btnAddCmsProduct" style="font-size: 0.72rem; padding: 4px 10px; color: #38BDF8; border-color: rgba(56,189,248,0.3);">
-              + Thêm Sản Phẩm Mới
-            </button>
-          </div>
-
-          <div style="max-height: 220px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem;">
-              <thead>
-                <tr style="background: rgba(15,23,42,0.8); border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left;">
-                  <th style="padding: 8px 10px; color: #94A3B8;">Tên Sản Phẩm / Dịch Vụ</th>
-                  <th style="padding: 8px 10px; color: #94A3B8;">Danh Mục</th>
-                  <th style="padding: 8px 10px; color: #94A3B8;">Giá (VNĐ)</th>
-                  <th style="padding: 8px 10px; color: #94A3B8;">Tồn Kho</th>
-                  <th style="padding: 8px 10px; text-align: center; color: #94A3B8;">Thao Tác</th>
-                </tr>
-              </thead>
-              <tbody id="cmsProductsTbody">
-                <!-- Dynamically populated rows -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Section 4: AI Model Selection -->
-        <div class="cms-section-card" style="margin-bottom: 20px;">
-          <div class="cms-section-title">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            4. CẤU HÌNH TRỢ LÝ AI TƯ VẤN KHÁCH HÀNG (CLIENT PORTAL AI ENGINE)
-          </div>
-          <div class="form-row" style="margin-bottom: 0;">
-            <div class="form-group">
-              <label>Model AI Phân Tích & Bóc Tách Nhu Cầu:</label>
-              <input type="text" id="cmsAiModel" class="form-input" placeholder="VD: Gemini 2.5 Pro, DeepSeek V3, Claude 3.5 Sonnet, GPT-4o, Custom LLM...">
-            </div>
-            <div class="form-group">
-              <label>Phong Cách Tư Vấn Của AI:</label>
-              <input type="text" value="Thực chiến, dễ hiểu (Không dùng thuật ngữ kỹ thuật khó hiểu)" disabled class="form-input" style="color: #34D399; opacity: 0.85;">
-            </div>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline" id="btnCancelClientCms">Hủy Bỏ</button>
-          <button type="submit" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            Lưu Cấu Hình & Đồng Bộ Tức Thì Sang Web Khách Hàng
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal: Quản Lý Tệp Khách Hàng Dùng Thử Nghiệm (Open Trial Leads) -->
-  <div class="modal-backdrop" id="trialLeadsModal" style="display: none;">
-    <div class="modal-dialog" style="max-width: 920px; width: 95%;">
-      <div class="modal-header">
-        <div>
-          <span style="font-size: 0.68rem; font-weight: 700; color: #38BDF8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 4px;">OPEN BETA &bull; QUẢN TRỊ TỆP KHÁCH HÀNG</span>
-          <h3 class="modal-title" style="font-size: 1.15rem; color: #F8FAFC;">Thống Kê Khách Hàng Trải Nghiệm Bản Thử Nghiệm</h3>
-          <p style="font-size: 0.76rem; color: var(--text-dim); margin-top: 2px;">Theo dõi danh sách khách hàng tự động kích hoạt trải nghiệm qua Client Portal để chủ động hỗ trợ và chăm sóc.</p>
-        </div>
-        <button class="btn-close" id="btnCloseTrialLeadsModal">&times;</button>
-      </div>
-
-      <div class="modal-body" style="padding: 16px 20px;">
-        <!-- KPI Summary Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
-          <div style="background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px 14px;">
-            <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Tổng Khách Thử Nghiệm</div>
-            <div id="trialModalTotalCount" style="font-size: 1.35rem; font-weight: 700; color: #38BDF8; margin-top: 4px;">0</div>
-          </div>
-          <div style="background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px 14px;">
-            <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Mã Key Đã Cấp Tự Động</div>
-            <div id="trialModalKeysIssued" style="font-size: 1.35rem; font-weight: 700; color: #10B981; margin-top: 4px;">0</div>
-          </div>
-          <div style="background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px 14px;">
-            <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Chính Sách Bảo Mật</div>
-            <div style="font-size: 0.78rem; font-weight: 600; color: #E2E8F0; margin-top: 8px;">HMAC-SHA256 Encrypted</div>
-          </div>
-        </div>
-
-        <!-- Trial Leads Table -->
-        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
-          <table class="task-table" style="width: 100%;">
-            <thead>
-              <tr>
-                <th width="85">Mã Lead</th>
-                <th width="140">Họ &amp; Tên</th>
-                <th width="125">Số Điện Thoại / Zalo</th>
-                <th>Dự Án Đăng Ký Thử Nghiệm</th>
-                <th width="130">Thời Gian</th>
-                <th width="100" style="text-align: center;">Mã Key</th>
-                <th width="110" style="text-align: center;">Thao Tác</th>
-              </tr>
-            </thead>
-            <tbody id="trialLeadsTableBody">
-              <!-- Dynamically populated by app.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="modal-footer" style="padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 0.72rem; color: #64748B;">Dữ liệu khách hàng được lưu trữ an toàn trong CSDL nội bộ và đồng bộ thời gian thực qua SSE.</span>
-        <button type="button" class="btn btn-outline" id="btnRefreshTrialLeads">Làm Mới Danh Sách</button>
-      </div>
     </div>
   </div>
 

@@ -176,8 +176,8 @@ sudo certbot --nginx -d tenmien-cuaban.com
 
 ---
 
-## 4. CÁC ĐƯỜNG DẪN TRUY CẬP HỆ THỐNG
-* **Trang Quản Trị Trung Tâm 9 Phòng Ban (Admin Hub):** `http://<IP-VPS>:5000/index.html`
-* **Cổng Tư Vấn Ý Tưởng Khách Hàng (Gemini 1):** `http://<IP-VPS>:5000/client_portal.html`
-* **Không Gian Giám Sát Website Khách Hàng (Gemini 2):** `http://<IP-VPS>:5000/client_workspace.html`
+## 4. ĐƯỜNG DẪN TRUY CẬP HỆ THỐNG
+* **Trang Quản Trị Trung Tâm & Điều Hành 9 Phòng Ban (Admin Hub):** `http://<IP-VPS>:5000/` (hoặc `http://localhost:5000/`)
+* **API Quản Trị Dự Án & Tác Vụ:** `http://<IP-VPS>:5000/api/projects`
+
 

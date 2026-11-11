@@ -30,18 +30,12 @@
    - Lưu trữ bền vững qua `localStorage` – dữ liệu không bị mất khi F5 tải lại trang.
 
 3. **Phân Quyền Vai Trò (Role-Based Access Control) & Bảo Vệ Chi Phí Token AI:**
-   - **Chế độ Admin Master:** Toàn quyền phát lệnh kỹ thuật xuống 9 phòng ban (`+ Phát Lệnh Cho AI Vibe`), cấp Key bảo mật cho khách hàng, khởi tạo dự án.
-   - **Chế độ Khách Hàng (Client):** Khi khách hàng đăng nhập bằng Project Access Key, hệ thống tự động ẩn nút phát lệnh AI Vibe (tránh tốn chi phí token của Admin) và khóa quyền chỉnh sửa skill kỹ thuật. Khách hàng chỉ theo dõi tiến độ và gửi **Feedback** về cho **Project Manager (PM)**.
+   - **Chế độ Admin Master:** Toàn quyền phát lệnh kỹ thuật xuống 9 phòng ban (`+ Phát Lệnh Cho AI Vibe`), cấp Key bảo mật dự án, khởi tạo dự án mới độc lập và quản trị tiến độ.
+   - **Chế độ Giám Sát Dự Án:** Theo dõi tiến độ thời gian thực của 9 phòng ban, bóc tách WBS và gửi yêu cầu kỹ thuật về cho **Project Manager (PM)**.
 
-4. **Cổng Tư Vấn Khách Hàng Thân Thiện ([`client_portal.html`](./client_portal.html)):**
-   - Dành cho khách vãng lai và đối tác tìm hiểu dịch vụ.
-   - **AI Chuyên Gia Tư Vấn (Client-Facing AI):** Phân tích ý tưởng dưới ngôn ngữ đời thường, dễ hiểu, làm nổi bật lợi ích kinh doanh và dự toán chi phí hợp lý.
-   - Kênh kết nối trực tiếp với Admin: Zalo, Hotline 24/7, Facebook Messenger, Email.
-   - Cổng đăng nhập bảo mật bằng **Mã Khóa Dự Án (Project Access Key)**.
-
-5. **Bộ Sinh & Xác Thực Key Mã Hóa Dự Án (`ITKEY-...`):**
-   - Admin nhập Tên khách hàng + Ngày sinh + SĐT + Mã dự án &rarr; Hệ thống tự động mã hóa kèm chữ ký số.
-   - Tích hợp bộ lọc an ninh đầu vào (Input Sanitization): Chặn đứng 100% các hành vi tấn công XSS, SQL Injection hoặc cố ý đánh cắp dữ liệu.
+4. **Bộ Sinh & Xác Thực Key Mã Hóa Dự Án (`ITKEY-...`):**
+   - Admin nhập Tên đối tác + Mã dự án &rarr; Hệ thống tự động mã hóa HMAC-SHA256 kèm chữ ký số.
+   - Tích hợp bộ lọc an ninh đầu vào (Input Sanitization): Chặn đứng 100% các hành vi tấn công XSS, SQL Injection hoặc truy cập trái phép.
 
 ---
 

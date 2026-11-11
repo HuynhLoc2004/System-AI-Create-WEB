@@ -1052,129 +1052,12 @@ function setupEventListeners() {
     });
   }
 
-  // Modal: Client CMS Management Center
-  const btnOpenClientCms = document.getElementById("btnOpenClientCmsModal");
-  if (btnOpenClientCms) {
-    btnOpenClientCms.addEventListener("click", () => openClientCmsModal());
-  }
-  const btnDropdownClientCms = document.getElementById("btnDropdownClientCms");
-  if (btnDropdownClientCms) {
-    btnDropdownClientCms.addEventListener("click", () => {
-      toggleToolsDropdown(false);
-      openClientCmsModal();
-    });
-  }
-  const btnCloseClientCms = document.getElementById("btnCloseClientCmsModal");
-  if (btnCloseClientCms) {
-    btnCloseClientCms.addEventListener("click", () => closeClientCmsModal());
-  }
-  const btnCancelClientCms = document.getElementById("btnCancelClientCms");
-  if (btnCancelClientCms) {
-    btnCancelClientCms.addEventListener("click", () => closeClientCmsModal());
-  }
-
-  // Modal: Open Trial Leads Management Center
-  const trialLeadsModal = document.getElementById("trialLeadsModal");
-  const btnOpenTrialLeads = document.getElementById("btnOpenTrialLeadsModal");
-  if (btnOpenTrialLeads) {
-    btnOpenTrialLeads.addEventListener("click", () => {
-      if (trialLeadsModal) {
-        trialLeadsModal.style.display = "flex";
-        fetchTrialLeads();
-      }
-    });
-  }
-  const btnDropdownTrialLeads = document.getElementById("btnDropdownTrialLeads");
-  if (btnDropdownTrialLeads) {
-    btnDropdownTrialLeads.addEventListener("click", () => {
-      toggleToolsDropdown(false);
-      if (trialLeadsModal) {
-        trialLeadsModal.style.display = "flex";
-        fetchTrialLeads();
-      }
-    });
-  }
-  const btnCloseTrialLeads = document.getElementById("btnCloseTrialLeadsModal");
-  if (btnCloseTrialLeads) {
-    btnCloseTrialLeads.addEventListener("click", () => {
-      if (trialLeadsModal) trialLeadsModal.style.display = "none";
-    });
-  }
-  const btnRefreshTrialLeads = document.getElementById("btnRefreshTrialLeads");
-  if (btnRefreshTrialLeads) {
-    btnRefreshTrialLeads.addEventListener("click", () => {
-      fetchTrialLeads();
-      showToast("Đã đồng bộ lại danh sách khách hàng thử nghiệm!", "info");
-    });
-  }
-  const btnAddCmsProduct = document.getElementById("btnAddCmsProduct");
-  if (btnAddCmsProduct) {
-    btnAddCmsProduct.addEventListener("click", () => addCmsProduct());
-  }
-  const cmsProjectSelect = document.getElementById("cmsProjectSelect");
-  if (cmsProjectSelect) {
-    cmsProjectSelect.addEventListener("change", (e) => {
-      const proj = projects.find(p => p.id === e.target.value);
-      if (proj) loadCmsFormForProject(proj);
-    });
-  }
-  const clientCmsForm = document.getElementById("clientCmsForm");
-  if (clientCmsForm) {
-    clientCmsForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      saveCmsConfiguration();
-    });
-  }
-
-  // Gemini Builder (Con AI thứ 2 chuyên tạo Website)
-  const btnRunGeminiBuilder = document.getElementById("btnRunGeminiBuilder");
-  if (btnRunGeminiBuilder) {
-    btnRunGeminiBuilder.addEventListener("click", async () => {
-      const promptInput = document.getElementById("aiBuilderPromptInput");
-      const prompt = promptInput ? promptInput.value.trim() : "";
-      if (!prompt) {
-        showToast("Vui lòng nhập mô tả ý tưởng/ngành nghề để Gemini tạo website!", "danger");
-        if (promptInput) promptInput.focus();
-        return;
-      }
-
-      btnRunGeminiBuilder.disabled = true;
-      btnRunGeminiBuilder.textContent = "Gemini Đang Tạo Web...";
-
-      try {
-        const selectedProjId = document.getElementById("cmsProjectSelect").value;
-        const res = await fetch("/api/ai/generate-website", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt, projectId: selectedProjId })
-        });
-        const data = await res.json();
-        if (data.success && data.data) {
-          const cfg = data.data;
-          document.getElementById("cmsBrandName").value = cfg.brandName || "";
-          document.getElementById("cmsHeadline").value = cfg.headline || "";
-          document.getElementById("cmsBannerTitle").value = cfg.bannerTitle || "";
-          document.getElementById("cmsBannerSubtitle").value = cfg.bannerSubtitle || "";
-          if (cfg.previewUrl) document.getElementById("cmsPreviewUrl").value = cfg.previewUrl;
-          if (cfg.customDomain) document.getElementById("cmsCustomDomain").value = cfg.customDomain;
-          if (cfg.adminStoreUser) document.getElementById("cmsAdminUser").value = cfg.adminStoreUser;
-          if (cfg.adminStorePass) document.getElementById("cmsAdminPass").value = cfg.adminStorePass;
-
-          if (Array.isArray(cfg.products) && cfg.products.length > 0) {
-            activeCmsProducts = cfg.products;
-            renderCmsProductsTable();
-          }
-
-          showToast(`Gemini Builder đã tạo xong website & ${activeCmsProducts.length} sản phẩm thật!`, "success");
-        } else {
-          showToast("Có lỗi xảy ra: " + (data.error || "Không thể tạo website"), "danger");
-        }
-      } catch (err) {
-        showToast("Lỗi kết nối máy chủ: " + err.message, "danger");
-      } finally {
-        btnRunGeminiBuilder.disabled = false;
-        btnRunGeminiBuilder.textContent = "Gemini Tạo Web & Sản Phẩm";
-      }
+  // Modal: Header Prominent New Project Button
+  const btnHeaderNewProj = document.getElementById("btnHeaderNewProject");
+  if (btnHeaderNewProj) {
+    btnHeaderNewProj.addEventListener("click", () => {
+      const modal = document.getElementById("newProjectModal");
+      if (modal) modal.style.display = "flex";
     });
   }
 
@@ -1217,7 +1100,7 @@ function setupEventListeners() {
   if (btnLogoutClient) {
     btnLogoutClient.addEventListener("click", () => {
       sessionStorage.clear();
-      window.location.href = "client_portal.html";
+      window.location.reload();
     });
   }
 
@@ -2420,65 +2303,99 @@ function handleAddNewTask() {
   showToast(`Đã lưu tác vụ mới [${newId}] cho phòng ban ${dept}`, "success");
 }
 
-function handleCreateNewProject() {
+async function handleCreateNewProject() {
   if (currentRole !== "ADMIN") return;
 
   const rawName = document.getElementById("modalProjName").value;
   const rawCode = document.getElementById("modalProjCode").value;
   const pkg = document.getElementById("modalProjPackage").value;
+  const infra = document.getElementById("modalProjInfra") ? document.getElementById("modalProjInfra").value : "Cloud VPS Docker Container (Port 5000)";
+  const rawBudget = document.getElementById("modalProjBudget") ? document.getElementById("modalProjBudget").value : "";
+  const rawDesc = document.getElementById("modalProjDesc") ? document.getElementById("modalProjDesc").value : "";
 
   const name = sanitizeInput(rawName);
   const code = sanitizeInput(rawCode);
+  const budget = sanitizeInput(rawBudget) || (pkg.includes("1.85") ? "1.85 Tỷ" : pkg.includes("550") ? "550 Triệu" : "3.5 Tỷ");
+  const description = sanitizeInput(rawDesc) || `Dự án triển khai phần mềm ${name} (${code}) tiêu chuẩn 9 phòng ban`;
 
   if (!name || !code) {
     showToast("Vui lòng điền tên và mã dự án hợp lệ!", "danger");
     return;
   }
 
-  const newId = `prj_${Date.now()}`;
-  const newProject = {
-    id: newId,
-    code,
+  const payload = {
     name,
+    code,
     package: pkg,
-    budget: pkg.includes("1.85") ? "1.85 Tỷ" : pkg.includes("550") ? "550 Triệu" : "3.5 Tỷ",
-    serverCost: "$85/tháng",
-    daysRemaining: "Còn 60 ngày tới Go-Live",
-    tokenSaved: "96.4%",
-    environment: "PRODUCTION",
-    deptStatuses: {
-      "client": "DONE",
-      "pm": "IN_PROGRESS",
-      "ba": "IN_PROGRESS",
-      "sa": "IDLE",
-      "ui": "IDLE",
-      "fe": "IDLE",
-      "be": "IDLE",
-      "dba": "IDLE",
-      "qa": "IDLE",
-      "devops": "IDLE",
-      "prod": "IDLE"
-    },
-    tasks: [
-      { id: "PM-001", dept: "01. Quản Trị Dự Án", title: "Khảo sát và đề xuất bài toán chi phí dự án", pic: "TPM Lead", status: "IN_PROGRESS", progress: 50, note: "Đang lập WBS và ngân sách" },
-      { id: "BA-002", dept: "02. Phân Tích Nghiệp Vụ", title: "Lấy yêu cầu khám phá chiến lược (Brand / SEO)", pic: "Lead BA", status: "IN_PROGRESS", progress: 40, note: "Khảo sát các bên liên quan" }
-    ],
-    feedbacks: [],
-    history: [
-      { time: "Vừa xong", dept: "Hệ Thống", action: `Đã khởi tạo dự án mới độc lập: ${name} (${code})`, type: "success" }
-    ]
+    budget,
+    infraStrategy: infra,
+    description
   };
 
-  projects.unshift(newProject);
-  currentProjectId = newId;
+  try {
+    const res = await fetch("/api/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    if (result.success && result.data) {
+      projects.unshift(result.data);
+      currentProjectId = result.data.id;
+    } else {
+      throw new Error(result.error || "Failed to create project on server");
+    }
+  } catch (err) {
+    console.warn("Backend API offline or error, creating project locally:", err);
+    const newId = `prj_${Date.now()}`;
+    const cleanCode = code.toUpperCase();
+    const localProj = {
+      id: newId,
+      code: cleanCode,
+      name,
+      package: pkg,
+      budget,
+      infraStrategy: infra,
+      description,
+      serverCost: "$45/tháng",
+      daysRemaining: "Còn 60 ngày tới Go-Live",
+      tokenSaved: "98.5%",
+      environment: "PRODUCTION",
+      deptStatuses: {
+        "client": "DONE", "pm": "IN_PROGRESS", "ba": "IN_PROGRESS",
+        "sa": "TODO", "ui": "TODO", "fe": "TODO", "be": "TODO",
+        "dba": "TODO", "qa": "TODO", "devops": "TODO", "prod": "TODO"
+      },
+      tasks: [
+        { id: `${cleanCode}-PM-01`, dept: "01. Quản Trị Dự Án", title: "Khảo sát và đề xuất bài toán chi phí dự án", pic: "TPM Lead", status: "IN_PROGRESS", progress: 60, note: "Đang lập WBS và ngân sách" },
+        { id: `${cleanCode}-BA-02`, dept: "02. Phân Tích Nghiệp Vụ", title: "Lấy yêu cầu khám phá chiến lược (Brand / SEO)", pic: "Lead BA", status: "IN_PROGRESS", progress: 50, note: "Khảo sát các bên liên quan" },
+        { id: `${cleanCode}-ARCH-03`, dept: "03. Kiến Trúc Phần Mềm", title: "Thiết kế kiến trúc hệ thống & tối ưu chi phí hạ tầng", pic: "Solution Architect", status: "TODO", progress: 20, note: "Chuẩn bị Review" },
+        { id: `${cleanCode}-UI-04`, dept: "04. Thiết Kế Trải Nghiệm", title: "Thiết kế UI/UX Design System đồng bộ", pic: "Senior UI/UX", status: "TODO", progress: 10, note: "Chờ wireframe từ BA" },
+        { id: `${cleanCode}-FE-05`, dept: "05. Phát Triển Giao Diện", title: "Xây dựng giao diện Web responsive chuẩn doanh nghiệp", pic: "Senior Web Dev", status: "TODO", progress: 0, note: "Chờ UI/UX phê duyệt" },
+        { id: `${cleanCode}-BE-06`, dept: "06. Lập Trình Nghiệp Vụ", title: "Xây dựng RESTful API và Business Logic", pic: "Backend Lead", status: "TODO", progress: 0, note: "Chờ ARCH" },
+        { id: `${cleanCode}-DBA-07`, dept: "07. Cơ Sở Dữ Liệu", title: "Thiết kế CSDL quan hệ chuẩn 3NF và phân vùng Index", pic: "Senior DBA", status: "TODO", progress: 0, note: "Chờ BA spec" },
+        { id: `${cleanCode}-QA-08`, dept: "08. Đảm Bảo Chất Lượng", title: "Xây dựng Test Plan, Test Case và kiểm thử tự động", pic: "QA Lead", status: "TODO", progress: 0, note: "Chờ bản build" },
+        { id: `${cleanCode}-OPS-09`, dept: "09. Vận Hành & Hạ Tầng", title: `Thiết lập hạ tầng ${infra} và CI/CD pipeline`, pic: "DevOps Engineer", status: "TODO", progress: 0, note: "Cấu hình Docker & SSL" }
+      ],
+      feedbacks: [],
+      history: [
+        { time: "Vừa xong", dept: "Hệ Thống", action: `Đã khởi tạo dự án mới: ${name} (${code})`, type: "success" }
+      ]
+    };
+    projects.unshift(localProj);
+    currentProjectId = newId;
+  }
+
   saveProjectsToStorage();
   initProjectDropdown();
 
-  document.getElementById("newProjectForm").reset();
-  document.getElementById("newProjectModal").style.display = "none";
+  const form = document.getElementById("newProjectForm");
+  if (form) form.reset();
+  const modal = document.getElementById("newProjectModal");
+  if (modal) modal.style.display = "none";
   renderDashboard();
 
-  showToast(`Dự án [${code}] đã được khởi tạo và phân rã xuống 9 phòng ban!`, "success");
+  showToast(`Dự án [${code}] đã được khởi tạo thành công và kích hoạt 9 phòng ban!`, "success");
 }
 
 // Real-Time Event Sync from Backend (No more fake timer simulations)
@@ -2534,243 +2451,32 @@ function triggerRealtimeReport() {
 }
 
 // ========================================================
-// CLIENT CMS & WEBSITE SHOWCASE MANAGEMENT CONTROLLER
+// SYNC PROJECTS WITH BACKEND DATABASE
 // ========================================================
-function openClientCmsModal() {
-  const modal = document.getElementById("clientCmsModal");
-  if (!modal) return;
-
-  const projectSelect = document.getElementById("cmsProjectSelect");
-  if (projectSelect) {
-    projectSelect.innerHTML = projects.map(p => `
-      <option value="${p.id}" ${p.id === currentProjectId ? "selected" : ""}>[${p.code}] ${escapeHtml(p.name)}</option>
-    `).join("");
-  }
-
-  loadCmsFormForProject(getCurrentProject());
-  modal.style.display = "flex";
-}
-
-function closeClientCmsModal() {
-  const modal = document.getElementById("clientCmsModal");
-  if (modal) modal.style.display = "none";
-}
-
-let activeCmsProducts = [];
-
-function loadCmsFormForProject(project) {
-  if (!project) return;
-  const cfg = project.clientConfig || {};
-
-  const brandEl = document.getElementById("cmsBrandName");
-  if (brandEl) brandEl.value = cfg.brandName || project.name;
-
-  const headEl = document.getElementById("cmsHeadline");
-  if (headEl) headEl.value = cfg.headline || "";
-
-  const deployEl = document.getElementById("cmsDeployMode");
-  if (deployEl) deployEl.value = cfg.deployMode || "LOCAL_SERVER";
-
-  const prevEl = document.getElementById("cmsPreviewUrl");
-  if (prevEl) prevEl.value = cfg.previewUrl || "http://192.168.1.108:3000";
-
-  const domainEl = document.getElementById("cmsCustomDomain");
-  if (domainEl) domainEl.value = cfg.customDomain || "https://shop.example.com";
-
-  const bTitleEl = document.getElementById("cmsBannerTitle");
-  if (bTitleEl) bTitleEl.value = cfg.bannerTitle || "";
-
-  const bSubEl = document.getElementById("cmsBannerSubtitle");
-  if (bSubEl) bSubEl.value = cfg.bannerSubtitle || "";
-
-  const uEl = document.getElementById("cmsAdminUser");
-  if (uEl) uEl.value = cfg.adminStoreUser || "admin_store";
-
-  const pEl = document.getElementById("cmsAdminPass");
-  if (pEl) pEl.value = cfg.adminStorePass || "Store@2026Secure";
-
-  const aiEl = document.getElementById("cmsAiModel");
-  if (aiEl) aiEl.value = cfg.aiConsultingModel || "gemini-2.5-pro";
-
-  activeCmsProducts = Array.isArray(cfg.products) ? JSON.parse(JSON.stringify(cfg.products)) : [];
-  renderCmsProductsTable();
-}
-
-function renderCmsProductsTable() {
-  const tbody = document.getElementById("cmsProductsTbody");
-  if (!tbody) return;
-
-  tbody.innerHTML = "";
-  if (activeCmsProducts.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748B; padding:16px;">Chưa có sản phẩm nào. Bấm "+ Thêm Sản Phẩm Mới" để tạo.</td></tr>`;
-    return;
-  }
-
-  activeCmsProducts.forEach((prod, idx) => {
-    const tr = document.createElement("tr");
-    tr.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
-    tr.innerHTML = `
-      <td style="padding: 6px 8px;"><input type="text" class="table-input" value="${escapeHtml(prod.name)}" onchange="updateCmsProduct(${idx}, 'name', this.value)" style="width:100%;"></td>
-      <td style="padding: 6px 8px;"><input type="text" class="table-input" value="${escapeHtml(prod.category)}" onchange="updateCmsProduct(${idx}, 'category', this.value)" style="width:100%;"></td>
-      <td style="padding: 6px 8px;"><input type="number" class="table-input" value="${Number(prod.price) || 0}" onchange="updateCmsProduct(${idx}, 'price', Number(this.value))" style="width:110px;"></td>
-      <td style="padding: 6px 8px;"><input type="number" class="table-input" value="${Number(prod.stock) || 0}" onchange="updateCmsProduct(${idx}, 'stock', Number(this.value))" style="width:65px;"></td>
-      <td style="padding: 6px 8px; text-align:center;">
-        <button type="button" class="btn btn-outline" onclick="removeCmsProduct(${idx})" style="color:#F87171; border-color:rgba(239,68,68,0.3); padding:3px 8px; font-size:0.7rem;">Xóa</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-window.updateCmsProduct = function(idx, field, val) {
-  if (activeCmsProducts[idx]) {
-    activeCmsProducts[idx][field] = val;
-  }
-};
-
-window.removeCmsProduct = function(idx) {
-  activeCmsProducts.splice(idx, 1);
-  renderCmsProductsTable();
-};
-
-function addCmsProduct() {
-  const newId = "prod_" + Date.now().toString(36);
-  activeCmsProducts.push({
-    id: newId,
-    name: "Sản Phẩm Mới " + (activeCmsProducts.length + 1),
-    category: "Thời Trang & Dịch Vụ",
-    price: 850000,
-    stock: 25,
-    sku: "SKU-" + Math.floor(100 + Math.random() * 900),
-    status: "IN_STOCK"
-  });
-  renderCmsProductsTable();
-}
-
-function saveCmsConfiguration() {
-  const selectedProjId = document.getElementById("cmsProjectSelect").value;
-  const project = projects.find(p => p.id === selectedProjId);
-  if (!project) return;
-
-  const brandName = sanitizeInput(document.getElementById("cmsBrandName").value);
-  const headline = sanitizeInput(document.getElementById("cmsHeadline").value);
-  const deployMode = document.getElementById("cmsDeployMode").value;
-  const previewUrl = sanitizeInput(document.getElementById("cmsPreviewUrl").value);
-  const customDomain = sanitizeInput(document.getElementById("cmsCustomDomain").value);
-  const bannerTitle = sanitizeInput(document.getElementById("cmsBannerTitle").value);
-  const bannerSubtitle = sanitizeInput(document.getElementById("cmsBannerSubtitle").value);
-  const adminStoreUser = sanitizeInput(document.getElementById("cmsAdminUser").value);
-  const adminStorePass = sanitizeInput(document.getElementById("cmsAdminPass").value);
-  const aiConsultingModel = document.getElementById("cmsAiModel").value;
-
-  project.clientConfig = {
-    brandName: brandName || project.name,
-    headline: headline,
-    deployMode: deployMode,
-    previewUrl: previewUrl,
-    customDomain: customDomain,
-    sslActive: deployMode === "CUSTOM_DOMAIN_SSL" || (previewUrl && previewUrl.startsWith("https://")),
-    bannerTitle: bannerTitle,
-    bannerSubtitle: bannerSubtitle,
-    adminStoreUser: adminStoreUser,
-    adminStorePass: adminStorePass,
-    aiConsultingModel: aiConsultingModel,
-    aiTone: "Thực chiến, dễ hiểu (Không dùng thuật ngữ kỹ thuật khó hiểu)",
-    products: activeCmsProducts
-  };
-
-  saveProjectsToStorage();
-
-  // Save to Production Backend Server
-  fetch(`/api/projects/${selectedProjId}/config`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(project.clientConfig)
-  }).then(r => r.json()).then(res => {
-    console.log("[Production Backend] Config saved and Redis cache invalidated:", res);
-  }).catch(e => console.log("[Storage Fallback] Saved locally:", e));
-
-  closeClientCmsModal();
-  showToast(`Đã lưu cấu hình CMS & đồng bộ dữ liệu thật cho [${project.code}] thành công!`, "success");
-
-  // Re-render dashboard
-  renderDashboard();
-}
-
-// ----------------------------------------------------
-// Open Trial Leads Telemetry & Management (Admin Tracking)
-// ----------------------------------------------------
-let trialLeadsData = [];
-
-async function fetchTrialLeads() {
+async function syncProjectsWithBackend() {
   try {
-    const res = await fetch("/api/trial/leads");
+    const res = await fetch("/api/projects");
     if (!res.ok) return;
     const data = await res.json();
-    if (data.success && Array.isArray(data.data)) {
-      trialLeadsData = data.data;
-      updateTrialLeadsBadge();
-      renderTrialLeadsTable();
+    if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+      data.data.forEach(bp => {
+        const idx = projects.findIndex(p => p.id === bp.id || p.code === bp.code);
+        if (idx >= 0) {
+          projects[idx] = { ...projects[idx], ...bp };
+        } else {
+          projects.push(bp);
+        }
+      });
+      saveProjectsToStorage();
+      initProjectDropdown();
+      renderDashboard();
     }
-  } catch (err) {
-    console.warn("Could not fetch trial leads", err);
+  } catch (e) {
+    console.debug("Backend projects sync skipped", e);
   }
 }
 
-function updateTrialLeadsBadge() {
-  const count = trialLeadsData.length;
-  const badge = document.getElementById("topNavTrialCount");
-  if (badge) badge.textContent = count;
-  const totalCount = document.getElementById("trialModalTotalCount");
-  if (totalCount) totalCount.textContent = count;
-  const keysIssued = document.getElementById("trialModalKeysIssued");
-  if (keysIssued) keysIssued.textContent = count;
-}
+// Call on startup
+syncProjectsWithBackend();
 
-function renderTrialLeadsTable() {
-  const tbody = document.getElementById("trialLeadsTableBody");
-  if (!tbody) return;
-  tbody.innerHTML = "";
 
-  if (trialLeadsData.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 32px;">Chưa có khách hàng nào đăng ký bản thử nghiệm Open Beta.</td></tr>`;
-    return;
-  }
-
-  trialLeadsData.forEach(lead => {
-    const tr = document.createElement("tr");
-    const phoneVal = lead.phone ? escapeHtml(lead.phone) : "--";
-    const timeStr = lead.createdAt ? new Date(lead.createdAt).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" }) : "--";
-    
-    tr.innerHTML = `
-      <td style="font-family: var(--font-mono); font-weight: 600; color: #38BDF8;">${escapeHtml(lead.id)}</td>
-      <td style="font-weight: 600; color: #F8FAFC;">${escapeHtml(lead.name)}</td>
-      <td style="font-family: var(--font-mono); color: #CBD5E1;">
-        <span style="display: flex; align-items: center; gap: 6px;">
-          ${phoneVal}
-          <a href="tel:${phoneVal}" title="Gọi hỗ trợ khách hàng" style="color: #10B981; display: inline-flex;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
-        </span>
-      </td>
-      <td>
-        <strong style="color: #E2E8F0;">${escapeHtml(lead.projectTitle || "Dự án thử nghiệm")}</strong>
-        <div style="font-size: 0.7rem; color: #64748B;">Mã dự án: ${escapeHtml(lead.projectId)}</div>
-      </td>
-      <td style="font-size: 0.72rem; color: #94A3B8;">${timeStr}</td>
-      <td style="text-align: center;">
-        <button class="btn btn-outline" style="padding: 2px 7px; font-size: 0.65rem;" onclick="copyLeadKey('${escapeHtml(lead.key)}')">Sao Chép</button>
-      </td>
-      <td style="text-align: center;">
-        <a href="client_workspace.html?project=${encodeURIComponent(lead.projectId)}&role=admin" target="_blank" class="btn btn-outline" style="padding: 3px 8px; font-size: 0.68rem; text-decoration: none; color: #38BDF8; display: inline-flex; align-items: center; gap: 4px;">
-          Workspace
-        </a>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-window.copyLeadKey = function(key) {
-  navigator.clipboard.writeText(key).then(() => {
-    showToast("Đã sao chép mã Key truy cập của khách!", "success");
-  });
-};
