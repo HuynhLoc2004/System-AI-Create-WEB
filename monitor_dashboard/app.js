@@ -1974,7 +1974,7 @@ async function handleDispatchDirective() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          projectId: project.id,
+          projectId: project.code || project.id || "PRJ-RETAIL-2026",
           requirement: reqText,
           adminKey: inputKey
         })

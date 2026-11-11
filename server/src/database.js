@@ -300,7 +300,17 @@ services:
   }
 
   getProjectById(id) {
-    return this.data.projects.find(p => p.id === id || p.code === id);
+    if (!id) return null;
+    const cleanId = String(id).toLowerCase().trim();
+    return this.data.projects.find(p => 
+      p.id === id || 
+      p.code === id ||
+      String(p.id).toLowerCase() === cleanId ||
+      String(p.code).toLowerCase() === cleanId ||
+      (cleanId === "prj_retail" && (p.id === "PRJ-RETAIL-2026" || p.code === "RETAIL")) ||
+      (cleanId === "prj_fintech" && (p.id === "PRJ-FINTECH-2026" || p.code === "FINTECH")) ||
+      (cleanId === "prj_pharma" && (p.id === "PRJ-PHARMA" || p.code === "PHARMA"))
+    );
   }
 
   getProject(id) {
