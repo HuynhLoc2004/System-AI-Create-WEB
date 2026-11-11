@@ -53,3 +53,4 @@ Khi AI sinh code hoặc người dùng chỉnh sửa 1 file duy nhất:
 - Nhận request: `PUT /api/projects/:id/files` với body `{ filePath, content }`.
 - Ghi đè khóa `project.files[filePath] = content`.
 - Kích hoạt sự kiện SSE `project:file_updated` để tất cả các màn hình quản trị viên cùng thấy cập nhật.
+

@@ -34,3 +34,4 @@ sequenceDiagram
   - Mã nguồn từ chuỗi JSON được nén thành blob `.zip` ngay trong bộ nhớ client.
   - Tự động kích hoạt hành động tải xuống (`saveAs(blob, "project.zip")`).
   - Máy chủ không tốn 1 byte ổ cứng để tạo file tạm.
+

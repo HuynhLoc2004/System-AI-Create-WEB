@@ -32,3 +32,4 @@ WHERE id = 'PRJ-RETAIL-2026';
 
 1. **Giới hạn kích thước file:** Mỗi file text không vượt quá 2MB. Các tài sản nhị phân nặng (ảnh lớn, video) phải đưa lên Cloudflare R2 / S3 CDN thay vì lưu thô vào CSDL.
 2. **Bảo toàn tính toàn vẹn:** Khóa `package.json` và `README.md` luôn được khởi tạo mặc định trong mỗi dự án mới.
+

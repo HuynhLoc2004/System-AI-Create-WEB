@@ -614,88 +614,115 @@ const departmentsData = {
     role: "Đầu vào định hướng kinh doanh, phê duyệt ngân sách và nghiệm thu sản phẩm cuối.",
     inputs: ["Ý tưởng kinh doanh thô", "Hạn mức ngân sách tối đa", "Yêu cầu mốc thời gian bàn giao"],
     deliverables: ["Hợp đồng kinh tế", "Phê duyệt điều lệ Project Charter", "Biên bản nghiệm thu UAT Sign-off"],
-    x: 90, y: 235, width: 145, height: 80
+    x: 110, y: 160, width: 140, height: 80
+  },
+  "po": {
+    badge: "10. PO",
+    title: "QUẢN LÝ SẢN PHẨM",
+    subtitle: "Product Owner / PM",
+    role: "Định nghĩa PRD, cắt bỏ 60% tính năng thừa (Kill Criteria), thiết lập North Star Metric và phát hành Product Brief 1 trang.",
+    inputs: ["Ý tưởng kinh doanh từ Sponsor", "Phản hồi người dùng từ Analytics (Phòng 13)", "Nghiên cứu thị trường"],
+    deliverables: ["Product Brief 1 trang", "Bản đặc tả PRD Tier-1", "Ma trận MoSCoW & North Star KPI"],
+    x: 110, y: 320, width: 140, height: 80
   },
   "pm": {
     badge: "01. PM",
     title: "QUẢN TRỊ DỰ ÁN",
     subtitle: "Project Manager / TPM",
-    role: "Trung tâm điều hành, tiếp nhận phản hồi khách hàng, phân tích Solution kỹ thuật và điều phối 8 phòng ban.",
-    inputs: ["Mục tiêu kinh doanh & Feedback từ khách", "Phản hồi tiến độ từ 8 phòng ban", "Báo cáo rủi ro kỹ thuật"],
-    deliverables: ["WBS phân rã công việc", "Bảng điều khiển Master Task", "Solution giải quyết phản hồi khách hàng"],
-    x: 250, y: 235, width: 145, height: 80
+    role: "Trung tâm điều hành, tiếp nhận phản hồi khách hàng, phân tích Solution kỹ thuật và điều phối các phòng ban.",
+    inputs: ["Mục tiêu kinh doanh & Feedback từ khách", "Phản hồi tiến độ từ các phòng ban", "Báo cáo rủi ro kỹ thuật"],
+    deliverables: ["WBS phân rã công việc", "Bảng điều khiển Master Task", "Ma trận Scope Creep & Change Request"],
+    x: 320, y: 160, width: 140, height: 80
   },
   "ba": {
     badge: "02. BA",
     title: "PHÂN TÍCH NGHIỆP VỤ",
     subtitle: "Business Analyst",
     role: "Khám phá chiến lược (Brand/SEO/CRO), đặc tả phần mềm SRS và bẻ rã ma trận yêu cầu.",
-    inputs: ["Ý tưởng kinh doanh từ khách", "Góp ý khả thi từ Solution Architect", "Phỏng vấn người dùng cuối"],
-    deliverables: ["Tài liệu BRD & SRS chuẩn", "Sơ đồ quy trình BPMN", "Ma trận phân rã công việc xuống 6 phòng ban"],
-    x: 410, y: 235, width: 145, height: 80
+    inputs: ["Product Brief từ PO", "Góp ý khả thi từ Solution Architect", "Phỏng vấn người dùng cuối"],
+    deliverables: ["Tài liệu BRD & SRS chuẩn", "Sơ đồ quy trình BPMN", "Ma trận phân rã công việc kỹ thuật"],
+    x: 320, y: 320, width: 140, height: 80
   },
   "sa": {
     badge: "03. SA",
     title: "KIẾN TRÚC & CHI PHÍ",
     subtitle: "Solution Architect",
-    role: "Định hình khung xương kỹ thuật Modular Monolith, chọn Tech Stack và tính toán chi phí hạ tầng.",
+    role: "Định hình khung xương kỹ thuật Modular Monolith, đóng băng API Contracts (OpenAPI 3.0) và tính chi phí hạ tầng.",
     inputs: ["Tài liệu SRS từ BA", "Dung lượng tải trọng dự kiến (CCU/RPS)", "Tham vấn cùng các Tech Leads"],
-    deliverables: ["Tài liệu kiến trúc hệ thống SAD", "Bộ ghi nhận quyết định ADRs", "Bảng bóc tách chi phí CBS"],
-    x: 585, y: 145, width: 155, height: 80
+    deliverables: ["Frozen API Contracts (OpenAPI 3.0)", "Tài liệu kiến trúc hệ thống SAD", "Bảng bóc tách chi phí CBS"],
+    x: 580, y: 160, width: 150, height: 80
   },
   "ui": {
     badge: "04. UI/UX",
     title: "THIẾT KẾ TRẢI NGHIỆM",
     subtitle: "Design System & Motion",
-    role: "Bản sắc thiết kế độc bản, tôn trọng Brand Guideline của khách, font chữ nghiêm túc và cuộn 60fps.",
+    role: "Bản sắc thiết kế độc bản, UX Writing & Micro-copy nhân văn, hỗ trợ đa ngôn ngữ i18n và cuộn 60fps.",
     inputs: ["SRS & Luồng người dùng từ BA", "Định hướng thương hiệu khách hàng", "Tiêu chuẩn kỹ thuật từ Frontend"],
-    deliverables: ["Bộ Design System tokens.json", "Prototype Figma có tương tác", "Quy chuẩn cuộn Kinetic Scroll 60fps"],
-    x: 585, y: 325, width: 155, height: 80
+    deliverables: ["Bộ Design System tokens.json", "Tiêu chuẩn UX Writing & Micro-copy", "Prototype Figma có tương tác"],
+    x: 580, y: 320, width: 150, height: 80
   },
   "dba": {
     badge: "07. DBA",
     title: "CƠ SỞ DỮ LIỆU",
     subtitle: "Database Administrator",
-    role: "Thiết kế ERD chuẩn 3NF, gác cổng bảo mật chống SQLi, tối ưu Index chống phình đĩa và dọn rác.",
+    role: "Thiết kế ERD chuẩn 3NF, gác cổng bảo mật chống SQLi, Zero-Downtime Migration (Expand & Contract).",
     inputs: ["Báo cáo thực thể từ BA & SA", "Tần suất câu lệnh từ Backend", "Dung lượng tăng trưởng dữ liệu"],
-    deliverables: ["DDL Schema & Migration scripts", "Chiến lược Index có chọn lọc", "Script Autovacuum & Backup WAL 5m"],
-    x: 775, y: 120, width: 155, height: 80
+    deliverables: ["Zero-Downtime Expand & Contract Script", "DDL Schema & Migration scripts", "Chiến lược Index có chọn lọc"],
+    x: 785, y: 95, width: 135, height: 75
   },
   "be": {
     badge: "06. BE",
     title: "LẬP TRÌNH BACKEND",
     subtitle: "Clean Arch & Core APIs",
-    role: "Bộ não xử lý Web Động, quản trị Transaction ACID, bảo mật JWT kép, Worker BullMQ và Caching.",
-    inputs: ["SRS từ BA", "Database Schema từ DBA", "Kiến trúc SAD từ Solution Architect"],
+    role: "Bộ não xử lý Web Động, tuân thủ Frozen API Contract, quản trị Transaction ACID, bảo mật JWT kép.",
+    inputs: ["Frozen API Contract từ SA", "Database Schema từ DBA", "Kiến trúc SAD từ Solution Architect"],
     deliverables: ["Hệ thống API RESTful chuẩn Swagger", "Xử lý hàng đợi bất đồng bộ", "Unit Test bảo vệ logic nghiệp vụ"],
-    x: 775, y: 235, width: 155, height: 80
+    x: 785, y: 225, width: 135, height: 75
   },
   "fe": {
     badge: "05. FE",
     title: "LẬP TRÌNH FRONTEND",
     subtitle: "Web Động Next.js / React",
-    role: "Tái hiện thiết kế pixel-perfect, cấu hình cuộn êm ái Lenis, tối ưu Web Động và Responsive.",
-    inputs: ["Bản vẽ Figma & Design Tokens", "Tài liệu API Swagger từ Backend", "Mock Server chạy độc lập"],
-    deliverables: ["Ứng dụng Web Động Next.js", "Clean Components theo Atomic design", "Tích hợp API qua Axios Interceptors"],
-    x: 775, y: 350, width: 155, height: 80
+    role: "Tái hiện thiết kế pixel-perfect, lập trình song song qua Frozen API Mock, tích hợp Event Tracking.",
+    inputs: ["Bản vẽ Figma & Design Tokens", "Frozen API Contracts từ SA", "Tiêu chuẩn UX Writing từ UI/UX"],
+    deliverables: ["Ứng dụng Web Động Next.js", "Clean Components theo Atomic design", "Tích hợp Event Tracking PostHog"],
+    x: 785, y: 355, width: 135, height: 75
+  },
+  "sec": {
+    badge: "11. SEC",
+    title: "AN TOÀN THÔNG TIN",
+    subtitle: "DevSecOps / AppSec",
+    role: "Gác cổng an ninh chuỗi cung ứng mã nguồn (CVE), chống rò rỉ API Secret, quét SAST/DAST và triệt tiêu lỗi IDOR/BOLA.",
+    inputs: ["Mã nguồn FE & BE", "Khai báo package.json", "Cấu hình biến môi trường .env"],
+    deliverables: ["DevSecOps Audit Report 0 CVE", "Chứng nhận quét Secret Clearance", "Quyền Veto chặn Merge/Deploy"],
+    x: 955, y: 225, width: 140, height: 80
   },
   "qa": {
     badge: "08. QA",
     title: "KIỂM ĐỊNH CHẤT LƯỢNG",
-    subtitle: "QA/QC & Input Security",
-    role: "Kiểm thử từng chức năng ngay khi bàn giao, ghi nhật ký PASS/FAIL, kiểm tra bảo mật ô input trên Mock DB.",
-    inputs: ["SRS từ BA", "Bản build Staging từ Dev", "Môi trường Sandbox cô lập với Mock Data"],
-    deliverables: ["Nhật ký kiểm thử tính năng PASS/FAIL", "Ma trận kiểm thử bảo mật Input", "Biên bản nghiệm thu QA Sign-off"],
-    x: 975, y: 235, width: 155, height: 80
+    subtitle: "QA/QC & Quality Gates",
+    role: "Kiểm thử tự động theo Quality Gate (Coverage >= 70%, 0 Blocker, Bundle < 500KB), kiểm tra bảo mật Input.",
+    inputs: ["Bản build Staging từ Dev", "Báo cáo bảo mật từ DevSecOps", "Môi trường Sandbox cô lập"],
+    deliverables: ["Quality Gate Pass Report", "Nhật ký kiểm thử PASS/FAIL", "Biên bản nghiệm thu QA Sign-off"],
+    x: 1130, y: 160, width: 140, height: 80
+  },
+  "rel": {
+    badge: "12. REL",
+    title: "QUẢN LÝ PHÁT HÀNH",
+    subtitle: "Release & UAT Lead",
+    role: "Tổ chức nghiệm thu người dùng (UAT), cấp dữ liệu giả lập chuẩn, điều phối Go-Live Checklist và kích hoạt Rollback 30s.",
+    inputs: ["Bản build Staging từ QA", "Chứng nhận an toàn từ DevSecOps", "Mock Production Data"],
+    deliverables: ["Môi trường UAT Sandbox", "Go-Live Sign-Off Matrix", "Sổ tay Rollback 30 giây"],
+    x: 1130, y: 320, width: 145, height: 80
   },
   "devops": {
     badge: "09. OPS",
     title: "HẠ TẦNG & TRIỂN KHAI",
     subtitle: "DevOps & CI/CD Cloud",
     role: "Đề xuất server tối ưu chi phí, CI/CD tự động, bảo mật Secret Keys, đóng gói Docker 85MB và Rollback 60s.",
-    inputs: ["Mã nguồn từ Dev", "Chứng nhận nghiệm thu từ QA", "Cấu hình biến môi trường .env"],
+    inputs: ["Mã nguồn từ Dev", "Chứng nhận nghiệm thu từ QA & Release Lead", "Cấu hình biến môi trường .env"],
     deliverables: ["Đường ống CI/CD GitHub/GitLab/Jenkins", "Hệ thống Docker Compose VPS chạy 24/7", "Dashboard Prometheus & Alert Bot Telegram"],
-    x: 1165, y: 235, width: 155, height: 80
+    x: 1445, y: 225, width: 140, height: 80
   },
   "prod": {
     badge: "PROD",
@@ -704,13 +731,23 @@ const departmentsData = {
     role: "Môi trường vận hành sản xuất thực tế phục vụ người tiêu dùng cuối không gián đoạn.",
     inputs: ["Bản release tag chính thức từ DevOps", "Chứng chỉ SSL TLS 1.3", "Hạ tầng Cloudflare WAF"],
     deliverables: ["Uptime SLA 99.9%", "Trải nghiệm người dùng mượt mà", "Báo cáo doanh thu & giao dịch ngân hàng"],
-    x: 1345, y: 235, width: 145, height: 80
+    x: 1625, y: 160, width: 140, height: 80
+  },
+  "analytics": {
+    badge: "13. DATA",
+    title: "ĐO LƯỜNG & HẬU MÃI",
+    subtitle: "Analytics & Post-Launch",
+    role: "Theo dõi sự kiện phễu người dùng (PostHog/GA4), quan sát lỗi ngoại lệ thời gian thực (Sentry) và bảo đảm SLA phản hồi.",
+    inputs: ["Người dùng thao tác trên Production", "Nhật ký ngoại lệ Client/Server", "Hộp góp ý phản hồi từ khách"],
+    deliverables: ["Báo cáo Tỷ lệ Kích hoạt & Phễu rơi rụng", "Cảnh báo lỗi ngoại lệ tức thì", "Vòng lặp phản hồi gửi ngược về PO"],
+    x: 1625, y: 320, width: 145, height: 80
   }
 };
 
 // Workflow Graph Connection Edges (From -> To)
 const workflowEdges = [
-  { from: "client", to: "pm" },
+  { from: "client", to: "po" },
+  { from: "po", to: "pm" },
   { from: "pm", to: "ba" },
   { from: "ba", to: "sa" },
   { from: "ba", to: "ui" },
@@ -719,11 +756,16 @@ const workflowEdges = [
   { from: "ui", to: "fe" },
   { from: "dba", to: "be", bidirectional: true },
   { from: "be", to: "fe", bidirectional: true },
-  { from: "dba", to: "qa" },
+  { from: "be", to: "sec" },
+  { from: "fe", to: "sec" },
   { from: "be", to: "qa" },
   { from: "fe", to: "qa" },
-  { from: "qa", to: "devops" },
-  { from: "devops", to: "prod" }
+  { from: "sec", to: "qa" },
+  { from: "qa", to: "rel" },
+  { from: "rel", to: "devops" },
+  { from: "devops", to: "prod" },
+  { from: "prod", to: "analytics" },
+  { from: "analytics", to: "po", bidirectional: false }
 ];
 
 // App State & Role Management
@@ -1517,13 +1559,13 @@ function renderWorkflowGraph(project) {
   gConnections.innerHTML = "";
   gNodes.innerHTML = "";
 
-  // 1. Draw 5 Stage Column Backgrounds (Clear Zones)
+  // 1. Draw 5 Stage Column Backgrounds (Clear Zones for 11-Step Tier-1 Enterprise Lifecycle)
   const stages = [
-    { title: "PHA 1: KHỞI TẠO & YÊU CẦU", x: 15, y: 15, width: 480, height: 440 },
-    { title: "PHA 2: THIẾT KẾ & KIẾN TRÚC", x: 505, y: 15, width: 160, height: 440 },
-    { title: "PHA 3: LẬP TRÌNH & CSDL", x: 675, y: 15, width: 200, height: 440 },
-    { title: "PHA 4: KIỂM ĐỊNH QA", x: 885, y: 15, width: 180, height: 440 },
-    { title: "PHA 5: TRIỂN KHAI THỰC TẾ", x: 1075, y: 15, width: 345, height: 440 }
+    { title: "PHA 1: KHỞI TẠO & CHIẾN LƯỢC", x: 15, y: 15, width: 430, height: 450 },
+    { title: "PHA 2: THIẾT KẾ & KIẾN TRÚC ĐÓNG BĂNG", x: 460, y: 15, width: 235, height: 450 },
+    { title: "PHA 3: LẬP TRÌNH & BẢO MẬT (APPSEC)", x: 710, y: 15, width: 330, height: 450 },
+    { title: "PHA 4: KIỂM ĐỊNH QA & NGHIỆM THU UAT", x: 1055, y: 15, width: 285, height: 450 },
+    { title: "PHA 5: TRIỂN KHAI & HẬU PHÁT HÀNH", x: 1355, y: 15, width: 410, height: 450 }
   ];
 
   stages.forEach(s => {

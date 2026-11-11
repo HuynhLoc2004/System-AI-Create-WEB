@@ -47,3 +47,4 @@ CREATE INDEX idx_project_files_gin ON project_workspaces USING GIN (files);
 2. **Giai đoạn 2 (Precision Coding):**
    - Chỉ truyền nội dung của ĐÚNG 1 file đích (`targetFileContent`) kèm yêu cầu kỹ thuật ngắn gọn.
    - AI Coder sinh trực tiếp nội dung mới của file đó mà không phải nạp toàn bộ mã nguồn của dự án.
+

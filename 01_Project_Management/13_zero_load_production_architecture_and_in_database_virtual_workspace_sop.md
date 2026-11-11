@@ -56,3 +56,4 @@ flowchart TD
    ```
 3. **Mọi thao tác xuất mã nguồn phải dùng cơ chế nén trực tiếp từ RAM (`JSZip`) và bắn Stream về trình duyệt.**
 4. **Việc render chạy thử (Live Preview) được đẩy toàn bộ về Client-side sử dụng bộ giả lập trình duyệt hoặc Sandbox.**
+
