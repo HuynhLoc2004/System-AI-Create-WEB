@@ -116,12 +116,12 @@
     <section class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Tiến Độ Dự Án Thực Tế</span>
-          <span class="badge badge-warning" id="projectStatusBadge">CHỜ LỆNH</span>
+          <span class="kpi-title">Tiến Độ Dự Án</span>
+          <span class="badge badge-warning" id="projectStatusBadge">0%</span>
         </div>
         <div class="kpi-value-row">
           <span class="kpi-number" id="kpiProgressNum">0%</span>
-          <span class="kpi-subtext" id="kpiDaysRemaining">0 / 0 Tác Vụ Hoàn Tất</span>
+          <span class="kpi-subtext" id="kpiDaysRemaining">Chưa có tác vụ</span>
         </div>
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" id="kpiProgressBar" style="width: 0%;"></div>
@@ -130,39 +130,36 @@
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Khối Lượng Tác Vụ 9 Phòng Ban</span>
-          <span class="kpi-subtext" id="kpiTotalTasksCount">Tổng: 0 Tác Vụ</span>
+          <span class="kpi-title">Tác Vụ Phòng Ban</span>
+          <span class="kpi-subtext" id="kpiTotalTasksCount">Tổng: 0</span>
         </div>
         <div class="kpi-metrics-row">
-          <div><strong id="statCompleted" class="text-success">0</strong> <small>ĐÃ XONG</small></div>
-          <div><strong id="statInProgress" class="text-warning">0</strong> <small>ĐANG LÀM</small></div>
-          <div><strong id="statBlocked" class="text-danger">0</strong> <small>BỊ NGHẼN</small></div>
-          <div><strong id="statCancelled" class="text-muted">0</strong> <small>ĐÃ HỦY</small></div>
+          <div><strong id="statCompleted" class="text-success">0</strong> <small>Xong</small></div>
+          <div><strong id="statInProgress" class="text-warning">0</strong> <small>Đang làm</small></div>
+          <div><strong id="statBlocked" class="text-danger">0</strong> <small>Nghẽn</small></div>
         </div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Hạ Tầng Backend & Máy Chủ</span>
-          <span class="badge badge-success" id="kpiServerStatusBadge">ONLINE (LIVE)</span>
+          <span class="kpi-title">Hạ Tầng Backend</span>
+          <span class="badge badge-success" id="kpiServerStatusBadge">ONLINE</span>
         </div>
         <div class="kpi-value-row">
           <span class="kpi-number text-highlight" id="kpiServerPort" style="font-size: 1.35rem; color: #10B981;">Port 5000</span>
-          <span class="kpi-subtext" id="kpiServerUptime">Uptime: Đang kết nối</span>
+          <span class="kpi-subtext" id="kpiServerUptime">Sẵn sàng</span>
         </div>
-        <div class="budget-burn" id="kpiServerDetails">Bộ nhớ: <strong id="kpiServerRam">-- MB</strong> &bull; CSDL: <strong>Persistent DB (Real)</strong></div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Trí Tuệ Nhân Tạo (Gemini AI)</span>
-          <span class="badge badge-success" id="kpiAiBadge">API ACTIVE</span>
+          <span class="kpi-title">Trí Tuệ Nhân Tạo</span>
+          <span class="badge badge-success" id="kpiAiBadge">AI READY</span>
         </div>
         <div class="kpi-value-row">
-          <span class="kpi-number text-highlight" id="kpiAiEngine" style="font-size: 1.35rem; color: #38BDF8;">Gemini 3.6 Flash</span>
-          <span class="kpi-subtext" id="kpiAiStatus">Dual Engine Ready</span>
+          <span class="kpi-number text-highlight" id="kpiAiEngine" style="font-size: 1.35rem; color: #38BDF8;">Gemini 2.5</span>
+          <span class="kpi-subtext" id="kpiAiStatus">Dual Engine</span>
         </div>
-        <div class="token-burn">Phản hồi: <strong>Tức thì &lt; 1s</strong> &bull; Nhiệm vụ: <strong>Tư Vấn & Sinh Web</strong></div>
       </div>
     </section>
 
@@ -170,14 +167,14 @@
     <section class="workflow-section">
       <div class="section-header">
         <div>
-          <h2>Sơ Đồ Luồng Phối Hợp Toàn Diện 13 Phòng Ban Chuẩn Tier-1 (11-Step Lifecycle Map)</h2>
-          <p class="section-desc">Theo dõi sự luân chuyển chuẩn xác từ Ý Tưởng (PO) -> Bóc Tách (BA) -> Kiến Trúc Đóng Băng (SA) -> Lập Trình & An Ninh (DevSecOps) -> Nghiệm Thu (UAT) -> Triển Khai & Vận Hành (Analytics). Bấm vào từng phòng ban để xem chi tiết.</p>
+          <h2>Sơ Đồ Phối Hợp 13 Phòng Ban</h2>
+          <p class="section-desc">Bấm vào từng phòng ban để xem chi tiết hoặc giao việc</p>
         </div>
         <div class="workflow-legend">
-          <span class="legend-item"><span class="dot dot-success"></span> Đã hoàn tất</span>
-          <span class="legend-item"><span class="dot dot-warning pulse"></span> Đang phối hợp</span>
-          <span class="legend-item"><span class="dot dot-danger pulse"></span> Đang bị nghẽn (Blocker)</span>
-          <span class="legend-item"><span class="dot dot-idle"></span> Trong hàng đợi</span>
+          <span class="legend-item"><span class="dot dot-success"></span> Đã xong</span>
+          <span class="legend-item"><span class="dot dot-warning pulse"></span> Đang làm</span>
+          <span class="legend-item"><span class="dot dot-danger pulse"></span> Nghẽn</span>
+          <span class="legend-item"><span class="dot dot-idle"></span> Chờ lượt</span>
         </div>
       </div>
 
@@ -241,29 +238,11 @@
       <section class="task-management-section">
         <div class="section-header">
           <div>
-            <h2>Bảng Chiến Lược Quản Trị Tác Vụ (Master Task Board)</h2>
-            <p class="section-desc">Phân định rõ ràng từng đơn vị công việc, người phụ trách và tình trạng tiến độ</p>
+            <h2>Bảng Quản Trị Tác Vụ</h2>
+            <p class="section-desc">Theo dõi các đầu việc do AI hoặc Admin điều phối</p>
           </div>
           <div class="task-actions">
             <button class="btn btn-primary" id="btnAddTaskModal">+ Thêm Task</button>
-          </div>
-        </div>
-
-        <!-- Perspective View Switcher: Customer Friendly vs Technical IT -->
-        <div class="perspective-bar">
-          <div class="perspective-info">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            <span>Hiển thị theo: <strong id="perspectiveModeLabel">Góc Nhìn Khách Hàng (Dễ Hiểu)</strong></span>
-          </div>
-          <div class="perspective-switch-group">
-            <button type="button" class="btn-perspective active business" id="btnPerspectiveBusiness" title="Xem tên chức năng thực tế dễ hiểu, không chứa thuật ngữ khó">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Dễ Hiểu Cho Khách Hàng
-            </button>
-            <button type="button" class="btn-perspective" id="btnPerspectiveTech" title="Xem thuật ngữ mã nguồn chuyên sâu dành cho đội ngũ lập trình">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              Kỹ Thuật Chuyên Sâu (IT)
-            </button>
           </div>
         </div>
 
@@ -274,11 +253,10 @@
             <button class="filter-btn" data-filter="DONE">Đã Xong (<span id="countDone">0</span>)</button>
             <button class="filter-btn" data-filter="IN_PROGRESS">Đang Làm (<span id="countInProgress">0</span>)</button>
             <button class="filter-btn" data-filter="BLOCKED">Bị Nghẽn (<span id="countBlocked">0</span>)</button>
-            <button class="filter-btn" data-filter="CANCELLED">Đã Hủy (<span id="countCancelled">0</span>)</button>
           </div>
           <div class="search-box">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="taskSearchInput" class="task-search-input" placeholder="Tìm kiếm chức năng, mã task, phòng ban...">
+            <input type="text" id="taskSearchInput" class="task-search-input" placeholder="Tìm kiếm tác vụ...">
           </div>
         </div>
 
@@ -287,13 +265,10 @@
           <table class="task-table">
             <thead>
               <tr>
-                <th width="85">Mã Task</th>
+                <th width="90">Mã</th>
                 <th width="150">Phòng Ban</th>
-                <th>Tác Vụ & Chức Năng Cụ Thể</th>
-                <th width="120">Phụ Trách</th>
-                <th width="125" style="text-align: center;">Trạng Thái Thực Tế</th>
-                <th width="85">Tiến Độ</th>
-                <th width="75" style="text-align: center;">Hệ Thống</th>
+                <th>Tác Vụ</th>
+                <th width="130" style="text-align: center;">Trạng Thái</th>
               </tr>
             </thead>
             <tbody id="taskTableBody">

@@ -1363,14 +1363,14 @@ function renderTaskTable() {
   if (!project.tasks || project.tasks.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="7" style="text-align: center; padding: 48px 24px; color: #94A3B8;">
-          <div style="font-size: 1.1rem; font-weight: 600; color: #F1F5F9; margin-bottom: 8px;">
-            Dự Án Đang Ở Trạng Thái 0% Nguyên Bản (Không Có Dữ Liệu Ảo)
-          </div>
-          <p style="font-size: 0.88rem; color: #64748B; margin: 0 auto; max-width: 520px; line-height: 1.6;">
-            Hệ thống đã loại bỏ hoàn toàn các task mẫu tĩnh. Bạn chưa giao việc nên chưa có tác vụ nào được tính hoàn thành.<br>
-            Hãy bấm nút <strong style="color: #38BDF8;">"⚡ Phát Lệnh AI"</strong> ở trên để bắt đầu giao việc thực tế cho các phòng ban lập trình!
-          </p>
+        <td colspan="4" style="text-align: center; padding: 40px 16px;">
+          <div style="font-size: 1.8rem; margin-bottom: 8px; opacity: 0.6;">⚡</div>
+          <div style="font-size: 0.95rem; font-weight: 600; color: #F1F5F9; margin-bottom: 4px;">Chưa có tác vụ nào</div>
+          <p style="font-size: 0.8rem; color: #64748B; margin: 0 0 14px 0;">Bấm nút bên dưới để giao việc cho AI lập trình.</p>
+          <button type="button" class="btn btn-primary" onclick="document.getElementById('btnOpenDispatchModal').click()" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; padding: 6px 16px; margin: 0 auto; border-radius: 6px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Phát Lệnh AI
+          </button>
         </td>
       </tr>
     `;
@@ -1458,27 +1458,20 @@ function renderTaskTable() {
     }
 
     tr.innerHTML = `
-      <td class="task-id">${task.id}</td>
-      <td style="color: var(--text-muted); font-size: 0.78rem;">${displayDept}</td>
+      <td class="task-id" style="font-weight: 600; color: #38BDF8; font-size: 0.8rem;">${task.id}</td>
+      <td style="color: #94A3B8; font-size: 0.8rem; font-weight: 500;">${displayDept}</td>
       <td>
-        <span class="task-title">${displayTitle} ${directiveTag}</span>
+        <div style="font-size: 0.86rem; font-weight: 500; color: #F1F5F9;">${displayTitle} ${directiveTag}</div>
+        ${displayNote ? `<div style="font-size: 0.74rem; color: #64748B; margin-top: 2px;">${displayNote}</div>` : ''}
         ${blockedCalloutHtml}
       </td>
-      <td><strong>${task.pic}</strong></td>
       <td style="text-align: center;">
-        <select class="status-select-badge" onchange="changeTaskStatus('${task.id}', this.value)" style="color-scheme: dark; background: #111624; border: 1px solid rgba(255,255,255,0.15); color: #E2E8F0; padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; outline: none; cursor: pointer;">
-          <option value="IN_PROGRESS" style="background-color: #0B0E17; color: #E2E8F0;" ${task.status === "IN_PROGRESS" ? "selected" : ""}>ĐANG LÀM</option>
-          <option value="DONE" style="background-color: #0B0E17; color: #E2E8F0;" ${task.status === "DONE" ? "selected" : ""}>ĐÃ XONG</option>
-          <option value="BLOCKED" style="background-color: #0B0E17; color: #E2E8F0;" ${task.status === "BLOCKED" ? "selected" : ""}>BỊ NGHẼN</option>
-          <option value="CANCELLED" style="background-color: #0B0E17; color: #E2E8F0;" ${task.status === "CANCELLED" ? "selected" : ""}>ĐÃ HỦY</option>
+        <select class="status-select-badge" onchange="changeTaskStatus('${task.id}', this.value)" style="color-scheme: dark; background: #0F172A; border: 1px solid #334155; color: #F1F5F9; padding: 4px 8px; border-radius: 6px; font-size: 0.74rem; outline: none; cursor: pointer;">
+          <option value="IN_PROGRESS" ${task.status === "IN_PROGRESS" ? "selected" : ""}>Đang làm</option>
+          <option value="DONE" ${task.status === "DONE" ? "selected" : ""}>Đã xong</option>
+          <option value="BLOCKED" ${task.status === "BLOCKED" ? "selected" : ""}>Bị nghẽn</option>
+          <option value="CANCELLED" ${task.status === "CANCELLED" ? "selected" : ""}>Đã hủy</option>
         </select>
-      </td>
-      <td>
-        <span style="font-family: var(--font-mono); font-size: 0.78rem;">${task.progress}%</span>
-        <div class="progress-mini"><div class="progress-mini-fill" style="width: ${task.progress}%;"></div></div>
-      </td>
-      <td style="text-align: center;">
-        <span style="font-size: 0.72rem; color: #64748B;">Chuẩn</span>
       </td>
     `;
     tbody.appendChild(tr);
@@ -1608,23 +1601,14 @@ function renderActivityFeed(project) {
 
 // 5. Client Feedback & PM Resolution Section
 function renderFeedbackSection(project) {
-  const container = document.getElementById("feedbackListContainer");
-  if (!container) return;
-  container.innerHTML = "";
-
+  const section = document.querySelector(".feedback-section");
   const feedbacks = project.feedbacks || [];
-  if (feedbacks.length === 0) {
-    container.innerHTML = `
-      <div class="feedback-empty-state">
-        <div class="empty-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <p>Chưa có yêu cầu hoặc phản hồi nào từ khách hàng cho dự án này.</p>
-        <span class="empty-sub">Bấm nút <strong>"Gửi Yêu Cầu Mới"</strong> để gửi phản hồi trực tiếp về cho Project Manager xử lý.</span>
-      </div>
-    `;
-    return;
+  if (section) {
+    section.style.display = feedbacks.length > 0 ? "block" : "none";
   }
+  const container = document.getElementById("feedbackListContainer");
+  if (!container || feedbacks.length === 0) return;
+  container.innerHTML = "";
 
   feedbacks.forEach(fb => {
     const card = document.createElement("div");
