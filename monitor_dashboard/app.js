@@ -578,7 +578,7 @@ function setupEventListeners() {
       if (projText) projText.value = `${project.code} - ${project.name}`;
       const keyInput = document.getElementById("dispatchAdminKeyInput");
       if (keyInput) {
-        keyInput.value = "";
+        keyInput.value = DEFAULT_ADMIN_MASTER_KEY;
         keyInput.style.borderColor = "#1E283D";
         keyInput.style.boxShadow = "none";
       }
