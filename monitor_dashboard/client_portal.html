@@ -2190,7 +2190,7 @@
                 Bạn thấy bảng bóc tách giải pháp này phù hợp? Bạn có thể <strong>kích hoạt dự án dùng thử nghiệm ngay</strong> để trải nghiệm không gian làm việc và xem sản phẩm thực tế, hoặc liên hệ trực tiếp Admin nếu muốn may đo thêm.
               </div>
               <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
-                <button type="button" class="btn-open-trial-modal chat-admin-handover-btn" style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border: none; cursor: pointer; color: white;" data-project-title="${escapeHtml(recommendations.projectTitle || 'Dự Án Web Động Trải Nghiệm')}">
+                <button type="button" class="btn-open-trial-modal chat-admin-handover-btn" style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border: none; cursor: pointer; color: white;" data-project-title="${escapeHtml(recs.projectTitle || (data.recommendations && data.recommendations.projectTitle) || 'Dự Án Web Động Trải Nghiệm')}">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   Bắt Đầu Triển Khai Thử Nghiệm Ngay (Tự Động Cấp Key)
                 </button>
