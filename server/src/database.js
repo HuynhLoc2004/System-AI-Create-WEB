@@ -72,12 +72,12 @@ class ProductionDatabase {
           adminPass: "Nova@2026MasterPass",
           aiModel: "Gemini 2.5 Pro",
           products: [
-            { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, stock: 45, sku: "BLZ-CSM-01" },
-            { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, stock: 28, sku: "DRS-SLK-09" },
-            { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, stock: 60, sku: "SHS-OXF-03" },
-            { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, stock: 15, sku: "WLT-CRK-07" },
-            { id: "p5", name: "Sơ Mi Cotton Ai Cập Chống Nhăn", category: "Thời Trang Nam", price: 890000, stock: 120, sku: "SHT-EGY-12" },
-            { id: "p6", name: "Áo Khoác Trench Coat Chống Thấm", category: "Thời Trang Nữ", price: 2890000, stock: 35, sku: "TRC-WTR-04" }
+            { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, stock: 45, sku: "BLZ-CSM-01", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80" },
+            { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, stock: 28, sku: "DRS-SLK-09", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80" },
+            { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, stock: 60, sku: "SHS-OXF-03", image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80" },
+            { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, stock: 15, sku: "WLT-CRK-07", image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80" },
+            { id: "p5", name: "Sơ Mi Cotton Ai Cập Chống Nhăn", category: "Thời Trang Nam", price: 890000, stock: 120, sku: "SHT-EGY-12", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80" },
+            { id: "p6", name: "Áo Khoác Trench Coat Chống Thấm", category: "Thời Trang Nữ", price: 2890000, stock: 35, sku: "TRC-WTR-04", image: "https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=600&q=80" }
           ]
         }
       },

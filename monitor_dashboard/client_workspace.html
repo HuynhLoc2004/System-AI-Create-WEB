@@ -264,202 +264,1080 @@
       border-color: var(--accent-blue);
     }
 
-    /* Storefront Body */
+    /* ========================================================
+       PRODUCTION-GRADE LUXURY STOREFRONT CANVAS
+       ======================================================== */
     .store-screen-canvas {
-      background: #0A0F1D;
-      padding: 28px;
+      background: #090D1A;
+      color: #E2E8F0;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 24px;
       margin: 0 auto;
       transition: max-width 0.25s ease;
       width: 100%;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+      font-family: var(--font-sans);
     }
     .store-screen-canvas.mobile-mode {
       max-width: 410px;
-      border-left: 1px dashed rgba(255, 255, 255, 0.15);
-      border-right: 1px dashed rgba(255, 255, 255, 0.15);
-      padding: 18px;
+      border-left: 2px dashed rgba(59, 130, 246, 0.35);
+      border-right: 2px dashed rgba(59, 130, 246, 0.35);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
     }
 
-    .store-topbar {
+    /* Announcement Bar */
+    .store-announce-bar {
+      background: #0B132B;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 8px 24px;
+      font-size: 0.72rem;
+      color: #94A3B8;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 16px;
+      gap: 12px;
+    }
+    .announce-msg-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .announce-badge-tag {
+      background: rgba(37, 99, 235, 0.2);
+      color: #60A5FA;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.3px;
+    }
+    .announce-hotline {
+      font-weight: 600;
+      color: #CBD5E1;
+      white-space: nowrap;
+    }
+
+    /* Store Main Navbar */
+    .store-navbar {
+      background: #0F172A;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+    }
+    .store-brand-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .store-logo-emblem {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #1E293B, #0F172A);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #60A5FA;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    .store-brand-names {
+      display: flex;
+      flex-direction: column;
     }
     .store-title-text {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 800;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.2px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .store-tagline-text {
+      font-size: 0.65rem;
+      color: #64748B;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .store-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .store-nav-a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.15s ease;
+      cursor: pointer;
+    }
+    .store-nav-a:hover, .store-nav-a.active {
       color: #FFFFFF;
     }
+
+    .store-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .store-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .store-search-wrap svg {
+      position: absolute;
+      left: 10px;
+      color: #64748B;
+      pointer-events: none;
+    }
+    .store-search-field {
+      background: #090E1A;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 6px 12px 6px 30px;
+      font-size: 0.74rem;
+      color: #E2E8F0;
+      width: 170px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .store-search-field:focus {
+      border-color: #3B82F6;
+      width: 210px;
+      background: #0F172A;
+    }
+
     .cart-summary-btn {
-      background: var(--accent-blue);
+      background: #2563EB;
       color: #FFFFFF;
       border: none;
       padding: 7px 16px;
       border-radius: 20px;
       font-size: 0.76rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.15s ease;
+      transition: background 0.15s ease, transform 0.1s ease;
+      white-space: nowrap;
     }
     .cart-summary-btn:hover {
-      background: var(--accent-blue-hover);
+      background: #1D4ED8;
+      transform: translateY(-1px);
     }
-
-    .promo-banner-box {
-      background: linear-gradient(135deg, #141C2E, #0D1322);
-      border: 1px solid var(--border-subtle);
+    .cart-badge-count {
+      background: #FFFFFF;
+      color: #1E3A8A;
+      font-size: 0.65rem;
+      font-weight: 800;
       border-radius: 10px;
-      padding: 22px 26px;
-    }
-    .promo-banner-box h2 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 6px;
-    }
-    .promo-banner-box p {
-      font-size: 0.78rem;
-      color: var(--text-muted);
+      padding: 1px 6px;
+      min-width: 16px;
+      text-align: center;
     }
 
-    /* Product Grid */
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 16px;
-    }
-    @media (max-width: 640px) {
-      .catalog-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-    }
-
-    .catalog-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-    .catalog-card:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-    }
-    .catalog-thumb {
-      height: 110px;
-      background: #182236;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    /* Store Hero Banner */
+    .store-hero-section {
+      background: linear-gradient(135deg, #0F172A 0%, #090D1A 60%, #172033 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 34px 28px;
       position: relative;
+      overflow: hidden;
     }
-    .sku-badge {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      font-size: 0.62rem;
-      font-family: var(--font-mono);
-      background: rgba(0, 0, 0, 0.45);
-      color: #94A3B8;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    .item-name {
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: #FFFFFF;
-      min-height: 38px;
-      line-height: 1.35;
-    }
-    .item-cat {
-      font-size: 0.7rem;
-      color: var(--text-sub);
-    }
-    .item-bottom {
-      display: flex;
-      justify-content: space-between;
+    .hero-badge-pill {
+      display: inline-flex;
       align-items: center;
-      margin-top: auto;
-      padding-top: 6px;
-    }
-    .item-price {
-      font-size: 0.88rem;
+      gap: 6px;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #93C5FD;
+      font-size: 0.68rem;
       font-weight: 700;
-      color: #FFFFFF;
-      font-family: var(--font-mono);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
     }
-    .btn-add-item {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    .store-hero-title {
+      font-size: 1.45rem;
+      font-weight: 800;
       color: #FFFFFF;
-      padding: 5px 12px;
-      border-radius: 5px;
-      font-size: 0.74rem;
+      margin-bottom: 8px;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      max-width: 780px;
+    }
+    .store-hero-desc {
+      font-size: 0.82rem;
+      color: #94A3B8;
+      line-height: 1.55;
+      max-width: 680px;
+      margin-bottom: 18px;
+    }
+    .store-hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .btn-hero-primary {
+      background: #2563EB;
+      color: #FFFFFF;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-hero-primary:hover {
+      background: #1D4ED8;
+    }
+    .btn-hero-outline {
+      background: transparent;
+      color: #CBD5E1;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
     }
-    .btn-add-item:hover {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
+    .btn-hero-outline:hover {
+      border-color: #60A5FA;
+      color: #FFFFFF;
+    }
+    .store-hero-trust-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      flex-wrap: wrap;
+    }
+    .trust-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: #94A3B8;
+    }
+    .trust-chip svg {
+      color: #10B981;
+      flex-shrink: 0;
     }
 
-    /* VietQR Payment Banner inside Store */
-    .store-checkout-block {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+    /* Category Filter Pills */
+    .store-cat-bar {
+      padding: 16px 28px 4px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .store-section-label {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .store-cat-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .cat-pill {
+      background: #131D33;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94A3B8;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: #2563EB;
+      border-color: #2563EB;
+      color: #FFFFFF;
+    }
+
+    /* Product Grid */
+    .store-catalog-wrapper {
+      padding: 16px 28px 28px 28px;
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .catalog-card {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 10px;
-      padding: 20px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .checkout-title {
-      font-size: 0.88rem;
+    .catalog-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+    .catalog-thumb {
+      height: 160px;
+      background: #162035;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-real-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+      display: block;
+    }
+    .catalog-card:hover .product-real-img {
+      transform: scale(1.05);
+    }
+    .sku-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      color: #94A3B8;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 2;
+    }
+    .stock-chip {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .catalog-card-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 6px;
+    }
+    .item-cat {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #60A5FA;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .item-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      min-height: 38px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .item-price-row {
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+    .price-original {
+      font-size: 0.68rem;
+      color: #64748B;
+      text-decoration: line-through;
+      font-family: var(--font-mono);
+    }
+    .item-price {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #38BDF8;
+      font-family: var(--font-mono);
+    }
+    .catalog-btn-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .btn-add-item {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      padding: 6px 8px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-add-item:hover {
+      background: #1E293B;
+      border-color: #60A5FA;
+    }
+    .btn-buy-instant {
+      flex: 1;
+      background: #2563EB;
+      border: 1px solid #2563EB;
+      color: #FFFFFF;
+      padding: 6px 8px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      text-align: center;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-buy-instant:hover {
+      background: #1D4ED8;
+    }
+
+    /* Brand Value Pillars (Corporate Guarantees) */
+    .store-values-section {
+      background: #0B1224;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 28px;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .value-card {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .value-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(37, 99, 235, 0.15);
+      color: #60A5FA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .value-card-title {
+      font-size: 0.82rem;
       font-weight: 700;
       color: #FFFFFF;
     }
-    .qr-card-white {
-      background: #FFFFFF;
-      border-radius: 10px;
-      padding: 14px;
-      width: 180px;
+    .value-card-desc {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      line-height: 1.45;
+    }
+
+    /* Customer Reviews Section */
+    .store-reviews-section {
+      padding: 28px;
+      background: #090D1A;
+    }
+    .reviews-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+    .reviews-title-block h3 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .reviews-title-block p {
+      font-size: 0.74rem;
+      color: #64748B;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .review-card {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      color: #FBBF24;
+    }
+    .review-body-text {
+      font-size: 0.76rem;
+      color: #CBD5E1;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .review-author-box {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .review-author-name {
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .review-author-badge {
+      color: #34D399;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    /* Complete E-Commerce Footer */
+    .store-footer {
+      background: #080C17;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px 28px 20px 28px;
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+    .footer-col p {
+      font-size: 0.74rem;
+      color: #94A3B8;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .footer-col-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-col-links a {
+      font-size: 0.74rem;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .footer-col-links a:hover {
+      color: #60A5FA;
+    }
+    .footer-payment-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .pay-chip {
+      background: #131D33;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #CBD5E1;
+    }
+    .gov-cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93C5FD;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .footer-bottom-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: #64748B;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* ========================================================
+       SLIDE-OVER CART & VIETQR CHECKOUT DRAWER
+       ======================================================== */
+    .cart-drawer-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .cart-drawer-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cart-drawer-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 440px;
+      max-width: 90vw;
+      height: 100vh;
+      background: #0A0F1D;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+      z-index: 201;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cart-drawer-backdrop.active .cart-drawer-panel {
+      transform: translateX(0);
+    }
+    .cart-drawer-head {
+      background: #0F172A;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-drawer-head h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-drawer {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #94A3B8;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease;
+    }
+    .btn-close-drawer:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+    }
+    .cart-drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .cart-empty-state {
+      text-align: center;
+      padding: 40px 10px;
+      color: #64748B;
+      font-size: 0.82rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      gap: 12px;
+    }
+    .cart-item-row {
+      display: flex;
+      gap: 12px;
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 10px;
+      align-items: center;
+    }
+    .cart-item-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #182236;
+      flex-shrink: 0;
+    }
+    .cart-item-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .cart-item-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .cart-item-price {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #38BDF8;
+      font-family: var(--font-mono);
+    }
+    .cart-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-qty-action {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .btn-qty-action:hover {
+      background: #2563EB;
+    }
+    .cart-qty-val {
+      font-size: 0.76rem;
+      font-weight: 700;
+      min-width: 18px;
+      text-align: center;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+    }
+    .btn-cart-del {
+      background: transparent;
+      border: none;
+      color: #EF4444;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: 4px;
+    }
+
+    /* VietQR Block in Drawer */
+    .cart-drawer-checkout-box {
+      background: #0F172A;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      text-align: center;
+    }
+    .drawer-qr-card {
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 12px;
+      width: 170px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .drawer-qr-card svg {
+      width: 120px;
+      height: 120px;
     }
     .qr-bank-head {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 800;
       color: #1E3A8A;
       border-bottom: 1px solid #E2E8F0;
-      padding-bottom: 4px;
+      padding-bottom: 3px;
     }
     .qr-total-label {
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 800;
       color: #0F172A;
       font-family: var(--font-mono);
+    }
+    .drawer-total-breakdown {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.74rem;
+      color: #94A3B8;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+    }
+    .drawer-total-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .drawer-total-row.final {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+    .btn-simulate-paid {
+      width: 100%;
+      background: #10B981;
+      color: #FFFFFF;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-simulate-paid:hover {
+      background: #059669;
+    }
+    .order-success-state {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.74rem;
+      color: #34D399;
+      display: none;
+      line-height: 1.5;
+    }
+
+    /* ========================================================
+       RESPONSIVE RULES: MOBILE MODE & VIEWPORT OVERRIDES
+       ======================================================== */
+    .store-screen-canvas.mobile-mode .store-navbar {
+      padding: 10px 14px;
+    }
+    .store-screen-canvas.mobile-mode .store-nav-links,
+    .store-screen-canvas.mobile-mode .store-search-wrap,
+    .store-screen-canvas.mobile-mode .announce-hotline {
+      display: none !important;
+    }
+    .store-screen-canvas.mobile-mode .store-announce-bar {
+      padding: 6px 12px;
+      font-size: 0.65rem;
+      justify-content: center;
+      text-align: center;
+    }
+    .store-screen-canvas.mobile-mode .store-hero-section {
+      padding: 20px 14px;
+    }
+    .store-screen-canvas.mobile-mode .store-hero-title {
+      font-size: 1.15rem;
+      line-height: 1.35;
+    }
+    .store-screen-canvas.mobile-mode .store-hero-desc {
+      font-size: 0.75rem;
+      margin-bottom: 14px;
+    }
+    .store-screen-canvas.mobile-mode .store-hero-trust-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .store-screen-canvas.mobile-mode .store-cat-bar {
+      padding: 12px 14px 4px 14px;
+    }
+    .store-screen-canvas.mobile-mode .store-catalog-wrapper {
+      padding: 12px 14px 20px 14px;
+    }
+    .store-screen-canvas.mobile-mode .catalog-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+    }
+    .store-screen-canvas.mobile-mode .catalog-thumb {
+      height: 120px !important;
+    }
+    .store-screen-canvas.mobile-mode .catalog-card-body {
+      padding: 8px;
+      gap: 4px;
+    }
+    .store-screen-canvas.mobile-mode .item-name {
+      font-size: 0.74rem;
+      min-height: 32px;
+      line-height: 1.25;
+    }
+    .store-screen-canvas.mobile-mode .item-price {
+      font-size: 0.8rem;
+    }
+    .store-screen-canvas.mobile-mode .catalog-btn-row {
+      flex-direction: column;
+      gap: 4px;
+    }
+    .store-screen-canvas.mobile-mode .btn-add-item,
+    .store-screen-canvas.mobile-mode .btn-buy-instant {
+      padding: 6px 4px;
+      font-size: 0.68rem;
+      min-height: 32px;
+    }
+    .store-screen-canvas.mobile-mode .store-values-section {
+      padding: 18px 14px;
+    }
+    .store-screen-canvas.mobile-mode .values-grid {
+      grid-template-columns: 1fr !important;
+      gap: 10px;
+    }
+    .store-screen-canvas.mobile-mode .store-reviews-section {
+      padding: 18px 14px;
+    }
+    .store-screen-canvas.mobile-mode .reviews-grid {
+      grid-template-columns: 1fr !important;
+      gap: 10px;
+    }
+    .store-screen-canvas.mobile-mode .store-footer {
+      padding: 20px 14px 16px 14px;
+    }
+    .store-screen-canvas.mobile-mode .footer-columns {
+      grid-template-columns: 1fr !important;
+      gap: 16px;
+    }
+    .store-screen-canvas.mobile-mode .footer-bottom-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* True Viewport Responsive Overrides (For actual mobile devices) */
+    @media (max-width: 900px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-columns {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .store-navbar {
+        padding: 10px 14px;
+      }
+      .store-nav-links, .store-search-wrap, .announce-hotline {
+        display: none !important;
+      }
+      .store-hero-section {
+        padding: 20px 14px;
+      }
+      .store-hero-title {
+        font-size: 1.15rem;
+      }
+      .store-catalog-wrapper {
+        padding: 12px 14px;
+      }
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .catalog-thumb {
+        height: 120px !important;
+      }
+      .values-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .footer-columns {
+        grid-template-columns: 1fr !important;
+      }
+      .cart-drawer-panel {
+        width: 100vw;
+        max-width: 100vw;
+      }
     }
 
     /* Floating Feedback Trigger */
@@ -796,67 +1674,278 @@
 
         <!-- Store Canvas -->
         <div class="store-screen-canvas" id="storeScreenCanvas">
-          <div class="store-topbar">
-            <div class="store-title-text" id="storeBrandName">NOVAWEAR PREMIUM RETAIL</div>
-            <button type="button" class="cart-summary-btn" id="btnCartHeader">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              <span>Giỏ Hàng (<span id="cartCountBadge">0</span>)</span>
-            </button>
+          
+          <!-- Announcement Bar -->
+          <div class="store-announce-bar">
+            <div class="announce-msg-text">
+              <span class="announce-badge-tag">CAM KẾT 2026</span>
+              <span id="storeAnnounceText">Miễn phí giao hàng toàn quốc từ 500.000 đ &bull; Đền bù 100% nếu nứt vỡ khi vận chuyển</span>
+            </div>
+            <div class="announce-hotline">Hotline CSKH: 1900 6868 (8:00 - 22:00)</div>
           </div>
 
-          <div class="promo-banner-box">
-            <h2 id="storeBannerTitle">Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên</h2>
-            <p id="storeBannerSubtitle">Thanh toán quét mã VietQR tự động trong 0.8 giây - Tiền về tài khoản doanh nghiệp ngay lập tức</p>
-          </div>
-
-          <!-- Product Catalog Grid -->
-          <div class="catalog-grid" id="previewStoreProductGrid">
-            <!-- Dynamically populated from real DB -->
-          </div>
-
-          <!-- VietQR Instant Checkout Block -->
-          <div class="store-checkout-block">
-            <div class="checkout-title">Cổng Thanh Toán Quét Mã VietQR Tự Động (Napas 247)</div>
-            
-            <div class="qr-card-white">
-              <div class="qr-bank-head">
-                <span>VietQR</span>
-                <span>NAPAS 247</span>
+          <!-- Main Store Navbar -->
+          <div class="store-navbar">
+            <a href="#storeScreenCanvas" class="store-brand-identity">
+              <div class="store-logo-emblem" id="storeLogoEmblem">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
               </div>
-              
-              <!-- Sharp SVG QR Matrix -->
-              <svg width="130" height="130" viewBox="0 0 100 100" fill="#0F172A">
-                <rect x="0" y="0" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
-                <rect x="7" y="7" width="16" height="16"/>
-                <rect x="70" y="0" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
-                <rect x="77" y="7" width="16" height="16"/>
-                <rect x="0" y="70" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
-                <rect x="7" y="77" width="16" height="16"/>
-                <rect x="38" y="8" width="6" height="6"/>
-                <rect x="48" y="18" width="6" height="6"/>
-                <rect x="38" y="28" width="6" height="6"/>
-                <rect x="18" y="38" width="6" height="6"/>
-                <rect x="28" y="48" width="6" height="6"/>
-                <rect x="38" y="48" width="6" height="6"/>
-                <rect x="48" y="48" width="6" height="6"/>
-                <rect x="58" y="38" width="6" height="6"/>
-                <rect x="68" y="48" width="6" height="6"/>
-                <rect x="78" y="38" width="6" height="6"/>
-                <rect x="88" y="48" width="6" height="6"/>
-                <rect x="38" y="68" width="6" height="6"/>
-                <rect x="48" y="78" width="6" height="6"/>
-                <rect x="58" y="68" width="6" height="6"/>
-                <rect x="68" y="78" width="6" height="6"/>
-                <rect x="78" y="68" width="6" height="6"/>
-                <rect x="88" y="78" width="6" height="6"/>
-              </svg>
+              <div class="store-brand-names">
+                <div class="store-title-text" id="storeBrandName">NOVAWEAR PREMIUM RETAIL</div>
+                <div class="store-tagline-text" id="storeBrandSub">OFFICIAL FLAGSHIP STORE</div>
+              </div>
+            </a>
 
-              <div class="qr-total-label" id="vietqrDisplayTotal">0 VNĐ</div>
+            <div class="store-nav-links">
+              <a href="#storeScreenCanvas" class="store-nav-a active">Trang Chủ</a>
+              <a href="#storeCatalogSection" class="store-nav-a">Bộ Sưu Tập</a>
+              <a href="#storeValuesSection" class="store-nav-a">Cam Kết Chất Lượng</a>
+              <a href="#storeReviewsSection" class="store-nav-a">Đánh Giá</a>
+              <a href="#storeFooterSection" class="store-nav-a">Liên Hệ & Bảo Hành</a>
             </div>
 
-            <p style="font-size: 0.75rem; color: var(--text-muted); max-width: 480px;">
-              Khách hàng mở ứng dụng ngân hàng bất kỳ để quét mã. Tiền chuyển thẳng vào tài khoản của bạn và đơn hàng tự động kích hoạt.
-            </p>
+            <div class="store-nav-actions">
+              <div class="store-search-wrap">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" class="store-search-field" id="storeSearchInput" placeholder="Tìm sản phẩm, mã SKU...">
+              </div>
+              <button type="button" class="cart-summary-btn" id="btnCartHeader" onclick="openCartDrawer()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span>Giỏ Hàng</span>
+                <span class="cart-badge-count" id="cartCountBadge">0</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Banner Section -->
+          <div class="store-hero-section">
+            <div class="hero-badge-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>BỘ SƯU TẬP CAO CẤP 2026 &bull; PHÂN PHỐI CHÍNH HÃNG</span>
+            </div>
+            <h2 class="store-hero-title" id="storeBannerTitle">Bộ Sưu Tập Xuất Khẩu 2026 - Tinh Hoa Thủ Công Tinh Xảo</h2>
+            <p class="store-hero-desc" id="storeBannerSubtitle">Thanh toán quét mã VietQR Napas 247 nhận diện tiền về tức thì trong 0.8 giây, tự động kích hoạt bảo hành điện tử chính hãng.</p>
+            
+            <div class="store-hero-cta-row">
+              <button type="button" class="btn-hero-primary" onclick="scrollToSection('storeCatalogSection')">Khám Phá Danh Mục</button>
+              <button type="button" class="btn-hero-outline" onclick="scrollToSection('storeValuesSection')">Chính Sách & Bảo Hành</button>
+            </div>
+
+            <div class="store-hero-trust-bar">
+              <div class="trust-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Đóng gói chuyên dụng chống nứt vỡ</span>
+              </div>
+              <div class="trust-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Kiểm tra hàng trước khi thanh toán</span>
+              </div>
+              <div class="trust-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Quét VietQR Napas 247 đối soát 1 giây</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Filter Bar & Product Catalog Grid -->
+          <div class="store-cat-bar" id="storeCatalogSection">
+            <div class="store-section-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Danh Mục Sản Phẩm</span>
+            </div>
+            <div class="store-cat-pills">
+              <button type="button" class="cat-pill active" onclick="filterCatalog('ALL', this)">Tất Cả Sản Phẩm</button>
+              <button type="button" class="cat-pill" onclick="filterCatalog('BEST', this)">Bán Chạy Nhất</button>
+              <button type="button" class="cat-pill" onclick="filterCatalog('NEW', this)">Mới Xuất Xưởng</button>
+              <button type="button" class="cat-pill" onclick="filterCatalog('PROMO', this)">Ưu Đãi Đặc Biệt</button>
+            </div>
+          </div>
+
+          <div class="store-catalog-wrapper">
+            <div class="catalog-grid" id="previewStoreProductGrid">
+              <!-- Populated dynamically with real photography -->
+            </div>
+          </div>
+
+          <!-- Brand Value Pillars Section -->
+          <div class="store-values-section" id="storeValuesSection">
+            <div class="values-grid">
+              <div class="value-card">
+                <div class="value-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="value-card-title">Chính Hãng & Kiểm Định Chuẩn Mực</div>
+                <div class="value-card-desc">100% chế tác tinh xảo theo tiêu chuẩn chất lượng cao, có tem chứng thực và chứng chỉ nguồn gốc xuất xứ.</div>
+              </div>
+              <div class="value-card">
+                <div class="value-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <div class="value-card-title">Đóng Gói Chuyên Dụng An Toàn</div>
+                <div class="value-card-desc">Hộp gỗ hoặc thùng mút xốp định hình 5 lớp, bảo hiểm rủi ro hư hỏng hoặc nứt vỡ trong suốt quá trình giao nhận.</div>
+              </div>
+              <div class="value-card">
+                <div class="value-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </div>
+                <div class="value-card-title">1 Đổi 1 Trong Vòng 30 Ngày</div>
+                <div class="value-card-desc">Hỗ trợ đổi mới tận nhà nhanh chóng nếu có bất kỳ lỗi kỹ thuật nào từ nhà sản xuất, hoàn toàn miễn phí.</div>
+              </div>
+              <div class="value-card">
+                <div class="value-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                </div>
+                <div class="value-card-title">Thanh Toán VietQR Napas 247</div>
+                <div class="value-card-desc">Quét mã đối soát tự động trong 0.8 giây, tiền chuyển thẳng tài khoản không qua trung gian gián đoạn.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer Reviews Section -->
+          <div class="store-reviews-section" id="storeReviewsSection">
+            <div class="reviews-top-row">
+              <div class="reviews-title-block">
+                <h3>Đánh Giá Thực Tế Từ Khách Hàng</h3>
+                <p>100% nhận xét từ người mua đã được xác thực đơn hàng qua hệ thống Web Động</p>
+              </div>
+            </div>
+            <div class="reviews-grid" id="previewStoreReviewsGrid">
+              <!-- Rendered dynamically matching industry -->
+            </div>
+          </div>
+
+          <!-- Complete 4-Column Footer -->
+          <footer class="store-footer" id="storeFooterSection">
+            <div class="footer-columns">
+              <div class="footer-col">
+                <h4 id="footerBrandTitle">NOVAWEAR RETAIL</h4>
+                <p id="footerBrandDesc">Đơn vị tiên phong cung cấp sản phẩm cao cấp, chính hãng với trải nghiệm mua sắm trực tuyến Web Động hiện đại, tích hợp cổng thanh toán VietQR Napas 247 tự động.</p>
+                <div style="font-size: 0.72rem; color: #64748B; display: flex; flex-direction: column; gap: 4px;">
+                  <div>Địa chỉ Showroom: Tầng 3, Tòa nhà Landmark, Hà Nội & TP. Hồ Chí Minh</div>
+                  <div>Tổng đài tư vấn: 1900 6868 &bull; Email: cskh@doanhnghiep.vn</div>
+                </div>
+                <div class="gov-cert-badge">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span>Đã Đăng Ký Bộ Công Thương</span>
+                </div>
+              </div>
+              <div class="footer-col">
+                <h4>Danh Mục & Mua Sắm</h4>
+                <div class="footer-col-links">
+                  <a href="#storeCatalogSection">Sản Phẩm Bán Chạy</a>
+                  <a href="#storeCatalogSection">Bộ Sưu Tập Mới 2026</a>
+                  <a href="#storeCatalogSection">Sản Phẩm Giảm Giá</a>
+                  <a href="#storeCatalogSection">Phiếu Quà Tặng Doanh Nghiệp</a>
+                </div>
+              </div>
+              <div class="footer-col">
+                <h4>Chính Sách Khách Hàng</h4>
+                <div class="footer-col-links">
+                  <a href="javascript:void(0)">Chính Sách Đổi Trả 30 Ngày</a>
+                  <a href="javascript:void(0)">Chính Sách Vận Chuyển Hỏa Tốc</a>
+                  <a href="javascript:void(0)">Bảo Mật Thông Tin Khách Hàng</a>
+                  <a href="javascript:void(0)">Quy Định Kiểm Hàng & Đồng Kiểm</a>
+                </div>
+              </div>
+              <div class="footer-col">
+                <h4>Kênh Thanh Toán Tích Hợp</h4>
+                <p>Hệ thống hỗ trợ thanh toán bảo mật đa kênh qua Napas 247, VietQR và các ngân hàng lớn tại Việt Nam:</p>
+                <div class="footer-payment-badges">
+                  <span class="pay-chip">VietQR</span>
+                  <span class="pay-chip">Napas 247</span>
+                  <span class="pay-chip">MBBank</span>
+                  <span class="pay-chip">Vietcombank</span>
+                  <span class="pay-chip">Techcombank</span>
+                  <span class="pay-chip">Visa/Master</span>
+                </div>
+              </div>
+            </div>
+            <div class="footer-bottom-bar">
+              <div>&copy; 2026 <span id="footerCopyrightBrand">Thương Hiệu Doanh Nghiệp</span>. Toàn bộ bản quyền được bảo lưu.</div>
+              <div>Vận hành bởi Nền tảng Web Động IT-Assignment &bull; Đã kiểm thử QA Production</div>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      <!-- Slide-Over Cart & Checkout Drawer Modal -->
+      <div class="cart-drawer-backdrop" id="storeCartBackdrop">
+        <div class="cart-drawer-panel" id="storeCartDrawer">
+          <div class="cart-drawer-head">
+            <h3>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>Giỏ Hàng & Thanh Toán VietQR</span>
+            </h3>
+            <button type="button" class="btn-close-drawer" onclick="closeCartDrawer()">&times;</button>
+          </div>
+
+          <div class="cart-drawer-body">
+            <!-- Cart Items List Container -->
+            <div id="drawerCartItemsContainer">
+              <!-- Rendered by JS -->
+            </div>
+
+            <!-- VietQR Payment Section in Drawer -->
+            <div class="cart-drawer-checkout-box" id="drawerCheckoutBox">
+              <div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">
+                Thanh Toán Quét Mã VietQR Napas 247
+              </div>
+              
+              <div class="drawer-qr-card">
+                <div class="qr-bank-head">
+                  <span>VietQR</span>
+                  <span>NAPAS 247</span>
+                </div>
+                <svg id="drawerQrSvg" width="120" height="120" viewBox="0 0 100 100" fill="#0F172A">
+                  <rect x="0" y="0" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
+                  <rect x="7" y="7" width="16" height="16"/>
+                  <rect x="70" y="0" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
+                  <rect x="77" y="7" width="16" height="16"/>
+                  <rect x="0" y="70" width="30" height="30" fill="none" stroke="#0F172A" stroke-width="6"/>
+                  <rect x="7" y="77" width="16" height="16"/>
+                  <rect x="38" y="8" width="6" height="6"/><rect x="48" y="18" width="6" height="6"/><rect x="38" y="28" width="6" height="6"/>
+                  <rect x="18" y="38" width="6" height="6"/><rect x="28" y="48" width="6" height="6"/><rect x="38" y="48" width="6" height="6"/>
+                  <rect x="48" y="48" width="6" height="6"/><rect x="58" y="38" width="6" height="6"/><rect x="68" y="48" width="6" height="6"/>
+                  <rect x="78" y="38" width="6" height="6"/><rect x="88" y="48" width="6" height="6"/><rect x="38" y="68" width="6" height="6"/>
+                  <rect x="48" y="78" width="6" height="6"/><rect x="58" y="68" width="6" height="6"/><rect x="68" y="78" width="6" height="6"/>
+                  <rect x="78" y="68" width="6" height="6"/><rect x="88" y="78" width="6" height="6"/>
+                </svg>
+                <div class="qr-total-label" id="drawerQrTotalDisplay">0 VNĐ</div>
+              </div>
+
+              <div style="font-size: 0.7rem; color: #94A3B8; text-align: left; width: 100%;">
+                <div>Ngân hàng: <strong>MBBank (Napas 247)</strong></div>
+                <div>Số tài khoản: <strong>0988234888</strong></div>
+                <div>Chủ tài khoản: <strong id="drawerAccountOwner">DOANH NGHIEP CHINH HANG</strong></div>
+                <div>Nội dung CK: <strong id="drawerTransferMemo" style="color: #60A5FA; font-family: var(--font-mono);">PAY DH2026</strong></div>
+              </div>
+
+              <!-- Breakdown -->
+              <div class="drawer-total-breakdown">
+                <div class="drawer-total-row">
+                  <span>Tạm tính hàng hóa:</span>
+                  <span id="drawerSubtotalDisplay">0 VNĐ</span>
+                </div>
+                <div class="drawer-total-row">
+                  <span>Phí vận chuyển:</span>
+                  <span style="color: #34D399;">Miễn phí (Toàn quốc)</span>
+                </div>
+                <div class="drawer-total-row final">
+                  <span>Tổng thanh toán:</span>
+                  <span id="drawerFinalTotalDisplay" style="color: #38BDF8;">0 VNĐ</span>
+                </div>
+              </div>
+
+              <button type="button" class="btn-simulate-paid" id="btnSimulatePaid" onclick="simulateConfirmPayment()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Xác Nhận Đã Quét Mã VietQR (Demo)</span>
+              </button>
+
+              <div class="order-success-state" id="drawerOrderSuccess">
+                <strong style="display: block; margin-bottom: 4px;">THANH TOÁN THÀNH CÔNG!</strong>
+                Đơn hàng <span id="successOrderId" style="font-weight: 700; color: #FFFFFF;"></span> đã được hệ thống ghi nhận trong 0.8 giây. Đơn hàng đang được điều phối sang bộ phận đóng gói và giao hỏa tốc!
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1114,72 +2203,480 @@
       renderAll();
     }
 
-    let cartTotal = 0;
-    let cartCount = 0;
+    // Global Cart State
+    let cartItems = [];
+
+    // Helper: Curated High-Definition Imagery by Industry / Product Keywords
+    function getProductImage(p, brand) {
+      if (p.image && typeof p.image === "string" && p.image.startsWith("http")) {
+        return p.image;
+      }
+      const raw = ((p.name || "") + " " + (p.category || "") + " " + (brand || "")).toLowerCase();
+
+      // Ceramics / Pottery / Bát Tràng
+      if (raw.includes("gốm") || raw.includes("bát tràng") || raw.includes("bình") || raw.includes("ấm") || raw.includes("tử sa") || raw.includes("lộc bình") || raw.includes("tượng") || raw.includes("men")) {
+        if (raw.includes("ấm") || raw.includes("trà") || raw.includes("tử sa")) {
+          return "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"; // luxury ceramic tea set
+        }
+        if (raw.includes("bình") || raw.includes("hút lộc") || raw.includes("men lam")) {
+          return "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=600&q=80"; // traditional ceramic vase
+        }
+        if (raw.includes("lộc bình") || raw.includes("tứ quý")) {
+          return "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80"; // tall artisanal vase
+        }
+        if (raw.includes("tượng") || raw.includes("di lặc")) {
+          return "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"; // carved sculpture
+        }
+        return "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=600&q=80"; // ceramic craft
+      }
+
+      // Fashion / Novawear / Apparel
+      if (raw.includes("blazer") || raw.includes("vest") || raw.includes("cashmere")) {
+        return "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80"; // luxury blazer
+      }
+      if (raw.includes("đầm") || raw.includes("váy") || raw.includes("lụa")) {
+        return "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80"; // elegant dress
+      }
+      if (raw.includes("giày") || raw.includes("oxford") || raw.includes("sneaker")) {
+        return "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80"; // luxury leather shoes
+      }
+      if (raw.includes("ví") || raw.includes("túi") || raw.includes("cá sấu")) {
+        return "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80"; // premium leather wallet
+      }
+      if (raw.includes("sơ mi") || raw.includes("cotton")) {
+        return "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80"; // tailored dress shirt
+      }
+      if (raw.includes("trench") || raw.includes("áo khoác")) {
+        return "https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=600&q=80"; // stylish coat
+      }
+
+      // Furniture / Home Decor
+      if (raw.includes("sofa") || raw.includes("nội thất")) {
+        return "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80"; // modern couch
+      }
+      if (raw.includes("bàn") || raw.includes("ghế")) {
+        return "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80"; // dining table
+      }
+      if (raw.includes("giường") || raw.includes("tủ")) {
+        return "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80"; // minimalist bed
+      }
+
+      // Coffee / Bakery / F&B
+      if (raw.includes("cold brew") || raw.includes("cà phê") || raw.includes("cafe")) {
+        return "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80"; // cold brew
+      }
+      if (raw.includes("latte") || raw.includes("cappuccino")) {
+        return "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"; // latte
+      }
+      if (raw.includes("hạt") || raw.includes("bean") || raw.includes("arabica")) {
+        return "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=80"; // roasted beans
+      }
+      if (raw.includes("trà") || raw.includes("tea")) {
+        return "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"; // tea drink
+      }
+
+      // Dental / Clinic
+      if (raw.includes("nha") || raw.includes("răng") || raw.includes("khám") || raw.includes("y tế")) {
+        return "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80"; // clinic care
+      }
+
+      // Default Clean Product Shot
+      return "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80";
+    }
+
+    // Helper: Crisp Vector Logo SVG by Brand / Domain
+    function getBrandLogoSvg(brand) {
+      const lower = (brand || "").toLowerCase();
+      if (lower.includes("gốm") || lower.includes("bát tràng") || lower.includes("mỹ nghệ") || lower.includes("thủ công")) {
+        // Traditional Amphora / Vase Crest
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M8 2h8M9 2v4a3 3 0 0 1-3 3H5a2 2 0 0 0-2 2v2a5 5 0 0 0 5 5h1a4 4 0 0 1 4 4v0M15 2v4a3 3 0 0 0 3 3h1a2 2 0 0 1 2 2v2a5 5 0 0 1-5 5h-1a4 4 0 0 0-4 4v0M8 22h8"/></svg>`;
+      }
+      if (lower.includes("thời trang") || lower.includes("fashion") || lower.includes("nova") || lower.includes("wear")) {
+        // Luxury Diamond Crest
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="2" y1="9" x2="22" y2="9"/></svg>`;
+      }
+      if (lower.includes("cafe") || lower.includes("cà phê") || lower.includes("f&b") || lower.includes("tea")) {
+        // Coffee Cup Crest
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`;
+      }
+      if (lower.includes("nội thất") || lower.includes("living") || lower.includes("nordic")) {
+        // Furniture Minimalist House Crest
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+      }
+      // High-Tech Modern Crest
+      return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
+    }
+
+    let activeCatalogFilter = "ALL";
+    let rawCatalogItems = [];
 
     function renderAll() {
       const cfg = currentProject.clientConfig || {};
-      const brand = cfg.brandName || currentProject.name;
+      const brand = cfg.brandName || currentProject.name || "Doanh Nghiệp Trực Tuyến";
       const previewUrl = cfg.previewUrl || "http://127.0.0.1:5000/storefront";
 
       document.getElementById("topBrandTitle").textContent = brand;
       document.getElementById("topProjectSubtitle").textContent = `Không Gian Giám Sát: ${brand}`;
-
       document.getElementById("previewAddressUrl").textContent = previewUrl;
-      document.getElementById("storeBrandName").textContent = brand.toUpperCase();
 
+      // Storefront Navbar & Branding
+      document.getElementById("storeBrandName").textContent = brand.toUpperCase();
+      document.getElementById("storeLogoEmblem").innerHTML = getBrandLogoSvg(brand);
+      
+      const subLabel = brand.toLowerCase().includes("gốm") 
+        ? "DI SẢN NGHỆ THUẬT & GỐM SỨ BÁT TRÀNG"
+        : (brand.toLowerCase().includes("cafe") ? "ROASTERY & COFFEE FLAGSHIP" : "OFFICIAL FLAGSHIP STORE");
+      document.getElementById("storeBrandSub").textContent = subLabel;
+
+      // Banner text
       if (cfg.bannerTitle) document.getElementById("storeBannerTitle").textContent = cfg.bannerTitle;
       if (cfg.bannerSubtitle) document.getElementById("storeBannerSubtitle").textContent = cfg.bannerSubtitle;
+
+      // Footer branding
+      document.getElementById("footerBrandTitle").textContent = brand.toUpperCase();
+      document.getElementById("footerCopyrightBrand").textContent = brand;
+      document.getElementById("drawerAccountOwner").textContent = brand.toUpperCase();
 
       // Guide credentials
       document.getElementById("guideAdminUrlVal").textContent = `${previewUrl}/admin`;
       document.getElementById("guideAdminUserVal").textContent = cfg.adminStoreUser || "novawear_admin";
       document.getElementById("guideAdminPassVal").textContent = cfg.adminStorePass || "Nova@2026MasterPass";
 
-      renderCatalog(cfg.products);
+      // Products & Reviews
+      rawCatalogItems = Array.isArray(cfg.products) && cfg.products.length > 0 ? cfg.products : [
+        { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, sku: "BLZ-CSM-01", stock: 45 },
+        { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, sku: "DRS-SLK-09", stock: 28 },
+        { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, sku: "SHS-OXF-03", stock: 60 },
+        { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, sku: "WLT-CRK-07", stock: 15 }
+      ];
+
+      renderCatalog();
+      renderCustomerReviews(brand);
       renderTickets();
     }
 
-    function renderCatalog(items) {
+    function renderCatalog() {
       const grid = document.getElementById("previewStoreProductGrid");
       if (!grid) return;
       grid.innerHTML = "";
 
-      const list = (Array.isArray(items) && items.length > 0) ? items : [
-        { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, sku: "BLZ-CSM-01" },
-        { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, sku: "DRS-SLK-09" },
-        { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, sku: "SHS-OXF-03" },
-        { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, sku: "WLT-CRK-07" }
-      ];
+      const brand = currentProject.clientConfig?.brandName || currentProject.name || "";
+      const searchWord = (document.getElementById("storeSearchInput")?.value || "").toLowerCase().trim();
+
+      let list = [...rawCatalogItems];
+
+      // Search filter
+      if (searchWord) {
+        list = list.filter(item => 
+          (item.name || "").toLowerCase().includes(searchWord) ||
+          (item.category || "").toLowerCase().includes(searchWord) ||
+          (item.sku || "").toLowerCase().includes(searchWord)
+        );
+      }
+
+      // Tab filter
+      if (activeCatalogFilter === "BEST") {
+        list = list.slice(0, 2);
+      } else if (activeCatalogFilter === "NEW") {
+        list = list.slice(-2);
+      } else if (activeCatalogFilter === "PROMO") {
+        list = list.filter(p => (Number(p.price) || 0) < 5000000);
+      }
+
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; color: #64748B; padding: 40px; font-size: 0.84rem;">
+            Không tìm thấy sản phẩm phù hợp với từ khóa "${escapeHtml(searchWord)}".
+          </div>
+        `;
+        return;
+      }
 
       list.forEach((p, idx) => {
         const priceNum = Number(p.price) || 0;
-        const formatted = priceNum.toLocaleString("vi-VN") + " đ";
-        const sku = p.sku || ("SKU-0" + (idx + 1));
+        const formattedPrice = priceNum.toLocaleString("vi-VN") + " đ";
+        const origPrice = Math.round(priceNum * 1.18).toLocaleString("vi-VN") + " đ";
+        const sku = p.sku || ("SKU-" + (idx + 1).toString().padStart(2, "0"));
+        const imgUrl = getProductImage(p, brand);
+        const stock = p.stock || 25;
 
         const card = document.createElement("div");
         card.className = "catalog-card";
         card.innerHTML = `
           <div class="catalog-thumb">
             <span class="sku-badge">${escapeHtml(sku)}</span>
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+            <span class="stock-chip">Còn ${stock} món</span>
+            <img class="product-real-img" src="${escapeHtml(imgUrl)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80'">
           </div>
-          <div class="item-name">${escapeHtml(p.name)}</div>
-          <div class="item-cat">${escapeHtml(p.category || "Sản phẩm")}</div>
-          <div class="item-bottom">
-            <span class="item-price">${formatted}</span>
-            <button type="button" class="btn-add-item" onclick="addItemToCart(${priceNum}, '${escapeHtml(p.name)}')">+ Thêm</button>
+          <div class="catalog-card-body">
+            <div class="item-cat">${escapeHtml(p.category || "Chính Hãng")}</div>
+            <div class="item-name" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</div>
+            <div class="item-price-row">
+              <span class="price-original">${origPrice}</span>
+              <span class="item-price">${formattedPrice}</span>
+            </div>
+            <div class="catalog-btn-row">
+              <button type="button" class="btn-add-item" onclick="handleAddToCart('${p.id || sku}', false)">+ Thêm</button>
+              <button type="button" class="btn-buy-instant" onclick="handleAddToCart('${p.id || sku}', true)">Mua Ngay</button>
+            </div>
           </div>
         `;
         grid.appendChild(card);
       });
     }
 
-    window.addItemToCart = function(price, name) {
-      cartTotal += price;
-      cartCount++;
-      document.getElementById("cartCountBadge").textContent = cartCount;
-      document.getElementById("vietqrDisplayTotal").textContent = cartTotal.toLocaleString("vi-VN") + " VNĐ";
+    // Filter Buttons
+    window.filterCatalog = function(filterKey, btn) {
+      activeCatalogFilter = filterKey;
+      document.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderCatalog();
+    };
+
+    // Live Search in Storefront
+    document.getElementById("storeSearchInput")?.addEventListener("input", () => {
+      renderCatalog();
+    });
+
+    // Smooth Scroll Helper
+    window.scrollToSection = function(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    // Reviews Renderer
+    function renderCustomerReviews(brand) {
+      const grid = document.getElementById("previewStoreReviewsGrid");
+      if (!grid) return;
+
+      const lower = (brand || "").toLowerCase();
+      let reviews = [];
+
+      if (lower.includes("gốm") || lower.includes("bát tràng")) {
+        reviews = [
+          {
+            name: "Vũ Đình Cường (Hà Nội)",
+            badge: "Đã mua Bình Hút Lộc Men Lam",
+            text: "Bộ bình men lam đóng gói thùng xốp và hộp quà gỗ cực kỳ cẩn thận, không một vết trầy. Quét mã VietQR xong nhân viên gọi xác nhận ngay trong 3 phút!"
+          },
+          {
+            name: "Phạm Thúy Hằng (Đà Nẵng)",
+            badge: "Đã mua Bộ Ấm Chén Tử Sa",
+            text: "Chất đất tử sa giữ nhiệt pha trà rất thơm, hoa văn đắp nổi sắc sảo đúng chuẩn Bát Tràng truyền thống. Rất an tâm về chất lượng."
+          },
+          {
+            name: "Công ty Cổ phần Vạn Thịnh",
+            badge: "Đặt 15 bộ quà tặng doanh nghiệp",
+            text: "Dịch vụ xuất hóa đơn VAT điện tử nhanh, đóng logo doanh nghiệp chỉn chu. Thanh toán ngân hàng tự động đối soát rất tiện lợi."
+          }
+        ];
+      } else if (lower.includes("cafe") || lower.includes("cà phê")) {
+        reviews = [
+          {
+            name: "Trần Anh Khoa (TP.HCM)",
+            badge: "Khách quen Cold Brew",
+            text: "Hương vị cold brew cam vàng ủ lạnh thanh mát, thơm đậm mùi Arabica Cầu Đất. Đặt online quét mã 3 phút có đồ uống ngay."
+          },
+          {
+            name: "Lê Hoàng Yến (Đà Lạt)",
+            badge: "Đã mua Hạt Rang Mộc 500g",
+            text: "Hạt rang mộc độ vừa hoàn hảo, chiết xuất espresso lớp crema dày mịn. Đóng gói túi zip van 1 chiều bảo quản rất tốt."
+          },
+          {
+            name: "Nguyễn Minh Đức (Hà Nội)",
+            badge: "Đã mua Combo Trà & Bánh",
+            text: "Trà đào thơm thảo mộc tự nhiên, không bị gắt đường. Giao hỏa tốc giữ được độ lạnh sảng khoái."
+          }
+        ];
+      } else {
+        reviews = [
+          {
+            name: "Nguyễn Tuấn Dũng (TP.HCM)",
+            badge: "Đã mua Áo Blazer Cashmere",
+            text: "Form áo may đo rất chuẩn, chất dạ cashmere đanh mịn và đứng dáng. Quét VietQR 0.8 giây hệ thống báo tiền về ngay lập tức, cực kỳ chuyên nghiệp."
+          },
+          {
+            name: "Trần Mai Phương (Hà Nội)",
+            badge: "Đã mua Đầm Lụa Baroque",
+            text: "Họa tiết baroque in sắc nét, vải lụa tơ tằm mềm mát không nhăn. Được mở hàng kiểm tra trước khi nhận rất an tâm!"
+          },
+          {
+            name: "Hoàng Minh Quân (Hải Phòng)",
+            badge: "Đã mua Giày Oxford Da Bò",
+            text: "Đế giày khâu chỉ Goodyear chắc chắn, da bò nhập khẩu êm chân. Dịch vụ đổi size tận nhà chu đáo 10/10."
+          }
+        ];
+      }
+
+      grid.innerHTML = "";
+      reviews.forEach(r => {
+        const starSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="#FBBF24" stroke="#FBBF24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+        const card = document.createElement("div");
+        card.className = "review-card";
+        card.innerHTML = `
+          <div class="review-stars">${starSvg.repeat(5)}</div>
+          <div class="review-body-text">“${escapeHtml(r.text)}”</div>
+          <div class="review-author-box">
+            <span class="review-author-name">${escapeHtml(r.name)}</span>
+            <span class="review-author-badge">&bull; ${escapeHtml(r.badge)}</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ========================================================
+    // CART & VIETQR CHECKOUT DRAWER CONTROLLER
+    // ========================================================
+    window.handleAddToCart = function(productId, openDrawerImmediate = false) {
+      const product = rawCatalogItems.find(p => (p.id || p.sku) === productId);
+      if (!product) return;
+
+      const brand = currentProject.clientConfig?.brandName || currentProject.name || "";
+      const existing = cartItems.find(item => (item.id || item.sku) === (product.id || product.sku));
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cartItems.push({
+          id: product.id || product.sku,
+          name: product.name,
+          category: product.category,
+          price: Number(product.price) || 0,
+          sku: product.sku,
+          img: getProductImage(product, brand),
+          qty: 1
+        });
+      }
+
+      updateCartUI();
+
+      if (openDrawerImmediate) {
+        openCartDrawer();
+      } else {
+        // Visual indicator on header button
+        const btn = document.getElementById("btnCartHeader");
+        if (btn) {
+          btn.style.transform = "scale(1.08)";
+          setTimeout(() => { btn.style.transform = ""; }, 200);
+        }
+      }
+    };
+
+    window.updateCartItemQty = function(productId, delta) {
+      const item = cartItems.find(i => (i.id || i.sku) === productId);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cartItems = cartItems.filter(i => (i.id || i.sku) !== productId);
+      }
+      updateCartUI();
+    };
+
+    window.removeCartItem = function(productId) {
+      cartItems = cartItems.filter(i => (i.id || i.sku) !== productId);
+      updateCartUI();
+    };
+
+    function updateCartUI() {
+      const totalCount = cartItems.reduce((acc, i) => acc + i.qty, 0);
+      const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
+
+      // Header Badge
+      document.getElementById("cartCountBadge").textContent = totalCount;
+
+      // Drawer Content
+      const listContainer = document.getElementById("drawerCartItemsContainer");
+      if (!listContainer) return;
+
+      if (cartItems.length === 0) {
+        listContainer.innerHTML = `
+          <div class="cart-empty-state">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <div>Giỏ hàng của bạn đang trống.<br>Hãy chọn sản phẩm để kiểm thử quy trình đặt hàng và thanh toán VietQR tự động!</div>
+          </div>
+        `;
+        document.getElementById("drawerSubtotalDisplay").textContent = "0 VNĐ";
+        document.getElementById("drawerFinalTotalDisplay").textContent = "0 VNĐ";
+        document.getElementById("drawerQrTotalDisplay").textContent = "0 VNĐ";
+        return;
+      }
+
+      listContainer.innerHTML = "";
+      cartItems.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "cart-item-row";
+        row.innerHTML = `
+          <img class="cart-item-thumb" src="${escapeHtml(item.img)}" alt="${escapeHtml(item.name)}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80'">
+          <div class="cart-item-meta">
+            <div class="cart-item-title">${escapeHtml(item.name)}</div>
+            <div class="cart-item-price">${(item.price * item.qty).toLocaleString("vi-VN")} đ</div>
+          </div>
+          <div class="cart-qty-row">
+            <button type="button" class="btn-qty-action" onclick="updateCartItemQty('${item.id || item.sku}', -1)">&minus;</button>
+            <span class="cart-qty-val">${item.qty}</span>
+            <button type="button" class="btn-qty-action" onclick="updateCartItemQty('${item.id || item.sku}', 1)">&plus;</button>
+            <button type="button" class="btn-cart-del" onclick="removeCartItem('${item.id || item.sku}')" title="Xóa">&times;</button>
+          </div>
+        `;
+        listContainer.appendChild(row);
+      });
+
+      const formattedTotal = subtotal.toLocaleString("vi-VN") + " VNĐ";
+      document.getElementById("drawerSubtotalDisplay").textContent = formattedTotal;
+      document.getElementById("drawerFinalTotalDisplay").textContent = formattedTotal;
+      document.getElementById("drawerQrTotalDisplay").textContent = formattedTotal;
+
+      const orderRef = "DH" + Math.floor(1000 + Math.random() * 9000);
+      const projCode = currentProject.code || "RETAIL";
+      document.getElementById("drawerTransferMemo").textContent = `PAY ${projCode} ${orderRef}`;
+    }
+
+    window.openCartDrawer = function() {
+      const backdrop = document.getElementById("storeCartBackdrop");
+      if (backdrop) backdrop.classList.add("active");
+      document.getElementById("drawerOrderSuccess").style.display = "none";
+      const btn = document.getElementById("btnSimulatePaid");
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Xác Nhận Đã Quét Mã VietQR (Demo)</span>`;
+      }
+    };
+
+    window.closeCartDrawer = function() {
+      const backdrop = document.getElementById("storeCartBackdrop");
+      if (backdrop) backdrop.classList.remove("active");
+    };
+
+    // Close on click outside panel
+    document.getElementById("storeCartBackdrop")?.addEventListener("click", (e) => {
+      if (e.target.id === "storeCartBackdrop") closeCartDrawer();
+    });
+
+    // Simulate Instant Webhook / VietQR Payment
+    window.simulateConfirmPayment = function() {
+      if (cartItems.length === 0) {
+        alert("Giỏ hàng đang trống! Vui lòng chọn sản phẩm trước.");
+        return;
+      }
+
+      const btn = document.getElementById("btnSimulatePaid");
+      btn.disabled = true;
+      btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Đang Đối Soát Napas 247... (0.8s)</span>`;
+
+      setTimeout(() => {
+        const orderId = "DH-2026-" + Math.floor(100000 + Math.random() * 900000);
+        document.getElementById("successOrderId").textContent = orderId;
+        document.getElementById("drawerOrderSuccess").style.display = "block";
+        btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Đã Thanh Toán Thành Công!</span>`;
+
+        // Clear cart after confirmation
+        setTimeout(() => {
+          cartItems = [];
+          updateCartUI();
+        }, 2500);
+      }, 800);
     };
 
     function renderTickets() {

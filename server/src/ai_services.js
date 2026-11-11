@@ -459,10 +459,21 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
       bannerTitle = "Bộ Sưu Tập Gốm Sứ Xuất Khẩu 2026 - Tặng Kèm Hộp Quà Gỗ";
       bannerSubtitle = "Thanh toán quét mã VietQR tự động đối soát đơn hàng tức thì";
       products = [
-        { id: "p1", name: "Bình Hút Lộc Thuận Buồm Xuôi Gió Men Lam", category: "Gốm Phong Thủy", price: 3850000, stock: 15, sku: "GOM-LOC-01" },
-        { id: "p2", name: "Bộ Ấm Chén Tử Sa Đắp Nổi Rồng Men Rạn", category: "Bộ Ấm Trà", price: 1650000, stock: 40, sku: "GOM-TRA-02" },
-        { id: "p3", name: "Lộc Bình Tứ Quý Xuân Hạ Thu Đông 1m6", category: "Lộc Bình", price: 12500000, stock: 6, sku: "GOM-BINH-03" },
-        { id: "p4", name: "Tượng Di Lặc Cầm Gậy Như Ý Men Hỏa Biến", category: "Tượng Nghệ Thuật", price: 2900000, stock: 20, sku: "GOM-TUONG-04" }
+        { id: "p1", name: "Bình Hút Lộc Thuận Buồm Xuôi Gió Men Lam", category: "Gốm Phong Thủy", price: 3850000, stock: 15, sku: "GOM-LOC-01", image: "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: "Bộ Ấm Chén Tử Sa Đắp Nổi Rồng Men Rạn", category: "Bộ Ấm Trà", price: 1650000, stock: 40, sku: "GOM-TRA-02", image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: "Lộc Bình Tứ Quý Xuân Hạ Thu Đông 1m6", category: "Lộc Bình", price: 12500000, stock: 6, sku: "GOM-BINH-03", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: "Tượng Di Lặc Cầm Gậy Như Ý Men Hỏa Biến", category: "Tượng Nghệ Thuật", price: 2900000, stock: 20, sku: "GOM-TUONG-04", image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" }
+      ];
+    } else if (lower.includes("thời trang") || lower.includes("quần áo") || lower.includes("váy") || lower.includes("đầm") || lower.includes("blazer") || lower.includes("fashion")) {
+      brandName = "Novawear Premium Retail";
+      headline = "Thời Trang Thiết Kế Hiện Đại - Chuẩn Mực May Đo Cao Cấp";
+      bannerTitle = "Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên";
+      bannerSubtitle = "Thanh toán quét mã VietQR tự động trong 0.8 giây - Tiền về tài khoản doanh nghiệp ngay lập tức";
+      products = [
+        { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, stock: 45, sku: "BLZ-CSM-01", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, stock: 28, sku: "DRS-SLK-09", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, stock: 60, sku: "SHS-OXF-03", image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, stock: 15, sku: "WLT-CRK-07", image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80" }
       ];
     } else if (lower.includes("nội thất") || lower.includes("bàn") || lower.includes("ghế") || lower.includes("sofa")) {
       brandName = "Nordic Living - Nội Thất Bắc Âu";
@@ -470,10 +481,10 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
       bannerTitle = "Ưu Đãi Thiết Kế Trọn Gói Căn Hộ - Giảm 15% Hợp Đồng";
       bannerSubtitle = "Hỗ trợ trả góp 0% hoặc thanh toán VietQR nhận chiết khấu trực tiếp";
       products = [
-        { id: "p1", name: "Sofa Góc L Da Bò Ý Nhập Khẩu Màu Nâu Cigar", category: "Phòng Khách", price: 28500000, stock: 8, sku: "NT-SOFA-01" },
-        { id: "p2", name: "Bàn Ăn Gỗ Sồi Nga Nguyên Tấm 8 Ghế", category: "Phòng Bếp", price: 16800000, stock: 12, sku: "NT-BAN-02" },
-        { id: "p3", name: "Giường Ngủ Bọc Nỉ Phong Cách Minimalist", category: "Phòng Ngủ", price: 14200000, stock: 15, sku: "NT-GIUONG-03" },
-        { id: "p4", name: "Tủ Quần Áo Cánh Kính Đèn LED Cảm Ứng", category: "Phòng Ngủ", price: 19500000, stock: 10, sku: "NT-TU-04" }
+        { id: "p1", name: "Sofa Góc L Da Bò Ý Nhập Khẩu Màu Nâu Cigar", category: "Phòng Khách", price: 28500000, stock: 8, sku: "NT-SOFA-01", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: "Bàn Ăn Gỗ Sồi Nga Nguyên Tấm 8 Ghế", category: "Phòng Bếp", price: 16800000, stock: 12, sku: "NT-BAN-02", image: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: "Giường Ngủ Bọc Nỉ Phong Cách Minimalist", category: "Phòng Ngủ", price: 14200000, stock: 15, sku: "NT-GIUONG-03", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: "Tủ Quần Áo Cánh Kính Đèn LED Cảm Ứng", category: "Phòng Ngủ", price: 19500000, stock: 10, sku: "NT-TU-04", image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=600&q=80" }
       ];
     } else if (lower.includes("cafe") || lower.includes("cà phê") || lower.includes("trà") || lower.includes("f&b")) {
       brandName = "The Highland Roastery & Cafe";
@@ -481,10 +492,10 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
       bannerTitle = "Đặt Bàn Trực Tuyến & Mang Đi - Tặng Ngay Voucher 30K";
       bannerSubtitle = "Quét mã VietQR tại quầy hoặc tại bàn, nhận đồ uống trong 3 phút";
       products = [
-        { id: "p1", name: "Cà Phê Cold Brew Ủ Lạnh 24h Hương Cam Vàng", category: "Cà Phê Đặc Sản", price: 65000, stock: 150, sku: "CF-COLD-01" },
-        { id: "p2", name: "Latte Hạnh Nhân Sữa Yến Mạch Nóng", category: "Cà Phê Ý", price: 58000, stock: 200, sku: "CF-LATTE-02" },
-        { id: "p3", name: "Hạt Cà Phê Arabica Cầu Đất Rang Mộc 500g", category: "Hạt Đóng Gói", price: 210000, stock: 85, sku: "CF-BEAN-03" },
-        { id: "p4", name: "Trà Đào Cam Sả Thảo Mộc Tươi", category: "Trà Trái Cây", price: 52000, stock: 180, sku: "CF-TEA-04" }
+        { id: "p1", name: "Cà Phê Cold Brew Ủ Lạnh 24h Hương Cam Vàng", category: "Cà Phê Đặc Sản", price: 65000, stock: 150, sku: "CF-COLD-01", image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: "Latte Hạnh Nhân Sữa Yến Mạch Nóng", category: "Cà Phê Ý", price: 58000, stock: 200, sku: "CF-LATTE-02", image: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: "Hạt Cà Phê Arabica Cầu Đất Rang Mộc 500g", category: "Hạt Đóng Gói", price: 210000, stock: 85, sku: "CF-BEAN-03", image: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: "Trà Đào Cam Sả Thảo Mộc Tươi", category: "Trà Trái Cây", price: 52000, stock: 180, sku: "CF-TEA-04", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80" }
       ];
     } else {
       brandName = `${prompt.slice(0, 25)} Premium Store`;
@@ -492,10 +503,10 @@ Bắt buộc trả về đúng định dạng JSON thuần với cấu trúc ch�
       bannerTitle = "Chào Mừng Đến Với Hệ Thống Mới - Đặt Hàng Trực Tuyến";
       bannerSubtitle = "Thanh toán quét mã VietQR tự động 24/7";
       products = [
-        { id: "p1", name: `Gói Dịch Vụ Cơ Bản (${prompt.slice(0, 20)})`, category: "Gói Dịch Vụ", price: 1500000, stock: 100, sku: "SRV-BAS-01" },
-        { id: "p2", name: `Gói Nâng Cao Chuyên Sâu`, category: "Gói Dịch Vụ", price: 3500000, stock: 50, sku: "SRV-PRO-02" },
-        { id: "p3", name: `Sản Phẩm Tiêu Chuẩn Doanh Nghiệp`, category: "Sản Phẩm", price: 2200000, stock: 75, sku: "PRD-STD-03" },
-        { id: "p4", name: `Phụ Kiện Đi Kèm Chính Hãng`, category: "Phụ Kiện", price: 650000, stock: 200, sku: "ACC-GEN-04" }
+        { id: "p1", name: `Gói Dịch Vụ Cơ Bản (${prompt.slice(0, 20)})`, category: "Gói Dịch Vụ", price: 1500000, stock: 100, sku: "SRV-BAS-01", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" },
+        { id: "p2", name: `Gói Nâng Cao Chuyên Sâu`, category: "Gói Dịch Vụ", price: 3500000, stock: 50, sku: "SRV-PRO-02", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" },
+        { id: "p3", name: `Sản Phẩm Tiêu Chuẩn Doanh Nghiệp`, category: "Sản Phẩm", price: 2200000, stock: 75, sku: "PRD-STD-03", image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80" },
+        { id: "p4", name: `Phụ Kiện Đi Kèm Chính Hãng`, category: "Phụ Kiện", price: 650000, stock: 200, sku: "ACC-GEN-04", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80" }
       ];
     }
 
