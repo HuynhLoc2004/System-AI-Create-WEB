@@ -1061,6 +1061,55 @@ function setupEventListeners() {
     });
   }
 
+  // Modal: Virtual Code Studio (Zero-Load Source Code Explorer)
+  const btnOpenVirtualStudio = document.getElementById("btnOpenVirtualStudioModal");
+  if (btnOpenVirtualStudio) {
+    btnOpenVirtualStudio.addEventListener("click", () => openVirtualStudio());
+  }
+  const btnCloseVirtualStudio = document.getElementById("btnCloseVirtualStudioModal");
+  if (btnCloseVirtualStudio) {
+    btnCloseVirtualStudio.addEventListener("click", () => closeVirtualStudio());
+  }
+  const btnSaveCode = document.getElementById("btnSaveActiveCode");
+  if (btnSaveCode) {
+    btnSaveCode.addEventListener("click", () => saveActiveVirtualFile());
+  }
+  const btnCopyCode = document.getElementById("btnCopyActiveCode");
+  if (btnCopyCode) {
+    btnCopyCode.addEventListener("click", () => {
+      const editor = document.getElementById("virtualStudioCodeEditor");
+      if (editor) {
+        navigator.clipboard.writeText(editor.value).then(() => {
+          showToast("Đã sao chép toàn bộ mã nguồn tệp vào bộ nhớ tạm!", "success");
+        });
+      }
+    });
+  }
+  const btnDownloadZip = document.getElementById("btnDownloadProjectZip");
+  if (btnDownloadZip) {
+    btnDownloadZip.addEventListener("click", () => downloadProjectZip());
+  }
+  const btnDropdownZip = document.getElementById("btnDropdownDownloadZip");
+  if (btnDropdownZip) {
+    btnDropdownZip.addEventListener("click", () => {
+      toggleToolsDropdown(false);
+      downloadProjectZip();
+    });
+  }
+
+  // Dispatch Mode Switcher (Vibe Code vs Manual Directive)
+  const dispatchModeSelect = document.getElementById("dispatchModeSelect");
+  const dispatchDeptGroup = document.getElementById("dispatchDeptGroup");
+  if (dispatchModeSelect && dispatchDeptGroup) {
+    dispatchModeSelect.addEventListener("change", (e) => {
+      if (e.target.value === "MANUAL_DIRECTIVE") {
+        dispatchDeptGroup.style.display = "block";
+      } else {
+        dispatchDeptGroup.style.display = "none";
+      }
+    });
+  }
+
   // Modal: Client Feedback Intake (Gửi về PM)
   const feedbackModal = document.getElementById("feedbackModal");
   const btnOpenFeedback = document.getElementById("btnOpenFeedbackModal");
@@ -2173,7 +2222,7 @@ function handleClientFeedbackSubmit() {
 }
 
 // Top-Down Manager Directive Handler (Admin Only - Protected with Admin Master Key)
-function handleDispatchDirective() {
+async function handleDispatchDirective() {
   if (currentRole !== "ADMIN") {
     showToast("Bạn đang ở quyền Khách Hàng (Read-Only). Quyền phát lệnh AI bị khóa để bảo mật hệ thống!", "danger");
     return;
@@ -2195,10 +2244,10 @@ function handleDispatchDirective() {
   }
 
   const project = getCurrentProject();
-  const deptName = document.getElementById("dispatchDept").value;
   const rawTitle = document.getElementById("dispatchTitle").value;
   const rawDetails = document.getElementById("dispatchDetails").value;
   const priority = document.getElementById("dispatchPriority").value;
+  const mode = document.getElementById("dispatchModeSelect")?.value || "VIBE_CODE_DIRECT";
 
   const title = sanitizeInput(rawTitle);
   const details = sanitizeInput(rawDetails);
@@ -2208,9 +2257,84 @@ function handleDispatchDirective() {
     return;
   }
 
+  // MODE 1: [2-AI Dual Engine] AI 1 (Orchestrator) -> AI 2 (Vibe Coder)
+  if (mode === "VIBE_CODE_DIRECT") {
+    const liveBox = document.getElementById("dispatchLiveProgress");
+    const liveText = document.getElementById("dispatchLiveStatusText");
+    if (liveBox) liveBox.style.display = "block";
+    if (liveText) liveText.textContent = "AI 1 (Orchestrator PM/SA) đang bóc tách luồng & xác định tệp đích...";
+
+    const reqText = `${title}: ${details}`;
+    try {
+      const res = await fetch("/api/vibe/dispatch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectId: project.id,
+          requirement: reqText,
+          adminKey: inputKey
+        })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || "Lỗi xử lý AI");
+
+      const result = data.data;
+      if (liveText) liveText.textContent = `AI 2 (${result.orchestration.deptName}) đã hoàn tất code vào ${result.codingResult.filePath}!`;
+
+      // Highlight target department on workflow canvas
+      activeDirectiveDept = result.orchestration.targetDept;
+
+      // Update local project files and tasks
+      project.files = project.files || {};
+      project.files[result.codingResult.filePath] = result.codingResult.fileContent;
+      
+      const newTaskId = `DIR-${Math.floor(100 + Math.random() * 900)}`;
+      project.tasks.unshift({
+        id: newTaskId,
+        dept: result.orchestration.deptName,
+        title: `[AI VIBE CODE] ${result.orchestration.taskTitle}`,
+        pic: `${result.orchestration.deptName} (AI Coder)`,
+        status: "DONE",
+        progress: 100,
+        note: `Tệp: ${result.codingResult.filePath} &bull; ${result.codingResult.changeSummary}`,
+        isDirective: true
+      });
+
+      if (project.deptStatuses) {
+        project.deptStatuses[result.orchestration.targetDept] = "DONE";
+      }
+
+      project.history.unshift({
+        time: "Vừa xong",
+        dept: result.orchestration.deptName,
+        action: `[VIBE CODE] Đã sinh mã nguồn vào: ${result.codingResult.filePath} (${result.codingResult.explanation})`,
+        type: "success"
+      });
+
+      saveProjectsToStorage();
+      renderDashboard();
+
+      setTimeout(() => {
+        if (liveBox) liveBox.style.display = "none";
+        document.getElementById("dispatchForm").reset();
+        document.getElementById("dispatchModal").style.display = "none";
+        showToast(`AI 1 & AI 2 đã code thành công vào tệp [${result.codingResult.filePath}]! Mở Kho Mã Nguồn để xem chi tiết.`, "success");
+        // Open Virtual Code Studio to inspect the generated code
+        openVirtualStudio(result.codingResult.filePath);
+      }, 700);
+
+    } catch (err) {
+      if (liveText) liveText.textContent = `Lỗi: ${err.message}`;
+      showToast(`Không thể thực thi lệnh: ${err.message}`, "danger");
+      if (liveBox) liveBox.style.display = "none";
+    }
+    return;
+  }
+
+  // MODE 2: Manual Directive (Task Creation)
+  const deptName = document.getElementById("dispatchDept").value;
   const directiveId = `DIR-${Math.floor(100 + Math.random() * 900)}`;
 
-  // Find corresponding department key to highlight on canvas
   let targetKey = "pm";
   if (deptName.includes("01")) targetKey = "pm";
   else if (deptName.includes("02")) targetKey = "ba";
@@ -2224,7 +2348,6 @@ function handleDispatchDirective() {
 
   activeDirectiveDept = targetKey;
 
-  // Insert directive as high-priority task at the top
   project.tasks.unshift({
     id: directiveId,
     dept: deptName,
@@ -2236,12 +2359,10 @@ function handleDispatchDirective() {
     isDirective: true
   });
 
-  // Target department shifts to IN_PROGRESS
   if (project.deptStatuses) {
     project.deptStatuses[targetKey] = "IN_PROGRESS";
   }
 
-  // Log to activity history
   project.history.unshift({
     time: "Vừa xong",
     dept: "BAN QUẢN LÝ",
@@ -2474,6 +2595,140 @@ async function syncProjectsWithBackend() {
   } catch (e) {
     console.debug("Backend projects sync skipped", e);
   }
+}
+
+// ========================================================
+// VIRTUAL CODE STUDIO CONTROLLER (ZERO-LOAD & IN-MEMORY ZIP)
+// ========================================================
+let activeVirtualFilePath = "src/App.jsx";
+let currentProjectVirtualFiles = {};
+
+async function openVirtualStudio(targetFile = null) {
+  const modal = document.getElementById("virtualStudioModal");
+  if (!modal) return;
+  const project = getCurrentProject();
+  if (!project) return;
+
+  try {
+    const res = await fetch(`/api/projects/${encodeURIComponent(project.id)}/files`);
+    const data = await res.json();
+    if (data.success && data.data) {
+      currentProjectVirtualFiles = data.data;
+    } else {
+      currentProjectVirtualFiles = project.files || {};
+    }
+  } catch (err) {
+    currentProjectVirtualFiles = project.files || {};
+  }
+
+  // If no files yet, generate boilerplate
+  if (Object.keys(currentProjectVirtualFiles).length === 0) {
+    currentProjectVirtualFiles = {
+      "package.json": JSON.stringify({ name: project.code?.toLowerCase() || "app", version: "1.0.0" }, null, 2),
+      "src/App.jsx": `import React from 'react';\n\nexport default function App() {\n  return <h1>${project.name}</h1>;\n}`,
+      "database/schema.sql": `-- Schema\nCREATE TABLE orders (id SERIAL PRIMARY KEY);`,
+      "README.md": `# ${project.name}`
+    };
+  }
+
+  renderVirtualStudioFileList();
+
+  const fileToOpen = targetFile && currentProjectVirtualFiles[targetFile] ? targetFile : Object.keys(currentProjectVirtualFiles)[0] || "src/App.jsx";
+  selectVirtualFile(fileToOpen);
+
+  modal.style.display = "flex";
+}
+
+function closeVirtualStudio() {
+  const modal = document.getElementById("virtualStudioModal");
+  if (modal) modal.style.display = "none";
+}
+
+function renderVirtualStudioFileList() {
+  const container = document.getElementById("virtualStudioFileList");
+  const countBadge = document.getElementById("virtualStudioFileCount");
+  if (!container) return;
+
+  const files = Object.keys(currentProjectVirtualFiles);
+  if (countBadge) countBadge.textContent = `${files.length} files`;
+
+  container.innerHTML = "";
+  files.forEach(filePath => {
+    const item = document.createElement("div");
+    item.className = `virtual-file-item ${filePath === activeVirtualFilePath ? "active" : ""}`;
+    item.style.padding = "8px 14px";
+    item.style.fontSize = "0.78rem";
+    item.style.cursor = "pointer";
+    item.style.display = "flex";
+    item.style.alignItems = "center";
+    item.style.gap = "8px";
+    item.style.transition = "all 0.15s ease";
+    item.style.color = filePath === activeVirtualFilePath ? "#38BDF8" : "#94A3B8";
+    item.style.background = filePath === activeVirtualFilePath ? "rgba(56, 189, 248, 0.12)" : "transparent";
+    item.style.borderLeft = filePath === activeVirtualFilePath ? "3px solid #38BDF8" : "3px solid transparent";
+
+    const iconSvg = filePath.endsWith(".jsx") || filePath.endsWith(".tsx") || filePath.endsWith(".js")
+      ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`
+      : filePath.endsWith(".sql")
+      ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>`
+      : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+
+    item.innerHTML = `${iconSvg} <span style="font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(filePath)}</span>`;
+    item.addEventListener("click", () => selectVirtualFile(filePath));
+    container.appendChild(item);
+  });
+}
+
+function selectVirtualFile(filePath) {
+  activeVirtualFilePath = filePath;
+  renderVirtualStudioFileList();
+
+  const editor = document.getElementById("virtualStudioCodeEditor");
+  const nameLabel = document.getElementById("virtualStudioActiveFileName");
+  const sizeLabel = document.getElementById("virtualStudioActiveFileSize");
+
+  const content = currentProjectVirtualFiles[filePath] || "";
+  if (editor) editor.value = content;
+  if (nameLabel) nameLabel.textContent = filePath;
+  if (sizeLabel) {
+    const bytes = new Blob([content]).size;
+    sizeLabel.textContent = `(${bytes > 1024 ? (bytes / 1024).toFixed(1) + " KB" : bytes + " B"})`;
+  }
+}
+
+async function saveActiveVirtualFile() {
+  const editor = document.getElementById("virtualStudioCodeEditor");
+  if (!editor) return;
+  const newContent = editor.value;
+  const project = getCurrentProject();
+  if (!project) return;
+
+  currentProjectVirtualFiles[activeVirtualFilePath] = newContent;
+  project.files = project.files || {};
+  project.files[activeVirtualFilePath] = newContent;
+
+  try {
+    const res = await fetch(`/api/projects/${encodeURIComponent(project.id)}/files`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filePath: activeVirtualFilePath, content: newContent })
+    });
+    if (res.ok) {
+      showToast(`Đã lưu tệp [${activeVirtualFilePath}] thành công vào CSDL!`, "success");
+    }
+  } catch (err) {
+    console.warn("Could not sync file to server, saved locally:", err);
+  }
+
+  saveProjectsToStorage();
+  selectVirtualFile(activeVirtualFilePath);
+}
+
+function downloadProjectZip() {
+  const project = getCurrentProject();
+  if (!project) return;
+  showToast("Đang chuẩn bị gói nén ZIP trực tiếp từ RAM máy chủ...", "info");
+  window.location.href = `/api/projects/${encodeURIComponent(project.id)}/export-zip`;
 }
 
 // Call on startup

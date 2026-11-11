@@ -6,11 +6,12 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import crypto from "crypto";
+import JSZip from "jszip";
 import { CONFIG } from "./config.js";
 import { db } from "./database.js";
 import { cache } from "./cache.js";
 import { jobQueue } from "./queue.js";
-import { consultantAI, builderAI } from "./ai_services.js";
+import { consultantAI, builderAI, executeVibeCodePipeline } from "./ai_services.js";
 
 const app = express();
 
@@ -193,6 +194,114 @@ app.put("/api/projects/:id/config", async (req, res) => {
   broadcastEvent("project:updated", updated);
 
   res.json({ success: true, message: "Configuration updated successfully", data: updated });
+});
+
+// ========================================================
+// ZERO-LOAD VIRTUAL WORKSPACE & 2-AI VIBE CODING PIPELINE
+// ========================================================
+
+// 1. Lấy cây thư mục mã nguồn ảo (Virtual File Tree JSONB)
+app.get("/api/projects/:id/files", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const files = db.getProjectFiles(id);
+    if (!files) {
+      return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+    }
+    res.json({ success: true, data: files, totalFiles: Object.keys(files).length });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 2. Cập nhật hoặc tạo file đơn lẻ (Atomic Patch - 0% disk write)
+app.put("/api/projects/:id/files", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { filePath, content } = req.body;
+    if (!filePath || content === undefined) {
+      return res.status(400).json({ success: false, error: "Thiếu đường dẫn file hoặc nội dung" });
+    }
+
+    const updated = db.updateProjectFile(id, filePath, content);
+    if (!updated) {
+      return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+    }
+
+    await cache.invalidatePattern("projects:");
+    db.logAudit("UPDATE_FILE", "Admin", { projectId: id, filePath });
+    broadcastEvent("project:file_updated", { projectId: id, filePath });
+
+    res.json({ success: true, message: `Đã lưu tệp ${filePath} vào cơ sở dữ liệu`, data: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 3. Tải toàn bộ mã nguồn ZIP trực tiếp từ RAM (JSZip Streaming - 0 bytes disk rác)
+app.get("/api/projects/:id/export-zip", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = db.getProject(id);
+    if (!project) {
+      return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+    }
+
+    const files = db.getProjectFiles(id) || {};
+    const zip = new JSZip();
+
+    for (const [filePath, content] of Object.entries(files)) {
+      zip.file(filePath, content);
+    }
+
+    const zipBuffer = await zip.generateAsync({
+      type: "nodebuffer",
+      compression: "DEFLATE",
+      compressionOptions: { level: 6 }
+    });
+
+    const safeCode = (project.code || "project").toLowerCase().replace(/[^a-z0-9_-]/g, "");
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader("Content-Disposition", `attachment; filename="${safeCode}_source_code.zip"`);
+    res.setHeader("Content-Length", zipBuffer.length);
+
+    db.logAudit("EXPORT_ZIP", "Admin", { projectId: id, totalFiles: Object.keys(files).length, sizeBytes: zipBuffer.length });
+    return res.end(zipBuffer);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 4. Phát lệnh AI Vibe Code 2-AI Dual Engine (Điều phối & Lập trình)
+app.post("/api/vibe/dispatch", async (req, res) => {
+  try {
+    const { projectId, requirement, adminKey } = req.body;
+    if (!projectId || !requirement) {
+      return res.status(400).json({ success: false, error: "Vui lòng chọn dự án và nhập yêu cầu kỹ thuật" });
+    }
+
+    // Run the 2-AI pipeline (AI 1: Orchestrator PM/SA -> AI 2: Vibe Coder Specialist)
+    const result = await executeVibeCodePipeline(projectId, requirement, db);
+
+    await cache.invalidatePattern("projects:");
+    db.logAudit("VIBE_CODE_DISPATCH", "Admin Master", {
+      projectId,
+      targetDept: result.orchestration.targetDept,
+      file: result.codingResult.filePath
+    });
+
+    // Broadcast SSE to update Dashboard diagrams & tasks live
+    broadcastEvent("vibe:code_generated", result);
+
+    res.json({
+      success: true,
+      message: `AI 1 (${result.orchestration.deptName}) và AI 2 đã code thành công vào tệp ${result.codingResult.filePath}!`,
+      data: result
+    });
+  } catch (err) {
+    console.error("[Vibe Dispatch Error]", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // 4. Client Feedbacks API

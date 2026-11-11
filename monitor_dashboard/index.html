@@ -57,6 +57,12 @@
           + Khởi Tạo Dự Án Mới
         </button>
 
+        <!-- Virtual Code Studio Button -->
+        <button class="btn btn-secondary" id="btnOpenVirtualStudioModal" title="Xem cây thư mục mã nguồn ảo, chỉnh sửa file và tải file ZIP không tốn tài nguyên server" style="display: flex; align-items: center; gap: 6px; border-color: rgba(56, 189, 248, 0.4); color: #38BDF8;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Kho Mã Nguồn
+        </button>
+
         <!-- Admin-Only Directive Dispatcher -->
         <button class="btn btn-secondary" id="btnOpenDispatchModal" title="Phát lệnh kỹ thuật điều phối AI Vibe cho 9 phòng ban">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -358,26 +364,34 @@
         </div>
 
         <div class="form-group">
-          <label>Phòng Ban Nhận Chỉ Đạo:</label>
-          <select id="dispatchDept" required>
+          <label style="color: #38BDF8; font-weight: 700;">CHỌN PHƯƠNG THỨC THỰC THI CHO AI:</label>
+          <select id="dispatchModeSelect" style="border-color: #38BDF8; font-weight: 600;">
+            <option value="VIBE_CODE_DIRECT">⚡ [2-AI Dual Engine] AI 1 Điều Phối ➔ AI 2 Code Trực Tiếp Vào File Dự Án</option>
+            <option value="MANUAL_DIRECTIVE">📋 [Chỉ Đạo Nghiệp Vụ] Tạo Task & Bóc Tách WBS Cho PM</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="dispatchDeptGroup" style="display: none;">
+          <label>Phòng Ban Nhận Chỉ Đạo (Nếu can thiệp thủ công):</label>
+          <select id="dispatchDept">
+            <option value="05. Lập Trình Frontend">05. Lập Trình Frontend (FE)</option>
+            <option value="06. Lập Trình Backend">06. Lập Trình Backend (BE)</option>
+            <option value="07. Cơ Sở Dữ Liệu">07. Cơ Sở Dữ Liệu (DBA)</option>
+            <option value="04. Thiết Kế (UI/UX)">04. Thiết Kế Trải Nghiệm (UI/UX)</option>
+            <option value="09. Hạ Tầng (DevOps)">09. Triển Khai & Hạ Tầng (DevOps)</option>
             <option value="01. Quản Trị (PM)">01. Quản Trị Dự Án (PM)</option>
             <option value="02. Phân Tích (BA)">02. Phân Tích Nghiệp Vụ (BA)</option>
             <option value="03. Kiến Trúc (SA)">03. Kiến Trúc & Chi Phí (SA)</option>
-            <option value="04. Thiết Kế (UI/UX)">04. Thiết Kế Trải Nghiệm (UI/UX)</option>
-            <option value="05. Lập Trình Frontend">05. Lập Trình Frontend</option>
-            <option value="06. Lập Trình Backend">06. Lập Trình Backend</option>
-            <option value="07. Cơ Sở Dữ Liệu">07. Cơ Sở Dữ Liệu (DBA)</option>
             <option value="08. Kiểm Thử (QA)">08. Kiểm Thử Chất Lượng (QA)</option>
-            <option value="09. Hạ Tầng (DevOps)">09. Triển Khai & Hạ Tầng (DevOps)</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Chức Năng Hoặc Mục Tiêu Cốt Lõi:</label>
-          <input type="text" id="dispatchTitle" required placeholder="Ví dụ: Ưu tiên tối ưu tải trang dưới 1.5s và bảo mật ô VietQR">
+          <label>Yêu Cầu Kỹ Thuật / Tính Năng Cần Lập Trình:</label>
+          <input type="text" id="dispatchTitle" required placeholder="Ví dụ: Tạo component bảng tính hoa hồng đại lý responsive hoặc Viết API webhook VietQR">
         </div>
         <div class="form-group">
-          <label>Nội Dung Hướng Dẫn Chi Tiết Cho AI & Đội Ngũ:</label>
-          <textarea id="dispatchDetails" rows="3" required placeholder="Ghi chú chi tiết yêu cầu bổ sung để AI phân tích và đưa vào phạm vi công việc..."></textarea>
+          <label>Mô Tả Chi Tiết / Logic Nghiệp Vụ Cụ Thể:</label>
+          <textarea id="dispatchDetails" rows="3" required placeholder="Mô tả cụ thể logic, công thức tính, hoặc cấu trúc bảng để AI 1 cắt ngữ cảnh và AI 2 viết code chính xác..."></textarea>
         </div>
         <div class="form-row">
           <div class="form-group half">
@@ -392,6 +406,15 @@
             <label>Dự Án Áp Dụng:</label>
             <input type="text" id="dispatchTargetProjectText" readonly style="color: #60A5FA; font-weight: 600;">
           </div>
+        </div>
+
+        <!-- Live Step Execution Box -->
+        <div id="dispatchLiveProgress" style="display: none; background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px; margin-bottom: 14px;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: #38BDF8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span class="status-dot dot-working" style="width: 8px; height: 8px;"></span>
+            TIẾN TRÌNH 2-AI DUAL ENGINE ĐANG THỰC THI...
+          </div>
+          <div id="dispatchLiveStatusText" style="font-size: 0.78rem; color: #CBD5E1; font-family: monospace;">Đang khởi tạo kết nối...</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline" id="btnCancelDispatch">Hủy</button>
@@ -676,6 +699,66 @@
           <button type="submit" class="btn btn-primary">Tạo & Mã Hóa Key Khách Hàng</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal: Virtual Code Studio & Project Source Code Manager (Zero-Load) -->
+  <div class="modal-backdrop" id="virtualStudioModal" style="display: none;">
+    <div class="modal-dialog modal-dialog-xl" style="max-width: 1100px; width: 95%; max-height: 90vh; display: flex; flex-direction: column;">
+      <div class="modal-header" style="border-bottom: 1px solid #1E293B; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="modal-icon-pill" style="background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3); color: #38BDF8;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.15rem; color: #F8FAFC;">Kho Mã Nguồn Dự Án (Virtual Code Studio)</h3>
+            <p style="margin: 2px 0 0 0; font-size: 0.74rem; color: #94A3B8;">
+              Mã nguồn được quản trị dạng cây thư mục ảo trong CSDL (Zero-Load &bull; 0% node_modules &bull; 0% rác VPS).
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" class="btn btn-primary" id="btnDownloadProjectZip" title="Nén trực tiếp từ RAM máy chủ và tải về ngay lập tức" style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; padding: 6px 14px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Tải Trọn Bộ ZIP Code (RAM Stream)
+          </button>
+          <button class="btn-close" id="btnCloseVirtualStudioModal">&times;</button>
+        </div>
+      </div>
+
+      <div class="modal-body" style="padding: 0; display: flex; flex: 1; min-height: 480px; overflow: hidden; background: #0B1120;">
+        <!-- Left: File Tree Explorer -->
+        <div style="width: 260px; border-right: 1px solid #1E293B; background: #0F172A; display: flex; flex-direction: column;">
+          <div style="padding: 10px 14px; font-size: 0.72rem; font-weight: 700; color: #64748B; text-transform: uppercase; border-bottom: 1px solid #1E293B; display: flex; justify-content: space-between; align-items: center;">
+            <span>CÂY THƯ MỤC MÃ NGUỒN</span>
+            <span id="virtualStudioFileCount" style="color: #38BDF8;">6 files</span>
+          </div>
+          <div id="virtualStudioFileList" style="flex: 1; overflow-y: auto; padding: 6px 0;">
+            <!-- Rendered by app.js -->
+          </div>
+          <div style="padding: 10px 14px; border-top: 1px solid #1E293B; font-size: 0.7rem; color: #64748B;">
+            <div>&bull; Định dạng: JSONB Flat Tree</div>
+            <div>&bull; Bộ nhớ chiếm dụng: ~45 KB</div>
+          </div>
+        </div>
+
+        <!-- Right: Code Viewer & Editor -->
+        <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #080D1A;">
+          <div style="padding: 8px 16px; background: #0F172A; border-bottom: 1px solid #1E293B; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="virtualStudioActiveFileName" style="font-family: monospace; font-size: 0.85rem; font-weight: 600; color: #38BDF8;">src/App.jsx</span>
+              <span id="virtualStudioActiveFileSize" style="font-size: 0.72rem; color: #64748B;">(1.2 KB)</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="btn btn-outline" id="btnCopyActiveCode" style="font-size: 0.72rem; padding: 4px 10px;">Sao Chép</button>
+              <button type="button" class="btn btn-primary" id="btnSaveActiveCode" style="font-size: 0.72rem; padding: 4px 12px; background: #10B981; border-color: #10B981;">Lưu Thay Đổi</button>
+            </div>
+          </div>
+          <div style="flex: 1; position: relative; overflow: hidden;">
+            <textarea id="virtualStudioCodeEditor" spellcheck="false" style="width: 100%; height: 100%; box-sizing: border-box; resize: none; background: #080D1A; color: #E2E8F0; border: none; outline: none; padding: 16px; font-family: 'Fira Code', Consolas, Monaco, monospace; font-size: 0.82rem; line-height: 1.55; tab-size: 2;"></textarea>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

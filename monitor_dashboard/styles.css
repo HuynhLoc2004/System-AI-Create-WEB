@@ -2028,3 +2028,26 @@ svg text {
     border-radius: 8px;
   }
 }
+
+/* Virtual Code Studio Modal Styles */
+.modal-dialog-xl {
+  background: #0F172A;
+  border: 1px solid #1E293B;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.virtual-file-item:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #F8FAFC !important;
+}
+
+#virtualStudioCodeEditor::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+#virtualStudioCodeEditor::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
