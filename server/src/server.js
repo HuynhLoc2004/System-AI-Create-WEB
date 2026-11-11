@@ -437,6 +437,24 @@ app.post("/api/projects/:id/reset", async (req, res) => {
   }
 });
 
+// 7.1 Dọn sạch toàn bộ mock data trên mọi dự án (Hệ thống sạch 100%)
+app.post("/api/admin/clean-all", async (req, res) => {
+  try {
+    const projects = db.cleanAllMockData();
+    await cache.invalidatePattern("projects:");
+    await cache.invalidatePattern("feedbacks:");
+    broadcastEvent("project:reset", { message: "Toàn bộ database đã được dọn sạch về 0% nguyên bản" });
+    res.json({
+      success: true,
+      message: "Đã dọn sạch toàn bộ mock data trên toàn hệ thống!",
+      projects
+    });
+  } catch (err) {
+    console.error("[Clean All Mock Error]", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 4. Client Feedbacks API
 app.get("/api/feedback", async (req, res) => {
   const projectId = req.query.projectId;

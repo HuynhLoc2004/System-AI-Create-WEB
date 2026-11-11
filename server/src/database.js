@@ -161,102 +161,57 @@ services:
         name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
         code: "RETAIL",
         progress: 0,
-        budget: "1.85 Tỷ",
+        budget: "May đo thực tế",
         status: "PLANNING",
         stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
-        serverCost: "$85/tháng (VPS + CDN)",
-        infraStrategy: "VPS Hybrid + Cloudflare CDN (Tiết kiệm 75%)",
+        serverCost: "Localhost:5000 (Zero-Load)",
+        infraStrategy: "Virtual File Tree JSONB (0% CPU VPS)",
         tokenEfficiency: 100,
         deptStatuses: {
           client: "IDLE", po: "IDLE", pm: "IDLE", ba: "IDLE", sa: "IDLE",
           ui: "IDLE", fe: "IDLE", be: "IDLE", dba: "IDLE", sec: "IDLE",
           qa: "IDLE", rel: "IDLE", devops: "IDLE", prod: "IDLE", analytics: "IDLE"
         },
+        tasks: [],
+        feedbacks: [],
+        blockers: [],
+        state: "DRAFT",
+        history: [
+          { time: "Khởi tạo", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản. Hãy phát lệnh AI để bắt đầu.", type: "info" }
+        ],
         clientConfig: {
           brandName: "Novawear Premium Retail",
           headline: "Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Tự Động",
           deployMode: "Máy Chủ Cục Bộ Nội Bộ (Localhost:5000)",
           previewUrl: "http://127.0.0.1:5000/storefront",
           customDomain: "https://novawear.com.vn",
-          bannerTitle: "Bộ Sưu Tập Thu Đông 2026 - Giảm 25% Đơn Đầu",
+          bannerTitle: "Bộ Sưu Tập Thu Đông 2026",
           bannerSubtitle: "Thanh toán quét mã VietQR nhận diện giao dịch tự động trong 0.8 giây",
           adminUser: "novawear_admin",
           adminPass: "Nova@2026MasterPass",
-          aiModel: "Gemini 2.5 Pro",
-          products: [
-            { id: "p1", name: "Áo Blazer Dạ Cashmere Ý", category: "Thời Trang Nam", price: 2450000, stock: 45, sku: "BLZ-CSM-01", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80" },
-            { id: "p2", name: "Đầm Lụa Tơ Tằm Họa Tiết Baroque", category: "Thời Trang Nữ", price: 3150000, stock: 28, sku: "DRS-SLK-09", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80" },
-            { id: "p3", name: "Giày Oxford Da Bò Nhập Khẩu", category: "Phụ Kiện Da", price: 1850000, stock: 60, sku: "SHS-OXF-03", image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80" },
-            { id: "p4", name: "Ví Da Cá Sấu Khóa Đồng Nguyên Khối", category: "Phụ Kiện Da", price: 1200000, stock: 15, sku: "WLT-CRK-07", image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80" },
-            { id: "p5", name: "Sơ Mi Cotton Ai Cập Chống Nhăn", category: "Thời Trang Nam", price: 890000, stock: 120, sku: "SHT-EGY-12", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80" },
-            { id: "p6", name: "Áo Khoác Trench Coat Chống Thấm", category: "Thời Trang Nữ", price: 2890000, stock: 35, sku: "TRC-WTR-04", image: "https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=600&q=80" }
-          ]
-        }
-      },
-      {
-        id: "PRJ-FINTECH-2026",
-        name: "Cổng Thanh Toán & Ví Điện Tử B2B",
-        code: "FINTECH",
-        progress: 74,
-        budget: "3.20 Tỷ",
-        status: "ON-TRACK",
-        stage: "Pha 3: Lập trình & CSDL",
-        serverCost: "$240/tháng (Kubernetes VPS)",
-        infraStrategy: "Active-Active Multi-DC + Redis Cluster",
-        tokenEfficiency: 92.8,
-        clientConfig: {
-          brandName: "PayLink Core Gateway",
-          headline: "Hạ Tầng Thanh Toán B2B Phân Tán Đa Kênh Tốc Độ Cao",
-          deployMode: "Cloud Staging VPS (103.20.144.52:8443)",
-          previewUrl: "http://127.0.0.1:5000/fintech-gateway",
-          customDomain: "https://paylink-core.vn",
-          bannerTitle: "Cổng Thanh Toán Doanh Nghiệp Cấp 1 PCI-DSS",
-          bannerSubtitle: "Xử lý 10,000 giao dịch/giây với độ trễ đối soát dưới 300ms",
-          adminUser: "fintech_secops",
-          adminPass: "PayLink#Sec2026!",
-          aiModel: "Gemini 2.5 Pro",
-          products: [
-            { id: "f1", name: "Gói Tích Hợp API VietQR Napas247", category: "API Gateway", price: 15000000, stock: 999, sku: "API-QR-247" },
-            { id: "f2", name: "Dịch Vụ Virtual Account Định Danh", category: "Ngân Hàng Số", price: 25000000, stock: 500, sku: "VA-ID-B2B" },
-            { id: "f3", name: "Module Chống Gian Lận AI Fraud Guard", category: "Bảo Mật", price: 40000000, stock: 100, sku: "SEC-FRD-AI" }
-          ]
-        }
-      },
-      {
-        id: "PRJ-ENTERPRISE-2026",
-        name: "Hệ Thống ERP & Chuỗi Cung Ứng",
-        code: "ENTERPRISE",
-        progress: 92,
-        budget: "4.50 Tỷ",
-        status: "ON-TRACK",
-        stage: "Pha 4: Kiểm định QA",
-        serverCost: "$380/tháng (Private Cloud)",
-        infraStrategy: "PostgreSQL Dedicated + ClickHouse Analytics",
-        tokenEfficiency: 96.5,
-        clientConfig: {
-          brandName: "OmniSupply Enterprise ERP",
-          headline: "Giải Pháp Quản Trị Chuỗi Cung Ứng & Vận Hành Doanh Nghiệp Toàn Diện",
-          deployMode: "Tên Miền Riêng Khách Hàng (https://omnisupply.vn)",
-          previewUrl: "https://omnisupply.vn",
-          customDomain: "https://omnisupply.vn",
-          bannerTitle: "Tự Động Hóa 100% Kho Bãi & Vận Chuyển Toàn Quốc",
-          bannerSubtitle: "Đồng bộ đa chi nhánh, quản trị tồn kho và tối ưu lộ trình xe tải",
-          adminUser: "erp_superadmin",
-          adminPass: "OmniSupply@9999",
-          aiModel: "Gemini 2.5 Pro",
-          products: [
-            { id: "e1", name: "Module Quản Lý Kho WMS Barcode 2D", category: "Kho Vận", price: 50000000, stock: 50, sku: "WMS-BAR-01" },
-            { id: "e2", name: "Module Lập Kế Hoạch Sản Xuất MRP II", category: "Sản Xuất", price: 80000000, stock: 20, sku: "MRP-PLN-02" },
-            { id: "e3", name: "Module Kế Toán Tài Chính Đa Tiền Tệ", category: "Tài Chính", price: 65000000, stock: 30, sku: "ACC-CUR-03" }
-          ]
+          aiModel: "Gemini 2.5 Flash",
+          products: []
         }
       }
     ];
 
     this.data.feedbacks = [];
     this.data.tasks = [];
+    this.data.orders = [];
+    this.data.trial_leads = [];
+    this.data.audit_logs = [];
+
+    // Ensure default files exist for the project
+    this.data.projects.forEach(p => {
+      p.files = this.createDefaultProjectFiles(p);
+    });
 
     this.save();
+  }
+
+  cleanAllMockData() {
+    this.seedInitialData();
+    return this.data.projects;
   }
 
   resetProjectToClean(projectId) {
@@ -300,17 +255,21 @@ services:
   }
 
   getProjectById(id) {
-    if (!id) return null;
+    if (!id) return this.data.projects[0] || null;
     const cleanId = String(id).toLowerCase().trim();
-    return this.data.projects.find(p => 
+    let project = this.data.projects.find(p => 
       p.id === id || 
       p.code === id ||
       String(p.id).toLowerCase() === cleanId ||
       String(p.code).toLowerCase() === cleanId ||
-      (cleanId === "prj_retail" && (p.id === "PRJ-RETAIL-2026" || p.code === "RETAIL")) ||
-      (cleanId === "prj_fintech" && (p.id === "PRJ-FINTECH-2026" || p.code === "FINTECH")) ||
-      (cleanId === "prj_pharma" && (p.id === "PRJ-PHARMA" || p.code === "PHARMA"))
+      (cleanId === "prj_retail" && (p.id === "PRJ-RETAIL-2026" || p.code === "RETAIL"))
     );
+    if (!project && this.data.projects.length > 0) {
+      if (cleanId === "prj_retail" || cleanId === "starter" || cleanId === "default" || cleanId.includes("retail")) {
+        return this.data.projects[0];
+      }
+    }
+    return project || null;
   }
 
   getProject(id) {

@@ -93,11 +93,11 @@ function verifyAndDecodeClientKey(key) {
 // 2. Initial Projects Data Store (Isolated Multi-Project Coexistence)
 const defaultProjects = [
   {
-    id: "prj_retail",
+    id: "PRJ-RETAIL-2026",
     code: "PRJ-RETAIL-2026",
     name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
     package: "Gói May Đo Doanh Nghiệp",
-    budget: "Tối Ưu Thực Tế (1.85 Tỷ)",
+    budget: "Tối Ưu Thực Tế",
     serverCost: "Node.js Localhost:5000",
     daysRemaining: "Sprint 1: Khởi Tạo & Chờ Lệnh",
     tokenSaved: "100%",
@@ -113,7 +113,7 @@ const defaultProjects = [
     tasks: [],
     feedbacks: [],
     history: [
-      { time: "Vừa xong", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản. Hãy phát lệnh AI để bắt đầu.", type: "info" }
+      { time: "Khởi tạo", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản. Hãy phát lệnh AI để bắt đầu.", type: "info" }
     ],
     clientConfig: {
       brandName: "Novawear Premium Retail",
@@ -124,74 +124,6 @@ const defaultProjects = [
       sslActive: true,
       adminUser: "novawear_admin",
       adminPass: "Nova@2026MasterPass",
-      products: []
-    }
-  },
-  {
-    id: "prj_fintech",
-    code: "PRJ-FINTECH-2026",
-    name: "Cổng Thanh Toán & Ví Điện Tử B2B",
-    package: "Gói Tài Chính Phân Tán",
-    budget: "Tối Ưu Thực Tế (3.20 Tỷ)",
-    serverCost: "Node.js Localhost:5000",
-    daysRemaining: "Sprint 1: Khởi Tạo & Chờ Lệnh",
-    tokenSaved: "100%",
-    progress: 0,
-    status: "PLANNING",
-    stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
-    environment: "PRODUCTION",
-    deptStatuses: {
-      "client": "IDLE", "po": "IDLE", "pm": "IDLE", "ba": "IDLE", "sa": "IDLE",
-      "ui": "IDLE", "fe": "IDLE", "be": "IDLE", "dba": "IDLE", "sec": "IDLE",
-      "qa": "IDLE", "rel": "IDLE", "devops": "IDLE", "prod": "IDLE", "analytics": "IDLE"
-    },
-    tasks: [],
-    feedbacks: [],
-    history: [
-      { time: "Vừa xong", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản.", type: "info" }
-    ],
-    clientConfig: {
-      brandName: "PayLink Core Gateway",
-      headline: "Hạ Tầng Thanh Toán B2B Phân Tán Đa Kênh Tốc Độ Cao",
-      previewUrl: "http://127.0.0.1:5000/fintech-gateway",
-      customDomain: "https://paylink-core.vn",
-      sslActive: true,
-      adminUser: "fintech_secops",
-      adminPass: "Fintech@CorePCI2026",
-      products: []
-    }
-  },
-  {
-    id: "prj_pharma",
-    code: "PRJ-PHARMA",
-    name: "Hệ Thống Phân Phối Dược Phẩm 2026",
-    package: "Gói Doanh Nghiệp Dược",
-    budget: "Tối Ưu Thực Tế (1.85 Tỷ)",
-    serverCost: "Node.js Localhost:5000",
-    daysRemaining: "Sprint 1: Khởi Tạo & Chờ Lệnh",
-    tokenSaved: "100%",
-    progress: 0,
-    status: "PLANNING",
-    stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
-    environment: "PRODUCTION",
-    deptStatuses: {
-      "client": "IDLE", "po": "IDLE", "pm": "IDLE", "ba": "IDLE", "sa": "IDLE",
-      "ui": "IDLE", "fe": "IDLE", "be": "IDLE", "dba": "IDLE", "sec": "IDLE",
-      "qa": "IDLE", "rel": "IDLE", "devops": "IDLE", "prod": "IDLE", "analytics": "IDLE"
-    },
-    tasks: [],
-    feedbacks: [],
-    history: [
-      { time: "Vừa xong", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản.", type: "info" }
-    ],
-    clientConfig: {
-      brandName: "PharmaCare Global",
-      headline: "Hệ Thống Phân Phối Dược Phẩm Đạt Chuẩn GSP/GDP",
-      previewUrl: "http://127.0.0.1:5000/pharma-b2b",
-      customDomain: "https://pharmacare-global.com",
-      sslActive: true,
-      adminUser: "pharma_director",
-      adminPass: "Pharma@2026Verified",
       products: []
     }
   }
@@ -444,29 +376,22 @@ function showToast(msg, type = "info") {
 
 function saveProjectsToStorage() {
   try {
-    localStorage.setItem("it_assignment_projects_v10_real", JSON.stringify(projects));
+    localStorage.setItem("it_assignment_projects_v11_clean", JSON.stringify(projects));
   } catch (e) {
     console.warn("Storage quota exceeded", e);
   }
 }
 
 function loadProjectsFromStorage() {
-  const saved = localStorage.getItem("it_assignment_projects_v10_real");
+  const saved = localStorage.getItem("it_assignment_projects_v11_clean");
   if (saved) {
     try {
-      projects = JSON.parse(saved);
-      // Validate array health
-      if (!Array.isArray(projects) || projects.length === 0) {
-        projects = defaultProjects;
-        saveProjectsToStorage();
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        projects = parsed.filter(p => !p.id.startsWith("PRJ-TRIAL-") && p.id !== "prj_fintech" && p.id !== "prj_pharma");
+        if (projects.length === 0) projects = defaultProjects;
       } else {
-        // Hydrate clientConfig if missing
-        projects.forEach(p => {
-          const def = defaultProjects.find(d => d.id === p.id || d.code === p.code);
-          if (def && (!p.clientConfig || !p.clientConfig.products || p.clientConfig.products.length === 0)) {
-            p.clientConfig = JSON.parse(JSON.stringify(def.clientConfig));
-          }
-        });
+        projects = defaultProjects;
       }
     } catch (e) {
       projects = defaultProjects;
@@ -484,10 +409,6 @@ function loadProjectsFromStorage() {
       currentProjectId = matched.id;
     }
   }
-}
-
-function saveProjectsToStorage() {
-  localStorage.setItem("it_assignment_projects_v8", JSON.stringify(projects));
 }
 
 function getCurrentProject() {
@@ -593,7 +514,7 @@ function setupEventListeners() {
       const project = getCurrentProject();
       if (!project) return;
 
-      if (!confirm(`Bạn có chắc muốn DỌN SẠCH TOÀN BỘ MOCK DATA và đưa dự án [${project.code}] về 0% nguyên bản để điều phối thật từ đầu không?`)) {
+      if (!confirm(`Bạn có chắc muốn DỌN SẠCH TOÀN BỘ MOCK DATA và đưa toàn bộ hệ thống về 0% nguyên bản để điều phối thật từ đầu không?`)) {
         return;
       }
 
@@ -601,27 +522,24 @@ function setupEventListeners() {
         btnResetClean.disabled = true;
         btnResetClean.textContent = "Đang dọn dẹp...";
 
-        // Call backend reset API
-        await fetch(`/api/projects/${encodeURIComponent(project.id)}/reset`, { method: "POST" });
+        // Call backend clean all API
+        await fetch("/api/admin/clean-all", { method: "POST" });
+        localStorage.removeItem("it_assignment_projects_v11_clean");
+        localStorage.removeItem("it_assignment_projects_v10_real");
+        localStorage.removeItem("it_assignment_projects_v8");
 
-        project.tasks = [];
-        project.feedbacks = [];
-        project.progress = 0;
-        project.status = "PLANNING";
-        project.stage = "Pha 1: Khởi Tạo & Chờ Điều Phối AI";
-        project.deptStatuses = {
-          client: "IDLE", po: "IDLE", pm: "IDLE", ba: "IDLE", sa: "IDLE",
-          ui: "IDLE", fe: "IDLE", be: "IDLE", dba: "IDLE", sec: "IDLE",
-          qa: "IDLE", rel: "IDLE", devops: "IDLE", prod: "IDLE", analytics: "IDLE"
-        };
-        project.history = [
-          { time: "Vừa xong", dept: "Hệ Thống", action: "Đã dọn sạch toàn bộ mock data. Dự án đưa về 0% thực tế.", type: "success" }
-        ];
-
-        saveProjectsToStorage();
+        await syncProjectsWithBackend();
         renderDashboard();
-        showToast("Đã dọn sạch toàn bộ mock data! Dự án đã trở về 0% thực tế.", "success");
+        showToast("Đã dọn sạch toàn bộ mock data! Hệ thống đã trở về 0% thực tế.", "success");
       } catch (err) {
+        console.error("Reset error", err);
+        showToast("Lỗi khi reset: " + err.message, "danger");
+      } finally {
+        btnResetClean.disabled = false;
+        btnResetClean.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Dọn Mock (Về 0%)`;
+      }
+    });
+  }
         console.error("Reset error", err);
         showToast("Lỗi khi reset: " + err.message, "danger");
       } finally {
@@ -2284,14 +2202,10 @@ async function syncProjectsWithBackend() {
     if (!res.ok) return;
     const data = await res.json();
     if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-      data.data.forEach(bp => {
-        const idx = projects.findIndex(p => p.id === bp.id || p.code === bp.code);
-        if (idx >= 0) {
-          projects[idx] = { ...projects[idx], ...bp };
-        } else {
-          projects.push(bp);
-        }
-      });
+      projects = data.data;
+      if (!projects.some(p => p.id === currentProjectId)) {
+        currentProjectId = projects[0].id;
+      }
       saveProjectsToStorage();
       initProjectDropdown();
       renderDashboard();
