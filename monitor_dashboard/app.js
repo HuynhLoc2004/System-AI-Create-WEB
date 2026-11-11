@@ -753,6 +753,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initRealtimeHeartbeat();
   updateLiveServerMetrics();
   setInterval(updateLiveServerMetrics, 10000);
+  fetchTrialLeads();
+  setInterval(fetchTrialLeads, 15000);
 });
 
 // Detect User Role from URL Params or Session Storage
@@ -1069,6 +1071,41 @@ function setupEventListeners() {
   const btnCancelClientCms = document.getElementById("btnCancelClientCms");
   if (btnCancelClientCms) {
     btnCancelClientCms.addEventListener("click", () => closeClientCmsModal());
+  }
+
+  // Modal: Open Trial Leads Management Center
+  const trialLeadsModal = document.getElementById("trialLeadsModal");
+  const btnOpenTrialLeads = document.getElementById("btnOpenTrialLeadsModal");
+  if (btnOpenTrialLeads) {
+    btnOpenTrialLeads.addEventListener("click", () => {
+      if (trialLeadsModal) {
+        trialLeadsModal.style.display = "flex";
+        fetchTrialLeads();
+      }
+    });
+  }
+  const btnDropdownTrialLeads = document.getElementById("btnDropdownTrialLeads");
+  if (btnDropdownTrialLeads) {
+    btnDropdownTrialLeads.addEventListener("click", () => {
+      toggleToolsDropdown(false);
+      if (trialLeadsModal) {
+        trialLeadsModal.style.display = "flex";
+        fetchTrialLeads();
+      }
+    });
+  }
+  const btnCloseTrialLeads = document.getElementById("btnCloseTrialLeadsModal");
+  if (btnCloseTrialLeads) {
+    btnCloseTrialLeads.addEventListener("click", () => {
+      if (trialLeadsModal) trialLeadsModal.style.display = "none";
+    });
+  }
+  const btnRefreshTrialLeads = document.getElementById("btnRefreshTrialLeads");
+  if (btnRefreshTrialLeads) {
+    btnRefreshTrialLeads.addEventListener("click", () => {
+      fetchTrialLeads();
+      showToast("Đã đồng bộ lại danh sách khách hàng thử nghiệm!", "info");
+    });
   }
   const btnAddCmsProduct = document.getElementById("btnAddCmsProduct");
   if (btnAddCmsProduct) {
@@ -2659,3 +2696,81 @@ function saveCmsConfiguration() {
   // Re-render dashboard
   renderDashboard();
 }
+
+// ----------------------------------------------------
+// Open Trial Leads Telemetry & Management (Admin Tracking)
+// ----------------------------------------------------
+let trialLeadsData = [];
+
+async function fetchTrialLeads() {
+  try {
+    const res = await fetch("/api/trial/leads");
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.success && Array.isArray(data.data)) {
+      trialLeadsData = data.data;
+      updateTrialLeadsBadge();
+      renderTrialLeadsTable();
+    }
+  } catch (err) {
+    console.warn("Could not fetch trial leads", err);
+  }
+}
+
+function updateTrialLeadsBadge() {
+  const count = trialLeadsData.length;
+  const badge = document.getElementById("topNavTrialCount");
+  if (badge) badge.textContent = count;
+  const totalCount = document.getElementById("trialModalTotalCount");
+  if (totalCount) totalCount.textContent = count;
+  const keysIssued = document.getElementById("trialModalKeysIssued");
+  if (keysIssued) keysIssued.textContent = count;
+}
+
+function renderTrialLeadsTable() {
+  const tbody = document.getElementById("trialLeadsTableBody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  if (trialLeadsData.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 32px;">Chưa có khách hàng nào đăng ký bản thử nghiệm Open Beta.</td></tr>`;
+    return;
+  }
+
+  trialLeadsData.forEach(lead => {
+    const tr = document.createElement("tr");
+    const phoneVal = lead.phone ? escapeHtml(lead.phone) : "--";
+    const timeStr = lead.createdAt ? new Date(lead.createdAt).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" }) : "--";
+    
+    tr.innerHTML = `
+      <td style="font-family: var(--font-mono); font-weight: 600; color: #38BDF8;">${escapeHtml(lead.id)}</td>
+      <td style="font-weight: 600; color: #F8FAFC;">${escapeHtml(lead.name)}</td>
+      <td style="font-family: var(--font-mono); color: #CBD5E1;">
+        <span style="display: flex; align-items: center; gap: 6px;">
+          ${phoneVal}
+          <a href="tel:${phoneVal}" title="Gọi hỗ trợ khách hàng" style="color: #10B981; display: inline-flex;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        </span>
+      </td>
+      <td>
+        <strong style="color: #E2E8F0;">${escapeHtml(lead.projectTitle || "Dự án thử nghiệm")}</strong>
+        <div style="font-size: 0.7rem; color: #64748B;">Mã dự án: ${escapeHtml(lead.projectId)}</div>
+      </td>
+      <td style="font-size: 0.72rem; color: #94A3B8;">${timeStr}</td>
+      <td style="text-align: center;">
+        <button class="btn btn-outline" style="padding: 2px 7px; font-size: 0.65rem;" onclick="copyLeadKey('${escapeHtml(lead.key)}')">Sao Chép</button>
+      </td>
+      <td style="text-align: center;">
+        <a href="client_workspace.html?project=${encodeURIComponent(lead.projectId)}&role=admin" target="_blank" class="btn btn-outline" style="padding: 3px 8px; font-size: 0.68rem; text-decoration: none; color: #38BDF8; display: inline-flex; align-items: center; gap: 4px;">
+          Workspace
+        </a>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+window.copyLeadKey = function(key) {
+  navigator.clipboard.writeText(key).then(() => {
+    showToast("Đã sao chép mã Key truy cập của khách!", "success");
+  });
+};

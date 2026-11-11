@@ -67,6 +67,12 @@
           Phát Lệnh AI
         </button>
 
+        <!-- Open Trial Leads Monitoring Button -->
+        <button class="btn btn-outline" id="btnOpenTrialLeadsModal" title="Xem danh sách khách hàng tự động đăng ký bản thử nghiệm Open Beta" style="font-size: 0.75rem; display: flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Khách Thử Nghiệm (<span id="topNavTrialCount">0</span>)
+        </button>
+
         <!-- Tools Dropdown Menu (Eliminates 5 colorful buttons!) -->
         <div class="dropdown-wrapper">
           <button class="btn btn-ghost" id="btnToggleToolsDropdown" title="Công cụ quản trị khác">
@@ -76,6 +82,10 @@
             <button type="button" class="dropdown-item" id="btnDropdownClientCms">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
               Quản Trị Web Khách Hàng (CMS)
+            </button>
+            <button type="button" class="dropdown-item" id="btnDropdownTrialLeads">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Quản Trị Khách Thử Nghiệm (Open Trial)
             </button>
             <button type="button" class="dropdown-item" id="btnOpenKeyGenModal">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -831,6 +841,63 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal: Quản Lý Tệp Khách Hàng Dùng Thử Nghiệm (Open Trial Leads) -->
+  <div class="modal-backdrop" id="trialLeadsModal" style="display: none;">
+    <div class="modal-dialog" style="max-width: 920px; width: 95%;">
+      <div class="modal-header">
+        <div>
+          <span style="font-size: 0.68rem; font-weight: 700; color: #38BDF8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 4px;">OPEN BETA &bull; QUẢN TRỊ TỆP KHÁCH HÀNG</span>
+          <h3 class="modal-title" style="font-size: 1.15rem; color: #F8FAFC;">Thống Kê Khách Hàng Trải Nghiệm Bản Thử Nghiệm</h3>
+          <p style="font-size: 0.76rem; color: var(--text-dim); margin-top: 2px;">Theo dõi danh sách khách hàng tự động kích hoạt trải nghiệm qua Client Portal để chủ động hỗ trợ và chăm sóc.</p>
+        </div>
+        <button class="btn-close" id="btnCloseTrialLeadsModal">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 16px 20px;">
+        <!-- KPI Summary Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+          <div style="background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px 14px;">
+            <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Tổng Khách Thử Nghiệm</div>
+            <div id="trialModalTotalCount" style="font-size: 1.35rem; font-weight: 700; color: #38BDF8; margin-top: 4px;">0</div>
+          </div>
+          <div style="background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px 14px;">
+            <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Mã Key Đã Cấp Tự Động</div>
+            <div id="trialModalKeysIssued" style="font-size: 1.35rem; font-weight: 700; color: #10B981; margin-top: 4px;">0</div>
+          </div>
+          <div style="background: #0B1120; border: 1px solid #1E293B; border-radius: 8px; padding: 12px 14px;">
+            <div style="font-size: 0.7rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Chính Sách Bảo Mật</div>
+            <div style="font-size: 0.78rem; font-weight: 600; color: #E2E8F0; margin-top: 8px;">HMAC-SHA256 Encrypted</div>
+          </div>
+        </div>
+
+        <!-- Trial Leads Table -->
+        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+          <table class="task-table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="85">Mã Lead</th>
+                <th width="140">Họ &amp; Tên</th>
+                <th width="125">Số Điện Thoại / Zalo</th>
+                <th>Dự Án Đăng Ký Thử Nghiệm</th>
+                <th width="130">Thời Gian</th>
+                <th width="100" style="text-align: center;">Mã Key</th>
+                <th width="110" style="text-align: center;">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="trialLeadsTableBody">
+              <!-- Dynamically populated by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.72rem; color: #64748B;">Dữ liệu khách hàng được lưu trữ an toàn trong CSDL nội bộ và đồng bộ thời gian thực qua SSE.</span>
+        <button type="button" class="btn btn-outline" id="btnRefreshTrialLeads">Làm Mới Danh Sách</button>
+      </div>
     </div>
   </div>
 

@@ -15,6 +15,7 @@ class ProductionDatabase {
       feedbacks: [],
       tasks: [],
       orders: [],
+      trial_leads: [],
       audit_logs: [],
       _meta: {
         version: "2.0.0",
@@ -34,6 +35,7 @@ class ProductionDatabase {
       try {
         const raw = fs.readFileSync(this.filePath, "utf8");
         this.data = JSON.parse(raw);
+        this.data.trial_leads = this.data.trial_leads || [];
         console.log(`[Database] Loaded persistent data from ${this.filePath} (${this.data.projects?.length || 0} projects)`);
       } catch (err) {
         console.error(`[Database] Error reading DB file, re-initializing: ${err.message}`);
@@ -306,6 +308,36 @@ class ProductionDatabase {
     order.paidAt = new Date().toISOString();
     this.save();
     return order;
+  }
+
+  // Trial Leads Management (Open Trial & Self-Service)
+  getTrialLeads() {
+    if (!this.data.trial_leads) this.data.trial_leads = [];
+    return this.data.trial_leads;
+  }
+
+  addTrialLead(leadData) {
+    if (!this.data.trial_leads) this.data.trial_leads = [];
+    const newLead = {
+      id: leadData.id || ("LEAD-" + Date.now().toString().slice(-6)),
+      name: leadData.name,
+      phone: leadData.phone,
+      projectTitle: leadData.projectTitle || "Dự án thử nghiệm",
+      projectId: leadData.projectId,
+      key: leadData.key,
+      summary: leadData.summary || "",
+      status: "TRIAL_ACTIVE",
+      createdAt: new Date().toISOString()
+    };
+    this.data.trial_leads.unshift(newLead);
+    this.save();
+    return newLead;
+  }
+
+  addProject(project) {
+    this.data.projects.unshift(project);
+    this.save();
+    return project;
   }
 
   // Audit Logs

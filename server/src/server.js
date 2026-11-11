@@ -242,43 +242,109 @@ app.post("/api/orders/:id/pay", (req, res) => {
   res.json({ success: true, message: "Payment reconciliation enqueued", jobId: job.id });
 });
 
-// 7. Cryptographic Key Verification API
+// 7. Cryptographic Key Verification & Generation Engine
+function hashString(str) {
+  let h1 = 0xdeadbeef ^ 0, h2 = 0x41c6ce57 ^ 0;
+  for (let i = 0, ch; i < str.length; i++) {
+    ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16).padStart(14, "0");
+}
+
+function encryptPayload(str, salt) {
+  const textBytes = new TextEncoder().encode(str);
+  const saltBytes = new TextEncoder().encode(salt);
+  const hex = [];
+  for (let i = 0; i < textBytes.length; i++) {
+    const masked = textBytes[i] ^ saltBytes[i % saltBytes.length] ^ ((i * 11 + 3) & 0xff);
+    hex.push(masked.toString(16).padStart(2, "0"));
+  }
+  return hex.join("");
+}
+
+function decryptPayload(hexStr, salt) {
+  const saltBytes = new TextEncoder().encode(salt);
+  const byteCount = hexStr.length / 2;
+  const outBytes = new Uint8Array(byteCount);
+  for (let i = 0; i < byteCount; i++) {
+    const byteVal = parseInt(hexStr.substr(i * 2, 2), 16);
+    outBytes[i] = byteVal ^ saltBytes[i % saltBytes.length] ^ ((i * 11 + 3) & 0xff);
+  }
+  return new TextDecoder().decode(outBytes);
+}
+
+function generateClientAccessKey(name, dob, phone, projectCode) {
+  const tag = projectCode.replace("PRJ-", "").split("-")[0] || "TRIAL";
+  const nonce = Math.random().toString(36).substring(2, 7).toUpperCase();
+  const raw = [name.trim(), (dob || "TRIAL-USER").trim(), phone.trim(), projectCode.trim(), Date.now(), nonce].join("::");
+  const encryptedBlob = encryptPayload(raw, CONFIG.MASTER_AUTH_SALT);
+  const signature = hashString(encryptedBlob + "::" + CONFIG.MASTER_AUTH_SALT);
+  return `ITKEY.${tag}.${encryptedBlob}.${signature}`;
+}
+
 app.post("/api/auth/verify-key", (req, res) => {
   const { key } = req.body;
-  if (!key || !key.startsWith("ITKEY.")) {
+  if (!key || typeof key !== "string" || !key.startsWith("ITKEY.")) {
     return res.status(400).json({ valid: false, error: "Định dạng khóa không hợp lệ (Phải bắt đầu bằng ITKEY.)" });
   }
 
-  const parts = key.split(".");
+  const parts = key.trim().split(".");
   if (parts.length !== 4) {
     return res.status(400).json({ valid: false, error: "Khóa bị sai cấu trúc chuẩn (4 thành phần)." });
   }
 
-  const [prefix, tag, hexPayload, signature] = parts;
+  const [prefix, tag, blob, sig] = parts;
 
-  // Verify HMAC checksum
-  const expectedSig = crypto
-    .createHmac("sha256", CONFIG.MASTER_AUTH_SALT)
-    .update(`${tag}.${hexPayload}`)
-    .digest("hex")
-    .substring(0, 16)
-    .toUpperCase();
+  // Check signature using hashString (matches frontend & key generator)
+  const expectedSig = hashString(blob + "::" + CONFIG.MASTER_AUTH_SALT);
+  if (sig !== expectedSig) {
+    const hmacSig = crypto
+      .createHmac("sha256", CONFIG.MASTER_AUTH_SALT)
+      .update(`${tag}.${blob}`)
+      .digest("hex")
+      .substring(0, 16)
+      .toUpperCase();
 
-  if (signature.toUpperCase() !== expectedSig) {
-    db.logAudit("AUTH_VIOLATION_TAMPERING", "Security", { keyAttempt: key });
-    return res.status(403).json({ valid: false, error: "Vi phạm an ninh: Chữ ký số không khớp hoặc khóa đã bị sửa đổi trái phép!" });
+    if (sig.toUpperCase() !== hmacSig) {
+      db.logAudit("AUTH_VIOLATION_TAMPERING", "Security", { keyAttempt: key });
+      return res.status(403).json({ valid: false, error: "Vi phạm an ninh: Chữ ký số không khớp hoặc khóa đã bị sửa đổi trái phép!" });
+    }
   }
 
   try {
-    const rawJson = Buffer.from(hexPayload, "hex").toString("utf8");
-    const payload = JSON.parse(rawJson);
+    let name = "Khách Hàng";
+    let projectCode = "PRJ-RETAIL-2026";
+    let phone = "";
+    let dob = "";
+    let timestamp = Date.now();
 
-    // Verify against database project
-    const project = db.getProjectById(payload.projectId || payload.projectCode || "PRJ-RETAIL-2026");
+    try {
+      const decrypted = decryptPayload(blob, CONFIG.MASTER_AUTH_SALT);
+      const decParts = decrypted.split("::");
+      if (decParts.length >= 4) {
+        name = decParts[0];
+        dob = decParts[1];
+        phone = decParts[2];
+        projectCode = decParts[3];
+        timestamp = Number(decParts[4]) || Date.now();
+      }
+    } catch (e) {
+      const rawJson = Buffer.from(blob, "hex").toString("utf8");
+      const payload = JSON.parse(rawJson);
+      name = payload.name;
+      projectCode = payload.projectId || payload.projectCode;
+      phone = payload.phone;
+    }
+
+    const project = db.getProjectById(projectCode);
 
     res.json({
       valid: true,
-      payload,
+      payload: { name, dob, phone, projectCode, timestamp },
       project: project || null,
       message: "Xác thực khóa bảo mật thành công!"
     });
@@ -317,6 +383,115 @@ app.post("/api/ai/generate-website", async (req, res) => {
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
+});
+
+// 10. Open Trial & Self-Service Activation API (Cho Phép Khách Tự Động Kích Hoạt & Cấp Key Trải Nghiệm)
+app.post("/api/trial/activate", async (req, res) => {
+  try {
+    const { name, phone, projectTitle, summary, websiteConfig } = req.body;
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, error: "Vui lòng nhập họ và tên của bạn." });
+    }
+
+    if (!phone || !phone.trim() || phone.trim().length < 8) {
+      return res.status(400).json({ success: false, error: "Vui lòng nhập số điện thoại hoặc Zalo liên hệ hợp lệ để bảo mật quyền truy cập." });
+    }
+
+    // Sanitize input
+    const cleanName = name.trim().replace(/[<>]/g, "");
+    const cleanPhone = phone.trim().replace(/[<>]/g, "");
+    const cleanTitle = (projectTitle || "Dự án Web Động Trải Nghiệm").trim().replace(/[<>]/g, "");
+
+    const timestampSuffix = Date.now().toString().slice(-6);
+    const projectId = `PRJ-TRIAL-${timestampSuffix}`;
+    const projectCode = `TRIAL-${timestampSuffix}`;
+
+    // Cryptographic key generation
+    const key = generateClientAccessKey(cleanName, "TRIAL-USER", cleanPhone, projectId);
+
+    // Initial products
+    const products = websiteConfig?.products || [
+      { id: "p1", name: "Sản phẩm Trải Nghiệm 01", category: "Danh Mục Chính", price: 450000, stock: 50, sku: "SMP-01" },
+      { id: "p2", name: "Sản phẩm Trải Nghiệm 02", category: "Danh Mục Chính", price: 890000, stock: 30, sku: "SMP-02" },
+      { id: "p3", name: "Dịch Vụ Cao Cấp Mẫu", category: "Dịch Vụ", price: 1250000, stock: 20, sku: "SMP-03" }
+    ];
+
+    const newProject = {
+      id: projectId,
+      code: projectCode,
+      name: cleanTitle,
+      progress: 75,
+      budget: "Bản Thử Nghiệm (Miễn Phí)",
+      status: "ON-TRACK",
+      stage: "Pha Thử Nghiệm & Trải Nghiệm Khách Hàng",
+      serverCost: "Hệ thống Cục bộ / VPS Test",
+      infraStrategy: "Cloud Staging + VietQR Mô Phỏng Thực Tế",
+      tokenEfficiency: 98.0,
+      isTrial: true,
+      clientConfig: {
+        brandName: websiteConfig?.brandName || cleanTitle,
+        headline: websiteConfig?.headline || "Hệ Thống Web Động May Đo Trải Nghiệm Trực Tiếp",
+        deployMode: "Máy Chủ Thử Nghiệm (Localhost:5000)",
+        previewUrl: "http://127.0.0.1:5000/storefront",
+        customDomain: `https://${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "")}-trial.vn`,
+        bannerTitle: websiteConfig?.bannerTitle || `${cleanTitle} - Phiên Bản Trải Nghiệm Thực Tế`,
+        bannerSubtitle: websiteConfig?.bannerSubtitle || "Thanh toán quét mã VietQR tự động đối soát đơn hàng tức thì",
+        adminUser: "trial_admin",
+        adminPass: "Trial@2026Key",
+        aiModel: "Gemini 3.6 Flash",
+        products
+      },
+      tasks: [
+        { id: "TR-01", dept: "01. Khởi Tạo", title: "Khởi tạo không gian dự án thử nghiệm", pic: "AI Orchestrator", status: "DONE", progress: 100 },
+        { id: "TR-02", dept: "04. Giao Diện", title: "Thiết lập Design System mẫu theo ngành nghề", pic: "AI UI Builder", status: "DONE", progress: 100 },
+        { id: "TR-03", dept: "06. Web Động", title: "Tích hợp cổng quét mã VietQR ngân hàng", pic: "Backend Lead", status: "DONE", progress: 100 },
+        { id: "TR-04", dept: "08. Trải Nghiệm", title: "Khách hàng thử nghiệm tính năng và gửi feedback", pic: cleanName, status: "IN_PROGRESS", progress: 50 }
+      ]
+    };
+
+    // Save project and trial lead
+    db.addProject(newProject);
+
+    const lead = db.addTrialLead({
+      name: cleanName,
+      phone: cleanPhone,
+      projectTitle: cleanTitle,
+      projectId,
+      key,
+      summary: summary || "Khách tự động kích hoạt trải nghiệm qua Client Portal"
+    });
+
+    db.logAudit("TRIAL_ACTIVATED", cleanName, { projectId, phone: cleanPhone, title: cleanTitle });
+
+    // Notify all connected SSE clients (e.g. Admin Dashboard)
+    broadcastEvent("trial:created", {
+      lead,
+      project: newProject,
+      message: `Khách hàng ${cleanName} vừa kích hoạt dự án thử nghiệm: ${cleanTitle}`
+    });
+
+    res.json({
+      success: true,
+      message: "Kích hoạt dự án thử nghiệm thành công!",
+      data: {
+        key,
+        projectId,
+        projectCode,
+        name: cleanName,
+        projectTitle: cleanTitle,
+        lead
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: "Lỗi kích hoạt thử nghiệm: " + err.message });
+  }
+});
+
+// 11. Get Trial Leads API (Dành Cho Admin Thống Kê & Quản Lý Tệp Khách Thử Nghiệm)
+app.get("/api/trial/leads", (req, res) => {
+  const leads = db.getTrialLeads();
+  res.json({ success: true, count: leads.length, data: leads });
 });
 
 // Fallback to index.html for SPA routes

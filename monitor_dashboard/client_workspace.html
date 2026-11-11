@@ -990,9 +990,18 @@
         .replace(/'/g, "&#039;");
     }
 
-    // Read Key or Session
-    const loggedClientName = sessionStorage.getItem("it_client_name") || "Đại Diện Doanh Nghiệp";
-    const authorizedProjectCode = sessionStorage.getItem("it_authorized_project") || "PRJ-RETAIL-2026";
+    // Read Key or Session from URL params or Session Storage
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramProject = urlParams.get("project");
+    const paramName = urlParams.get("name");
+    const paramKey = urlParams.get("key");
+
+    if (paramProject) sessionStorage.setItem("it_authorized_project", paramProject);
+    if (paramName) sessionStorage.setItem("it_client_name", paramName);
+    if (paramKey) sessionStorage.setItem("it_client_key", paramKey);
+
+    const authorizedProjectCode = paramProject || sessionStorage.getItem("it_authorized_project") || "PRJ-RETAIL-2026";
+    const loggedClientName = paramName || sessionStorage.getItem("it_client_name") || "Đại Diện Khách Hàng";
     document.getElementById("clientNameBadge").textContent = escapeHtml(loggedClientName);
 
     // Initial clean project model
