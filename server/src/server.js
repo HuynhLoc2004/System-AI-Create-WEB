@@ -410,11 +410,20 @@ app.post("/api/trial/activate", async (req, res) => {
     // Cryptographic key generation
     const key = generateClientAccessKey(cleanName, "TRIAL-USER", cleanPhone, projectId);
 
-    // Initial products
-    const products = websiteConfig?.products || [
-      { id: "p1", name: "Sản phẩm Trải Nghiệm 01", category: "Danh Mục Chính", price: 450000, stock: 50, sku: "SMP-01" },
-      { id: "p2", name: "Sản phẩm Trải Nghiệm 02", category: "Danh Mục Chính", price: 890000, stock: 30, sku: "SMP-02" },
-      { id: "p3", name: "Dịch Vụ Cao Cấp Mẫu", category: "Dịch Vụ", price: 1250000, stock: 20, sku: "SMP-03" }
+    // Dynamic AI Website Generation tailored to client's industry
+    let genConfig = websiteConfig;
+    if (!genConfig || !Array.isArray(genConfig.products) || genConfig.products.length === 0) {
+      try {
+        genConfig = await builderAI.generateWebsite(cleanTitle, projectCode);
+      } catch (e) {
+        genConfig = builderAI.fallbackBuilder(cleanTitle, projectCode);
+      }
+    }
+
+    const products = genConfig?.products && genConfig.products.length > 0 ? genConfig.products : [
+      { id: "p1", name: "Sản phẩm Mẫu Cao Cấp 01", category: "Danh Mục Chính", price: 1450000, stock: 50, sku: "PRD-01", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" },
+      { id: "p2", name: "Sản phẩm Mẫu Cao Cấp 02", category: "Danh Mục Chính", price: 2150000, stock: 30, sku: "PRD-02", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" },
+      { id: "p3", name: "Dịch Vụ Chuyên Nghiệp Đi Kèm", category: "Dịch Vụ", price: 850000, stock: 20, sku: "SRV-03", image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80" }
     ];
 
     const newProject = {
@@ -430,13 +439,13 @@ app.post("/api/trial/activate", async (req, res) => {
       tokenEfficiency: 98.0,
       isTrial: true,
       clientConfig: {
-        brandName: websiteConfig?.brandName || cleanTitle,
-        headline: websiteConfig?.headline || "Hệ Thống Web Động May Đo Trải Nghiệm Trực Tiếp",
+        brandName: genConfig?.brandName || cleanTitle,
+        headline: genConfig?.headline || "Hệ Thống Web Động May Đo Trải Nghiệm Trực Tiếp",
         deployMode: "Máy Chủ Thử Nghiệm (Localhost:5000)",
         previewUrl: "http://127.0.0.1:5000/storefront",
         customDomain: `https://${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "")}-trial.vn`,
-        bannerTitle: websiteConfig?.bannerTitle || `${cleanTitle} - Phiên Bản Trải Nghiệm Thực Tế`,
-        bannerSubtitle: websiteConfig?.bannerSubtitle || "Thanh toán quét mã VietQR tự động đối soát đơn hàng tức thì",
+        bannerTitle: genConfig?.bannerTitle || `${cleanTitle} - Phiên Bản Trải Nghiệm Thực Tế`,
+        bannerSubtitle: genConfig?.bannerSubtitle || "Thanh toán quét mã VietQR tự động đối soát đơn hàng tức thì",
         adminUser: "trial_admin",
         adminPass: "Trial@2026Key",
         aiModel: "Gemini 3.6 Flash",
