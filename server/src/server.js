@@ -288,12 +288,22 @@ app.post("/api/vibe/dispatch", async (req, res) => {
     await cache.invalidatePattern("projects:");
     db.logAudit("VIBE_CODE_DISPATCH", "Admin Master", {
       projectId,
-      targetDept: result.orchestration.targetDept,
-      file: result.codingResult.filePath
+      targetDept: result.orchestration?.targetDept || "fe",
+      file: result.codingResult?.filePath || "unknown"
     });
 
     // Broadcast SSE to update Dashboard diagrams & tasks live
     broadcastEvent("vibe:code_generated", result);
+
+    if (result.blocked) {
+      return res.status(422).json({
+        success: false,
+        blocked: true,
+        message: result.error,
+        violations: result.violations,
+        data: result
+      });
+    }
 
     res.json({
       success: true,

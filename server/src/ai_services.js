@@ -13,13 +13,13 @@ import { QualityGateEngine } from "./quality_gates.js";
 class ConsultantAIService {
   constructor() {
     this.apiKey = process.env.GEMINI_CONSULT_API_KEY || process.env.GEMINI_API_KEY || "";
-    this.modelName = process.env.GEMINI_CONSULT_MODEL || "gemini-2.5-pro";
+    this.modelName = process.env.GEMINI_CONSULT_MODEL || "gemini-2.5-flash";
     this.client = null;
 
     if (this.apiKey) {
       try {
-        this.client = new GoogleGenAI({ apiKey: this.apiKey });
-        console.log(`[Gemini Consultant AI] Initialized with model: ${this.modelName}`);
+        this.client = new GoogleGenAI({ apiKey: this.apiKey, apiVersion: "v1beta" });
+        console.log(`[Gemini Consultant AI] Initialized with model: ${this.modelName} (v1beta)`);
       } catch (err) {
         console.warn(`[Gemini Consultant AI] Initialization failed: ${err.message}`);
       }
@@ -361,13 +361,13 @@ QUY CHUẨN BẮT BUỘC (ANTI-AI-SLOP):
 class BuilderAIService {
   constructor() {
     this.apiKey = process.env.GEMINI_BUILDER_API_KEY || process.env.GEMINI_API_KEY || "";
-    this.modelName = process.env.GEMINI_BUILDER_MODEL || "gemini-2.5-pro";
+    this.modelName = process.env.GEMINI_BUILDER_MODEL || "gemini-2.5-flash";
     this.client = null;
 
     if (this.apiKey) {
       try {
-        this.client = new GoogleGenAI({ apiKey: this.apiKey });
-        console.log(`[Gemini Builder AI] Initialized with model: ${this.modelName}`);
+        this.client = new GoogleGenAI({ apiKey: this.apiKey, apiVersion: "v1beta" });
+        console.log(`[Gemini Builder AI] Initialized with model: ${this.modelName} (v1beta)`);
       } catch (err) {
         console.warn(`[Gemini Builder AI] Initialization failed: ${err.message}`);
       }
@@ -569,13 +569,13 @@ export const builderAI = new BuilderAIService();
 class DepartmentOrchestratorAIService {
   constructor() {
     this.apiKey = process.env.GEMINI_ORCHESTRATOR_API_KEY || process.env.GEMINI_API_KEY || "";
-    this.modelName = process.env.GEMINI_ORCHESTRATOR_MODEL || "gemini-2.5-pro";
+    this.modelName = process.env.GEMINI_ORCHESTRATOR_MODEL || "gemini-2.5-flash";
     this.client = null;
 
     if (this.apiKey && !this.apiKey.includes("your_gemini_key")) {
       try {
-        this.client = new GoogleGenAI({ apiKey: this.apiKey });
-        console.log(`[AI 1: Orchestrator AI] Initialized with model: ${this.modelName}`);
+        this.client = new GoogleGenAI({ apiKey: this.apiKey, apiVersion: "v1beta" });
+        console.log(`[AI 1: Orchestrator AI] Initialized with model: ${this.modelName} (v1beta)`);
       } catch (err) {
         console.warn(`[AI 1: Orchestrator AI] Initialization failed: ${err.message}`);
       }
@@ -587,7 +587,7 @@ class DepartmentOrchestratorAIService {
     
     // Call Gemini Orchestrator if client is available
     if (this.client) {
-      const candidateModels = [this.modelName, "gemini-3.1-flash-lite"];
+      const candidateModels = Array.from(new Set([this.modelName, "gemini-2.5-flash", "gemini-3.1-flash-lite"]));
       for (const m of candidateModels) {
         try {
           console.log(`[AI 1: Orchestrator] Analyzing requirement using ${m}...`);
@@ -714,13 +714,13 @@ Yêu cầu kỹ thuật từ Quản trị viên: "${userRequirement}"`;
 class DepartmentVibeCoderAIService {
   constructor() {
     this.apiKey = process.env.GEMINI_VIBE_CODER_API_KEY || process.env.GEMINI_API_KEY || "";
-    this.modelName = process.env.GEMINI_VIBE_CODER_MODEL || "gemini-2.5-pro";
+    this.modelName = process.env.GEMINI_VIBE_CODER_MODEL || "gemini-2.5-flash";
     this.client = null;
 
     if (this.apiKey && !this.apiKey.includes("your_gemini_key")) {
       try {
-        this.client = new GoogleGenAI({ apiKey: this.apiKey });
-        console.log(`[AI 2: Vibe Coder AI] Initialized with model: ${this.modelName}`);
+        this.client = new GoogleGenAI({ apiKey: this.apiKey, apiVersion: "v1beta" });
+        console.log(`[AI 2: Vibe Coder AI] Initialized with model: ${this.modelName} (v1beta)`);
       } catch (err) {
         console.warn(`[AI 2: Vibe Coder AI] Initialization failed: ${err.message}`);
       }
@@ -729,7 +729,7 @@ class DepartmentVibeCoderAIService {
 
   async generateCode(project, plan, currentFileContent = "") {
     if (this.client) {
-      const candidateModels = [this.modelName, "gemini-3.1-flash-lite"];
+      const candidateModels = Array.from(new Set([this.modelName, "gemini-2.5-flash", "gemini-3.1-flash-lite"]));
       for (const m of candidateModels) {
         try {
           console.log(`[AI 2: Vibe Coder] Generating code for ${plan.targetFilePath} via ${m}...`);
@@ -964,6 +964,9 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db) {
       success: false,
       blocked: true,
       projectId,
+      projectCode: project.code,
+      orchestration,
+      codingResult,
       error: `Chặn merge: Mã nguồn không vượt qua Quality Gate sau ${MAX_SELF_HEALING_RETRIES} lần tự phục hồi.`,
       violations: lastAuditResult?.violations
     };

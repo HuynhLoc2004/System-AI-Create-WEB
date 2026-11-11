@@ -94,12 +94,17 @@ export class QualityGateEngine {
 
       // Kiểm tra sơ bộ thẻ JSX bị bỏ lửng (dành cho file .tsx/.jsx)
       if (filePath.endsWith('.tsx') || filePath.endsWith('.jsx')) {
-        const openDivs = (content.match(/<div(\s|>)/g) || []).length;
-        const closeDivs = (content.match(/<\/div>/g) || []).length;
+        const cleanContent = content
+          .replace(/\/\*[\s\S]*?\*\//g, '')
+          .replace(/\/\/.*/g, '');
+        const selfClosingDivs = (cleanContent.match(/<div\b[^>]*\/>/gis) || []).length;
+        const allOpenDivs = (cleanContent.match(/<div(\s|>)/gi) || []).length;
+        const openDivs = allOpenDivs - selfClosingDivs;
+        const closeDivs = (cleanContent.match(/<\/div>/gi) || []).length;
         if (openDivs !== closeDivs) {
           violations.push({
             file: filePath,
-            message: `Lỗi thẻ JSX: Có ${openDivs} thẻ <div mở nhưng có ${closeDivs} thẻ </div> đóng.`
+            message: `Lỗi thẻ JSX: Có ${openDivs} thẻ <div mở (đã trừ ${selfClosingDivs} thẻ tự đóng <div .../>) nhưng có ${closeDivs} thẻ </div> đóng.`
           });
         }
       }
