@@ -160,13 +160,18 @@ services:
         id: "PRJ-RETAIL-2026",
         name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
         code: "RETAIL",
-        progress: 88,
+        progress: 0,
         budget: "1.85 Tỷ",
-        status: "ON-TRACK",
-        stage: "Pha 3: Lập trình & CSDL",
+        status: "PLANNING",
+        stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
         serverCost: "$85/tháng (VPS + CDN)",
         infraStrategy: "VPS Hybrid + Cloudflare CDN (Tiết kiệm 75%)",
-        tokenEfficiency: 95.2,
+        tokenEfficiency: 100,
+        deptStatuses: {
+          client: "IDLE", po: "IDLE", pm: "IDLE", ba: "IDLE", sa: "IDLE",
+          ui: "IDLE", fe: "IDLE", be: "IDLE", dba: "IDLE", sec: "IDLE",
+          qa: "IDLE", rel: "IDLE", devops: "IDLE", prod: "IDLE", analytics: "IDLE"
+        },
         clientConfig: {
           brandName: "Novawear Premium Retail",
           headline: "Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Tự Động",
@@ -248,46 +253,34 @@ services:
       }
     ];
 
-    this.data.feedbacks = [
-      {
-        id: "fb_001",
-        projectId: "PRJ-RETAIL-2026",
-        sender: "Đại Diện Khách Hàng (Sponsor)",
-        category: "Giao diện & Trải nghiệm người dùng",
-        content: "Giao diện website bán lẻ cần hạn chế tối đa icon màu mè, font chữ sắc nét và dùng tông màu tối giản theo đúng nhận diện thương hiệu công ty. Cuộn trang trên điện thoại phải êm và mượt.",
-        assignedDept: "01. Quản Trị Dự Án (PM)",
-        solution: "Ban Quản Trị đã chỉ đạo bộ phận thiết kế tinh chỉnh lại toàn bộ bảng màu tối giản, chuyên nghiệp theo đúng nhận diện thương hiệu công ty và tối ưu trải nghiệm cuộn trang mượt mà 60fps trên điện thoại.",
-        solutionDept: "04. Thiết Kế UI/UX",
-        status: "RESOLVED",
-        timestamp: "Hôm qua 15:30"
-      },
-      {
-        id: "fb_002",
-        projectId: "PRJ-RETAIL-2026",
-        sender: "Giám Đốc Vận Hành",
-        category: "Thanh toán & Vận hành đơn hàng",
-        content: "Yêu cầu trang Checkout phải là Web động hoàn chỉnh, kết nối API VietQR thật trên Production và tự động đối soát ngân hàng ngay khi khách quét mã, không dùng trang tĩnh.",
-        assignedDept: "01. Quản Trị Dự Án (PM)",
-        solution: "Ban Quản Trị đã phê duyệt triển khai cổng thanh toán Web Động, kết nối hệ thống tự động nhận diện tiền về tài khoản ngân hàng và kiểm thử an toàn trước khi bàn giao.",
-        solutionDept: "06. Lập Trình Backend",
-        status: "IN_PROGRESS",
-        timestamp: "Hôm nay 09:15"
-      }
-    ];
-
-    this.data.tasks = [
-      { id: "PM-001", projectId: "PRJ-RETAIL-2026", dept: "01. Quản Trị (PM)", title: "Ký kết Charter & Phê duyệt điều lệ dự án bán lẻ", status: "DONE", cost: "0 Token" },
-      { id: "BA-002", projectId: "PRJ-RETAIL-2026", dept: "02. Phân Tích (BA)", title: "Lập tài liệu BRD/SRS luồng thanh toán VietQR động", status: "DONE", cost: "450 Token" },
-      { id: "SA-003", projectId: "PRJ-RETAIL-2026", dept: "03. Kiến Trúc (SA)", title: "Thiết kế kiến trúc Web Động & Hybrid Cache CSDL", status: "DONE", cost: "620 Token" },
-      { id: "UI-104", projectId: "PRJ-RETAIL-2026", dept: "04. Giao Diện (UI/UX)", title: "Cập nhật Brand Guideline Navy tối giản & loại bỏ emoji", status: "DONE", cost: "310 Token" },
-      { id: "DB-007", projectId: "PRJ-RETAIL-2026", dept: "07. CSDL (DBA)", title: "Thiết kế lược đồ CSDL & chỉ mục truy vấn tải cao", status: "DONE", cost: "550 Token" },
-      { id: "BE-110", projectId: "PRJ-RETAIL-2026", dept: "06. Backend (BE)", title: "Lập trình Webhook đối soát VietQR và giỏ hàng thời gian thực", status: "IN_PROGRESS", cost: "850 Token" },
-      { id: "FE-111", projectId: "PRJ-RETAIL-2026", dept: "05. Frontend (FE)", title: "Lập trình Web Động Responsive & cuộn mượt 60fps trên di động", status: "IN_PROGRESS", cost: "780 Token" },
-      { id: "QA-114", projectId: "PRJ-RETAIL-2026", dept: "08. Kiểm Định (QA)", title: "Kiểm thử bảo mật ô input, chống SQLi & giả mạo đơn hàng", status: "IN_PROGRESS", cost: "420 Token" },
-      { id: "OPS-009", projectId: "PRJ-RETAIL-2026", dept: "09. Hạ Tầng (Ops)", title: "Cấu hình Docker, Redis Cache, Nginx SSL & Staging VPS", status: "IN_PROGRESS", cost: "690 Token" }
-    ];
+    this.data.feedbacks = [];
+    this.data.tasks = [];
 
     this.save();
+  }
+
+  resetProjectToClean(projectId) {
+    const proj = this.getProjectById(projectId);
+    if (!proj) return null;
+    proj.progress = 0;
+    proj.status = "PLANNING";
+    proj.stage = "Pha 1: Khởi Tạo & Chờ Điều Phối AI";
+    proj.tasks = [];
+    proj.feedbacks = [];
+    proj.blockers = [];
+    proj.state = "DRAFT";
+    proj.deptStatuses = {
+      client: "IDLE", po: "IDLE", pm: "IDLE", ba: "IDLE", sa: "IDLE",
+      ui: "IDLE", fe: "IDLE", be: "IDLE", dba: "IDLE", sec: "IDLE",
+      qa: "IDLE", rel: "IDLE", devops: "IDLE", prod: "IDLE", analytics: "IDLE"
+    };
+
+    // Filter tasks & feedbacks belonging to this project
+    this.data.tasks = this.data.tasks.filter(t => t.projectId !== projectId);
+    this.data.feedbacks = this.data.feedbacks.filter(f => f.projectId !== projectId);
+
+    this.save();
+    return proj;
   }
 
   save() {

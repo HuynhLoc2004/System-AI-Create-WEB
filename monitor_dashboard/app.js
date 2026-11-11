@@ -97,510 +97,102 @@ const defaultProjects = [
     code: "PRJ-RETAIL-2026",
     name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
     package: "Gói May Đo Doanh Nghiệp",
-    budget: "Tối Ưu Thực Tế",
+    budget: "Tối Ưu Thực Tế (1.85 Tỷ)",
     serverCost: "Node.js Localhost:5000",
-    daysRemaining: "Sprint 3: Đang hoàn thiện",
-    tokenSaved: "95.2%",
-    environment: "PRODUCTION", // "PRODUCTION" (Real Data 100%) or "UAT_SANDBOX" (Mock Data)
+    daysRemaining: "Sprint 1: Khởi Tạo & Chờ Lệnh",
+    tokenSaved: "100%",
+    progress: 0,
+    status: "PLANNING",
+    stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
+    environment: "PRODUCTION",
     deptStatuses: {
-      "client": "DONE",
-      "pm": "DONE",
-      "ba": "DONE",
-      "sa": "DONE",
-      "ui": "DONE",
-      "fe": "IN_PROGRESS",
-      "be": "IN_PROGRESS",
-      "dba": "DONE",
-      "qa": "IN_PROGRESS",
-      "devops": "IN_PROGRESS",
-      "prod": "IDLE"
+      "client": "IDLE", "po": "IDLE", "pm": "IDLE", "ba": "IDLE", "sa": "IDLE",
+      "ui": "IDLE", "fe": "IDLE", "be": "IDLE", "dba": "IDLE", "sec": "IDLE",
+      "qa": "IDLE", "rel": "IDLE", "devops": "IDLE", "prod": "IDLE", "analytics": "IDLE"
     },
-    tasks: [
-      { 
-        id: "PM-101", 
-        dept: "01. Quản Trị Dự Án", 
-        businessDept: "Ban Quản Trị & Điều Phối Dự Án",
-        title: "Lập WBS & Bóc tách bài toán chi phí giải pháp", 
-        businessTitle: "Kế hoạch tổng thể & Dự toán ngân sách minh bạch theo nhu cầu thực tế",
-        pic: "TPM Lead", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Đã thống nhất phương án triển khai phần mềm may đo",
-        businessNote: "Đã hoàn thành phân rã chi tiết mốc bàn giao và ngân sách cố định không phát sinh"
-      },
-      { 
-        id: "BA-102", 
-        dept: "02. Phân Tích Nghiệp Vụ", 
-        businessDept: "Bộ Phận Phân Tích Nghiệp Vụ",
-        title: "Đặc tả yêu cầu SRS & Luồng BPMN thanh toán VietQR", 
-        businessTitle: "Sơ đồ các bước thanh toán và quy trình xử lý đơn hàng cho khách",
-        pic: "Lead BA", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Khớp 100% tiêu chí nghiệp vụ của khách",
-        businessNote: "Đã hoàn thiện tài liệu mô tả luồng mua hàng và quét mã VietQR chuẩn xác"
-      },
-      { 
-        id: "SA-103", 
-        dept: "03. Kiến Trúc & Chi Phí", 
-        businessDept: "Kiến Trúc Sư Hệ Thống & Tối Ưu Chi Phí",
-        title: "Thiết kế kiến trúc Modular Monolith & Chọn Tech Stack", 
-        businessTitle: "Chọn công nghệ Web Động tốc độ cao & Tiết kiệm chi phí thuê máy chủ",
-        pic: "Solution Architect", 
-        status: "DONE", 
-        progress: 100, 
-        note: "NestJS + Next.js SSR + PostgreSQL",
-        businessNote: "Đã thiết kế hệ thống tối ưu hiệu năng cao, tiết kiệm tối đa chi phí hạ tầng máy chủ"
-      },
-      { 
-        id: "UI-104", 
-        dept: "04. Thiết Kế UI/UX", 
-        businessDept: "Thiết Kế Trải Nghiệm Khách Hàng",
-        title: "Xây dựng Design System độc bản & Cuộn mượt 60fps", 
-        businessTitle: "Thiết kế giao diện mua sắm sang trọng, tối giản, cuộn mượt mà trên điện thoại",
-        pic: "Senior UI/UX", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Đã xuất tokens.json và bàn giao Figma",
-        businessNote: "Bàn giao trọn bộ màu sắc, font chữ và giao diện đạt chuẩn nhận diện thương hiệu"
-      },
-      { 
-        id: "UI-105", 
-        dept: "04. Thiết Kế UI/UX", 
-        businessDept: "Thiết Kế Trải Nghiệm Khách Hàng",
-        title: "Hiệu ứng 3D Parallax đồ họa nặng nề trang chủ", 
-        businessTitle: "[Đã Hủy]: Hiệu ứng 3D phức tạp làm chậm máy khách hàng",
-        pic: "Motion Designer", 
-        status: "CANCELLED", 
-        progress: 0, 
-        note: "HỦY BỎ: Làm chậm LCP > 3.5s, ảnh hưởng điểm SEO!",
-        businessNote: "Đã hủy bỏ hiệu ứng 3D rườm rà để ưu tiên trang web tải cực nhanh dưới 1 giây"
-      },
-      { 
-        id: "DB-106", 
-        dept: "07. Cơ Sở Dữ Liệu", 
-        businessDept: "Quản Trị Cơ Sở Dữ Liệu & An Toàn Thông Tin",
-        title: "Viết DDL Schema 3NF & Tước quyền DROP của app_user", 
-        businessTitle: "Khởi tạo hệ thống lưu trữ thông tin đơn hàng an toàn, bảo mật dữ liệu tuyệt đối",
-        pic: "DBA Senior", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Chạy migration thành công, phân quyền tối thiểu",
-        businessNote: "Thiết lập phân quyền bảo mật chặt chẽ, chống hacker xóa dữ liệu doanh nghiệp"
-      },
-      { 
-        id: "DB-107", 
-        dept: "07. Cơ Sở Dữ Liệu", 
-        businessDept: "Quản Trị Cơ Sở Dữ Liệu & An Toàn Thông Tin",
-        title: "Cấu hình Autovacuum dọn Dead Tuples & Backup WAL 5m", 
-        businessTitle: "Hệ thống tự động sao lưu dữ liệu dự phòng mỗi 5 phút (Chống mất đơn hàng)",
-        pic: "DBA Senior", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Đạt mục tiêu RPO < 5 phút cho đơn hàng",
-        businessNote: "Cứ 5 phút toàn bộ giao dịch mua bán được tự động sao lưu an toàn sang máy chủ phụ"
-      },
-      { 
-        id: "BE-108", 
-        dept: "06. Lập Trình Backend", 
-        businessDept: "Lập Trình Nghiệp Vụ Cốt Lõi",
-        title: "Khởi tạo Clean Architecture, JWT kép & RBAC Guards", 
-        businessTitle: "Hệ thống đăng nhập bảo mật đa tầng, tự động khóa tài khoản khi có xâm nhập lạ",
-        pic: "Backend Lead", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Access Token 15m + Refresh Token Cookie",
-        businessNote: "Đã hoàn thành cơ chế bảo vệ tài khoản khách mua hàng chuẩn ngân hàng quốc tế"
-      },
-      { 
-        id: "BE-109", 
-        dept: "06. Lập Trình Backend", 
-        businessDept: "Lập Trình Nghiệp Vụ Cốt Lõi",
-        title: "Xử lý Pessimistic Lock trừ kho & BullMQ delay job", 
-        businessTitle: "Chức năng Giữ hàng trong giỏ & Tự động hoàn kho sau 10 phút nếu khách chưa thanh toán",
-        pic: "Backend Senior", 
-        status: "IN_PROGRESS", 
-        progress: 80, 
-        note: "Đang kiểm thử hoàn kho tự động sau 10 phút",
-        businessNote: "Ngăn chặn tình trạng 2 khách đặt trùng một sản phẩm và tự động nhả kho khi đơn hết hạn"
-      },
-      { 
-        id: "BE-110", 
-        dept: "06. Lập Trình Backend", 
-        businessDept: "Lập Trình Nghiệp Vụ Cốt Lõi",
-        title: "Tích hợp Webhook IPN ngân hàng VietQR tự động", 
-        businessTitle: "Chức năng Quét mã VietQR tự động - Xác nhận tiền về tài khoản tức thì",
-        pic: "Backend Mid", 
-        status: "BLOCKED", 
-        progress: 40, 
-        note: "ĐANG NGHẼN: Đang chờ đối tác ngân hàng cấp Sandbox!",
-        businessNote: "Ngân hàng đối tác cấp môi trường thử nghiệm chậm -> Đội ngũ kỹ thuật đã chủ động mở cổng thanh toán mô phỏng nội bộ để khách hàng kiểm thử bình thường, không trễ tiến độ.",
-        blockedSolution: {
-          issue: "Ngân hàng đối tác phản hồi chậm về cấp quyền Sandbox thử nghiệm thanh toán trực tiếp",
-          solution: "PM & SA thống nhất kích hoạt Mock VietQR Server nội bộ chuẩn EMVCo, tạo bộ Webhook giả lập để đội Frontend & Backend tiếp tục lập trình, bảo đảm không làm chậm tiến độ bàn giao của khách hàng dù chỉ 1 ngày!"
-        }
-      },
-      { 
-        id: "FE-111", 
-        dept: "05. Lập Trình Frontend", 
-        businessDept: "Lập Trình Giao Diện Web & App",
-        title: "Cấu hình Lenis Smooth Scroll 60fps & Khung Base shell", 
-        businessTitle: "Tối ưu trải nghiệm lướt màn hình mượt mà, thao tác êm ái trên mọi điện thoại",
-        pic: "Frontend Lead", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Đã tích hợp smooth_scroll_provider.tsx",
-        businessNote: "Cuộn trang êm ái 60fps, mang lại cảm giác mua sắm cao cấp như ứng dụng Apple"
-      },
-      { 
-        id: "FE-112", 
-        dept: "05. Lập Trình Frontend", 
-        businessDept: "Lập Trình Giao Diện Web & App",
-        title: "Dựng màn hình Giỏ hàng & Checkout với Optimistic UI", 
-        businessTitle: "Màn hình Giỏ hàng & Thanh toán thông minh (Tự động tính tiền ship và mã giảm giá)",
-        pic: "Frontend Mid", 
-        status: "IN_PROGRESS", 
-        progress: 85, 
-        note: "Đang test trên thiết bị di động 375px",
-        businessNote: "Khách hàng thao tác thêm bớt sản phẩm nhận kết quả ngay tức khắc không cần chờ tải lại trang"
-      },
-      { 
-        id: "FE-113", 
-        dept: "05. Lập Trình Frontend", 
-        businessDept: "Lập Trình Giao Diện Web & App",
-        title: "Tính năng chia sẻ giỏ hàng lên mạng xã hội", 
-        businessTitle: "[Đã Hủy]: Tính năng chia sẻ giỏ hàng lên mạng xã hội (Khách hàng yêu cầu bỏ)",
-        pic: "Frontend Junior", 
-        status: "CANCELLED", 
-        progress: 0, 
-        note: "HỦY BỎ: Khách hàng đánh giá không thiết yếu",
-        businessNote: "Đã lược bỏ tính năng theo đúng yêu cầu phản hồi của khách hàng để giao diện đơn giản nhất"
-      },
-      { 
-        id: "QA-114", 
-        dept: "08. Kiểm Thử QA/QC", 
-        businessDept: "Bộ Phận Kiểm Định Chất Lượng & Bảo Mật",
-        title: "Kiểm thử thâm nhập bảo mật ô Input (Chống SQLi & XSS)", 
-        businessTitle: "Kiểm định an ninh mạng, chống hacker và bảo vệ thông tin thẻ thanh toán của khách",
-        pic: "QA Lead", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Pass 100% các payload độc hại trên Mock DB",
-        businessNote: "Đã vượt qua 100% các bài kiểm tra tấn công thử nghiệm, bảo đảm website an toàn tuyệt đối"
-      },
-      { 
-        id: "QA-115", 
-        dept: "08. Kiểm Thử QA/QC", 
-        businessDept: "Bộ Phận Kiểm Định Chất Lượng & Bảo Mật",
-        title: "Kiểm định 5 chiều UI/UX/Hiệu ứng/Responsive màn hình", 
-        businessTitle: "Kiểm thử hiển thị chuẩn đẹp trên 20 dòng điện thoại iPhone, Samsung và máy tính bảng",
-        pic: "QA Specialist", 
-        status: "IN_PROGRESS", 
-        progress: 65, 
-        note: "Đã kiểm tra xong 14/20 màn hình",
-        businessNote: "Đang kiểm tra chi tiết để trang web không bị tràn chữ hay lệch nút trên mọi kích thước màn hình"
-      },
-      { 
-        id: "OPS-116", 
-        dept: "09. Hạ Tầng DevOps", 
-        businessDept: "Hạ Tầng Đám Mây & Vận Hành 24/7",
-        title: "Đóng gói Docker Multi-stage 85MB qua .dockerignore", 
-        businessTitle: "Tối ưu tốc độ tải trang cực nhanh (dưới 1 giây) khi lượng khách truy cập đông",
-        pic: "DevOps Engineer", 
-        status: "DONE", 
-        progress: 100, 
-        note: "Quét Trivy 0 lỗi bảo mật CVE",
-        businessNote: "Nén dung lượng hệ thống siêu nhẹ, giúp website tải nhanh gấp 3 lần bình thường"
-      },
-      { 
-        id: "OPS-117", 
-        dept: "09. Hạ Tầng DevOps", 
-        businessDept: "Hạ Tầng Đám Mây & Vận Hành 24/7",
-        title: "Thiết lập GitHub Actions CI/CD Rolling Deploy VPS", 
-        businessTitle: "Cài đặt chứng chỉ bảo mật SSL xanh (HTTPS) và hệ thống máy chủ vận hành 24/7",
-        pic: "DevOps Engineer", 
-        status: "IN_PROGRESS", 
-        progress: 90, 
-        note: "Đang hoàn tất cấu hình Nginx SSL tự động",
-        businessNote: "Khách hàng truy cập luôn thấy ổ khóa bảo mật màu xanh an toàn, hệ thống tự động cập nhật không gián đoạn"
-      }
-    ],
-    feedbacks: [
-      {
-        id: "FB-01",
-        title: "Đồng bộ nhận diện thương hiệu Dark Navy & Tối ưu cuộn 60fps",
-        sender: "Đại Diện Khách Hàng (Sponsor)",
-        category: "Giao diện UI/UX",
-        time: "Hôm qua 15:30",
-        content: "Hạn chế tối đa emoji màu mè, đổi font chữ sắc nét và dùng màu Dark Navy theo đúng Brand Guideline. Cuộn trang phải đạt 60fps mượt mà.",
-        pmSolution: "Ban Quản Trị đã chỉ đạo bộ phận thiết kế tinh chỉnh lại toàn bộ bảng màu tối giản, chuyên nghiệp theo đúng nhận diện thương hiệu công ty và tối ưu trải nghiệm cuộn trang mượt mà 60fps trên điện thoại.",
-        assignedDept: "04. Thiết Kế UI/UX",
-        status: "RESOLVED"
-      },
-      {
-        id: "FB-02",
-        title: "Tích hợp Web Động & Đối soát thanh toán VietQR ngân hàng thực",
-        sender: "Giám Đốc Vận Hành",
-        category: "Nghiệp vụ Web Động",
-        time: "Hôm nay 09:15",
-        content: "Trang Checkout phải kết nối API VietQR thật trên Production, tự động đối soát ngân hàng ngay khi khách quét mã, không dùng trang tĩnh.",
-        pmSolution: "Ban Quản Trị đã phê duyệt triển khai cổng thanh toán Web Động, kết nối hệ thống tự động nhận diện tiền về tài khoản ngân hàng và kiểm thử an toàn trước khi bàn giao.",
-        assignedDept: "06. Lập Trình Backend",
-        status: "IN_PROGRESS"
-      }
-    ],
+    tasks: [],
+    feedbacks: [],
     history: [
-      { time: "5 phút trước", dept: "05. Frontend", action: "Hoàn tất ghép giao diện Checkout Mobile view 390px (Web Động React)", type: "success" },
-      { time: "18 phút trước", dept: "06. Backend", action: "Báo cáo Blocker: Đang chờ ngân hàng kích hoạt cổng Sandbox", type: "danger" },
-      { time: "42 phút trước", dept: "08. QA / QC", action: "Thực thi xong bộ test case Input Security trên Mock DB - Ký PASS", type: "success" },
-      { time: "1 giờ trước", dept: "07. Database", action: "Hoàn tất cấu hình Autovacuum dọn rác và script Backup WAL 5 phút", type: "info" },
-      { time: "2 giờ trước", dept: "09. DevOps", action: "Đóng gói xong Docker Image dung lượng siêu nhẹ 85MB", type: "info" }
+      { time: "Vừa xong", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản. Hãy phát lệnh AI để bắt đầu.", type: "info" }
     ],
     clientConfig: {
       brandName: "Novawear Premium Retail",
-      headline: "Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Động Tự Động",
-      previewUrl: "http://192.168.1.108:3000/storefront",
+      headline: "Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Tự Động",
+      previewUrl: "http://127.0.0.1:5000/storefront",
       deployMode: "LOCAL_SERVER",
       customDomain: "https://novawear.com.vn",
       sslActive: true,
-      adminStoreUser: "novawear_admin",
-      adminStorePass: "Nova@2026MasterPass",
-      bannerTitle: "Bộ Sưu Tập Thu Đông 2026 - Giảm 20% Cho Đơn Hàng Đầu Tiên",
-      bannerSubtitle: "Thanh toán quét mã VietQR tự động 1 giây - Tiền về tài khoản ngay lập tức",
-      contactPhone: "0909 888 999",
-      contactZalo: "https://zalo.me/0909888999",
-      contactFacebook: "https://facebook.com/novawear.official",
-      contactEmail: "admin@novawear.com.vn",
-      aiConsultingModel: "gemini-2.5-pro",
-      aiTone: "Thực chiến, dễ hiểu (Không dùng thuật ngữ kỹ thuật khó hiểu)",
-      products: [
-        {
-          id: "prod_01",
-          name: "Áo Blazer Linen Ý Thiết Kế Form Rộng",
-          category: "Thời Trang Nam",
-          price: 1250000,
-          stock: 45,
-          sku: "NW-BLZ-01",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_02",
-          name: "Đầm Lụa Tơ Tằm Thêu Tay Họa Tiết Sen",
-          category: "Thời Trang Nữ",
-          price: 1850000,
-          stock: 28,
-          sku: "NW-DRS-02",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_03",
-          name: "Giày Oxford Da Bò Nhập Khẩu Thủ Công",
-          category: "Phụ Kiện Da",
-          price: 2400000,
-          stock: 16,
-          sku: "NW-SHOE-03",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_04",
-          name: "Túi Xách Da Công Sở Đựng Laptop 14 Inch",
-          category: "Phụ Kiện Da",
-          price: 1590000,
-          stock: 32,
-          sku: "NW-BAG-04",
-          status: "IN_STOCK"
-        }
-      ]
+      adminUser: "novawear_admin",
+      adminPass: "Nova@2026MasterPass",
+      products: []
     }
   },
   {
     id: "prj_fintech",
     code: "PRJ-FINTECH-2026",
-    name: "Cổng Ví Điện Tử & Chuyển Tiền Tức Thời",
-    package: "Gói 1: MVP Tinh Gọn (550 Triệu)",
-    budget: "550 Triệu",
-    serverCost: "$45/tháng (VPS)",
-    daysRemaining: "Còn 18 ngày tới Go-Live",
-    tokenSaved: "97.1%",
-    environment: "UAT_SANDBOX", // Sandbox Mock Data isolated
+    name: "Cổng Thanh Toán & Ví Điện Tử B2B",
+    package: "Gói Tài Chính Phân Tán",
+    budget: "Tối Ưu Thực Tế (3.20 Tỷ)",
+    serverCost: "Node.js Localhost:5000",
+    daysRemaining: "Sprint 1: Khởi Tạo & Chờ Lệnh",
+    tokenSaved: "100%",
+    progress: 0,
+    status: "PLANNING",
+    stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
+    environment: "PRODUCTION",
     deptStatuses: {
-      "client": "DONE",
-      "pm": "DONE",
-      "ba": "DONE",
-      "sa": "DONE",
-      "ui": "IN_PROGRESS",
-      "fe": "IN_PROGRESS",
-      "be": "IN_PROGRESS",
-      "dba": "DONE",
-      "qa": "IDLE",
-      "devops": "DONE",
-      "prod": "IDLE"
+      "client": "IDLE", "po": "IDLE", "pm": "IDLE", "ba": "IDLE", "sa": "IDLE",
+      "ui": "IDLE", "fe": "IDLE", "be": "IDLE", "dba": "IDLE", "sec": "IDLE",
+      "qa": "IDLE", "rel": "IDLE", "devops": "IDLE", "prod": "IDLE", "analytics": "IDLE"
     },
-    tasks: [
-      { id: "PM-201", dept: "01. Quản Trị Dự Án", title: "Khảo sát và chốt phạm vi MVP trong 2.5 tháng", pic: "TPM Lead", status: "DONE", progress: 100, note: "Tiết kiệm chi phí tối đa" },
-      { id: "BA-202", dept: "02. Phân Tích Nghiệp Vụ", title: "Đặc tả luồng nạp rút tiền qua ngân hàng liên kết", pic: "Lead BA", status: "DONE", progress: 100, note: "Luồng chuẩn bảo mật 2FA" },
-      { id: "DB-203", dept: "07. Cơ Sở Dữ Liệu", title: "Thiết kế bảng số dư ví và nhật ký giao dịch tài chính", pic: "DBA Senior", status: "DONE", progress: 100, note: "Kiểm tra ràng buộc số dư >= 0" },
-      { id: "BE-204", dept: "06. Lập Trình Backend", title: "Xây dựng lõi chuyển tiền với Transaction cô lập cấp cao", pic: "Backend Senior", status: "IN_PROGRESS", progress: 60, note: "Đang test concurrency" },
-      { id: "FE-205", dept: "05. Lập Trình Frontend", title: "Giao diện bàn phím số OTP và quét mã QR chuyển tiền", pic: "Frontend Lead", status: "IN_PROGRESS", progress: 45, note: "Tối ưu vùng chạm 48px" }
-    ],
-    feedbacks: [
-      {
-        id: "FB-11",
-        title: "Kiểm định an toàn ô Input nạp rút tiền, chống gian lận số dư âm",
-        sender: "Risk & Compliance Lead",
-        category: "Bảo mật thông tin",
-        time: "2 ngày trước",
-        content: "Kiểm thử thâm nhập toàn bộ ô input chuyển tiền, ngăn chặn triệt để SQL Injection và tấn công số dư âm.",
-        pmSolution: "Áp dụng Parameterized Query và Pessimistic Locking với ràng buộc kiểm tra số dư. Đã điều phối tác vụ DB-203 & BE-204.",
-        assignedDept: "07. Cơ Sở Dữ Liệu",
-        status: "RESOLVED"
-      }
-    ],
+    tasks: [],
+    feedbacks: [],
     history: [
-      { time: "25 phút trước", dept: "06. Backend", action: "Triển khai hàm đối soát số dư ví với cơ chế ACID trên Mock DB", type: "info" },
-      { time: "1 giờ trước", dept: "07. Database", action: "Chốt DDL Schema bảng wallets và audit_ledgers", type: "success" }
+      { time: "Vừa xong", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản.", type: "info" }
     ],
     clientConfig: {
-      brandName: "PaySmart Gateway Enterprise",
-      headline: "Hạ Tầng Thanh Toán Đa Kênh & Chuyển Tiền Tức Thời 24/7",
-      previewUrl: "https://sandbox-api.paysmart.vn/portal",
-      deployMode: "VPS_STAGING",
-      customDomain: "https://paysmart.vn",
+      brandName: "PayLink Core Gateway",
+      headline: "Hạ Tầng Thanh Toán B2B Phân Tán Đa Kênh Tốc Độ Cao",
+      previewUrl: "http://127.0.0.1:5000/fintech-gateway",
+      customDomain: "https://paylink-core.vn",
       sslActive: true,
-      adminStoreUser: "paysmart_admin",
-      adminStorePass: "PaySmart@Sec2026!",
-      bannerTitle: "Cổng Thanh Toán Tích Hợp 40+ Ngân Hàng & Ví Điện Tử",
-      bannerSubtitle: "API Webhook IPN xử lý giao dịch dưới 50ms - Tỷ lệ uptime 99.99%",
-      contactPhone: "0912 345 678",
-      contactZalo: "https://zalo.me/0912345678",
-      contactFacebook: "https://facebook.com/paysmart.vn",
-      contactEmail: "support@paysmart.vn",
-      aiConsultingModel: "gemini-2.5-pro",
-      aiTone: "Thực chiến, dễ hiểu (Không dùng thuật ngữ kỹ thuật khó hiểu)",
-      products: [
-        {
-          id: "prod_ft_01",
-          name: "Gói Cổng Thanh Toán Merchant Khởi Nghiệp",
-          category: "Dịch Vụ Cổng API",
-          price: 3500000,
-          stock: 100,
-          sku: "PS-GATE-BASIC",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_ft_02",
-          name: "Thiết Bị Smart POS Quẹt Thẻ & Quét VietQR Động",
-          category: "Thiết Bị Điểm Bán",
-          price: 4200000,
-          stock: 35,
-          sku: "PS-TERM-02",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_ft_03",
-          name: "Bản Quyền Hệ Thống Đối Soát Doanh Thu Tự Động",
-          category: "Phần Mềm Quản Trị",
-          price: 8500000,
-          stock: 50,
-          sku: "PS-RECON-PRO",
-          status: "IN_STOCK"
-        }
-      ]
+      adminUser: "fintech_secops",
+      adminPass: "Fintech@CorePCI2026",
+      products: []
     }
   },
   {
-    id: "prj_enterprise",
-    code: "PRJ-CORP-ERP",
-    name: "Hệ Thống ERP Quản Trị Kho & Chuỗi Cung Ứng",
-    package: "Gói 3: Enterprise (3.5 Tỷ)",
-    budget: "3.5 Tỷ",
-    serverCost: "$350/tháng (Multi-Node)",
-    daysRemaining: "Còn 95 ngày tới Go-Live",
-    tokenSaved: "92.8%",
+    id: "prj_pharma",
+    code: "PRJ-PHARMA",
+    name: "Hệ Thống Phân Phối Dược Phẩm 2026",
+    package: "Gói Doanh Nghiệp Dược",
+    budget: "Tối Ưu Thực Tế (1.85 Tỷ)",
+    serverCost: "Node.js Localhost:5000",
+    daysRemaining: "Sprint 1: Khởi Tạo & Chờ Lệnh",
+    tokenSaved: "100%",
+    progress: 0,
+    status: "PLANNING",
+    stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
     environment: "PRODUCTION",
     deptStatuses: {
-      "client": "DONE",
-      "pm": "DONE",
-      "ba": "DONE",
-      "sa": "DONE",
-      "ui": "DONE",
-      "fe": "IN_PROGRESS",
-      "be": "DONE",
-      "dba": "DONE",
-      "qa": "IN_PROGRESS",
-      "devops": "DONE",
-      "prod": "IN_PROGRESS"
+      "client": "IDLE", "po": "IDLE", "pm": "IDLE", "ba": "IDLE", "sa": "IDLE",
+      "ui": "IDLE", "fe": "IDLE", "be": "IDLE", "dba": "IDLE", "sec": "IDLE",
+      "qa": "IDLE", "rel": "IDLE", "devops": "IDLE", "prod": "IDLE", "analytics": "IDLE"
     },
-    tasks: [
-      { id: "PM-301", dept: "01. Quản Trị Dự Án", title: "Thiết lập cấu trúc WBS phân rã 8 phân hệ doanh nghiệp", pic: "TPM Lead", status: "DONE", progress: 100, note: "Quản trị tiến độ đa phòng ban" },
-      { id: "SA-302", dept: "03. Kiến Trúc & Chi Phí", title: "Quy chuẩn kiến trúc Event-Driven Microservices", pic: "Principal Architect", status: "DONE", progress: 100, note: "Cụm RabbitMQ + PostgreSQL Sharding" },
-      { id: "DB-303", dept: "07. Cơ Sở Dữ Liệu", title: "Phân vùng Partitioning bảng lịch sử xuất nhập kho theo tháng", pic: "DBA Specialist", status: "DONE", progress: 100, note: "Giảm 75% thời gian query báo cáo" },
-      { id: "BE-304", dept: "06. Lập Trình Backend", title: "APIs đồng bộ máy quét mã vạch cầm tay thời gian thực", pic: "Backend Team", status: "DONE", progress: 100, note: "Tốc độ phản hồi < 50ms" },
-      { id: "QA-305", dept: "08. Kiểm Thử QA/QC", title: "Test tải mô phỏng 10.000 lượt quét kho đồng thời bằng k6", pic: "QA Lead", status: "IN_PROGRESS", progress: 70, note: "Đạt chuẩn P95 < 120ms" }
-    ],
-    feedbacks: [
-      {
-        id: "FB-21",
-        title: "Tối ưu truy vấn báo cáo kho hàng triệu dòng, không gây nghẽn dashboard",
-        sender: "Giám Đốc Kho Vận",
-        category: "Cơ sở dữ liệu & Tải trọng",
-        time: "Hôm nay 11:00",
-        content: "Dữ liệu xuất nhập kho hàng triệu dòng, yêu cầu query báo cáo tổng hợp phản hồi dưới 1 giây, không treo dashboard.",
-        pmSolution: "Phân vùng Partitioning bảng inventory theo quý kết hợp Materialized View và Redis Caching. Đã điều phối tác vụ DB-303.",
-        assignedDept: "07. Cơ Sở Dữ Liệu",
-        status: "IN_PROGRESS"
-      }
-    ],
+    tasks: [],
+    feedbacks: [],
     history: [
-      { time: "10 phút trước", dept: "08. QA / QC", action: "Đang chạy kịch bản k6 tải cao 5.000 CCU - Hệ thống ổn định", type: "success" },
-      { time: "3 giờ trước", dept: "07. Database", action: "Hoàn tất tạo Partition theo quý cho bảng inventory_logs", type: "info" }
+      { time: "Vừa xong", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản.", type: "info" }
     ],
     clientConfig: {
-      brandName: "OmniLogistics ERP",
-      headline: "Hệ Thống Quản Trị Chuỗi Cung Ứng, Kho Vận & Đội Xe Đa Điểm",
-      previewUrl: "http://10.0.0.12:8080/erp-portal",
-      deployMode: "LOCAL_SERVER",
-      customDomain: "https://erp.omnilogistics.com",
+      brandName: "PharmaCare Global",
+      headline: "Hệ Thống Phân Phối Dược Phẩm Đạt Chuẩn GSP/GDP",
+      previewUrl: "http://127.0.0.1:5000/pharma-b2b",
+      customDomain: "https://pharmacare-global.com",
       sslActive: true,
-      adminStoreUser: "omni_root",
-      adminStorePass: "OmniCorp@2026MasterKey",
-      bannerTitle: "Tự Động Hóa Quản Lý 12 Chi Nhánh & Đội Xe 80 Phương Tiện",
-      bannerSubtitle: "Đồng bộ tồn kho thời gian thực - Báo cáo lợi nhuận tức thời",
-      contactPhone: "0988 777 666",
-      contactZalo: "https://zalo.me/0988777666",
-      contactFacebook: "https://facebook.com/omnilogistics",
-      contactEmail: "contact@omnilogistics.com",
-      aiConsultingModel: "gemini-2.5-pro",
-      aiTone: "Thực chiến, dễ hiểu (Không dùng thuật ngữ kỹ thuật khó hiểu)",
-      products: [
-        {
-          id: "prod_erp_01",
-          name: "Bản Quyền Module Quản Lý Kho Vận Đa Điểm (WMS)",
-          category: "Module Phần Mềm",
-          price: 15500000,
-          stock: 20,
-          sku: "OL-WMS-01",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_erp_02",
-          name: "Module Định Vị GPS & Điều Phối Đội Xe Vận Tải (TMS)",
-          category: "Module Phần Mềm",
-          price: 12800000,
-          stock: 25,
-          sku: "OL-TMS-02",
-          status: "IN_STOCK"
-        },
-        {
-          id: "prod_erp_03",
-          name: "Máy Quét Mã Vạch Cầm Tay Kết Nối Wi-Fi Công Nghiệp",
-          category: "Phần Cứng Kho Hàng",
-          price: 3850000,
-          stock: 40,
-          sku: "OL-SCAN-03",
-          status: "IN_STOCK"
-        }
-      ]
+      adminUser: "pharma_director",
+      adminPass: "Pharma@2026Verified",
+      products: []
     }
   }
 ];
@@ -850,13 +442,21 @@ function showToast(msg, type = "info") {
   }, 4500);
 }
 
+function saveProjectsToStorage() {
+  try {
+    localStorage.setItem("it_assignment_projects_v10_real", JSON.stringify(projects));
+  } catch (e) {
+    console.warn("Storage quota exceeded", e);
+  }
+}
+
 function loadProjectsFromStorage() {
-  const saved = localStorage.getItem("it_assignment_projects_v8");
+  const saved = localStorage.getItem("it_assignment_projects_v10_real");
   if (saved) {
     try {
       projects = JSON.parse(saved);
       // Validate array health
-      if (!Array.isArray(projects) || projects.length === 0 || !projects[0].tasks || projects[0].tasks.length === 0) {
+      if (!Array.isArray(projects) || projects.length === 0) {
         projects = defaultProjects;
         saveProjectsToStorage();
       } else {
@@ -983,6 +583,51 @@ function setupEventListeners() {
         keyInput.style.boxShadow = "none";
       }
       dispatchModal.style.display = "flex";
+    });
+  }
+
+  // Button: Reset Clean Slate (Dọn Sạch Mock Data về 0% Thực Tế)
+  const btnResetClean = document.getElementById("btnResetCleanData");
+  if (btnResetClean) {
+    btnResetClean.addEventListener("click", async () => {
+      const project = getCurrentProject();
+      if (!project) return;
+
+      if (!confirm(`Bạn có chắc muốn DỌN SẠCH TOÀN BỘ MOCK DATA và đưa dự án [${project.code}] về 0% nguyên bản để điều phối thật từ đầu không?`)) {
+        return;
+      }
+
+      try {
+        btnResetClean.disabled = true;
+        btnResetClean.textContent = "Đang dọn dẹp...";
+
+        // Call backend reset API
+        await fetch(`/api/projects/${encodeURIComponent(project.id)}/reset`, { method: "POST" });
+
+        project.tasks = [];
+        project.feedbacks = [];
+        project.progress = 0;
+        project.status = "PLANNING";
+        project.stage = "Pha 1: Khởi Tạo & Chờ Điều Phối AI";
+        project.deptStatuses = {
+          client: "IDLE", po: "IDLE", pm: "IDLE", ba: "IDLE", sa: "IDLE",
+          ui: "IDLE", fe: "IDLE", be: "IDLE", dba: "IDLE", sec: "IDLE",
+          qa: "IDLE", rel: "IDLE", devops: "IDLE", prod: "IDLE", analytics: "IDLE"
+        };
+        project.history = [
+          { time: "Vừa xong", dept: "Hệ Thống", action: "Đã dọn sạch toàn bộ mock data. Dự án đưa về 0% thực tế.", type: "success" }
+        ];
+
+        saveProjectsToStorage();
+        renderDashboard();
+        showToast("Đã dọn sạch toàn bộ mock data! Dự án đã trở về 0% thực tế.", "success");
+      } catch (err) {
+        console.error("Reset error", err);
+        showToast("Lỗi khi reset: " + err.message, "danger");
+      } finally {
+        btnResetClean.disabled = false;
+        btnResetClean.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Dọn Mock (Về 0%)`;
+      }
     });
   }
   const btnCloseDispatch = document.getElementById("btnCloseDispatchModal");
@@ -1806,6 +1451,23 @@ function renderTaskTable() {
   const tbody = document.getElementById("taskTableBody");
   if (!tbody) return;
   tbody.innerHTML = "";
+
+  if (!project.tasks || project.tasks.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; padding: 48px 24px; color: #94A3B8;">
+          <div style="font-size: 1.1rem; font-weight: 600; color: #F1F5F9; margin-bottom: 8px;">
+            Dự Án Đang Ở Trạng Thái 0% Nguyên Bản (Không Có Dữ Liệu Ảo)
+          </div>
+          <p style="font-size: 0.88rem; color: #64748B; margin: 0 auto; max-width: 520px; line-height: 1.6;">
+            Hệ thống đã loại bỏ hoàn toàn các task mẫu tĩnh. Bạn chưa giao việc nên chưa có tác vụ nào được tính hoàn thành.<br>
+            Hãy bấm nút <strong style="color: #38BDF8;">"⚡ Phát Lệnh AI"</strong> ở trên để bắt đầu giao việc thực tế cho các phòng ban lập trình!
+          </p>
+        </td>
+      </tr>
+    `;
+    return;
+  }
 
   let filtered = project.tasks;
 

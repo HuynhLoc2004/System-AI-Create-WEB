@@ -404,6 +404,29 @@ app.post("/api/projects/:id/state-transition", async (req, res) => {
   }
 });
 
+// 7. RESET TO CLEAN SLATE (0% REAL DATA): Dọn sạch toàn bộ mock data
+app.post("/api/projects/:id/reset", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = db.resetProjectToClean(id);
+    if (!project) {
+      return res.status(404).json({ success: false, error: `Không tìm thấy dự án ${id}` });
+    }
+
+    await cache.invalidatePattern("projects:");
+    broadcastEvent("project:reset", { projectId: id, message: "Dự án đã được reset về 0% sạch sẽ" });
+
+    res.json({
+      success: true,
+      message: `Đã dọn dẹp sạch toàn bộ mock data của dự án ${id}, đưa về trạng thái 0% thực tế.`,
+      project
+    });
+  } catch (err) {
+    console.error("[Reset Project Error]", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 4. Client Feedbacks API
 app.get("/api/feedback", async (req, res) => {
   const projectId = req.query.projectId;
