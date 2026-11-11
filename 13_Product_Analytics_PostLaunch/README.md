@@ -23,3 +23,4 @@
   - Báo cáo Tỷ lệ Kích hoạt & Phễu rơi rụng (Activation & Funnel Report).
   - Báo cáo lỗi ngoại lệ tức thì (Crash & Exception Logs).
   - Backlog cải tiến gửi lại cho PO.
+

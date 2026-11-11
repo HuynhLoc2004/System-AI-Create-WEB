@@ -12,6 +12,8 @@ import { db } from "./database.js";
 import { cache } from "./cache.js";
 import { jobQueue } from "./queue.js";
 import { consultantAI, builderAI, executeVibeCodePipeline } from "./ai_services.js";
+import { QualityGateEngine } from "./quality_gates.js";
+import { ProjectStateMachine } from "./state_machine.js";
 
 const app = express();
 
@@ -300,6 +302,104 @@ app.post("/api/vibe/dispatch", async (req, res) => {
     });
   } catch (err) {
     console.error("[Vibe Dispatch Error]", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5. DETERMINISTIC QUALITY GATE: Thẩm định mã nguồn cơ học
+app.post("/api/projects/:id/audit", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = db.getProjectById(id);
+    if (!project) {
+      return res.status(404).json({ success: false, error: `Không tìm thấy dự án ${id}` });
+    }
+
+    const files = db.getProjectFiles(id);
+    const auditReport = QualityGateEngine.auditAll(files);
+
+    res.json({
+      success: true,
+      projectId: id,
+      auditReport
+    });
+  } catch (err) {
+    console.error("[Quality Gate Audit Error]", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 6. DETERMINISTIC STATE MACHINE: Quản trị luồng trạng thái dự án
+app.get("/api/projects/:id/state", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = db.getProjectById(id);
+    if (!project) {
+      return res.status(404).json({ success: false, error: `Không tìm thấy dự án ${id}` });
+    }
+
+    project.state = project.state || 'DRAFT';
+    const allowedNext = ProjectStateMachine.VALID_TRANSITIONS[project.state] || [];
+
+    res.json({
+      success: true,
+      projectId: id,
+      state: project.state,
+      allowedTransitions: allowedNext,
+      blockers: project.blockers || []
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post("/api/projects/:id/state-transition", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nextState } = req.body;
+    const project = db.getProjectById(id);
+    if (!project) {
+      return res.status(404).json({ success: false, error: `Không tìm thấy dự án ${id}` });
+    }
+
+    // Build context
+    const files = db.getProjectFiles(id);
+    const hasApiContracts = Boolean(files["src/contracts/api.d.ts"] || files["contracts/api.d.ts"] || files["api.d.ts"]);
+    const hasTokens = Boolean(files["src/styles/tokens.json"] || files["tokens.json"]);
+    const audit = QualityGateEngine.auditAll(files);
+
+    const ctx = {
+      id: project.id,
+      state: project.state || 'DRAFT',
+      hasApiContracts,
+      hasTokens,
+      securityAuditPassed: audit.passed,
+      qaCoverage: project.qaCoverage || 75,
+      blockers: project.blockers || []
+    };
+
+    const result = ProjectStateMachine.transition(ctx, nextState);
+    if (!result.success) {
+      project.state = ctx.state;
+      project.blockers = ctx.blockers;
+      db.save();
+      broadcastEvent("project:state_changed", { projectId: id, state: project.state, error: result.error });
+      return res.status(422).json({ success: false, ...result });
+    }
+
+    project.state = ctx.state;
+    db.save();
+    await cache.invalidatePattern("projects:");
+    broadcastEvent("project:state_changed", { projectId: id, state: project.state });
+
+    res.json({
+      success: true,
+      message: `Đã chuyển thành công trạng thái dự án sang [${nextState}]`,
+      state: project.state,
+      data: result
+    });
+  } catch (err) {
+    console.error("[State Transition Error]", err);
     res.status(500).json({ success: false, error: err.message });
   }
 });

@@ -29,3 +29,4 @@ flowchart TD
 | **Kích thước gói Frontend (Bundle Size)** | **< 500 KB** (Gzip/Brotli) để tải nhanh trên mạng di động | Webpack / Vite Bundle Analyzer |
 | **Độ trễ phản hồi giao diện (INP)** | **< 200 ms** (Mọi nút bấm phải phản hồi tức thì) | Chrome Performance Profiler |
 | **Tính tương thích đa thiết bị** | **100% không tràn ngang (Horizontal Scrollbar)** trên màn hình 390px | Mobile Device Viewport Matrix |
+

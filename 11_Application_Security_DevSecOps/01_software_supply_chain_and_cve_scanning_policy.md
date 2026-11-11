@@ -30,3 +30,4 @@ Hệ thống AI chỉ được phép import các package có danh tiếng cao v�
 3. **Bảo Mật:** `bcryptjs`, `jsonwebtoken`, `express-rate-limit`.
 
 > **Chính sách DevSecOps:** Mọi package lạ nằm ngoài Whitelist hoặc có điểm CVSS >= 7.0 sẽ bị Policy Gate tự động **BLOCK** và yêu cầu AI thay thế bằng vanilla JS hoặc thư viện an toàn.
+

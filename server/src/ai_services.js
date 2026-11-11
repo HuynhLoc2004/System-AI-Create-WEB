@@ -5,6 +5,7 @@
  */
 import { GoogleGenAI } from "@google/genai";
 import { CONFIG } from "./config.js";
+import { QualityGateEngine } from "./quality_gates.js";
 
 // ----------------------------------------------------
 // 1. GEMINI INSTANCE 1: CONSULTANT AI
@@ -869,38 +870,103 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db) {
   const currentContent = project.files[targetFilePath] || "";
 
   // 3. Giai đoạn 3: AI 2 (Vibe Coder) sinh mã nguồn sạch
-  const codingResult = await departmentVibeCoderAI.generateCode(project, orchestration, currentContent);
+  let codingResult = await departmentVibeCoderAI.generateCode(project, orchestration, currentContent);
 
-  // 4. Ghi trực tiếp vào CSDL (Virtual File Tree)
-  db.updateProjectFile(projectId, codingResult.filePath, codingResult.fileContent);
+  // 4. HÀNG RÀO KIỂM THỬ XÁC ĐỊNH (Deterministic Quality Gate & Self-Healing Loop)
+  const MAX_SELF_HEALING_RETRIES = 3;
+  let healingAttempts = 0;
+  let gatePassed = false;
+  let lastAuditResult = null;
 
-  // 5. Thêm task và cập nhật trạng thái phòng ban trên Sơ đồ
-  const taskId = `DIR-${Math.floor(100 + Math.random() * 900)}`;
-  project.tasks = project.tasks || [];
-  project.tasks.unshift({
-    id: taskId,
-    dept: orchestration.deptName,
-    title: `[AI VIBE CODE] ${orchestration.taskTitle}`,
-    pic: `${orchestration.deptName} (AI Coder)`,
-    status: "DONE",
-    progress: 100,
-    note: `Tệp: ${codingResult.filePath} &bull; ${codingResult.changeSummary}`,
-    isDirective: true
-  });
+  while (healingAttempts < MAX_SELF_HEALING_RETRIES) {
+    const testFiles = { ...project.files, [codingResult.filePath]: codingResult.fileContent };
+    lastAuditResult = QualityGateEngine.auditAll(testFiles);
 
-  if (project.deptStatuses) {
-    project.deptStatuses[orchestration.targetDept] = "DONE";
+    if (lastAuditResult.passed) {
+      gatePassed = true;
+      break;
+    }
+
+    healingAttempts++;
+    console.warn(`[Quality Gate FAIL] Lần thử ${healingAttempts}/${MAX_SELF_HEALING_RETRIES} vi phạm:`, lastAuditResult.violations);
+
+    // Đóng gói Payload Self-Healing gửi ngược lại cho AI Coder sửa lỗi đúng trọng tâm
+    const errorDetails = lastAuditResult.violations
+      .map(v => `- [${v.file}${v.line ? ':' + v.line : ''}]: ${v.message}`)
+      .join('\n');
+
+    const healingDirective = {
+      ...orchestration,
+      coderPrompt: `MÃ NGUỒN VỪA SINH BỊ TỪ CHỐI BỞI QUALITY GATE (Lần thử ${healingAttempts}):\n${errorDetails}\n\nCHỈ THỊ SỬA LỖI (SELF-HEALING):\n- Khắc phục triệt để các vi phạm bảo mật/cú pháp nêu trên (KHÔNG hardcode secret/password, chỉ dùng whitelist package, đóng đủ thẻ JSX).\n- Giữ nguyên toàn bộ logic hợp lệ còn lại.\n- Yêu cầu ban đầu: "${userRequirement}"`
+    };
+
+    codingResult = await departmentVibeCoderAI.generateCode(project, healingDirective, codingResult.fileContent);
   }
 
-  db.save();
+  // Nếu vượt qua Quality Gate -> Ghi vào CSDL PostgreSQL (Virtual File Tree)
+  if (gatePassed) {
+    db.updateProjectFile(projectId, codingResult.filePath, codingResult.fileContent);
 
-  return {
-    success: true,
-    projectId,
-    projectCode: project.code,
-    orchestration,
-    codingResult,
-    totalFiles: Object.keys(project.files).length
-  };
+    const taskId = `DIR-${Math.floor(100 + Math.random() * 900)}`;
+    project.tasks = project.tasks || [];
+    project.tasks.unshift({
+      id: taskId,
+      dept: orchestration.deptName,
+      title: `[AI VIBE CODE] ${orchestration.taskTitle}`,
+      pic: `${orchestration.deptName} (AI Coder)`,
+      status: "DONE",
+      progress: 100,
+      note: `Tệp: ${codingResult.filePath} &bull; Quality Gate: PASS (0 CVE, 0 Secret Leak)${healingAttempts > 0 ? ` &bull; Tự sửa lỗi sau ${healingAttempts} lần` : ''}`,
+      isDirective: true
+    });
+
+    if (project.deptStatuses) {
+      project.deptStatuses[orchestration.targetDept] = "DONE";
+    }
+
+    db.save();
+
+    return {
+      success: true,
+      projectId,
+      projectCode: project.code,
+      orchestration,
+      codingResult,
+      qualityGate: {
+        passed: true,
+        selfHealingAttempts: healingAttempts,
+        audits: lastAuditResult?.results
+      },
+      totalFiles: Object.keys(project.files).length
+    };
+  } else {
+    // Không đạt Quality Gate sau 3 lần retry -> Chặn ghi file vào CSDL, ghi nhận Blocker
+    const taskId = `BLK-${Math.floor(100 + Math.random() * 900)}`;
+    project.tasks = project.tasks || [];
+    project.tasks.unshift({
+      id: taskId,
+      dept: orchestration.deptName,
+      title: `[BLOCKED BẢO MẬT] ${orchestration.taskTitle}`,
+      pic: "DevSecOps / Quality Gate Engine",
+      status: "BLOCKED",
+      progress: 0,
+      note: `Từ chối merge vào CSDL: ${lastAuditResult?.violations?.[0]?.message || 'Vi phạm rào chắn an ninh'}`,
+      isDirective: true
+    });
+
+    if (project.deptStatuses) {
+      project.deptStatuses[orchestration.targetDept] = "BLOCKED";
+    }
+
+    db.save();
+
+    return {
+      success: false,
+      blocked: true,
+      projectId,
+      error: `Chặn merge: Mã nguồn không vượt qua Quality Gate sau ${MAX_SELF_HEALING_RETRIES} lần tự phục hồi.`,
+      violations: lastAuditResult?.violations
+    };
+  }
 }
 

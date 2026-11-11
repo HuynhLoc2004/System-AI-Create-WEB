@@ -35,3 +35,4 @@ Hệ thống AI PO sẽ tự động từ chối sinh code nếu phát hiện c�
    - Yêu cầu chat real-time phức tạp giữa người mua và người bán -> **KILL**. Thay bằng Deep link mở Zalo Official Account hoặc Hotline Direct Call.
 3. **Yêu cầu đăng ký phức tạp (Multi-step Registration):**  
    - Bắt người dùng điền 8 trường dữ liệu mới cho xem hàng -> **KILL**. Chuyển sang mô hình Mua Hàng Nhanh (Guest Checkout qua Số điện thoại + OTP/VietQR).
+

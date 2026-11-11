@@ -24,3 +24,4 @@
   - PRD chuẩn hóa & Product Brief 1 trang.
   - Ma trận MoSCoW (Cắt gọt 60% tính năng thừa).
   - Bảng chỉ số KPI & North Star Metric đo lường giá trị kinh doanh.
+

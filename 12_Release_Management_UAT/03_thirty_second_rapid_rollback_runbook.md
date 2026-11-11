@@ -43,3 +43,4 @@ sequenceDiagram
    ```
 3. **Kiểm tra trạng thái sau 5 giây:**
    - Gửi request `GET /health` -> Trả về HTTP 200 OK.
+

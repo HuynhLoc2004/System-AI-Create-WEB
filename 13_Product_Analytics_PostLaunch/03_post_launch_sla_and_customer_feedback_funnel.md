@@ -29,3 +29,4 @@ flowchart LR
 1. Nút "Góp ý về Web" luôn nằm cố định góc phải bên dưới trang (`client_workspace.html`).
 2. Khách hàng bấm gửi ý kiến -> Lưu trực tiếp vào bảng feedback hệ thống.
 3. Phòng 13 tổng hợp hàng ngày và báo cáo trực tiếp cho PO để cải tiến liên tục.
+

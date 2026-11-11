@@ -57,3 +57,4 @@ export interface CreateOrderResponse {
 ### Lợi Ích Của Cơ Chế Này:
 1. **Rút ngắn 50% thời gian phát triển:** FE và BE làm việc độc lập không bị chặn (Unblocked).
 2. **Ghép nối (Integration) không lỗi:** Khi BE hoàn thành, chỉ cần trỏ endpoint thật là hệ thống khớp 100% không phát sinh lỗi sai tên thuộc tính (Mismatch Key).
+

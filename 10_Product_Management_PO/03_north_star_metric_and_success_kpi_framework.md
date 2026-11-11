@@ -34,3 +34,4 @@ flowchart TD
    - Bất kỳ bước nào rơi rụng > 30% đều phải được PO chỉ định UI/UX và FE thiết kế lại ngay lập tức.
 3. **Churn Prevention (Ngăn chặn rời bỏ):**  
    - Giữ trạng thái giỏ hàng trong `localStorage` ngay cả khi người dùng tắt trình duyệt và mở lại.
+

@@ -27,3 +27,4 @@ DevSecOps thiết lập bộ lọc Regex quét toàn bộ nội dung file trư�
    JWT_SECRET=your_jwt_secret_min_32_characters
    ```
 3. **Tự động quét Pre-Commit:** Hệ thống tích hợp Gitleaks / scan script tự động chặn lệnh commit nếu phát hiện chuỗi nghi vấn là Key thật.
+

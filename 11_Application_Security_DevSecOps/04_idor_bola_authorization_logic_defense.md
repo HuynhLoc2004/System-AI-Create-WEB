@@ -51,3 +51,4 @@ app.get('/api/orders/:id', verifyAuthMiddleware, async (req, res) => {
 ### Tiêu Chuẩn Thẻ Nhận Diện ID:
 1. **Không dùng số tự tăng tuần tự (Auto-increment Integer IDs)** ở Client-facing API: Tránh để lộ số lượng đơn hàng (VD: `/orders/1`, `/orders/2`).
 2. **Sử dụng UUIDv4 hoặc NanoID ngẫu nhiên:** Ví dụ: `/orders/ord_9f83ac71e2`.
+

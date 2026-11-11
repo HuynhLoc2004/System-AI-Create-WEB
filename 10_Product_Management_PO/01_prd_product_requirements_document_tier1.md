@@ -41,3 +41,4 @@ Trước khi chuyển giao bản PRD sang cho Business Analyst (BA) viết SRS v
 - [ ] Đã trả lời được câu hỏi: *"Khách hàng chấp nhận trả bao nhiêu tiền cho tính năng này?"*
 - [ ] Đã cắt giảm tối thiểu 50% các ý tưởng rườm rà do khách hàng hoặc các bên liên quan tự vẽ ra.
 - [ ] Bản PRD gói gọn trong tối đa 3-5 trang (hoặc 1 trang Product Brief cô đọng), không viết dài dòng văn hoa.
+

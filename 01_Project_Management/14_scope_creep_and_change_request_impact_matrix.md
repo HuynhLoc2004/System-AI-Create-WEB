@@ -30,3 +30,4 @@ Bất kỳ thành viên nào nhận yêu cầu thay đổi từ khách phải đ
 - **Lý do kinh doanh:** Khách hàng yêu cầu thêm phương thức thanh toán.
 - **Phòng ban bị ảnh hưởng:** BA (Bóc luồng), SA (Sửa API), BE (Tích hợp SDK), FE (Thêm UI nút bấm), QA (Viết thêm test case).
 - **Phán quyết của TPM:** Chấp thuận / Từ chối / Dời sang phiên bản tiếp theo.
+

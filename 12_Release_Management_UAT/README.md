@@ -24,3 +24,4 @@
   - Môi trường UAT Sandbox có dữ liệu sinh động.
   - Biên bản ký duyệt phát hành (Release Approval Certificate).
   - Production Deployment Trigger & Kế hoạch Rollback 30s sẵn sàng.
+

@@ -43,3 +43,4 @@ Tách toàn bộ chuỗi hiển thị ra từ điển JSON:
 }
 ```
 Lợi ích: Giúp website có thể mở rộng sang Tiếng Anh (`en.json`), Tiếng Nhật (`ja.json`) chỉ trong 5 phút mà không phải sửa một dòng code giao diện nào.
+

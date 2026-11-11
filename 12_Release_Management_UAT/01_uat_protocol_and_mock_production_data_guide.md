@@ -38,3 +38,4 @@ Môi trường UAT không bao giờ để trống dữ liệu (Empty State) và 
 1. **Hình ảnh sắc nét chuẩn tỉ lệ:** Hình ảnh Unsplash CDN chuẩn góc chụp sản phẩm thật, không vỡ hạt, không mờ.
 2. **Giá tiền và số liệu thực tế:** Định dạng tiền tệ `Intl.NumberFormat('vi-VN')` có ký hiệu `đ` rõ ràng.
 3. **Mã VietQR động Napas 247:** Hiển thị mã QR chuẩn Napas chứa số tài khoản thụ hưởng thử nghiệm để quét kiểm tra trực tiếp.
+

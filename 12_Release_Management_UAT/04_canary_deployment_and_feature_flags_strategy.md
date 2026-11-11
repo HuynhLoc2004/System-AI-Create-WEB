@@ -40,3 +40,4 @@ export function PaymentSection({ order }) {
 }
 ```
 Lợi ích: Khi có lỗi phát sinh, chỉ cần đổi `false` trên cấu hình là tính năng lập tức ẩn đi, không ảnh hưởng đến người dùng khác!
+

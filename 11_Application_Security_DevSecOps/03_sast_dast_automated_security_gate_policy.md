@@ -29,3 +29,4 @@ Tại môi trường chạy thử (Staging / Virtual Workspace):
      - `Strict-Transport-Security (HSTS)`
 2. **Rate Limiting Check:**
    - Endpoint tạo đơn hàng, đăng nhập, hoặc sinh QR phải có Rate Limiting (`express-rate-limit`) chống Spam Brute-force (Tối đa 10 requests / phút / IP).
+

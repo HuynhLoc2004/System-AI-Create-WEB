@@ -25,3 +25,4 @@
   - DevSecOps Audit Report (Báo cáo thẩm định an ninh 0 Critical CVE).
   - Chứng chỉ An toàn Secret (Secret Clearance Certificate).
   - Phê duyệt mở cổng bàn giao sang Release Management (UAT Sign-off ready).
+

@@ -41,3 +41,4 @@ sequenceDiagram
    Code mới chuyển sang dùng `full_name`.
 4. **Bước 4 (Contract):**  
    `ALTER TABLE orders DROP COLUMN customer_name;`
+

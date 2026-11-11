@@ -28,3 +28,4 @@
 - [ ] 8. **Kiểm tra Xóa Cache Client:** Đã cấu hình Cache-Control thích hợp để khách hàng không bị lưu file JS cũ.
 - [ ] 9. **Kế hoạch Rollback:** Bản backup code và dữ liệu gần nhất đã sẵn sàng khôi phục trong 30 giây.
 - [ ] 10. **Thông báo Đội Hỗ trợ:** Đội Post-Launch Analytics & Support đã bật Dashboard theo dõi lỗi real-time.
+
