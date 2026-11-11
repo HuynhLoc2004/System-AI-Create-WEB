@@ -319,8 +319,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initRealtimeHeartbeat();
   updateLiveServerMetrics();
   setInterval(updateLiveServerMetrics, 10000);
-  fetchTrialLeads();
-  setInterval(fetchTrialLeads, 15000);
 });
 
 // Detect User Role from URL Params or Session Storage
@@ -830,11 +828,11 @@ function setupEventListeners() {
     });
   }
 
-  // Manual Trigger: Realtime Progress Report
-  const btnRealtime = document.getElementById("btnSimulateRealtime");
-  if (btnRealtime) {
-    btnRealtime.addEventListener("click", () => {
-      triggerRealtimeReport();
+  // Manual Trigger: Refresh Realtime Project Feed
+  const btnRefreshFeed = document.getElementById("btnRefreshProjectFeed") || document.getElementById("btnSimulateRealtime");
+  if (btnRefreshFeed) {
+    btnRefreshFeed.addEventListener("click", () => {
+      refreshProjectHistory();
     });
   }
 
@@ -852,17 +850,17 @@ function setupEventListeners() {
   }
 }
 
-// Toggle Environment between Production (Real Data) & Sandbox (Mock Data)
+// Toggle Environment between Production (Real Data) & Local Workspace
 function toggleProjectEnvironment() {
   const project = getCurrentProject();
   if (!project) return;
 
   if (project.environment === "PRODUCTION") {
-    project.environment = "UAT_SANDBOX";
-    showToast(`Đã chuyển sang môi trường UAT / LOCAL: Sử dụng Mock Data & Sandbox DB cô lập 100%, bảo vệ dữ liệu Production!`, "warning");
+    project.environment = "LOCAL_DEV";
+    showToast(`Đã chuyển sang chế độ LOCAL WORKSPACE: Mọi tác vụ và code được lưu trữ cục bộ cho dự án [${project.code}]!`, "info");
   } else {
     project.environment = "PRODUCTION";
-    showToast(`Đã kích hoạt môi trường PRODUCTION: Sử dụng Dữ liệu thật 100%, kết nối VietQR Live, Cloud CDN an toàn.`, "success");
+    showToast(`Đã kích hoạt chế độ PRODUCTION: Tiến trình dự án [${project.code}] được bảo vệ nghiêm ngặt.`, "success");
   }
 
   saveProjectsToStorage();
@@ -963,7 +961,7 @@ function renderDashboard() {
       envLabel.textContent = "PROD (DATA THẬT 100%)";
     } else {
       envDot.className = "env-dot uat";
-      envLabel.textContent = "UAT / LOCAL (MOCK DATA)";
+      envLabel.textContent = "LOCAL WORKSPACE (NỘI BỘ)";
     }
   }
 
@@ -2168,29 +2166,27 @@ function initRealtimeHeartbeat() {
   }
 }
 
-function triggerRealtimeReport() {
+async function refreshProjectHistory() {
   const project = getCurrentProject();
   if (!project) return;
 
-  const simulatedReports = [
-    { dept: "06. Backend", action: "AI Vibe vừa đẩy commit: Hoàn thành Unit Test cho Pessimistic Lock & Idempotency Key", type: "success" },
-    { dept: "05. Frontend", action: "AI Vibe vừa tối ưu Cumulative Layout Shift (CLS) = 0.01 cho màn hình Catalog", type: "success" },
-    { dept: "08. QA / QC", action: "QA Lead vừa xác nhận PASS cho bộ kiểm thử tải 5,000 CCU bằng k6 trên môi trường Sandbox", type: "success" },
-    { dept: "07. Database", action: "DBA xác nhận chạy xong index covering cho cột orders(status, created_at)", type: "info" },
-    { dept: "09. DevOps", action: "DevOps vừa cập nhật file nginx.conf kích hoạt HTTP/2 và TLS 1.3", type: "info" }
-  ];
-
-  const pick = simulatedReports[Math.floor(Math.random() * simulatedReports.length)];
-  project.history.unshift({
-    time: "Vừa xong",
-    dept: pick.dept,
-    action: `[BÁO CÁO REALTIME] ${pick.action}`,
-    type: pick.type
-  });
-
-  saveProjectsToStorage();
-  renderActivityFeed(project);
-  showToast(`Phòng ban [${pick.dept}] vừa báo cáo mốc hoàn tất mới!`, "success");
+  try {
+    const res = await fetch(`/api/projects/${encodeURIComponent(project.id)}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.data) {
+        project.history = data.data.history || [];
+        project.tasks = data.data.tasks || [];
+        project.deptStatuses = data.data.deptStatuses || project.deptStatuses;
+        renderActivityFeed(project);
+        renderTaskTable();
+        renderWorkflowGraph(project);
+        showToast("Đã đồng bộ nhật ký tiến độ thực tế của dự án!", "info");
+      }
+    }
+  } catch (err) {
+    console.debug("Refresh feed error", err);
+  }
 }
 
 // ========================================================
