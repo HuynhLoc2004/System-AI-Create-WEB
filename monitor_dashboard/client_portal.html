@@ -1844,7 +1844,97 @@
     </div>
   </div>
 
+  <!-- Universal System Notification & Confirmation Dialog (No Native Alert/Confirm) -->
+  <div class="system-dialog-backdrop" id="systemDialogModal" style="display: none;">
+    <div class="system-dialog-box">
+      <div class="system-dialog-icon info" id="systemDialogIconWrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <h3 class="system-dialog-title" id="systemDialogTitle">Thông Báo Hệ Thống</h3>
+      <p class="system-dialog-msg" id="systemDialogMessage">Nội dung thông báo...</p>
+      <div class="system-dialog-actions" id="systemDialogActions">
+        <button type="button" class="btn btn-outline" id="systemDialogBtnCancel" style="min-width: 100px;">Hủy Bỏ</button>
+        <button type="button" class="btn btn-primary" id="systemDialogBtnConfirm" style="min-width: 110px;">Xác Nhận</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Universal System Notification & Confirmation Dialog Engine
+    window.showSystemDialog = function({
+      title = "Thông Báo Hệ Thống",
+      message = "",
+      type = "info", // "confirm" | "info" | "warning" | "success"
+      confirmText = "Đồng Ý",
+      cancelText = "Hủy Bỏ"
+    } = {}) {
+      return new Promise((resolve) => {
+        const modal = document.getElementById("systemDialogModal");
+        const iconWrap = document.getElementById("systemDialogIconWrap");
+        const titleEl = document.getElementById("systemDialogTitle");
+        const msgEl = document.getElementById("systemDialogMessage");
+        const btnConfirm = document.getElementById("systemDialogBtnConfirm");
+        const btnCancel = document.getElementById("systemDialogBtnCancel");
+
+        if (!modal) {
+          resolve(true);
+          return;
+        }
+
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+        btnConfirm.textContent = confirmText;
+        btnCancel.textContent = cancelText;
+
+        // Reset classes
+        iconWrap.className = "system-dialog-icon " + type;
+
+        if (type === "confirm") {
+          btnCancel.style.display = "inline-flex";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)";
+        } else if (type === "warning") {
+          btnCancel.style.display = "none";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #D97706 0%, #B45309 100%)";
+        } else if (type === "success") {
+          btnCancel.style.display = "none";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #10B981 0%, #059669 100%)";
+        } else {
+          // Info default
+          btnCancel.style.display = "none";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)";
+        }
+
+        modal.style.display = "flex";
+
+        const cleanup = () => {
+          modal.style.display = "none";
+          btnConfirm.removeEventListener("click", onConfirm);
+          btnCancel.removeEventListener("click", onCancel);
+        };
+
+        const onConfirm = () => {
+          cleanup();
+          resolve(true);
+        };
+
+        const onCancel = () => {
+          cleanup();
+          resolve(false);
+        };
+
+        btnConfirm.addEventListener("click", onConfirm);
+        btnCancel.addEventListener("click", onCancel);
+      });
+    };
+
+    // Override native browser alert with custom modal
+    window.alert = function(msg) {
+      window.showSystemDialog({ title: "Thông Báo Hệ Thống", message: String(msg), type: "info", confirmText: "Đã Hiểu" });
+    };
     function escapeHtml(str) {
       if (str === null || str === undefined) return "";
       return String(str)
@@ -2169,7 +2259,12 @@
       // Anti-tamper check
       const maliciousPattern = /(<script|javascript:|select\s+.*from|insert\s+into|union\s+select|--|;)/i;
       if (maliciousPattern.test(text)) {
-        alert("Cảnh báo an ninh: Phát hiện ký tự độc hại trong văn bản!");
+        await window.showSystemDialog({
+          title: "Cảnh Báo An Ninh",
+          message: "Phát hiện ký tự nguy hiểm hoặc cú pháp bất thường trong văn bản gửi đi!",
+          type: "warning",
+          confirmText: "Đã Hiểu"
+        });
         return;
       }
 
@@ -2321,9 +2416,17 @@
       chatInput.style.height = Math.min(chatInput.scrollHeight, 140) + "px";
     });
 
-    // Reset Chat Conversation
-    document.getElementById("btnResetConsultChat").addEventListener("click", () => {
-      if (confirm("Bạn có muốn làm mới cuộc trao đổi và bắt đầu phiên tư vấn mới?")) {
+    // Reset Chat Conversation with Universal System Confirm Modal
+    document.getElementById("btnResetConsultChat").addEventListener("click", async () => {
+      const confirmed = await window.showSystemDialog({
+        title: "Làm Mới Cuộc Trao Đổi",
+        message: "Bạn có muốn làm mới cuộc trao đổi và bắt đầu phiên tư vấn phân tích dự án mới cùng Trưởng Phòng Giải Pháp?",
+        type: "confirm",
+        confirmText: "Làm Mới Ngay",
+        cancelText: "Hủy Bỏ"
+      });
+
+      if (confirmed) {
         consultationHistory = [];
         const container = document.getElementById("chatMessagesContainer");
         container.innerHTML = `

@@ -1508,6 +1508,81 @@ svg text {
 }
 
 /* ========================================================
+   UNIVERSAL SYSTEM NOTIFICATION & CONFIRMATION DIALOG
+   Replaces native browser alert() and confirm() with Dark Navy Luxury UI
+   ======================================================== */
+.system-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.system-dialog-box {
+  background: linear-gradient(180deg, #131B2E 0%, #0E1526 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(59, 130, 246, 0.5);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  animation: modalSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.system-dialog-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+.system-dialog-icon.confirm,
+.system-dialog-icon.info {
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #60A5FA;
+}
+.system-dialog-icon.warning {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #F59E0B;
+}
+.system-dialog-icon.success {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #10B981;
+}
+.system-dialog-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  letter-spacing: -0.2px;
+}
+.system-dialog-msg {
+  font-size: 0.82rem;
+  color: #94A3B8;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  word-break: break-word;
+}
+.system-dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ========================================================
    PERSPECTIVE VIEW SWITCHER (Customer Easy vs Dev Technical)
    ======================================================== */
 .perspective-bar {

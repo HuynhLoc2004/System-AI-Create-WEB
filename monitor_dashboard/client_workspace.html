@@ -1600,6 +1600,112 @@
       color: var(--text-muted);
       line-height: 1.5;
     }
+
+    /* Universal System Dialog / Alert / Confirm */
+    .system-dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .system-dialog-box {
+      background: linear-gradient(180deg, #131B2E 0%, #0E1526 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(59, 130, 246, 0.5);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      animation: modalSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(12px) scale(0.98); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .system-dialog-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .system-dialog-icon.confirm,
+    .system-dialog-icon.info {
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #60A5FA;
+    }
+    .system-dialog-icon.warning {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #F59E0B;
+    }
+    .system-dialog-icon.success {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #10B981;
+    }
+    .system-dialog-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+    .system-dialog-msg {
+      font-size: 0.82rem;
+      color: #94A3B8;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      word-break: break-word;
+    }
+    .system-dialog-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .system-btn {
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+    .system-btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #CBD5E1;
+    }
+    .system-btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
+    .system-btn-primary {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      border: none;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+    .system-btn-primary:hover {
+      background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
+    }
   </style>
 </head>
 <body>
@@ -2062,9 +2168,99 @@
       </div>
     </section>
 
+    <!-- Universal System Notification & Confirmation Dialog (No Native Alert/Confirm) -->
+    <div class="system-dialog-backdrop" id="systemDialogModal" style="display: none;">
+      <div class="system-dialog-box">
+        <div class="system-dialog-icon info" id="systemDialogIconWrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3 class="system-dialog-title" id="systemDialogTitle">Thông Báo Hệ Thống</h3>
+        <p class="system-dialog-msg" id="systemDialogMessage">Nội dung thông báo...</p>
+        <div class="system-dialog-actions" id="systemDialogActions">
+          <button type="button" class="system-btn system-btn-outline" id="systemDialogBtnCancel" style="min-width: 100px;">Hủy Bỏ</button>
+          <button type="button" class="system-btn system-btn-primary" id="systemDialogBtnConfirm" style="min-width: 110px;">Xác Nhận</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script>
+    // Universal System Notification & Confirmation Dialog Engine
+    window.showSystemDialog = function({
+      title = "Thông Báo Hệ Thống",
+      message = "",
+      type = "info", // "confirm" | "info" | "warning" | "success"
+      confirmText = "Đồng Ý",
+      cancelText = "Hủy Bỏ"
+    } = {}) {
+      return new Promise((resolve) => {
+        const modal = document.getElementById("systemDialogModal");
+        const iconWrap = document.getElementById("systemDialogIconWrap");
+        const titleEl = document.getElementById("systemDialogTitle");
+        const msgEl = document.getElementById("systemDialogMessage");
+        const btnConfirm = document.getElementById("systemDialogBtnConfirm");
+        const btnCancel = document.getElementById("systemDialogBtnCancel");
+
+        if (!modal) {
+          resolve(true);
+          return;
+        }
+
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+        btnConfirm.textContent = confirmText;
+        btnCancel.textContent = cancelText;
+
+        // Reset classes
+        iconWrap.className = "system-dialog-icon " + type;
+
+        if (type === "confirm") {
+          btnCancel.style.display = "inline-flex";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)";
+        } else if (type === "warning") {
+          btnCancel.style.display = "none";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #D97706 0%, #B45309 100%)";
+        } else if (type === "success") {
+          btnCancel.style.display = "none";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #10B981 0%, #059669 100%)";
+        } else {
+          // Info default
+          btnCancel.style.display = "none";
+          iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+          btnConfirm.style.background = "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)";
+        }
+
+        modal.style.display = "flex";
+
+        const cleanup = () => {
+          modal.style.display = "none";
+          btnConfirm.removeEventListener("click", onConfirm);
+          btnCancel.removeEventListener("click", onCancel);
+        };
+
+        const onConfirm = () => {
+          cleanup();
+          resolve(true);
+        };
+
+        const onCancel = () => {
+          cleanup();
+          resolve(false);
+        };
+
+        btnConfirm.addEventListener("click", onConfirm);
+        btnCancel.addEventListener("click", onCancel);
+      });
+    };
+
+    // Override native browser alert with custom modal
+    window.alert = function(msg) {
+      window.showSystemDialog({ title: "Thông Báo Hệ Thống", message: String(msg), type: "info", confirmText: "Đã Hiểu" });
+    };
     const STORAGE_KEY = "it_assignment_projects_v8";
     const IT_MASTER_AUTH_SALT = "IT_ASSIGNMENT_SUPER_SECRET_SALT_2026_@#!$%";
     const API_BASE = window.location.protocol === "file:" ? "http://localhost:5000" : "";
@@ -2657,7 +2853,12 @@
     // Simulate Instant Webhook / VietQR Payment
     window.simulateConfirmPayment = function() {
       if (cartItems.length === 0) {
-        alert("Giỏ hàng đang trống! Vui lòng chọn sản phẩm trước.");
+        window.showSystemDialog({
+          title: "Giỏ Hàng Đang Trống",
+          message: "Vui lòng chọn sản phẩm vào giỏ hàng trước khi thực hiện quy trình quét mã thanh toán!",
+          type: "warning",
+          confirmText: "Đã Hiểu"
+        });
         return;
       }
 
@@ -2768,7 +2969,12 @@
 
       document.getElementById("workspaceFeedbackForm").reset();
       renderTickets();
-      alert("Góp ý của bạn đã được chuyển thẳng tới Ban Quản Trị! Đội ngũ kỹ sư sẽ cập nhật giải pháp ngay.");
+      window.showSystemDialog({
+        title: "Tiếp Nhận Góp Ý Thành Công",
+        message: "Yêu cầu điều chỉnh của bạn đã được chuyển thẳng tới Ban Quản Trị và các phòng ban kỹ thuật để phối hợp xử lý ngay!",
+        type: "success",
+        confirmText: "Hoàn Tất"
+      });
     });
 
     // Copy Helper
@@ -2785,7 +2991,12 @@
           btn.style.color = "";
         }, 1500);
       }).catch(err => {
-        alert("Đã sao chép: " + text);
+        window.showSystemDialog({
+          title: "Sao Chép Thông Tin",
+          message: "Đã sao chép nội dung: " + text,
+          type: "info",
+          confirmText: "Đóng"
+        });
       });
     };
 
