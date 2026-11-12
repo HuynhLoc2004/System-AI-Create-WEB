@@ -1857,8 +1857,28 @@ async function handleDispatchDirective() {
   if (mode === "VIBE_CODE_DIRECT") {
     const liveBox = document.getElementById("dispatchLiveProgress");
     const liveText = document.getElementById("dispatchLiveStatusText");
+    const submitBtn = document.querySelector("#dispatchForm button[type='submit']");
+    
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `⏳ AI Đang Viết Code (~15-20s)...`;
+    }
     if (liveBox) liveBox.style.display = "block";
-    if (liveText) liveText.textContent = "AI 1 (Orchestrator PM/SA) đang bóc tách luồng & xác định tệp đích...";
+    if (liveText) liveText.textContent = "⚡ Bước 1/3: AI 1 (Orchestrator) đang phân tích nghiệp vụ & chọn phòng ban...";
+
+    let stepTimer = 0;
+    const progressInterval = setInterval(() => {
+      stepTimer += 3;
+      if (liveText) {
+        if (stepTimer >= 3 && stepTimer < 9) {
+          liveText.textContent = "✍️ Bước 2/3: AI 2 (Vibe Coder) đang lập trình mã nguồn thực tế...";
+        } else if (stepTimer >= 9 && stepTimer < 18) {
+          liveText.textContent = "🛡️ Bước 3/3: Deterministic Quality Gate đang kiểm định cú pháp & an ninh...";
+        } else if (stepTimer >= 18) {
+          liveText.textContent = "💾 Bước 4/4: Đang đồng bộ vào kho mã nguồn ảo (Virtual Workspace)...";
+        }
+      }
+    }, 3000);
 
     const reqText = `${title}: ${details}`;
     try {
@@ -1871,11 +1891,12 @@ async function handleDispatchDirective() {
           adminKey: inputKey
         })
       });
+      clearInterval(progressInterval);
       const data = await res.json();
       if (!data.success) throw new Error(data.error || "Lỗi xử lý AI");
 
       const result = data.data;
-      if (liveText) liveText.textContent = `AI 2 (${result.orchestration.deptName}) đã hoàn tất code vào ${result.codingResult.filePath}!`;
+      if (liveText) liveText.textContent = `✅ AI 2 (${result.orchestration.deptName}) đã hoàn tất code vào ${result.codingResult.filePath}!`;
 
       // Highlight target department on workflow canvas
       activeDirectiveDept = result.orchestration.targetDept;
@@ -1900,6 +1921,10 @@ async function handleDispatchDirective() {
         project.deptStatuses[result.orchestration.targetDept] = "DONE";
       }
 
+      const totalTasks = project.tasks.length;
+      const doneTasks = project.tasks.filter(t => t.status === "DONE").length;
+      project.progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
       project.history.unshift({
         time: "Vừa xong",
         dept: result.orchestration.deptName,
@@ -1912,6 +1937,10 @@ async function handleDispatchDirective() {
 
       setTimeout(() => {
         if (liveBox) liveBox.style.display = "none";
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Xác Thực & Phát Lệnh Cho AI";
+        }
         document.getElementById("dispatchForm").reset();
         document.getElementById("dispatchModal").style.display = "none";
         showToast(`AI 1 & AI 2 đã code thành công vào tệp [${result.codingResult.filePath}]! Mở Kho Mã Nguồn để xem chi tiết.`, "success");
@@ -1920,6 +1949,11 @@ async function handleDispatchDirective() {
       }, 700);
 
     } catch (err) {
+      clearInterval(progressInterval);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Xác Thực & Phát Lệnh Cho AI";
+      }
       if (liveText) liveText.textContent = `Lỗi: ${err.message}`;
       showToast(`Không thể thực thi lệnh: ${err.message}`, "danger");
       if (liveBox) liveBox.style.display = "none";

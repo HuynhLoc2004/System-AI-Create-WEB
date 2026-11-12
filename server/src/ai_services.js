@@ -924,6 +924,10 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db) {
       project.deptStatuses[orchestration.targetDept] = "DONE";
     }
 
+    const totalTasks = project.tasks.length;
+    const doneTasks = project.tasks.filter(t => t.status === "DONE").length;
+    project.progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
     db.save();
 
     return {
