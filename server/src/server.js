@@ -843,4 +843,15 @@ app.listen(CONFIG.PORT, () => {
   console.log(`⚡ Cache Layer: ${cache.metrics.mode}`);
   console.log(`⚙️  Queue System: ${jobQueue.concurrency} Concurrent Workers Active`);
   console.log(`======================================================\n`);
+
+  // Đồng bộ mã nguồn vật lý vào workspace cục bộ
+  try {
+    const projects = db.getProjects();
+    if (projects.length > 0) {
+      db.syncProjectFilesToDisk(projects[0].id);
+      console.log(`📂 Physical Disk Sync: Đã đồng bộ mã nguồn [${projects[0].code}] trực tiếp vào ổ đĩa (${process.cwd()})`);
+    }
+  } catch (syncErr) {
+    console.warn(`[Startup Sync Warning] ${syncErr.message}`);
+  }
 });

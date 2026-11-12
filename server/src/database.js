@@ -442,7 +442,45 @@ services:
       type: "success"
     });
     this.save();
+
+    // 🌟 GHI TRỰC TIẾP VÀO Ổ ĐĨA VẬT LÝ DỰ ÁN (Physical Workspace Disk Sync)
+    try {
+      const workspaceRoot = process.env.LOCAL_WORKSPACE_ROOT || process.cwd();
+      const targetDiskPath = path.resolve(workspaceRoot, filePath);
+      if (targetDiskPath.startsWith(path.resolve(workspaceRoot))) {
+        const targetDir = path.dirname(targetDiskPath);
+        if (!fs.existsSync(targetDir)) {
+          fs.mkdirSync(targetDir, { recursive: true });
+        }
+        fs.writeFileSync(targetDiskPath, content, "utf8");
+        console.log(`[Physical Disk Write] Đã ghi trực tiếp vào ổ đĩa: ${targetDiskPath}`);
+      }
+    } catch (diskErr) {
+      console.warn(`[Physical Disk Write Warning] Không thể ghi file vào ổ đĩa: ${diskErr.message}`);
+    }
+
     return { filePath, content };
+  }
+
+  syncProjectFilesToDisk(projectId) {
+    const proj = this.getProject(projectId);
+    if (!proj || !proj.files) return;
+    const workspaceRoot = process.env.LOCAL_WORKSPACE_ROOT || process.cwd();
+    for (const [filePath, content] of Object.entries(proj.files)) {
+      try {
+        const targetDiskPath = path.resolve(workspaceRoot, filePath);
+        if (targetDiskPath.startsWith(path.resolve(workspaceRoot))) {
+          const targetDir = path.dirname(targetDiskPath);
+          if (!fs.existsSync(targetDir)) {
+            fs.mkdirSync(targetDir, { recursive: true });
+          }
+          fs.writeFileSync(targetDiskPath, content, "utf8");
+          console.log(`[Physical Disk Write] Đã đồng bộ file vật lý vào ổ đĩa: ${filePath}`);
+        }
+      } catch (err) {
+        console.warn(`[Disk Sync Warning] ${filePath}: ${err.message}`);
+      }
+    }
   }
 
   deleteProjectFile(projectId, filePath) {

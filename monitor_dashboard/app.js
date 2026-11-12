@@ -1943,7 +1943,7 @@ async function handleDispatchDirective() {
         }
         document.getElementById("dispatchForm").reset();
         document.getElementById("dispatchModal").style.display = "none";
-        showToast(`AI 1 & AI 2 đã code thành công vào tệp [${result.codingResult.filePath}]! Mở Kho Mã Nguồn để xem chi tiết.`, "success");
+        showToast(`⚡ AI đã viết trực tiếp vào file [${result.codingResult.filePath}] trên ổ đĩa máy tính! (VS Code đã cập nhật)`, "success");
         // Open Virtual Code Studio to inspect the generated code
         openVirtualStudio(result.codingResult.filePath);
       }, 700);
@@ -2338,7 +2338,7 @@ async function saveActiveVirtualFile() {
       body: JSON.stringify({ filePath: activeVirtualFilePath, content: newContent })
     });
     if (res.ok) {
-      showToast(`Đã lưu tệp [${activeVirtualFilePath}] thành công vào CSDL!`, "success");
+      showToast(`Đã lưu và đồng bộ trực tiếp tệp [${activeVirtualFilePath}] vào ổ đĩa dự án!`, "success");
     }
   } catch (err) {
     console.warn("Could not sync file to server, saved locally:", err);

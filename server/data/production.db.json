@@ -102,6 +102,17 @@
   "orders": [],
   "audit_logs": [
     {
+      "id": "log_1794447385173",
+      "action": "EXPORT_ZIP",
+      "actor": "Admin",
+      "details": {
+        "projectId": "PRJ-RETAIL-2026",
+        "totalFiles": 7,
+        "sizeBytes": 7738
+      },
+      "timestamp": "2026-11-12T01:36:25.173Z"
+    },
+    {
       "id": "log_1794447235042",
       "action": "VIBE_CODE_DISPATCH",
       "actor": "Admin Master",
@@ -126,7 +137,7 @@
   ],
   "_meta": {
     "version": "2.0.0",
-    "lastUpdated": "2026-11-12T01:33:55.042Z"
+    "lastUpdated": "2026-11-12T01:36:25.173Z"
   },
   "trial_leads": []
 }
