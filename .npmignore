@@ -1,0 +1,8 @@
+.env
+.env.*
+.git/
+.github/
+tests/
+*.log
+.system_generated/
+database/

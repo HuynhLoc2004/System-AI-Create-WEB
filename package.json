@@ -1,9 +1,13 @@
 {
   "name": "it-assignment-enterprise-platform",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
-  "description": "Production Multi-Department Software Engineering Platform & Retail Web",
+  "description": "Production Multi-Department Software Engineering Platform & Autonomous AI Vibe Coding Center",
   "main": "server/src/server.js",
+  "bin": {
+    "it-assignment": "bin/cli.js",
+    "it-assignment-enterprise-platform": "bin/cli.js"
+  },
   "scripts": {
     "start": "node server/src/server.js",
     "server": "node server/src/server.js",
