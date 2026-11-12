@@ -452,6 +452,24 @@ services:
         if (!fs.existsSync(targetDir)) {
           fs.mkdirSync(targetDir, { recursive: true });
         }
+
+        // Bảo vệ file package.json gốc không bị mất server dependencies
+        if (filePath === "package.json" && fs.existsSync(targetDiskPath)) {
+          try {
+            const currentPkg = JSON.parse(fs.readFileSync(targetDiskPath, "utf8"));
+            const newPkg = JSON.parse(content);
+            const mergedPkg = {
+              ...currentPkg,
+              ...newPkg,
+              scripts: { ...(currentPkg.scripts || {}), ...(newPkg.scripts || {}) },
+              dependencies: { ...(currentPkg.dependencies || {}), ...(newPkg.dependencies || {}) }
+            };
+            fs.writeFileSync(targetDiskPath, JSON.stringify(mergedPkg, null, 2), "utf8");
+            console.log(`[Physical Disk Write] Đã cập nhật kết hợp: ${targetDiskPath}`);
+            return { filePath, content };
+          } catch (_) {}
+        }
+
         fs.writeFileSync(targetDiskPath, content, "utf8");
         console.log(`[Physical Disk Write] Đã ghi trực tiếp vào ổ đĩa: ${targetDiskPath}`);
       }
@@ -460,6 +478,56 @@ services:
     }
 
     return { filePath, content };
+  }
+
+  recordIdeProgress({ dept, taskTitle, fileTarget, status, note }) {
+    const projects = this.getProjects();
+    if (!projects || projects.length === 0) return null;
+    const project = projects[0];
+
+    const taskId = `IDE-${Math.floor(100 + Math.random() * 900)}`;
+    project.tasks = project.tasks || [];
+    project.tasks.unshift({
+      id: taskId,
+      dept: dept || "Lập Trình",
+      title: taskTitle || "Cập nhật mã nguồn từ IDE",
+      pic: `${dept || "Developer"} (IDE Agent)`,
+      status: status || "DONE",
+      progress: status === "DONE" ? 100 : (status === "IN_PROGRESS" ? 50 : 0),
+      note: note || (fileTarget ? `Tệp: ${fileTarget}` : "Thực thi trực tiếp từ IDE"),
+      isDirective: true
+    });
+
+    if (project.deptStatuses && dept) {
+      project.deptStatuses[dept] = status || "DONE";
+    }
+
+    project.history = project.history || [];
+    project.history.unshift({
+      time: "Vừa xong",
+      dept: dept || "IDE Vibe Coding",
+      action: `[IDE VIBE] ${taskTitle} ${fileTarget ? `(${fileTarget})` : ""}`,
+      type: status === "BLOCKED" ? "danger" : "success"
+    });
+
+    if (fileTarget) {
+      try {
+        const workspaceRoot = process.env.LOCAL_WORKSPACE_ROOT || process.cwd();
+        const fullDiskPath = path.resolve(workspaceRoot, fileTarget);
+        if (fs.existsSync(fullDiskPath)) {
+          const fileContent = fs.readFileSync(fullDiskPath, "utf8");
+          project.files = project.files || {};
+          project.files[fileTarget] = fileContent;
+        }
+      } catch (_) {}
+    }
+
+    const totalTasks = project.tasks.length;
+    const doneTasks = project.tasks.filter(t => t.status === "DONE").length;
+    project.progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
+    this.save();
+    return { project, taskId };
   }
 
   syncProjectFilesToDisk(projectId) {

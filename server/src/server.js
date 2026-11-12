@@ -538,6 +538,30 @@ app.put("/api/tasks/:id/status", async (req, res) => {
   res.json({ success: true, data: updated });
 });
 
+// 5.1 IDE Progress Reporting API (Dành cho VS Code & AI Vibe Coding cập nhật Đài Quan Sát Web)
+app.post("/api/ide/report-progress", async (req, res) => {
+  try {
+    const { dept, taskTitle, fileTarget, status, note } = req.body;
+    const result = db.recordIdeProgress({ dept, taskTitle, fileTarget, status, note });
+    if (!result) {
+      return res.status(404).json({ success: false, error: "Không tìm thấy dự án đang hoạt động" });
+    }
+
+    await cache.invalidatePattern("projects:");
+    broadcastEvent("project:updated", {
+      projectId: result.project.id,
+      taskId: result.taskId,
+      dept,
+      progress: result.project.progress,
+      action: `[IDE VIBE] ${taskTitle}`
+    });
+
+    res.json({ success: true, message: "Đã cập nhật tiến độ IDE lên Web Dashboard", data: result });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 6. Orders & Real VietQR API
 app.post("/api/orders", (req, res) => {
   const order = db.createOrder(req.body);

@@ -2155,20 +2155,15 @@ function initRealtimeHeartbeat() {
   if (typeof EventSource !== "undefined") {
     try {
       const evtSource = new EventSource("/api/events");
+      evtSource.addEventListener("project:updated", () => syncProjectsWithBackend());
+      evtSource.addEventListener("task:created", () => syncProjectsWithBackend());
+      evtSource.addEventListener("task:status_updated", () => syncProjectsWithBackend());
+      evtSource.addEventListener("project:file_updated", () => syncProjectsWithBackend());
       evtSource.onmessage = function(event) {
         try {
           const data = JSON.parse(event.data);
           if (data && data.type !== "CONNECTED") {
-            const project = getCurrentProject();
-            if (project) {
-              project.history.unshift({
-                time: "Vừa xong",
-                dept: "Hệ Thống",
-                action: `[SỰ KIỆN MÁY CHỦ] ${data.type || "Cập nhật dữ liệu"}`,
-                type: "info"
-              });
-              renderActivityFeed(project);
-            }
+            syncProjectsWithBackend();
           }
         } catch (e) {}
       };
