@@ -67,6 +67,13 @@ if (command === "init") {
     fs.copyFileSync(scriptSrc, scriptDest);
   }
 
+  // Copy GEMINI.md (Luật điều phối cho AI trong IDE)
+  const geminiSrc = path.join(packageRoot, "GEMINI.md");
+  const geminiDest = path.join(targetDir, "GEMINI.md");
+  if (fs.existsSync(geminiSrc)) {
+    fs.copyFileSync(geminiSrc, geminiDest);
+  }
+
   console.log(`✅ Đã cài đặt thành công ${copied}/13 phòng ban vào: ${targetDir}`);
   console.log("👉 Bây giờ bạn có thể chat với AI trong IDE để tự động phối hợp theo 13 phòng ban!\n");
   process.exit(0);
