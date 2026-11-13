@@ -73,16 +73,24 @@ if (command === "init") {
 }
 
 if (command === "start" || command === "serve") {
+  const workspaceRoot = process.cwd();
+  const localDbDir = path.join(workspaceRoot, ".it-assignment");
+  if (!fs.existsSync(localDbDir)) {
+    fs.mkdirSync(localDbDir, { recursive: true });
+  }
+  const dbFile = path.join(localDbDir, "project.db.json");
   const serverScript = path.join(packageRoot, "server", "src", "server.js");
   console.log(`🚀 Đang khởi động Web Dashboard & Backend tại: http://localhost:5000 ...`);
-  console.log(`📂 Thư mục làm việc: ${process.cwd()}\n`);
+  console.log(`📂 Thư mục làm việc dự án: ${workspaceRoot}`);
+  console.log(`💾 CSDL Cục bộ dự án: ${dbFile}\n`);
 
   const child = spawn(process.execPath, [serverScript], {
     cwd: packageRoot,
     stdio: "inherit",
     env: {
       ...process.env,
-      LOCAL_WORKSPACE_ROOT: process.cwd(),
+      LOCAL_WORKSPACE_ROOT: workspaceRoot,
+      DB_FILE: dbFile,
       PORT: process.env.PORT || "5000"
     }
   });
@@ -96,3 +104,4 @@ if (command === "start" || command === "serve") {
     process.exit(code || 0);
   });
 }
+

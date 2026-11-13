@@ -37,15 +37,9 @@ class ProductionDatabase {
         this.data = JSON.parse(raw);
         this.data.trial_leads = this.data.trial_leads || [];
         this.data.projects = this.data.projects || [];
-        // Hydrate files if missing for zero-load virtual code studio
-        let needSave = false;
         this.data.projects.forEach(p => {
-          if (!p.files || Object.keys(p.files).length === 0) {
-            p.files = this.createDefaultProjectFiles(p);
-            needSave = true;
-          }
+          if (!p.files) p.files = {};
         });
-        if (needSave) this.save();
         console.log(`[Database] Loaded persistent data from ${this.filePath} (${this.data.projects?.length || 0} projects)`);
       } catch (err) {
         console.error(`[Database] Error reading DB file, re-initializing: ${err.message}`);
@@ -58,114 +52,26 @@ class ProductionDatabase {
   }
 
   createDefaultProjectFiles(project) {
-    const pkgName = (project.code || "project").toLowerCase().replace(/[^a-z0-9_-]/g, "");
-    return {
-      "package.json": JSON.stringify({
-        name: pkgName,
-        version: "1.0.0",
-        type: "module",
-        description: `Mã nguồn dự án ${project.name} (${project.code}) - Chuẩn 9 phòng ban`,
-        scripts: {
-          "dev": "vite",
-          "build": "vite build",
-          "preview": "vite preview"
-        },
-        dependencies: {
-          "react": "^18.3.1",
-          "react-dom": "^18.3.1",
-          "lucide-react": "^0.383.0"
-        }
-      }, null, 2),
-      "src/App.jsx": `import React, { useState } from 'react';
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState('overview');
-  return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif', background: '#0F172A', color: '#F8FAFC', minHeight: '100vh' }}>
-      <header style={{ borderBottom: '1px solid #1E293B', paddingBottom: '1.25rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1 style={{ margin: 0, color: '#38BDF8', fontSize: '1.6rem', fontWeight: 700 }}>${project.name}</h1>
-          <p style={{ color: '#94A3B8', margin: '6px 0 0 0', fontSize: '0.85rem' }}>Mã dự án: <code style={{ color: '#34D399', background: '#0B1120', padding: '2px 6px', borderRadius: '4px' }}>${project.code}</code> &bull; Tiêu chuẩn 9 phòng ban IT-Assignment</p>
-        </div>
-        <span style={{ background: 'rgba(56, 189, 248, 0.1)', color: '#38BDF8', border: '1px solid rgba(56, 189, 248, 0.25)', padding: '4px 10px', borderRadius: '6px', fontSize: '0.78rem', fontWeight: 600 }}>Zero-Load Production Ready</span>
-      </header>
-
-      <main style={{ maxWidth: '900px' }}>
-        <div style={{ background: '#1E293B', padding: '1.5rem', borderRadius: '12px', border: '1px solid #334155', marginBottom: '1.5rem' }}>
-          <h3 style={{ marginTop: 0, color: '#F1F5F9', fontSize: '1.15rem' }}>Kiến Trúc Không Trọng Lượng (Zero-Load)</h3>
-          <p style={{ color: '#CBD5E1', lineHeight: 1.6, fontSize: '0.9rem' }}>
-            Toàn bộ mã nguồn dự án được quản trị trực tiếp dạng Virtual File Tree (JSONB) trong cơ sở dữ liệu.
-            Server không cần tải node_modules, máy chủ VPS đạt mức tải CPU 0% khi người dùng xem trước và kiểm thử.
-          </p>
-          <div style={{ display: 'flex', gap: '10px', marginTop: '1rem' }}>
-            <button onClick={() => setActiveTab('overview')} style={{ background: activeTab === 'overview' ? '#2563EB' : '#334155', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>Tổng Quan Nghiệp Vụ</button>
-            <button onClick={() => setActiveTab('tech')} style={{ background: activeTab === 'tech' ? '#2563EB' : '#334155', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>Thông Số Kỹ Thuật</button>
-          </div>
-        </div>
-
-        {activeTab === 'tech' && (
-          <div style={{ background: '#0B1120', padding: '1.25rem', borderRadius: '8px', border: '1px solid #1E293B', fontFamily: 'monospace', fontSize: '0.82rem', color: '#A5B4FC' }}>
-            <div>&bull; Ngân Sách Dự Toán: ${project.budget || 'Tiêu Chuẩn'}</div>
-            <div>&bull; Hạ Tầng Triển Khai: ${project.infraStrategy || 'Docker VPS'}</div>
-            <div>&bull; Cơ Chế Nén: In-Memory JSZip Streaming</div>
-            <div>&bull; Lưu Trữ Code: PostgreSQL / DB JSONB (0% Inodes Pollution)</div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
-}`,
-      "src/index.css": `body {
-  margin: 0;
-  padding: 0;
-  background-color: #0b1120;
-  color: #f1f5f9;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}`,
-      "database/schema.sql": `-- Cơ sở dữ liệu dự án ${project.name} (${project.code})
-CREATE TABLE IF NOT EXISTS orders (
-  id VARCHAR(64) PRIMARY KEY,
-  customer_name VARCHAR(128) NOT NULL,
-  amount NUMERIC(15, 2) NOT NULL,
-  status VARCHAR(32) DEFAULT 'PENDING',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);`,
-      "docker-compose.yml": `version: '3.8'
-services:
-  app:
-    image: node:22-alpine
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-    restart: unless-stopped`,
-      "README.md": `# ${project.name} (${project.code})
-
-> Dự án được khởi tạo và điều phối bởi hệ sinh thái 9 phòng ban kỹ thuật IT-Assignment.
-
-## Kiến Trúc Zero-Load
-- **Lưu trữ:** Virtual File Tree JSONB trong Database (0% node_modules trên đĩa VPS).
-- **Xuất mã nguồn:** Nén trực tiếp từ RAM bằng JSZip Streaming.
-- **Xem trước:** Render client-side 0% CPU server.`
-    };
+    return {};
   }
 
   seedInitialData() {
+    const workspaceRoot = process.env.LOCAL_WORKSPACE_ROOT || process.cwd();
+    const folderName = path.basename(path.resolve(workspaceRoot));
+    const projectCode = folderName.toUpperCase().replace(/[^A-Z0-9_-]/g, "") || "PROJECT";
+    const projectName = folderName.replace(/[-_]/g, " ");
+
     this.data.projects = [
       {
-        id: "PRJ-RETAIL-2026",
-        name: "Sàn Bán Lẻ Đa Kênh & VietQR Động",
-        code: "RETAIL",
+        id: `PRJ-${projectCode}`,
+        name: projectName,
+        code: projectCode,
         progress: 0,
-        budget: "May đo thực tế",
+        budget: "Khởi tạo theo yêu cầu",
         status: "PLANNING",
         stage: "Pha 1: Khởi Tạo & Chờ Điều Phối AI",
         serverCost: "Localhost:5000 (Zero-Load)",
-        infraStrategy: "Virtual File Tree JSONB (0% CPU VPS)",
+        infraStrategy: "Local Workspace File System",
         tokenEfficiency: 100,
         deptStatuses: {
           client: "IDLE", po: "IDLE", pm: "IDLE", ba: "IDLE", sa: "IDLE",
@@ -177,21 +83,9 @@ services:
         blockers: [],
         state: "DRAFT",
         history: [
-          { time: "Khởi tạo", dept: "Hệ Thống", action: "Dự án đã sẵn sàng ở trạng thái 0% nguyên bản. Hãy phát lệnh AI để bắt đầu.", type: "info" }
+          { time: "Khởi tạo", dept: "Hệ Thống", action: `Dự án [${projectName}] đã sẵn sàng ở trạng thái 0% nguyên bản (0 tác vụ). Hãy bắt đầu phát lệnh AI!`, type: "info" }
         ],
-        clientConfig: {
-          brandName: "Novawear Premium Retail",
-          headline: "Hệ Thống Bán Lẻ Thời Trang Đa Kênh Tích Hợp VietQR Tự Động",
-          deployMode: "Máy Chủ Cục Bộ Nội Bộ (Localhost:5000)",
-          previewUrl: "http://127.0.0.1:5000/storefront",
-          customDomain: "https://novawear.com.vn",
-          bannerTitle: "Bộ Sưu Tập Thu Đông 2026",
-          bannerSubtitle: "Thanh toán quét mã VietQR nhận diện giao dịch tự động trong 0.8 giây",
-          adminUser: "novawear_admin",
-          adminPass: "Nova@2026MasterPass",
-          aiModel: "Gemini 2.5 Flash",
-          products: []
-        }
+        files: {}
       }
     ];
 
@@ -200,11 +94,6 @@ services:
     this.data.orders = [];
     this.data.trial_leads = [];
     this.data.audit_logs = [];
-
-    // Ensure default files exist for the project
-    this.data.projects.forEach(p => {
-      p.files = this.createDefaultProjectFiles(p);
-    });
 
     this.save();
   }

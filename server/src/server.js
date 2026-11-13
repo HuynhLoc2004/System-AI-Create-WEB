@@ -868,12 +868,12 @@ app.listen(CONFIG.PORT, () => {
   console.log(`⚙️  Queue System: ${jobQueue.concurrency} Concurrent Workers Active`);
   console.log(`======================================================\n`);
 
-  // Đồng bộ mã nguồn vật lý vào workspace cục bộ
+  // Đồng bộ mã nguồn vật lý vào workspace cục bộ (chỉ khi dự án có files thật)
   try {
     const projects = db.getProjects();
-    if (projects.length > 0) {
+    if (projects.length > 0 && projects[0].files && Object.keys(projects[0].files).length > 0) {
       db.syncProjectFilesToDisk(projects[0].id);
-      console.log(`📂 Physical Disk Sync: Đã đồng bộ mã nguồn [${projects[0].code}] trực tiếp vào ổ đĩa (${process.cwd()})`);
+      console.log(`📂 Physical Disk Sync: Đã đồng bộ mã nguồn [${projects[0].code}] trực tiếp vào ổ đĩa (${process.env.LOCAL_WORKSPACE_ROOT || process.cwd()})`);
     }
   } catch (syncErr) {
     console.warn(`[Startup Sync Warning] ${syncErr.message}`);
