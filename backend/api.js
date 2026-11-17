@@ -1,7 +1,7 @@
 /**
- * BACKEND DYNAMIC CMS ROUTER
+ * BACKEND DYNAMIC CMS & OPERATIONS ROUTER
  * Phòng ban phụ trách: 06_Backend_Development & 07_Database_Management
- * Kiến trúc: Dynamic Section-Driven REST API
+ * Kiến trúc: Dynamic Section-Driven & Catalog Operations REST API
  * Ngành nghề: Hệ Thống Nha Khoa & Phòng Khám Chuyên Khoa
  */
 import { Router } from "express";
@@ -9,7 +9,6 @@ import { Router } from "express";
 export function createProjectRouter(db, broadcastEvent) {
   const router = Router();
 
-  // Helper trích xuất project từ DB
   function resolveProject(req, res) {
     const projectId = req.params.projectId || req.projectId;
     const project = db.getProjectById(projectId);
@@ -17,90 +16,118 @@ export function createProjectRouter(db, broadcastEvent) {
       res.status(404).json({ success: false, error: "Không tìm thấy dự án " + projectId });
       return null;
     }
-    project.data = project.data || { sections: [], settings: {} };
+    project.data = project.data || {};
     project.data.sections = project.data.sections || [];
+    project.data.catalog_items = project.data.catalog_items || [];
+    project.data.submissions = project.data.submissions || [];
     return project;
   }
 
-  // 1. PUBLIC CLIENT API: Lấy các section đang bật
+  // --- CLIENT APIS ---
   router.get("/client/sections", (req, res) => {
     const project = resolveProject(req, res);
     if (!project) return;
-    const activeSections = project.data.sections.filter(s => s.active !== false);
-    res.json({ success: true, projectId: project.id, data: activeSections });
+    const active = project.data.sections.filter(s => s.active !== false);
+    res.json({ success: true, projectId: project.id, data: active });
   });
 
-  // 2. PUBLIC CLIENT API: Lấy dữ liệu cấu hình chung
-  router.get("/client/data", (req, res) => {
+  router.get("/client/catalog", (req, res) => {
     const project = resolveProject(req, res);
     if (!project) return;
-    res.json({ success: true, projectId: project.id, data: project.data });
+    const active = project.data.catalog_items.filter(i => i.status !== "INACTIVE");
+    res.json({ success: true, projectId: project.id, data: active });
   });
 
-  // 3. ADMIN CMS API: Lấy toàn bộ danh sách section để quản trị
+  router.post("/client/submissions", (req, res) => {
+    const project = resolveProject(req, res);
+    if (!project) return;
+    const { customerName, phone, itemId, itemName, scheduledDate, note } = req.body;
+    if (!customerName || !phone) {
+      return res.status(400).json({ success: false, error: "Họ tên và Số điện thoại là bắt buộc" });
+    }
+    const submission = {
+      id: "SUB-" + Math.floor(1000 + Math.random() * 9000),
+      customerName: String(customerName).trim(),
+      phone: String(phone).trim(),
+      itemId: itemId || "",
+      itemName: itemName || "Tư vấn tổng quát",
+      scheduledDate: scheduledDate || new Date().toISOString().split("T")[0],
+      note: note ? String(note).trim() : "",
+      status: "PENDING",
+      createdAt: new Date().toISOString()
+    };
+    project.data.submissions.unshift(submission);
+    db.save();
+
+    if (typeof broadcastEvent === "function") {
+      broadcastEvent("submission:created", { projectId: project.id, submission });
+      broadcastEvent("project:data_updated", { projectId: project.id, action: "ADD_SUBMISSION", submission });
+    }
+    res.json({ success: true, message: "Đặt lịch thành công!", data: submission });
+  });
+
+  router.get("/client/submissions", (req, res) => {
+    const project = resolveProject(req, res);
+    if (!project) return;
+    const { phone } = req.query;
+    if (!phone) return res.json({ success: true, data: [] });
+    const clean = String(phone).replace(/\D/g, "");
+    const matches = project.data.submissions.filter(s => {
+      const sp = String(s.phone).replace(/\D/g, "");
+      return sp.includes(clean) || clean.includes(sp);
+    });
+    res.json({ success: true, data: matches });
+  });
+
+  // --- ADMIN APIS ---
   router.get("/admin/sections", (req, res) => {
     const project = resolveProject(req, res);
     if (!project) return;
     res.json({ success: true, projectId: project.id, data: project.data.sections });
   });
 
-  // 4. ADMIN CMS API: Thêm mới section
-  router.post("/admin/sections", (req, res) => {
+  router.get("/admin/catalog", (req, res) => {
     const project = resolveProject(req, res);
     if (!project) return;
-    const { title, subtitle, type, content, items } = req.body;
-    if (!title) {
-      return res.status(400).json({ success: false, error: "Tiêu đề section không được để trống" });
-    }
-    const newSection = {
-      id: "sec-" + Date.now().toString(36),
-      title: String(title).trim(),
-      subtitle: subtitle ? String(subtitle).trim() : "",
-      type: type || "content",
-      content: content || "",
-      items: Array.isArray(items) ? items : [],
-      active: true,
+    res.json({ success: true, projectId: project.id, data: project.data.catalog_items });
+  });
+
+  router.post("/admin/catalog", (req, res) => {
+    const project = resolveProject(req, res);
+    if (!project) return;
+    const { name, category, price, duration_or_unit, description } = req.body;
+    const item = {
+      id: "item-" + Date.now().toString(36),
+      name: String(name || "").trim(),
+      category: category ? String(category).trim() : "Chung",
+      price: price || 0,
+      duration_or_unit: duration_or_unit || "Lần",
+      description: description || "",
+      status: "ACTIVE",
       updatedAt: new Date().toISOString()
     };
-    project.data.sections.push(newSection);
+    project.data.catalog_items.push(item);
     db.save();
-
-    if (typeof broadcastEvent === "function") {
-      broadcastEvent("project:data_updated", { projectId: project.id, action: "ADD_SECTION", section: newSection });
-    }
-    res.json({ success: true, message: "Đã thêm section mới thành công", data: newSection, sections: project.data.sections });
+    res.json({ success: true, data: item, catalog: project.data.catalog_items });
   });
 
-  // 5. ADMIN CMS API: Cập nhật section hoặc bật/tắt
-  router.put("/admin/sections/:id", (req, res) => {
+  router.get("/admin/submissions", (req, res) => {
+    const project = resolveProject(req, res);
+    if (!project) return;
+    res.json({ success: true, projectId: project.id, data: project.data.submissions });
+  });
+
+  router.put("/admin/submissions/:id/status", (req, res) => {
     const project = resolveProject(req, res);
     if (!project) return;
     const { id } = req.params;
-    const sec = project.data.sections.find(s => s.id === id);
-    if (!sec) {
-      return res.status(404).json({ success: false, error: "Không tìm thấy section " + id });
-    }
-    Object.assign(sec, req.body, { updatedAt: new Date().toISOString() });
+    const { status } = req.body;
+    const sub = project.data.submissions.find(s => s.id === id);
+    if (!sub) return res.status(404).json({ success: false, error: "Không tìm thấy đơn " + id });
+    sub.status = status || sub.status;
+    sub.updatedAt = new Date().toISOString();
     db.save();
-
-    if (typeof broadcastEvent === "function") {
-      broadcastEvent("project:data_updated", { projectId: project.id, action: "UPDATE_SECTION", section: sec });
-    }
-    res.json({ success: true, message: "Đã cập nhật section", data: sec, sections: project.data.sections });
-  });
-
-  // 6. ADMIN CMS API: Xóa section
-  router.delete("/admin/sections/:id", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    const { id } = req.params;
-    project.data.sections = project.data.sections.filter(s => s.id !== id);
-    db.save();
-
-    if (typeof broadcastEvent === "function") {
-      broadcastEvent("project:data_updated", { projectId: project.id, action: "DELETE_SECTION", deletedId: id });
-    }
-    res.json({ success: true, message: "Đã xóa section", sections: project.data.sections });
+    res.json({ success: true, data: sub });
   });
 
   return router;

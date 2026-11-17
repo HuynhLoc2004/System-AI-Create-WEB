@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 /**
  * Multi-Instance Gemini AI Architecture
  * - Instance 1: Consultant AI (Phân tích nhu cầu & tư vấn giải pháp)
@@ -853,6 +855,7 @@ export const departmentVibeCoderAI = new DepartmentVibeCoderAIService();
 /**
  * DOMAIN IDENTIFIER & DESIGN TOKEN RESOLVER
  * Tuân thủ quy tắc 90/10 Clean Light, cấm tiệt nền đen neon, glow và emoji rác
+ * Bổ sung đầy đủ dữ liệu nghiệp vụ: sections, catalog_items, submissions
  */
 function resolveDomainSpec(userRequirement = "", project = {}) {
   const text = (userRequirement + " " + (project.name || "")).toLowerCase();
@@ -906,6 +909,86 @@ function resolveDomainSpec(userRequirement = "", project = {}) {
           phone: "1900 6868",
           email: "hotro@nhakhoachuyensau.vn",
           active: true
+        }
+      ],
+      sampleCatalogItems: [
+        {
+          id: "item-cl-1",
+          name: "Trồng Răng Implant Straumann (Thụy Sĩ)",
+          category: "Cấy Ghép Implant",
+          price: 18000000,
+          duration_or_unit: "1 Trụ",
+          description: "Vật liệu Titanium sinh học tinh khiết, tích hợp xương nhanh chỉ trong 3 tuần, bảo hành trọn đời.",
+          status: "ACTIVE"
+        },
+        {
+          id: "item-cl-2",
+          name: "Niềng Răng Khay Trong Suốt Invisalign",
+          category: "Chỉnh Nha Thẩm Mỹ",
+          price: 45000000,
+          duration_or_unit: "Gói Toàn Diện",
+          description: "Khay niềng SmartTrack vô hình, scan dấu răng 3D iTero 5D biết trước kết quả sau điều trị.",
+          status: "ACTIVE"
+        },
+        {
+          id: "item-cl-3",
+          name: "Tẩy Trắng Răng Laser Whitening",
+          category: "Nha Khoa Thẩm Mỹ",
+          price: 2500000,
+          duration_or_unit: "45 phút",
+          description: "Bật sáng 3-5 tone tức thì, ứng dụng ánh sáng lạnh không ê buốt, bù khoáng men răng tự nhiên.",
+          status: "ACTIVE"
+        },
+        {
+          id: "item-cl-4",
+          name: "Nhổ Răng Khôn Sóng Siêu Âm Piezotome",
+          category: "Tiểu Phẫu Răng Khôn",
+          price: 1500000,
+          duration_or_unit: "1 Răng",
+          description: "Không đau, vết rạch vi phẫu nhỏ, bảo tồn cấu trúc xương hàm, lành thương sau 48h.",
+          status: "ACTIVE"
+        },
+        {
+          id: "item-cl-5",
+          name: "Bọc Răng Sứ Cercon HT Chính Hãng",
+          category: "Phục Hình Sứ",
+          price: 3800000,
+          duration_or_unit: "1 Răng",
+          description: "Độ thấu quang tự nhiên như răng thật, chịu lực uốn 1200 MPa, bảo hành chính hãng 10 năm.",
+          status: "ACTIVE"
+        },
+        {
+          id: "item-cl-6",
+          name: "Khám Tổng Quát & Cạo Vôi Răng Siêu Âm",
+          category: "Chăm Sóc Răng Miệng",
+          price: 300000,
+          duration_or_unit: "30 phút",
+          description: "Làm sạch mảng bám cao răng dưới nướu nhẹ nhàng, đánh bóng kháng khuẩn khử mùi hôi miệng.",
+          status: "ACTIVE"
+        }
+      ],
+      sampleSubmissions: [
+        {
+          id: "SUB-8291",
+          customerName: "Nguyễn Thị Thu Hà",
+          phone: "0901234567",
+          itemId: "item-cl-3",
+          itemName: "Tẩy Trắng Răng Laser Whitening",
+          scheduledDate: "2026-11-20",
+          note: "Khám vào buổi sáng lúc 9h",
+          status: "CONFIRMED",
+          createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
+        },
+        {
+          id: "SUB-8292",
+          customerName: "Trần Anh Dũng",
+          phone: "0987654321",
+          itemId: "item-cl-1",
+          itemName: "Trồng Răng Implant Straumann (Thụy Sĩ)",
+          scheduledDate: "2026-11-22",
+          note: "Cần chụp phim CT và tư vấn gói trả góp",
+          status: "PENDING",
+          createdAt: new Date(Date.now() - 1800000).toISOString()
         }
       ]
     };
@@ -961,6 +1044,15 @@ function resolveDomainSpec(userRequirement = "", project = {}) {
           email: "cskh@taphoasach.vn",
           active: true
         }
+      ],
+      sampleCatalogItems: [
+        { id: "item-rt-1", name: "Gạo ST25 Hữu Cơ Ông Cua Chính Hãng (Túi 5kg)", category: "Nông Sản & Gạo", price: 210000, duration_or_unit: "Túi 5kg", description: "Gạo đạt giải nhất ngon nhất thế giới, hạt thon dài dẻo thơm tự nhiên.", status: "ACTIVE" },
+        { id: "item-rt-2", name: "Thịt Bò Thăn Úc Black Angus Tươi", category: "Thịt & Hải Sản", price: 340000, duration_or_unit: "500g", description: "Bò ăn ngũ cốc chuẩn chất lượng, vân mỡ đều, mềm mọng khi chế biến bít tết.", status: "ACTIVE" },
+        { id: "item-rt-3", name: "Nho Mẫu Đơn Shine Muscat Nhập Khẩu", category: "Trái Cây Nhập Khẩu", price: 420000, duration_or_unit: "Chùm 600g", description: "Hương thơm hổ phách ngát, giòn ngọt đậm đà, không hạt cao cấp.", status: "ACTIVE" },
+        { id: "item-rt-4", name: "Sữa Tươi Thanh Trùng Nguyên Chất Dalatmilk", category: "Sữa & Bơ", price: 38000, duration_or_unit: "Chai 950ml", description: "100% sữa bò tươi từ cao nguyên Đà Lạt, giữ trọn vẹn hương vị tinh túy.", status: "ACTIVE" }
+      ],
+      sampleSubmissions: [
+        { id: "SUB-5101", customerName: "Lê Văn Toàn", phone: "0912345678", itemId: "item-rt-1", itemName: "Gạo ST25 Hữu Cơ Ông Cua (Túi 5kg)", scheduledDate: "2026-11-18", note: "Giao trước 17h chiều", status: "CONFIRMED", createdAt: new Date().toISOString() }
       ]
     };
   }
@@ -1015,6 +1107,14 @@ function resolveDomainSpec(userRequirement = "", project = {}) {
           email: "it-support@enterprise.internal",
           active: true
         }
+      ],
+      sampleCatalogItems: [
+        { id: "item-sa-1", name: "Gói Starter 50 Nhân Sự Nội Bộ", category: "Gói Thuê Bao", price: 490000, duration_or_unit: "Tháng", description: "Điểm danh WiFi 1 chi nhánh, xuất Excel chấm công tự động, hỗ trợ email 24/7.", status: "ACTIVE" },
+        { id: "item-sa-2", name: "Gói Enterprise Không Giới Hạn Chi Nhánh", category: "Gói Thuê Bao", price: 1890000, duration_or_unit: "Tháng", description: "Bảo mật CIDR BSSID đa chi nhánh, phân quyền Org Chart, tích hợp Webhook HR.", status: "ACTIVE" },
+        { id: "item-sa-3", name: "Thiết Bị WiFi Gateway Gateway Hardware Token", category: "Phần Cứng", price: 1200000, duration_or_unit: "Thiết bị", description: "Đầu phát tín hiệu mã hóa RSA-2048 xác thực vật lý tại văn phòng.", status: "ACTIVE" }
+      ],
+      sampleSubmissions: [
+        { id: "SUB-3011", customerName: "Phạm Minh Hoàng", phone: "0934567890", itemId: "item-sa-1", itemName: "Gói Starter 50 Nhân Sự Nội Bộ", scheduledDate: "2026-11-25", note: "Yêu cầu kỹ sư setup Subnet IP văn phòng", status: "PENDING", createdAt: new Date().toISOString() }
       ]
     };
   }
@@ -1069,6 +1169,13 @@ function resolveDomainSpec(userRequirement = "", project = {}) {
         email: "solutions@enterprise.vn",
         active: true
       }
+    ],
+    sampleCatalogItems: [
+      { id: "item-gen-1", name: "Gói Tư Vấn Kiến Trúc Phần Mềm Doanh Nghiệp", category: "Tư Vấn", price: 20000000, duration_or_unit: "Dự Án", description: "Khảo sát hạ tầng, bóc tách WBS và thiết kế tài liệu Architecture Blueprint.", status: "ACTIVE" },
+      { id: "item-gen-2", name: "Gói Kiểm Định An Ninh DevSecOps & Audit", category: "Bảo Mật", price: 15000000, duration_or_unit: "Gói", description: "Quét CVE, kiểm tra an toàn chuỗi cung ứng và cấp chứng nhận bảo mật.", status: "ACTIVE" }
+    ],
+    sampleSubmissions: [
+      { id: "SUB-1001", customerName: "Vũ Đình Khải", phone: "0945678901", itemId: "item-gen-1", itemName: "Gói Tư Vấn Kiến Trúc Phần Mềm Doanh Nghiệp", scheduledDate: "2026-11-21", note: "Họp trực tiếp tại trụ sở", status: "CONFIRMED", createdAt: new Date().toISOString() }
     ]
   };
 }
@@ -1083,54 +1190,38 @@ function buildArchitectureContract(domainSpec, userRequirement, project) {
     domain: domainSpec.domain,
     title: domainSpec.title,
     userRequirement,
-    architecturePattern: "Dynamic Section-Driven Modular Architecture",
+    architecturePattern: "Dynamic Multi-View Section & Catalog Driven Architecture",
     backendEngine: "Express.js RESTful Router (Stateless / Async)",
     database: {
       type: "Persistent JSON / Virtual Schema",
-      primaryEntities: ["sections", "items", "settings", "audit_logs"]
+      primaryEntities: [
+        "sections",
+        "catalog_items",
+        "submissions",
+        "settings",
+        "audit_logs"
+      ]
     },
     cachingStrategy: {
       engine: "In-Memory LRU Cache",
       ttlSeconds: 60,
-      invalidationEvents: ["section:updated", "data:saved"]
+      invalidationEvents: ["section:updated", "catalog:updated", "submission:created"]
     },
     apiContracts: [
-      {
-        method: "GET",
-        endpoint: "/api/projects/:projectId/client/sections",
-        access: "Public",
-        description: "Khách hàng lấy danh sách section đang bật (active=true) để render động"
-      },
-      {
-        method: "GET",
-        endpoint: "/api/projects/:projectId/client/data",
-        access: "Public",
-        description: "Lấy cấu hình tổng thể và thông tin thương hiệu"
-      },
-      {
-        method: "GET",
-        endpoint: "/api/projects/:projectId/admin/sections",
-        access: "Admin",
-        description: "Admin CMS lấy toàn bộ danh sách section kèm cờ bật/tắt"
-      },
-      {
-        method: "POST",
-        endpoint: "/api/projects/:projectId/admin/sections",
-        access: "Admin",
-        description: "Admin thêm mới section vào giao diện Client"
-      },
-      {
-        method: "PUT",
-        endpoint: "/api/projects/:projectId/admin/sections/:id",
-        access: "Admin",
-        description: "Admin cập nhật tiêu đề, nội dung, hoặc bật/tắt hiển thị section"
-      },
-      {
-        method: "DELETE",
-        endpoint: "/api/projects/:projectId/admin/sections/:id",
-        access: "Admin",
-        description: "Admin xóa hoàn toàn section khỏi cơ sở dữ liệu"
-      }
+      { method: "GET", endpoint: "/api/projects/:projectId/client/sections", access: "Public", description: "Lấy danh sách các section trang chủ đang hiển thị" },
+      { method: "GET", endpoint: "/api/projects/:projectId/client/catalog", access: "Public", description: "Lấy danh sách sản phẩm/dịch vụ có lọc và tìm kiếm" },
+      { method: "POST", endpoint: "/api/projects/:projectId/client/submissions", access: "Public", description: "Khách hàng gửi đặt lịch hẹn / đặt hàng mới" },
+      { method: "GET", endpoint: "/api/projects/:projectId/client/submissions", access: "Public", description: "Khách tra cứu trạng thái đơn theo số điện thoại" },
+      { method: "GET", endpoint: "/api/projects/:projectId/admin/sections", access: "Admin", description: "Admin quản lý các khối section trang chủ" },
+      { method: "POST", endpoint: "/api/projects/:projectId/admin/sections", access: "Admin", description: "Admin thêm section mới" },
+      { method: "PUT", endpoint: "/api/projects/:projectId/admin/sections/:id", access: "Admin", description: "Admin cập nhật section" },
+      { method: "DELETE", endpoint: "/api/projects/:projectId/admin/sections/:id", access: "Admin", description: "Admin xóa section" },
+      { method: "GET", endpoint: "/api/projects/:projectId/admin/catalog", access: "Admin", description: "Admin quản lý danh mục sản phẩm/dịch vụ" },
+      { method: "POST", endpoint: "/api/projects/:projectId/admin/catalog", access: "Admin", description: "Admin thêm mục mới vào catalog" },
+      { method: "PUT", endpoint: "/api/projects/:projectId/admin/catalog/:id", access: "Admin", description: "Admin sửa giá, mô tả sản phẩm" },
+      { method: "DELETE", endpoint: "/api/projects/:projectId/admin/catalog/:id", access: "Admin", description: "Admin xóa sản phẩm khỏi catalog" },
+      { method: "GET", endpoint: "/api/projects/:projectId/admin/submissions", access: "Admin", description: "Admin duyệt danh sách đơn đặt của khách" },
+      { method: "PUT", endpoint: "/api/projects/:projectId/admin/submissions/:id/status", access: "Admin", description: "Admin đổi trạng thái đơn (CONFIRMED / COMPLETED / CANCELLED)" }
     ],
     designTokens: {
       theme: "Clean Light",
@@ -1140,14 +1231,7 @@ function buildArchitectureContract(domainSpec, userRequirement, project) {
       textColor: "#0f172a",
       subtextColor: "#64748b",
       borderColor: "#e2e8f0",
-      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
-      negativeConstraints: [
-        "Strict 90/10 ratio: 90% Clean Light base, 10% purposeful accent",
-        "NO neon cyan/dark blue matrix backgrounds (#0F172A, #38BDF8)",
-        "NO glowing neon box-shadows or saturated gradients",
-        "NO childish emojis in buttons and titles",
-        "70% reduction in meaningless marketing fluff"
-      ]
+      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif"
     },
     generatedAt: new Date().toISOString()
   };
@@ -1157,679 +1241,43 @@ function buildArchitectureContract(domainSpec, userRequirement, project) {
  * SINH FILE BACKEND ROUTER (backend/api.js)
  */
 function buildBackendRouterCode(domainSpec) {
-  return `/**
- * BACKEND DYNAMIC CMS ROUTER
- * Phòng ban phụ trách: 06_Backend_Development & 07_Database_Management
- * Kiến trúc: Dynamic Section-Driven REST API
- * Ngành nghề: ${domainSpec.title}
- */
-import { Router } from "express";
-
-export function createProjectRouter(db, broadcastEvent) {
-  const router = Router();
-
-  // Helper trích xuất project từ DB
-  function resolveProject(req, res) {
-    const projectId = req.params.projectId || req.projectId;
-    const project = db.getProjectById(projectId);
-    if (!project) {
-      res.status(404).json({ success: false, error: "Không tìm thấy dự án " + projectId });
-      return null;
-    }
-    project.data = project.data || { sections: [], settings: {} };
-    project.data.sections = project.data.sections || [];
-    return project;
-  }
-
-  // 1. PUBLIC CLIENT API: Lấy các section đang bật
-  router.get("/client/sections", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    const activeSections = project.data.sections.filter(s => s.active !== false);
-    res.json({ success: true, projectId: project.id, data: activeSections });
-  });
-
-  // 2. PUBLIC CLIENT API: Lấy dữ liệu cấu hình chung
-  router.get("/client/data", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    res.json({ success: true, projectId: project.id, data: project.data });
-  });
-
-  // 3. ADMIN CMS API: Lấy toàn bộ danh sách section để quản trị
-  router.get("/admin/sections", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    res.json({ success: true, projectId: project.id, data: project.data.sections });
-  });
-
-  // 4. ADMIN CMS API: Thêm mới section
-  router.post("/admin/sections", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    const { title, subtitle, type, content, items } = req.body;
-    if (!title) {
-      return res.status(400).json({ success: false, error: "Tiêu đề section không được để trống" });
-    }
-    const newSection = {
-      id: "sec-" + Date.now().toString(36),
-      title: String(title).trim(),
-      subtitle: subtitle ? String(subtitle).trim() : "",
-      type: type || "content",
-      content: content || "",
-      items: Array.isArray(items) ? items : [],
-      active: true,
-      updatedAt: new Date().toISOString()
-    };
-    project.data.sections.push(newSection);
-    db.save();
-
-    if (typeof broadcastEvent === "function") {
-      broadcastEvent("project:data_updated", { projectId: project.id, action: "ADD_SECTION", section: newSection });
-    }
-    res.json({ success: true, message: "Đã thêm section mới thành công", data: newSection, sections: project.data.sections });
-  });
-
-  // 5. ADMIN CMS API: Cập nhật section hoặc bật/tắt
-  router.put("/admin/sections/:id", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    const { id } = req.params;
-    const sec = project.data.sections.find(s => s.id === id);
-    if (!sec) {
-      return res.status(404).json({ success: false, error: "Không tìm thấy section " + id });
-    }
-    Object.assign(sec, req.body, { updatedAt: new Date().toISOString() });
-    db.save();
-
-    if (typeof broadcastEvent === "function") {
-      broadcastEvent("project:data_updated", { projectId: project.id, action: "UPDATE_SECTION", section: sec });
-    }
-    res.json({ success: true, message: "Đã cập nhật section", data: sec, sections: project.data.sections });
-  });
-
-  // 6. ADMIN CMS API: Xóa section
-  router.delete("/admin/sections/:id", (req, res) => {
-    const project = resolveProject(req, res);
-    if (!project) return;
-    const { id } = req.params;
-    project.data.sections = project.data.sections.filter(s => s.id !== id);
-    db.save();
-
-    if (typeof broadcastEvent === "function") {
-      broadcastEvent("project:data_updated", { projectId: project.id, action: "DELETE_SECTION", deletedId: id });
-    }
-    res.json({ success: true, message: "Đã xóa section", sections: project.data.sections });
-  });
-
-  return router;
-}
-`;
+  const templatePath = path.resolve("server/src/templates/backend_api.js");
+  let tpl = fs.readFileSync(templatePath, "utf8");
+  return tpl.replaceAll("{{TITLE}}", domainSpec.title || "Enterprise Portal");
 }
 
 /**
- * SINH FILE CLIENT WEB (public/client.html) - Chuẩn 90/10 Clean Light
+ * SINH FILE CLIENT WEB (public/client.html) - Multi-View Interactive Web App
  */
 function buildClientHtml(domainSpec, project) {
-  const sectionsJson = JSON.stringify(domainSpec.sampleSections);
-  const primary = domainSpec.primaryColor;
-
-  return `<!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${domainSpec.title} - ${project.name || "Enterprise"}</title>
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: {
-              DEFAULT: '${primary}',
-              hover: '${primary}ee',
-              light: '${primary}15'
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
-
-  <!-- Top Announcement Bar -->
-  <div class="bg-brand text-white text-xs font-medium py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
-    <span>Cam kết bảo mật & tiêu chuẩn y khoa/doanh nghiệp hàng đầu</span>
-    <span class="opacity-60">&bull;</span>
-    <span class="underline cursor-pointer">Hotline 24/7: 1900 6868</span>
-  </div>
-
-  <!-- Header Navigation -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-lg bg-brand text-white flex items-center justify-center font-bold text-base shadow-sm">
-          ${domainSpec.domain.charAt(0)}
-        </div>
-        <div>
-          <span class="font-bold text-slate-900 text-base tracking-tight">${project.name || domainSpec.title}</span>
-          <span class="hidden sm:inline-block ml-2 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Live Client</span>
-        </div>
-      </div>
-
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-        <a href="#sec-hero" class="hover:text-brand transition">Trang Chủ</a>
-        <a href="#sec-services" class="hover:text-brand transition">Dịch Vụ</a>
-        <a href="#sec-about" class="hover:text-brand transition">Cam Kết</a>
-        <a href="#sec-contact" class="hover:text-brand transition">Liên Hệ</a>
-      </nav>
-
-      <div class="flex items-center gap-3">
-        <a href="/preview/${project.id}/admin" target="_blank" class="text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-200 transition">
-          Cổng CMS Admin
-        </a>
-        <a href="#sec-contact" class="px-4 py-2 text-sm font-medium text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
-          Đặt Lịch Ngay
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- Dynamic Section Rendering Container -->
-  <main id="sections-container" class="flex-1">
-    <!-- Initial Skeleton Loader -->
-    <div id="loader" class="py-20 text-center text-slate-400 text-sm">
-      <div class="animate-spin inline-block w-6 h-6 border-2 border-brand border-t-transparent rounded-full mb-3"></div>
-      <div>Đang đồng bộ giao diện theo thời gian thực từ CSDL...</div>
-    </div>
-  </main>
-
-  <!-- Clean Minimal Footer -->
-  <footer class="bg-white border-t border-slate-200 py-10 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <div class="flex items-center gap-2">
-        <span class="font-semibold text-slate-700">${project.name || domainSpec.title}</span>
-        <span>&copy; ${new Date().getFullYear()} Bản quyền thuộc về doanh nghiệp.</span>
-      </div>
-      <div class="flex gap-4">
-        <a href="#" class="hover:text-slate-800">Chính Sách Bảo Mật</a>
-        <a href="#" class="hover:text-slate-800">Điều Khoản Dịch Vụ</a>
-        <a href="/preview/${project.id}/admin" class="text-brand hover:underline font-medium">Quản Trị Nội Dung (Admin)</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Dynamic Fetch & Section Renderer Logic -->
-  <script>
-    window.__PROJECT_ID__ = "${project.id}";
-    const defaultSections = ${sectionsJson};
-
-    async function loadClientSections() {
-      const container = document.getElementById('sections-container');
-      let sections = defaultSections;
-
-      try {
-        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/client/sections');
-        if (res.ok) {
-          const json = await res.json();
-          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-            sections = json.data;
-          }
-        }
-      } catch (err) {
-        console.warn('Load dynamic sections fallback to cache:', err);
-      }
-
-      renderSections(sections, container);
-    }
-
-    function renderSections(sections, container) {
-      container.innerHTML = '';
-
-      sections.forEach((sec, idx) => {
-        if (sec.active === false) return;
-
-        if (sec.type === 'hero') {
-          container.appendChild(createHeroElement(sec));
-        } else if (sec.type === 'services') {
-          container.appendChild(createServicesElement(sec));
-        } else if (sec.type === 'about') {
-          container.appendChild(createAboutElement(sec));
-        } else if (sec.type === 'contact') {
-          container.appendChild(createContactElement(sec));
-        } else {
-          container.appendChild(createGenericElement(sec));
-        }
-      });
-    }
-
-    function createHeroElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-hero';
-      el.className = 'py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50 border-b border-slate-200/80';
-      el.innerHTML = \`
-        <div class="max-w-4xl mx-auto px-4 text-center">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-light px-3 py-1 rounded-full mb-4">
-            Đột Phá Công Nghệ &bull; Tiêu Chuẩn Hiện Đại
-          </span>
-          <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-5">
-            \${sec.title}
-          </h1>
-          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
-            \${sec.subtitle || ''}
-          </p>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="#sec-contact" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
-              \${sec.buttonText || 'Bắt Đầu Ngay'}
-            </a>
-            <a href="#sec-services" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition">
-              Tìm Hiểu Dịch Vụ
-            </a>
-          </div>
-        </div>
-      \`;
-      return el;
-    }
-
-    function createServicesElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-services';
-      el.className = 'py-16 bg-white border-b border-slate-200/80';
-      
-      const itemsHtml = (sec.items || []).map(item => \`
-        <div class="p-6 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 hover:shadow-sm transition">
-          <div class="w-9 h-9 rounded-lg bg-brand-light text-brand flex items-center justify-center font-bold text-sm mb-4">
-            &check;
-          </div>
-          <h3 class="text-base font-semibold text-slate-900 mb-2">\${item.title}</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">\${item.desc}</p>
-        </div>
-      \`).join('');
-
-      el.innerHTML = \`
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-          <div class="text-center max-w-2xl mx-auto mb-12">
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">\${sec.title}</h2>
-            <p class="text-sm text-slate-600">\${sec.subtitle || ''}</p>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            \${itemsHtml}
-          </div>
-        </div>
-      \`;
-      return el;
-    }
-
-    function createAboutElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-about';
-      el.className = 'py-16 bg-slate-50 border-b border-slate-200/80';
-
-      const statsHtml = (sec.items || []).map(item => \`
-        <div class="text-center p-4">
-          <div class="text-3xl sm:text-4xl font-extrabold text-brand mb-1">\${item.value}</div>
-          <div class="text-xs sm:text-sm font-medium text-slate-600">\${item.label}</div>
-        </div>
-      \`).join('');
-
-      el.innerHTML = \`
-        <div class="max-w-4xl mx-auto px-4">
-          <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">\${sec.title}</h2>
-            <p class="text-sm text-slate-600">\${sec.subtitle || ''}</p>
-          </div>
-          <div class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 shadow-sm">
-            \${statsHtml}
-          </div>
-        </div>
-      \`;
-      return el;
-    }
-
-    function createContactElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-contact';
-      el.className = 'py-16 bg-white';
-      el.innerHTML = \`
-        <div class="max-w-3xl mx-auto px-4">
-          <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">\${sec.title}</h2>
-            <p class="text-sm text-slate-600">\${sec.subtitle || ''}</p>
-          </div>
-          <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 sm:p-8">
-            <form onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Đội ngũ sẽ liên hệ trong 10 phút.');" class="space-y-4">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-xs font-medium text-slate-700 mb-1">Họ và tên *</label>
-                  <input type="text" required placeholder="Nguyễn Văn A" class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand">
-                </div>
-                <div>
-                  <label class="block text-xs font-medium text-slate-700 mb-1">Số điện thoại *</label>
-                  <input type="tel" required placeholder="0901 234 567" class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand">
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-slate-700 mb-1">Ghi chú yêu cầu</label>
-                <textarea rows="3" placeholder="Nhập nhu cầu tư vấn hoặc thời gian mong muốn..." class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand"></textarea>
-              </div>
-              <button type="submit" class="w-full py-3 bg-brand text-white font-semibold text-sm rounded-lg hover:opacity-95 shadow-sm transition">
-                Xác Nhận Gửi Yêu Cầu
-              </button>
-            </form>
-          </div>
-        </div>
-      \`;
-      return el;
-    }
-
-    function createGenericElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id;
-      el.className = 'py-12 bg-white border-b border-slate-200';
-      el.innerHTML = \`
-        <div class="max-w-4xl mx-auto px-4">
-          <h2 class="text-xl font-bold text-slate-900 mb-2">\${sec.title}</h2>
-          <p class="text-sm text-slate-600">\${sec.content || sec.subtitle || ''}</p>
-        </div>
-      \`;
-      return el;
-    }
-
-    // Initialize
-    loadClientSections();
-  </script>
-</body>
-</html>`;
+  const templatePath = path.resolve("server/src/templates/client.html");
+  let tpl = fs.readFileSync(templatePath, "utf8");
+  return tpl
+    .replaceAll("{{PAGE_TITLE}}", domainSpec.title || "Enterprise Portal")
+    .replaceAll("{{PROJECT_NAME}}", project.name || domainSpec.title)
+    .replaceAll("{{PROJECT_ID}}", project.id || project.code)
+    .replaceAll("{{PRIMARY_COLOR}}", domainSpec.primaryColor || "#0d9488")
+    .replaceAll("{{DOMAIN_INITIAL}}", (domainSpec.domain || "E").charAt(0))
+    .replaceAll("{{YEAR}}", String(new Date().getFullYear()))
+    .replaceAll("{{CATALOG_JSON}}", JSON.stringify(domainSpec.sampleCatalogItems || []))
+    .replaceAll("{{SECTIONS_JSON}}", JSON.stringify(domainSpec.sampleSections || []));
 }
 
 /**
- * SINH FILE ADMIN CMS (public/admin.html) - Quản Trị Dynamic Sections Thật
+ * SINH FILE ADMIN CMS (public/admin.html) - Bảng Điều Hành 3 Tabs (Sections, Catalog, Submissions)
  */
 function buildAdminHtml(domainSpec, project) {
-  const primary = domainSpec.primaryColor;
-
-  return `<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin CMS - ${domainSpec.title}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: '${primary}'
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-zinc-50 text-zinc-900 min-h-screen antialiased flex flex-col font-sans">
-
-  <!-- Top Executive Navigation -->
-  <header class="bg-white border-b border-zinc-200 px-6 py-3.5 flex items-center justify-between sticky top-0 z-30">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex items-center justify-center font-bold text-xs tracking-wider">
-        CMS
-      </div>
-      <div>
-        <div class="flex items-center gap-2">
-          <h1 class="text-sm font-semibold text-zinc-900">Quản Trị Nội Dung: ${project.name || domainSpec.title}</h1>
-          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-            Realtime DB Active
-          </span>
-        </div>
-        <p class="text-xs text-zinc-500">Mọi thay đổi tại đây lập tức phản ánh trực tiếp trên trang Client</p>
-      </div>
-    </div>
-
-    <div class="flex items-center gap-3">
-      <a href="/preview/${project.id}/client" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-700 bg-white border border-zinc-300 hover:bg-zinc-50 rounded-lg shadow-sm transition">
-        <span>🌐 Xem Trang Client</span>
-        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <button onclick="openAddModal()" class="px-3.5 py-1.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg shadow-sm transition flex items-center gap-1">
-        <span>+ Thêm Section Mới</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Main Content Layout -->
-  <main class="max-w-6xl w-full mx-auto p-6 flex-1">
-    <!-- Stat Summary Bar -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-      <div class="bg-white border border-zinc-200 rounded-xl p-4 shadow-sm">
-        <div class="text-xs font-medium text-zinc-500 mb-1">Tổng Số Section</div>
-        <div id="stat-total" class="text-2xl font-bold text-zinc-900">--</div>
-      </div>
-      <div class="bg-white border border-zinc-200 rounded-xl p-4 shadow-sm">
-        <div class="text-xs font-medium text-zinc-500 mb-1">Đang Hiển Thị Trên Client</div>
-        <div id="stat-active" class="text-2xl font-bold text-emerald-600">--</div>
-      </div>
-      <div class="bg-white border border-zinc-200 rounded-xl p-4 shadow-sm">
-        <div class="text-xs font-medium text-zinc-500 mb-1">Trạng Thái Đồng Bộ</div>
-        <div class="text-sm font-semibold text-zinc-800 mt-1 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Zero-Downtime Sync</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sections Table Card -->
-    <div class="bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden">
-      <div class="px-6 py-4 border-b border-zinc-200 flex items-center justify-between">
-        <div>
-          <h2 class="text-sm font-semibold text-zinc-900">Danh Sách Section Giao Diện</h2>
-          <p class="text-xs text-zinc-500">Bật/tắt hoặc chỉnh sửa nội dung để thay đổi cấu trúc website tức thời</p>
-        </div>
-        <button onclick="loadAdminSections()" class="text-xs text-zinc-600 hover:text-zinc-900 px-2.5 py-1 border border-zinc-200 rounded hover:bg-zinc-50">
-          Làm mới
-        </button>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-zinc-600">
-          <thead class="bg-zinc-50 text-zinc-700 font-semibold border-b border-zinc-200 uppercase tracking-wider text-[11px]">
-            <tr>
-              <th class="py-3 px-6">ID & Loại</th>
-              <th class="py-3 px-6">Tiêu Đề Section</th>
-              <th class="py-3 px-6">Phụ Đề / Mô Tả</th>
-              <th class="py-3 px-6 text-center">Hiển Thị</th>
-              <th class="py-3 px-6 text-right">Thao Tác</th>
-            </tr>
-          </thead>
-          <tbody id="sections-tbody" class="divide-y divide-zinc-200">
-            <tr>
-              <td colspan="5" class="py-8 text-center text-zinc-400">Đang tải danh sách section...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </main>
-
-  <!-- Modal Thêm Section -->
-  <div id="addModal" class="fixed inset-0 bg-zinc-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl max-w-md w-full border border-zinc-200 shadow-xl p-6">
-      <h3 class="text-base font-semibold text-zinc-900 mb-1">Thêm Section Mới</h3>
-      <p class="text-xs text-zinc-500 mb-4">Section mới sẽ lập tức xuất hiện trên giao diện trang Client</p>
-
-      <form id="addSectionForm" onsubmit="handleAddSection(event)" class="space-y-3.5">
-        <div>
-          <label class="block text-xs font-medium text-zinc-700 mb-1">Loại Section</label>
-          <select id="newSecType" class="w-full text-xs px-3 py-2 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-zinc-800">
-            <option value="content">Nội Dung Thông Thường (Content)</option>
-            <option value="services">Danh Sách Dịch Vụ / Sản Phẩm</option>
-            <option value="about">Số Liệu / Về Chúng Tôi</option>
-            <option value="contact">Form Liên Hệ</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-zinc-700 mb-1">Tiêu Đề Section *</label>
-          <input type="text" id="newSecTitle" required placeholder="VD: Khách Hàng Tiêu Biểu" class="w-full text-xs px-3 py-2 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-zinc-800">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-zinc-700 mb-1">Phụ Đề / Mô Tả Ngắn</label>
-          <textarea id="newSecSubtitle" rows="2" placeholder="VD: Hơn 500 đối tác lớn tin dùng..." class="w-full text-xs px-3 py-2 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-zinc-800"></textarea>
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeAddModal()" class="px-3 py-1.5 text-xs text-zinc-600 hover:bg-zinc-100 rounded-lg">
-            Hủy Bỏ
-          </button>
-          <button type="submit" class="px-4 py-1.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg shadow-sm">
-            Lưu Section
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    window.__PROJECT_ID__ = "${project.id}";
-
-    async function loadAdminSections() {
-      const tbody = document.getElementById('sections-tbody');
-      try {
-        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/admin/sections');
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          renderTable(json.data);
-        } else {
-          tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-red-500">Lỗi khi tải dữ liệu</td></tr>';
-        }
-      } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-red-500">Lỗi kết nối API</td></tr>';
-      }
-    }
-
-    function renderTable(sections) {
-      const tbody = document.getElementById('sections-tbody');
-      document.getElementById('stat-total').textContent = sections.length;
-      document.getElementById('stat-active').textContent = sections.filter(s => s.active !== false).length;
-
-      if (sections.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-zinc-400">Chưa có section nào. Hãy tạo mới.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = sections.map(sec => \`
-        <tr class="hover:bg-zinc-50/70 transition">
-          <td class="py-3 px-6">
-            <span class="font-mono text-[11px] text-zinc-500">\${sec.id}</span>
-            <span class="block text-[10px] font-semibold uppercase tracking-wider text-zinc-400 mt-0.5">\${sec.type || 'section'}</span>
-          </td>
-          <td class="py-3 px-6 font-medium text-zinc-900">\${sec.title}</td>
-          <td class="py-3 px-6 text-zinc-500 max-w-xs truncate">\${sec.subtitle || '-'}</td>
-          <td class="py-3 px-6 text-center">
-            <button onclick="toggleSection('\${sec.id}', \${sec.active === false ? 'true' : 'false'})" class="px-2 py-1 rounded text-[11px] font-medium \${sec.active !== false ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-zinc-100 text-zinc-400'}">
-              \${sec.active !== false ? 'Đang Bật' : 'Tắt'}
-            </button>
-          </td>
-          <td class="py-3 px-6 text-right space-x-2">
-            <button onclick="deleteSection('\${sec.id}')" class="text-red-500 hover:text-red-700 text-xs">
-              Xóa
-            </button>
-          </td>
-        </tr>
-      \`).join('');
-    }
-
-    async function toggleSection(id, newStatus) {
-      try {
-        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/admin/sections/' + id, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ active: newStatus })
-        });
-        const json = await res.json();
-        if (json.success) {
-          loadAdminSections();
-        }
-      } catch (err) {
-        alert('Lỗi khi đổi trạng thái section');
-      }
-    }
-
-    async function deleteSection(id) {
-      if (!confirm('Bạn có chắc muốn xóa section này?')) return;
-      try {
-        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/admin/sections/' + id, {
-          method: 'DELETE'
-        });
-        const json = await res.json();
-        if (json.success) {
-          loadAdminSections();
-        }
-      } catch (err) {
-        alert('Lỗi khi xóa section');
-      }
-    }
-
-    function openAddModal() {
-      document.getElementById('addModal').classList.remove('hidden');
-    }
-
-    function closeAddModal() {
-      document.getElementById('addModal').classList.add('hidden');
-      document.getElementById('addSectionForm').reset();
-    }
-
-    async function handleAddSection(e) {
-      e.preventDefault();
-      const type = document.getElementById('newSecType').value;
-      const title = document.getElementById('newSecTitle').value;
-      const subtitle = document.getElementById('newSecSubtitle').value;
-
-      try {
-        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/admin/sections', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type, title, subtitle })
-        });
-        const json = await res.json();
-        if (json.success) {
-          closeAddModal();
-          loadAdminSections();
-        } else {
-          alert(json.error || 'Lỗi lưu section');
-        }
-      } catch (err) {
-        alert('Lỗi kết nối lưu section');
-      }
-    }
-
-    loadAdminSections();
-  </script>
-</body>
-</html>`;
+  const templatePath = path.resolve("server/src/templates/admin.html");
+  let tpl = fs.readFileSync(templatePath, "utf8");
+  return tpl
+    .replaceAll("{{PAGE_TITLE}}", domainSpec.title || "Enterprise Portal")
+    .replaceAll("{{PROJECT_NAME}}", project.name || domainSpec.title)
+    .replaceAll("{{PROJECT_ID}}", project.id || project.code)
+    .replaceAll("{{PRIMARY_COLOR}}", domainSpec.primaryColor || "#0d9488");
 }
 
 /**
  * MULTI-STAGE PIPELINE ĐIỀU PHỐI 13 PHÒNG BAN VIBE CODING
- * Thay thế triệt để nút thắt Single-File Bottleneck bằng 4 giai đoạn tuần tự:
- * 1. Stage 1 (SA & DBA): Xuất architecture.json & schema CSDL dynamic sections
- * 2. Stage 2 (BE): Sinh backend/api.js xử lý CRUD dữ liệu Client & Admin
- * 3. Stage 3 (UIUX & FE): Áp dụng Clean Light sinh public/client.html & public/admin.html
- * 4. Stage 4 (SEC & QA): Kiểm định Quality Gate và bảo mật
  */
 export async function executeVibeCodePipeline(projectId, userRequirement, db, broadcastEvent = null) {
   const project = db.getProject(projectId);
@@ -1862,8 +1310,8 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
   // ========================================================
   // BƯỚC 1: SA & DBA (Kiến Trúc & Thiết Kế Schema CSDL)
   // ========================================================
-  notify("sa", "IN_PROGRESS", "Thiết Kế Kiến Trúc & Frozen Contract", "Đang phân tích bài toán và thiết kế architecture.json...");
-  notify("dba", "IN_PROGRESS", "Thiết Kế Schema Dynamic Sections", "Đang định nghĩa mô hình dữ liệu sections...");
+  notify("sa", "IN_PROGRESS", "Thiết Kế Kiến Trúc Multi-View & Hợp Đồng API", "Đang phân tích bài toán và thiết kế architecture.json...");
+  notify("dba", "IN_PROGRESS", "Thiết Kế Schema Sections, Catalog & Submissions", "Đang định nghĩa mô hình dữ liệu đa thực thể...");
 
   const architectureContract = buildArchitectureContract(domainSpec, userRequirement, project);
   project.files["architecture.json"] = JSON.stringify(architectureContract, null, 2);
@@ -1872,19 +1320,26 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
   if (!project.data.sections || project.data.sections.length === 0) {
     project.data.sections = domainSpec.sampleSections;
   }
+  if (!project.data.catalog_items || project.data.catalog_items.length === 0) {
+    project.data.catalog_items = domainSpec.sampleCatalogItems || [];
+  }
+  if (!project.data.submissions || project.data.submissions.length === 0) {
+    project.data.submissions = domainSpec.sampleSubmissions || [];
+  }
+
   project.data.settings = {
     siteName: project.name || domainSpec.title,
     domain: domainSpec.domain,
     primaryColor: domainSpec.primaryColor
   };
 
-  notify("sa", "DONE", "Hoàn tất architecture.json", "Đã xuất JSON Contract chuẩn REST API & Schema");
-  notify("dba", "DONE", "Hoàn tất Schema CSDL", "Đã khởi tạo bảng sections trong virtual database");
+  notify("sa", "DONE", "Hoàn tất architecture.json", "Đã xuất JSON Contract chuẩn REST API đa thực thể");
+  notify("dba", "DONE", "Hoàn tất Schema CSDL", "Đã khởi tạo bảng sections, catalog_items, submissions");
 
   // ========================================================
   // BƯỚC 2: BE (Lập Trình Backend REST Router)
   // ========================================================
-  notify("be", "IN_PROGRESS", "Xây dựng Backend REST Router", "Đang lập trình backend/api.js xử lý CRUD Client & Admin...");
+  notify("be", "IN_PROGRESS", "Xây dựng Backend REST Router Nghiệp Vụ", "Đang lập trình backend/api.js xử lý CRUD Client & Admin...");
 
   const backendCode = buildBackendRouterCode(domainSpec);
   project.files["backend/api.js"] = backendCode;
@@ -1892,10 +1347,10 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
   notify("be", "DONE", "Hoàn tất backend/api.js", "Router sẵn sàng kết nối CSDL và xử lý CRUD");
 
   // ========================================================
-  // BƯỚC 3: UIUX & FE (Thiết Kế Clean Light & Sinh Ứng Dụng Đôi)
+  // BƯỚC 3: UIUX & FE (Thiết Kế Clean Light & Sinh Multi-View Web App)
   // ========================================================
-  notify("ui", "IN_PROGRESS", "Thiết Lập Design Tokens Clean Light", "Cấu hình bảng màu chuẩn 90/10, loại bỏ hoàn toàn dark-neon...");
-  notify("fe", "IN_PROGRESS", "Sinh Client Web & Admin CMS", "Đang lập trình public/client.html và public/admin.html...");
+  notify("ui", "IN_PROGRESS", "Thiết Lập Design Tokens Clean Light Multi-View", "Cấu hình bảng màu chuẩn 90/10, loại bỏ hoàn toàn dark-neon...");
+  notify("fe", "IN_PROGRESS", "Sinh Multi-View Web App & Admin CMS", "Đang lập trình public/client.html và public/admin.html...");
 
   const clientHtml = buildClientHtml(domainSpec, project);
   const adminHtml = buildAdminHtml(domainSpec, project);
@@ -1904,7 +1359,7 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
   project.files["public/admin.html"] = adminHtml;
 
   notify("ui", "DONE", "Hoàn tất Design System", "Đạt chuẩn 90/10 Clean Light với màu nhấn " + domainSpec.primaryColor);
-  notify("fe", "DONE", "Hoàn tất Ứng Dụng Đôi (Client & Admin)", "Giao diện khách hàng và Cổng CMS Admin đã sẵn sàng kết nối");
+  notify("fe", "DONE", "Hoàn tất Ứng Dụng Đa Trang (Client & Admin)", "Giao diện khách hàng và Cổng CMS Admin đã sẵn sàng kết nối");
 
   // ========================================================
   // BƯỚC 4: SEC & QA (Kiểm Định Quality Gate & Đồng Bộ Ổ Đĩa)
@@ -1929,7 +1384,7 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
     {
       id: `DIR-${taskIdBase}`,
       dept: "03. Kiến Trúc & CSDL (SA/DBA)",
-      title: `[KIẾN TRÚC] Thiết kế Schema & API Contract (${domainSpec.domain})`,
+      title: `[KIẾN TRÚC] Thiết kế Multi-View & Multi-Entity Schema (${domainSpec.domain})`,
       pic: "Solution Architect & DBA Lead",
       status: "DONE",
       progress: 100,
@@ -1939,17 +1394,17 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
     {
       id: `DIR-${taskIdBase + 1}`,
       dept: "06. Lập Trình Backend",
-      title: `[BACKEND] Xây dựng RESTful Router CRUD`,
+      title: `[BACKEND] Xây dựng RESTful Router CRUD Catalog & Submissions`,
       pic: "Backend Lead",
       status: "DONE",
       progress: 100,
-      note: "Tệp: backend/api.js &bull; Dynamic Section Endpoints",
+      note: "Tệp: backend/api.js &bull; Dynamic Endpoints",
       isDirective: true
     },
     {
       id: `DIR-${taskIdBase + 2}`,
       dept: "05. Lập Trình Frontend & UI",
-      title: `[FRONTEND] Xây dựng Client Web & Admin CMS`,
+      title: `[FRONTEND] Xây dựng Multi-View Web App & 3-Tabs CMS`,
       pic: "UI/UX & Frontend Specialist",
       status: "DONE",
       progress: 100,
@@ -1968,10 +1423,8 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
     }
   ];
 
-  // Đưa các task mới lên đầu danh sách
   project.tasks.unshift(...generatedTasks);
 
-  // Tính lại tiến độ
   const totalTasks = project.tasks.length;
   const doneTasks = project.tasks.filter(t => t.status === "DONE").length;
   project.progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
@@ -1980,11 +1433,10 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
   project.history.unshift({
     time: "Vừa xong",
     dept: "Multi-Stage Vibe Pipeline",
-    action: `Đã tự động khởi tạo 4 tệp: architecture.json, backend/api.js, public/client.html, public/admin.html (${domainSpec.domain})`,
+    action: `Đã nâng cấp Multi-View Web App: architecture.json, backend/api.js, public/client.html, public/admin.html (${domainSpec.domain})`,
     type: "success"
   });
 
-  // Đồng bộ vật lý vào ổ đĩa
   db.syncProjectFilesToDisk(projectId);
   db.save();
 
@@ -2010,5 +1462,3 @@ export async function executeVibeCodePipeline(projectId, userRequirement, db, br
     }
   };
 }
-
-

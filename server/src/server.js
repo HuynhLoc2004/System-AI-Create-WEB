@@ -1032,6 +1032,197 @@ app.put("/api/projects/:projectId/admin/data", (req, res) => {
   res.json({ success: true, message: "Đã lưu cấu hình", data: project.data });
 });
 
+// ========================================================
+// 14. DYNAMIC CATALOG & SUBMISSION (BOOKING/ORDERS) REST APIS
+// ========================================================
+
+// Public: Lấy danh sách sản phẩm/dịch vụ (catalog)
+app.get("/api/projects/:projectId/client/catalog", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  const catalog = project.data?.catalog_items || [];
+  const activeItems = catalog.filter(item => item.status !== "INACTIVE");
+  res.json({ success: true, projectId: project.id, data: activeItems });
+});
+
+// Public: Khách hàng gửi đặt lịch / đặt hàng
+app.post("/api/projects/:projectId/client/submissions", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  const { customerName, phone, itemId, itemName, scheduledDate, note } = req.body;
+  if (!customerName || !phone) {
+    return res.status(400).json({ success: false, error: "Họ tên và Số điện thoại là bắt buộc" });
+  }
+
+  project.data = project.data || {};
+  project.data.submissions = project.data.submissions || [];
+
+  const submission = {
+    id: "SUB-" + Math.floor(1000 + Math.random() * 9000),
+    customerName: String(customerName).trim(),
+    phone: String(phone).trim(),
+    itemId: itemId || "",
+    itemName: itemName || "Tư vấn tổng quát",
+    scheduledDate: scheduledDate || new Date().toISOString().split("T")[0],
+    note: note ? String(note).trim() : "",
+    status: "PENDING",
+    createdAt: new Date().toISOString()
+  };
+
+  project.data.submissions.unshift(submission);
+  db.save();
+
+  broadcastEvent("submission:created", { projectId: project.id, submission });
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "ADD_SUBMISSION", submission });
+
+  res.json({
+    success: true,
+    message: "Đặt lịch thành công! Đội ngũ tư vấn sẽ liên hệ xác nhận trong ít phút.",
+    data: submission
+  });
+});
+
+// Public: Khách tra cứu trạng thái đơn/lịch hẹn qua số điện thoại
+app.get("/api/projects/:projectId/client/submissions", (req, res) => {
+  const { projectId } = req.params;
+  const { phone } = req.query;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  const submissions = project.data?.submissions || [];
+  if (!phone) {
+    return res.json({ success: true, data: [] });
+  }
+
+  const cleanPhone = String(phone).trim().replace(/\D/g, "");
+  const matches = submissions.filter(s => {
+    const sPhone = String(s.phone).replace(/\D/g, "");
+    return sPhone.includes(cleanPhone) || cleanPhone.includes(sPhone);
+  });
+
+  res.json({ success: true, data: matches });
+});
+
+// Admin: Lấy toàn bộ danh mục sản phẩm/dịch vụ
+app.get("/api/projects/:projectId/admin/catalog", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  res.json({ success: true, projectId: project.id, data: project.data?.catalog_items || [] });
+});
+
+// Admin: Thêm sản phẩm/dịch vụ mới
+app.post("/api/projects/:projectId/admin/catalog", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  const { name, category, price, duration_or_unit, description, image_url, status } = req.body;
+  if (!name) {
+    return res.status(400).json({ success: false, error: "Tên mục không được để trống" });
+  }
+
+  project.data = project.data || {};
+  project.data.catalog_items = project.data.catalog_items || [];
+
+  const newItem = {
+    id: "item-" + Date.now().toString(36),
+    name: String(name).trim(),
+    category: category ? String(category).trim() : "Dịch Vụ Chung",
+    price: price || 0,
+    duration_or_unit: duration_or_unit ? String(duration_or_unit).trim() : "Lần",
+    description: description ? String(description).trim() : "",
+    image_url: image_url || "",
+    status: status || "ACTIVE",
+    updatedAt: new Date().toISOString()
+  };
+
+  project.data.catalog_items.push(newItem);
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "ADD_CATALOG", item: newItem });
+  res.json({ success: true, message: "Đã thêm mục mới vào danh mục", data: newItem, catalog: project.data.catalog_items });
+});
+
+// Admin: Cập nhật sản phẩm/dịch vụ
+app.put("/api/projects/:projectId/admin/catalog/:id", (req, res) => {
+  const { projectId, id } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  project.data = project.data || {};
+  project.data.catalog_items = project.data.catalog_items || [];
+
+  const item = project.data.catalog_items.find(i => i.id === id);
+  if (!item) return res.status(404).json({ success: false, error: "Không tìm thấy mục " + id });
+
+  Object.assign(item, req.body, { updatedAt: new Date().toISOString() });
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "UPDATE_CATALOG", item });
+  res.json({ success: true, message: "Đã cập nhật mục", data: item, catalog: project.data.catalog_items });
+});
+
+// Admin: Xóa sản phẩm/dịch vụ
+app.delete("/api/projects/:projectId/admin/catalog/:id", (req, res) => {
+  const { projectId, id } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  project.data = project.data || {};
+  project.data.catalog_items = (project.data.catalog_items || []).filter(i => i.id !== id);
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "DELETE_CATALOG", deletedId: id });
+  res.json({ success: true, message: "Đã xóa mục khỏi danh mục", catalog: project.data.catalog_items });
+});
+
+// Admin: Lấy danh sách toàn bộ đơn đặt / lịch hẹn
+app.get("/api/projects/:projectId/admin/submissions", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  res.json({ success: true, projectId: project.id, data: project.data?.submissions || [] });
+});
+
+// Admin: Cập nhật trạng thái đơn đặt
+app.put("/api/projects/:projectId/admin/submissions/:id/status", (req, res) => {
+  const { projectId, id } = req.params;
+  const { status } = req.body;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  project.data = project.data || {};
+  project.data.submissions = project.data.submissions || [];
+
+  const sub = project.data.submissions.find(s => s.id === id);
+  if (!sub) return res.status(404).json({ success: false, error: "Không tìm thấy đơn " + id });
+
+  sub.status = status || sub.status;
+  sub.updatedAt = new Date().toISOString();
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "UPDATE_SUBMISSION_STATUS", submission: sub });
+  res.json({ success: true, message: "Đã cập nhật trạng thái đơn", data: sub });
+});
+
+// Admin: Xóa đơn đặt
+app.delete("/api/projects/:projectId/admin/submissions/:id", (req, res) => {
+  const { projectId, id } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+
+  project.data = project.data || {};
+  project.data.submissions = (project.data.submissions || []).filter(s => s.id !== id);
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "DELETE_SUBMISSION", deletedId: id });
+  res.json({ success: true, message: "Đã xóa đơn đặt", submissions: project.data.submissions });
+});
+
 // Fallback to index.html for SPA routes
 app.use((req, res) => {
   res.sendFile(path.join(CONFIG.STATIC_DIR, "index.html"));

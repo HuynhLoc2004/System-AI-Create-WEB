@@ -3,14 +3,15 @@
   "projectName": "Dự Án Mới",
   "domain": "CLINIC",
   "title": "Hệ Thống Nha Khoa & Phòng Khám Chuyên Khoa",
-  "userRequirement": "Xây dựng website phòng khám nha khoa cao cấp",
-  "architecturePattern": "Dynamic Section-Driven Modular Architecture",
+  "userRequirement": "Xây dựng website phòng khám nha khoa cao cấp có đặt lịch hẹn, bảng giá dịch vụ và tra cứu hồ sơ",
+  "architecturePattern": "Dynamic Multi-View Section & Catalog Driven Architecture",
   "backendEngine": "Express.js RESTful Router (Stateless / Async)",
   "database": {
     "type": "Persistent JSON / Virtual Schema",
     "primaryEntities": [
       "sections",
-      "items",
+      "catalog_items",
+      "submissions",
       "settings",
       "audit_logs"
     ]
@@ -20,7 +21,8 @@
     "ttlSeconds": 60,
     "invalidationEvents": [
       "section:updated",
-      "data:saved"
+      "catalog:updated",
+      "submission:created"
     ]
   },
   "apiContracts": [
@@ -28,37 +30,85 @@
       "method": "GET",
       "endpoint": "/api/projects/:projectId/client/sections",
       "access": "Public",
-      "description": "Khách hàng lấy danh sách section đang bật (active=true) để render động"
+      "description": "Lấy danh sách các section trang chủ đang hiển thị"
     },
     {
       "method": "GET",
-      "endpoint": "/api/projects/:projectId/client/data",
+      "endpoint": "/api/projects/:projectId/client/catalog",
       "access": "Public",
-      "description": "Lấy cấu hình tổng thể và thông tin thương hiệu"
+      "description": "Lấy danh sách sản phẩm/dịch vụ có lọc và tìm kiếm"
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/projects/:projectId/client/submissions",
+      "access": "Public",
+      "description": "Khách hàng gửi đặt lịch hẹn / đặt hàng mới"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/projects/:projectId/client/submissions",
+      "access": "Public",
+      "description": "Khách tra cứu trạng thái đơn theo số điện thoại"
     },
     {
       "method": "GET",
       "endpoint": "/api/projects/:projectId/admin/sections",
       "access": "Admin",
-      "description": "Admin CMS lấy toàn bộ danh sách section kèm cờ bật/tắt"
+      "description": "Admin quản lý các khối section trang chủ"
     },
     {
       "method": "POST",
       "endpoint": "/api/projects/:projectId/admin/sections",
       "access": "Admin",
-      "description": "Admin thêm mới section vào giao diện Client"
+      "description": "Admin thêm section mới"
     },
     {
       "method": "PUT",
       "endpoint": "/api/projects/:projectId/admin/sections/:id",
       "access": "Admin",
-      "description": "Admin cập nhật tiêu đề, nội dung, hoặc bật/tắt hiển thị section"
+      "description": "Admin cập nhật section"
     },
     {
       "method": "DELETE",
       "endpoint": "/api/projects/:projectId/admin/sections/:id",
       "access": "Admin",
-      "description": "Admin xóa hoàn toàn section khỏi cơ sở dữ liệu"
+      "description": "Admin xóa section"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/projects/:projectId/admin/catalog",
+      "access": "Admin",
+      "description": "Admin quản lý danh mục sản phẩm/dịch vụ"
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/projects/:projectId/admin/catalog",
+      "access": "Admin",
+      "description": "Admin thêm mục mới vào catalog"
+    },
+    {
+      "method": "PUT",
+      "endpoint": "/api/projects/:projectId/admin/catalog/:id",
+      "access": "Admin",
+      "description": "Admin sửa giá, mô tả sản phẩm"
+    },
+    {
+      "method": "DELETE",
+      "endpoint": "/api/projects/:projectId/admin/catalog/:id",
+      "access": "Admin",
+      "description": "Admin xóa sản phẩm khỏi catalog"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/projects/:projectId/admin/submissions",
+      "access": "Admin",
+      "description": "Admin duyệt danh sách đơn đặt của khách"
+    },
+    {
+      "method": "PUT",
+      "endpoint": "/api/projects/:projectId/admin/submissions/:id/status",
+      "access": "Admin",
+      "description": "Admin đổi trạng thái đơn (CONFIRMED / COMPLETED / CANCELLED)"
     }
   ],
   "designTokens": {
@@ -69,14 +119,7 @@
     "textColor": "#0f172a",
     "subtextColor": "#64748b",
     "borderColor": "#e2e8f0",
-    "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
-    "negativeConstraints": [
-      "Strict 90/10 ratio: 90% Clean Light base, 10% purposeful accent",
-      "NO neon cyan/dark blue matrix backgrounds (#0F172A, #38BDF8)",
-      "NO glowing neon box-shadows or saturated gradients",
-      "NO childish emojis in buttons and titles",
-      "70% reduction in meaningless marketing fluff"
-    ]
+    "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif"
   },
-  "generatedAt": "2026-11-17T06:21:05.617Z"
+  "generatedAt": "2026-11-17T06:32:19.877Z"
 }

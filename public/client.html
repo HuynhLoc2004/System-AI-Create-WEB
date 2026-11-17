@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hệ Thống Nha Khoa & Phòng Khám Chuyên Khoa - Dự Án Mới</title>
-  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -19,7 +17,7 @@
             brand: {
               DEFAULT: '#0d9488',
               hover: '#0d9488ee',
-              light: '#0d948815'
+              light: '#0d948818'
             }
           }
         }
@@ -28,55 +26,187 @@
   </script>
   <style>
     body { font-family: 'Inter', sans-serif; }
+    .tab-btn.active {
+      background-color: #0d9488;
+      color: #ffffff;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-sans">
 
   <!-- Top Announcement Bar -->
   <div class="bg-brand text-white text-xs font-medium py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
-    <span>Cam kết bảo mật & tiêu chuẩn y khoa/doanh nghiệp hàng đầu</span>
+    <span>Cam kết bảo mật & tiêu chuẩn chuyên môn cấp cao</span>
     <span class="opacity-60">&bull;</span>
-    <span class="underline cursor-pointer">Hotline 24/7: 1900 6868</span>
+    <span class="underline cursor-pointer">Hotline hỗ trợ 24/7: 1900 6868</span>
   </div>
 
-  <!-- Header Navigation -->
+  <!-- Header Navigation with SPA View Switcher -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
         <div class="w-9 h-9 rounded-lg bg-brand text-white flex items-center justify-center font-bold text-base shadow-sm">
           C
         </div>
         <div>
           <span class="font-bold text-slate-900 text-base tracking-tight">Dự Án Mới</span>
-          <span class="hidden sm:inline-block ml-2 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Live Client</span>
+          <span class="hidden sm:inline-block ml-2 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Web App</span>
         </div>
       </div>
 
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-        <a href="#sec-hero" class="hover:text-brand transition">Trang Chủ</a>
-        <a href="#sec-services" class="hover:text-brand transition">Dịch Vụ</a>
-        <a href="#sec-about" class="hover:text-brand transition">Cam Kết</a>
-        <a href="#sec-contact" class="hover:text-brand transition">Liên Hệ</a>
+      <!-- Navigation Tabs (SPA View Switcher) -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-medium text-slate-600">
+        <button id="nav-home" onclick="switchView('home')" class="tab-btn active px-3.5 py-1.5 rounded-lg transition">Trang Chủ</button>
+        <button id="nav-catalog" onclick="switchView('catalog')" class="tab-btn px-3.5 py-1.5 rounded-lg transition">Dịch Vụ & Bảng Giá</button>
+        <button id="nav-booking" onclick="switchView('booking')" class="tab-btn px-3.5 py-1.5 rounded-lg transition">Đặt Lịch & Tra Cứu</button>
       </nav>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <a href="/preview/PRJ-DEFAULT/admin" target="_blank" class="text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-200 transition">
-          Cổng CMS Admin
+          CMS Admin
         </a>
-        <a href="#sec-contact" class="px-4 py-2 text-sm font-medium text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
+        <button onclick="switchView('booking')" class="px-3.5 py-1.5 text-xs font-semibold text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
           Đặt Lịch Ngay
-        </a>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile View Bar -->
+    <div class="md:hidden flex border-t border-slate-100 bg-slate-50 px-4 py-2 justify-around text-xs font-medium text-slate-600">
+      <button onclick="switchView('home')" class="py-1 px-3 rounded hover:text-brand">Trang Chủ</button>
+      <button onclick="switchView('catalog')" class="py-1 px-3 rounded hover:text-brand">Bảng Giá</button>
+      <button onclick="switchView('booking')" class="py-1 px-3 rounded hover:text-brand">Đặt Lịch & Tra Cứu</button>
     </div>
   </header>
 
-  <!-- Dynamic Section Rendering Container -->
-  <main id="sections-container" class="flex-1">
-    <!-- Initial Skeleton Loader -->
-    <div id="loader" class="py-20 text-center text-slate-400 text-sm">
-      <div class="animate-spin inline-block w-6 h-6 border-2 border-brand border-t-transparent rounded-full mb-3"></div>
-      <div>Đang đồng bộ giao diện theo thời gian thực từ CSDL...</div>
-    </div>
+  <!-- MAIN MULTI-VIEW WRAPPER -->
+  <main class="flex-1">
+
+    <!-- VIEW 1: TRANG CHỦ (HOME VIEW) -->
+    <section id="view-home" class="view-panel">
+      <!-- Dynamic Sections Rendered here -->
+      <div id="home-sections-container"></div>
+
+      <!-- Featured Catalog Section -->
+      <div class="py-14 bg-white border-t border-slate-200/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-brand">Danh Mục Chọn Lọc</span>
+              <h2 class="text-2xl font-bold text-slate-900 mt-1">Dịch Vụ & Bảng Giá Tiêu Biểu</h2>
+            </div>
+            <button onclick="switchView('catalog')" class="text-xs font-semibold text-brand hover:underline flex items-center gap-1">
+              <span>Xem toàn bộ danh mục</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+          <div id="home-featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: DỊCH VỤ & BẢNG GIÁ (CATALOG VIEW) -->
+    <section id="view-catalog" class="view-panel hidden py-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="text-xs font-semibold uppercase tracking-wider text-brand bg-brand-light px-3 py-1 rounded-full">Bảng Giá Minh Bạch</span>
+          <h1 class="text-3xl font-bold text-slate-900 mt-3 mb-2">Danh Mục Dịch Vụ & Sản Phẩm</h1>
+          <p class="text-sm text-slate-600">Minh bạch chi phí, tư vấn phác đồ và hỗ trợ chăm sóc tận tâm.</p>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-8 flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <div class="relative w-full sm:w-80">
+            <input type="text" id="catalogSearchInput" oninput="filterCatalog()" placeholder="Tìm kiếm theo tên, mô tả..." class="w-full text-xs pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand">
+            <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <div id="catalogCategoryChips" class="flex flex-wrap gap-1.5 w-full sm:w-auto"></div>
+        </div>
+
+        <!-- Catalog Items Grid -->
+        <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="catalogEmpty" class="hidden text-center py-16 text-slate-400 text-sm">
+          Không tìm thấy dịch vụ nào phù hợp với từ khóa tìm kiếm.
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: ĐẶT LỊCH & TRA CỨU TIẾN ĐỘ (BOOKING & TRACKING) -->
+    <section id="view-booking" class="view-panel hidden py-10">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-xl mx-auto mb-10">
+          <h1 class="text-3xl font-bold text-slate-900 mb-2">Đặt Lịch Hẹn & Tra Cứu</h1>
+          <p class="text-sm text-slate-600">Đăng ký hẹn khám/tư vấn hoặc tra cứu tiến độ hồ sơ bằng số điện thoại.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Left Column: Form Đặt Lịch -->
+          <div class="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div class="flex items-center gap-2 mb-6">
+              <div class="w-7 h-7 rounded-lg bg-brand-light text-brand flex items-center justify-center font-bold text-xs">1</div>
+              <h2 class="text-lg font-bold text-slate-900">Thông Tin Đặt Lịch Hẹn</h2>
+            </div>
+
+            <form id="clientBookingForm" onsubmit="handleCreateBooking(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Họ và tên *</label>
+                  <input type="text" id="bkName" required placeholder="Nguyễn Văn A" class="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Số điện thoại *</label>
+                  <input type="tel" id="bkPhone" required placeholder="0901 234 567" class="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Chọn Dịch Vụ Quan Tâm</label>
+                <select id="bkItemSelect" class="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand"></select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Ngày Hẹn Mong Muốn</label>
+                <input type="date" id="bkDate" class="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Ghi Chú Yêu Cầu / Tình Trạng</label>
+                <textarea id="bkNote" rows="3" placeholder="Mô tả triệu chứng hoặc thời gian cụ thể bạn có thể đến..." class="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand"></textarea>
+              </div>
+
+              <button type="submit" id="bkSubmitBtn" class="w-full py-3 bg-brand text-white font-semibold text-xs uppercase tracking-wider rounded-lg hover:opacity-95 shadow-sm transition">
+                Xác Nhận Đặt Lịch Ngay
+              </button>
+            </form>
+
+            <div id="bkSuccessBox" class="hidden mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800"></div>
+          </div>
+
+          <!-- Right Column: Tra Cứu Bằng Số Điện Thoại -->
+          <div class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs">2</div>
+              <h2 class="text-lg font-bold text-slate-900">Tra Cứu Tiến Độ</h2>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Nhập số điện thoại đã đăng ký để kiểm tra trạng thái tiếp nhận và lịch hẹn đã duyệt.</p>
+
+            <div class="flex gap-2 mb-6">
+              <input type="tel" id="lookupPhoneInput" placeholder="Nhập SĐT của bạn..." class="flex-1 text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-brand">
+              <button onclick="handleLookup()" class="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg hover:bg-slate-800 transition">
+                Tra Cứu
+              </button>
+            </div>
+
+            <div id="lookupResults" class="space-y-3">
+              <div class="text-center py-8 text-xs text-slate-400">
+                Chưa có yêu cầu tra cứu. Vui lòng nhập số điện thoại.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Clean Minimal Footer -->
@@ -87,191 +217,338 @@
         <span>&copy; 2026 Bản quyền thuộc về doanh nghiệp.</span>
       </div>
       <div class="flex gap-4">
-        <a href="#" class="hover:text-slate-800">Chính Sách Bảo Mật</a>
-        <a href="#" class="hover:text-slate-800">Điều Khoản Dịch Vụ</a>
-        <a href="/preview/PRJ-DEFAULT/admin" class="text-brand hover:underline font-medium">Quản Trị Nội Dung (Admin)</a>
+        <button onclick="switchView('home')" class="hover:text-slate-800">Trang Chủ</button>
+        <button onclick="switchView('catalog')" class="hover:text-slate-800">Bảng Giá</button>
+        <button onclick="switchView('booking')" class="hover:text-slate-800">Đặt Lịch</button>
+        <a href="/preview/PRJ-DEFAULT/admin" class="text-brand hover:underline font-medium">Cổng Quản Trị CMS</a>
       </div>
     </div>
   </footer>
 
-  <!-- Dynamic Fetch & Section Renderer Logic -->
   <script>
     window.__PROJECT_ID__ = "PRJ-DEFAULT";
-    const defaultSections = [{"id":"sec-hero","type":"hero","title":"Chăm Sóc Nụ Cười Hoàn Hảo Cùng Đội Ngũ Chuyên Gia","subtitle":"Công nghệ nha khoa không đau chuẩn Châu Âu. Đặt lịch tư vấn và chụp phim CT miễn phí 100% hôm nay.","buttonText":"Đặt Lịch Khám Ngay","active":true},{"id":"sec-services","type":"services","title":"Dịch Vụ Điều Trị & Thẩm Mỹ Nổi Bật","subtitle":"Quy trình vô trùng tuyệt đối, bảo hành dịch vụ dài hạn.","active":true,"items":[{"title":"Trồng Răng Implant","desc":"Phục hình răng đã mất bền chắc trọn đời, ăn nhai tự nhiên."},{"title":"Niềng Răng Trong Suốt","desc":"Khay niềng thẩm mỹ công nghệ 3D, không lộ mắc cài."},{"title":"Tẩy Trắng Răng Laser","desc":"Trắng sáng bật 3-5 tone chỉ sau 45 phút, an toàn men răng."},{"title":"Nhổ Răng Khôn Sóng Siêu Âm","desc":"Kỹ thuật Piezotome không đau, hồi phục nhanh trong 48h."}]},{"id":"sec-about","type":"about","title":"Cam Kết Chất Lượng Dịch Vụ Chuẩn Y Khoa","subtitle":"Hơn 10.000 khách hàng đã tin tưởng lấy lại nụ cười rạng rỡ.","active":true,"items":[{"value":"100%","label":"Bác Sĩ Chuyên Khoa RHM"},{"value":"15+","label":"Năm Kinh Nghiệm Vận Hành"},{"value":"0 Đau","label":"Công Nghệ Gây Tê Siêu Âm"}]},{"id":"sec-contact","type":"contact","title":"Liên Hệ Đặt Lịch Khám & Tư Vấn Miễn Phí","subtitle":"Vui lòng để lại số điện thoại để chuyên viên tư vấn liên hệ trong vòng 10 phút.","phone":"1900 6868","email":"hotro@nhakhoachuyensau.vn","active":true}];
+    let activeCatalog = [{"id":"item-cl-1","name":"Trồng Răng Implant Straumann (Thụy Sĩ)","category":"Cấy Ghép Implant","price":18000000,"duration_or_unit":"1 Trụ","description":"Vật liệu Titanium sinh học tinh khiết, tích hợp xương nhanh chỉ trong 3 tuần, bảo hành trọn đời.","status":"ACTIVE"},{"id":"item-cl-2","name":"Niềng Răng Khay Trong Suốt Invisalign","category":"Chỉnh Nha Thẩm Mỹ","price":45000000,"duration_or_unit":"Gói Toàn Diện","description":"Khay niềng SmartTrack vô hình, scan dấu răng 3D iTero 5D biết trước kết quả sau điều trị.","status":"ACTIVE"},{"id":"item-cl-3","name":"Tẩy Trắng Răng Laser Whitening","category":"Nha Khoa Thẩm Mỹ","price":2500000,"duration_or_unit":"45 phút","description":"Bật sáng 3-5 tone tức thì, ứng dụng ánh sáng lạnh không ê buốt, bù khoáng men răng tự nhiên.","status":"ACTIVE"},{"id":"item-cl-4","name":"Nhổ Răng Khôn Sóng Siêu Âm Piezotome","category":"Tiểu Phẫu Răng Khôn","price":1500000,"duration_or_unit":"1 Răng","description":"Không đau, vết rạch vi phẫu nhỏ, bảo tồn cấu trúc xương hàm, lành thương sau 48h.","status":"ACTIVE"},{"id":"item-cl-5","name":"Bọc Răng Sứ Cercon HT Chính Hãng","category":"Phục Hình Sứ","price":3800000,"duration_or_unit":"1 Răng","description":"Độ thấu quang tự nhiên như răng thật, chịu lực uốn 1200 MPa, bảo hành chính hãng 10 năm.","status":"ACTIVE"},{"id":"item-cl-6","name":"Khám Tổng Quát & Cạo Vôi Răng Siêu Âm","category":"Chăm Sóc Răng Miệng","price":300000,"duration_or_unit":"30 phút","description":"Làm sạch mảng bám cao răng dưới nướu nhẹ nhàng, đánh bóng kháng khuẩn khử mùi hôi miệng.","status":"ACTIVE"}];
+    let activeSections = [{"id":"sec-hero","type":"hero","title":"Chăm Sóc Nụ Cười Hoàn Hảo Cùng Đội Ngũ Chuyên Gia","subtitle":"Công nghệ nha khoa không đau chuẩn Châu Âu. Đặt lịch tư vấn và chụp phim CT miễn phí 100% hôm nay.","buttonText":"Đặt Lịch Khám Ngay","active":true},{"id":"sec-services","type":"services","title":"Dịch Vụ Điều Trị & Thẩm Mỹ Nổi Bật","subtitle":"Quy trình vô trùng tuyệt đối, bảo hành dịch vụ dài hạn.","active":true,"items":[{"title":"Trồng Răng Implant","desc":"Phục hình răng đã mất bền chắc trọn đời, ăn nhai tự nhiên."},{"title":"Niềng Răng Trong Suốt","desc":"Khay niềng thẩm mỹ công nghệ 3D, không lộ mắc cài."},{"title":"Tẩy Trắng Răng Laser","desc":"Trắng sáng bật 3-5 tone chỉ sau 45 phút, an toàn men răng."},{"title":"Nhổ Răng Khôn Sóng Siêu Âm","desc":"Kỹ thuật Piezotome không đau, hồi phục nhanh trong 48h."}]},{"id":"sec-about","type":"about","title":"Cam Kết Chất Lượng Dịch Vụ Chuẩn Y Khoa","subtitle":"Hơn 10.000 khách hàng đã tin tưởng lấy lại nụ cười rạng rỡ.","active":true,"items":[{"value":"100%","label":"Bác Sĩ Chuyên Khoa RHM"},{"value":"15+","label":"Năm Kinh Nghiệm Vận Hành"},{"value":"0 Đau","label":"Công Nghệ Gây Tê Siêu Âm"}]},{"id":"sec-contact","type":"contact","title":"Liên Hệ Đặt Lịch Khám & Tư Vấn Miễn Phí","subtitle":"Vui lòng để lại số điện thoại để chuyên viên tư vấn liên hệ trong vòng 10 phút.","phone":"1900 6868","email":"hotro@nhakhoachuyensau.vn","active":true}];
+    let currentCategoryFilter = "ALL";
 
-    async function loadClientSections() {
-      const container = document.getElementById('sections-container');
-      let sections = defaultSections;
+    function formatVND(amount) {
+      if (!amount) return 'Liên hệ';
+      return new Intl.NumberFormat('vi-VN').format(amount) + ' đ';
+    }
 
+    // SPA View Switcher
+    function switchView(viewName) {
+      document.querySelectorAll('.view-panel').forEach(function(p) { p.classList.add('hidden'); });
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+
+      var target = document.getElementById('view-' + viewName);
+      if (target) target.classList.remove('hidden');
+
+      var btn = document.getElementById('nav-' + viewName);
+      if (btn) btn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Load Data from REST APIs
+    async function initClientApp() {
+      // 1. Fetch Sections
       try {
         const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/client/sections');
         if (res.ok) {
           const json = await res.json();
           if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-            sections = json.data;
+            activeSections = json.data;
           }
         }
-      } catch (err) {
-        console.warn('Load dynamic sections fallback to cache:', err);
-      }
+      } catch (_) {}
+      renderHomeSections(activeSections);
 
-      renderSections(sections, container);
+      // 2. Fetch Catalog Items
+      try {
+        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/client/catalog');
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            activeCatalog = json.data;
+          }
+        }
+      } catch (_) {}
+      renderCatalogCategoryChips();
+      filterCatalog();
+      renderFeaturedHomeCatalog();
+      populateBookingSelect();
+
+      // Set min date for booking to today
+      const today = new Date().toISOString().split('T')[0];
+      const bkDate = document.getElementById('bkDate');
+      if (bkDate) {
+        bkDate.min = today;
+        bkDate.value = today;
+      }
     }
 
-    function renderSections(sections, container) {
+    function renderHomeSections(sections) {
+      const container = document.getElementById('home-sections-container');
+      if (!container) return;
       container.innerHTML = '';
 
-      sections.forEach((sec, idx) => {
+      sections.forEach(function(sec) {
         if (sec.active === false) return;
-
         if (sec.type === 'hero') {
-          container.appendChild(createHeroElement(sec));
+          const el = document.createElement('div');
+          el.className = 'py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50 border-b border-slate-200/80 text-center px-4';
+          el.innerHTML = [
+            '<div class="max-w-4xl mx-auto">',
+            '  <span class="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-light px-3 py-1 rounded-full mb-4">Chuyên Nghiệp &bull; Tiêu Chuẩn Hiện Đại</span>',
+            '  <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-5">' + (sec.title || '') + '</h1>',
+            '  <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">' + (sec.subtitle || '') + '</p>',
+            '  <div class="flex flex-col sm:flex-row items-center justify-center gap-3">',
+            '    <button onclick="switchView(\\'booking\\')" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">' + (sec.buttonText || 'Đặt Lịch Ngay') + '</button>',
+            '    <button onclick="switchView(\\'catalog\\')" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition">Xem Bảng Giá & Dịch Vụ</button>',
+            '  </div>',
+            '</div>'
+          ].join('');
+          container.appendChild(el);
         } else if (sec.type === 'services') {
-          container.appendChild(createServicesElement(sec));
+          const el = document.createElement('div');
+          el.className = 'py-14 bg-white border-b border-slate-200/80';
+          const itemsHtml = (sec.items || []).map(function(i) {
+            return [
+              '<div class="p-6 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 transition">',
+              '  <div class="w-8 h-8 rounded-lg bg-brand-light text-brand flex items-center justify-center font-bold text-xs mb-3">&check;</div>',
+              '  <h3 class="text-sm font-bold text-slate-900 mb-1">' + (i.title || '') + '</h3>',
+              '  <p class="text-xs text-slate-600 leading-relaxed">' + (i.desc || '') + '</p>',
+              '</div>'
+            ].join('');
+          }).join('');
+
+          el.innerHTML = [
+            '<div class="max-w-6xl mx-auto px-4 sm:px-6">',
+            '  <div class="text-center max-w-2xl mx-auto mb-10">',
+            '    <h2 class="text-2xl font-bold text-slate-900 mb-2">' + (sec.title || '') + '</h2>',
+            '    <p class="text-xs sm:text-sm text-slate-600">' + (sec.subtitle || '') + '</p>',
+            '  </div>',
+            '  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">' + itemsHtml + '</div>',
+            '</div>'
+          ].join('');
+          container.appendChild(el);
         } else if (sec.type === 'about') {
-          container.appendChild(createAboutElement(sec));
-        } else if (sec.type === 'contact') {
-          container.appendChild(createContactElement(sec));
-        } else {
-          container.appendChild(createGenericElement(sec));
+          const el = document.createElement('div');
+          el.className = 'py-14 bg-slate-50 border-b border-slate-200/80';
+          const statsHtml = (sec.items || []).map(function(i) {
+            return [
+              '<div class="text-center p-4">',
+              '  <div class="text-3xl font-extrabold text-brand mb-1">' + (i.value || '') + '</div>',
+              '  <div class="text-xs font-medium text-slate-600">' + (i.label || '') + '</div>',
+              '</div>'
+            ].join('');
+          }).join('');
+
+          el.innerHTML = [
+            '<div class="max-w-4xl mx-auto px-4">',
+            '  <div class="text-center mb-8">',
+            '    <h2 class="text-2xl font-bold text-slate-900 mb-2">' + (sec.title || '') + '</h2>',
+            '    <p class="text-xs sm:text-sm text-slate-600">' + (sec.subtitle || '') + '</p>',
+            '  </div>',
+            '  <div class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 shadow-sm">' + statsHtml + '</div>',
+            '</div>'
+          ].join('');
+          container.appendChild(el);
         }
       });
     }
 
-    function createHeroElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-hero';
-      el.className = 'py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50 border-b border-slate-200/80';
-      el.innerHTML = `
-        <div class="max-w-4xl mx-auto px-4 text-center">
-          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-light px-3 py-1 rounded-full mb-4">
-            Đột Phá Công Nghệ &bull; Tiêu Chuẩn Hiện Đại
-          </span>
-          <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-5">
-            ${sec.title}
-          </h1>
-          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
-            ${sec.subtitle || ''}
-          </p>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="#sec-contact" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
-              ${sec.buttonText || 'Bắt Đầu Ngay'}
-            </a>
-            <a href="#sec-services" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition">
-              Tìm Hiểu Dịch Vụ
-            </a>
-          </div>
-        </div>
-      `;
-      return el;
+    function renderFeaturedHomeCatalog() {
+      const container = document.getElementById('home-featured-grid');
+      if (!container) return;
+      const topItems = activeCatalog.slice(0, 3);
+      container.innerHTML = topItems.map(function(item) {
+        return [
+          '<div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition flex flex-col justify-between">',
+          '  <div>',
+          '    <div class="flex items-center justify-between mb-3">',
+          '      <span class="text-[11px] font-semibold uppercase tracking-wider text-brand bg-brand-light px-2.5 py-0.5 rounded">' + item.category + '</span>',
+          '      <span class="text-xs text-slate-500">' + (item.duration_or_unit || '') + '</span>',
+          '    </div>',
+          '    <h3 class="text-base font-bold text-slate-900 mb-2">' + item.name + '</h3>',
+          '    <p class="text-xs text-slate-600 leading-relaxed mb-4">' + item.description + '</p>',
+          '  </div>',
+          '  <div class="pt-4 border-t border-slate-200/80 flex items-center justify-between">',
+          '    <div class="text-base font-extrabold text-slate-900">' + formatVND(item.price) + '</div>',
+          '    <button onclick="bookSpecificItem(\\'' + item.id + '\\')" class="px-3 py-1.5 bg-brand text-white text-xs font-medium rounded-lg hover:opacity-95 transition">Đặt Ngay</button>',
+          '  </div>',
+          '</div>'
+        ].join('');
+      }).join('');
     }
 
-    function createServicesElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-services';
-      el.className = 'py-16 bg-white border-b border-slate-200/80';
-      
-      const itemsHtml = (sec.items || []).map(item => `
-        <div class="p-6 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 hover:shadow-sm transition">
-          <div class="w-9 h-9 rounded-lg bg-brand-light text-brand flex items-center justify-center font-bold text-sm mb-4">
-            &check;
-          </div>
-          <h3 class="text-base font-semibold text-slate-900 mb-2">${item.title}</h3>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.desc}</p>
-        </div>
-      `).join('');
+    function renderCatalogCategoryChips() {
+      const container = document.getElementById('catalogCategoryChips');
+      if (!container) return;
+      const uniqueCats = ['ALL'];
+      activeCatalog.forEach(function(i) {
+        if (i.category && uniqueCats.indexOf(i.category) === -1) uniqueCats.push(i.category);
+      });
 
-      el.innerHTML = `
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-          <div class="text-center max-w-2xl mx-auto mb-12">
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">${sec.title}</h2>
-            <p class="text-sm text-slate-600">${sec.subtitle || ''}</p>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            ${itemsHtml}
-          </div>
-        </div>
-      `;
-      return el;
+      container.innerHTML = uniqueCats.map(function(cat) {
+        const isActive = currentCategoryFilter === cat;
+        const cls = isActive ? 'bg-brand text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200';
+        return '<button onclick="setCategoryFilter(\\'' + cat + '\\')" class="px-2.5 py-1 rounded-lg text-xs font-medium transition ' + cls + '">' + (cat === 'ALL' ? 'Tất Cả' : cat) + '</button>';
+      }).join('');
     }
 
-    function createAboutElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-about';
-      el.className = 'py-16 bg-slate-50 border-b border-slate-200/80';
-
-      const statsHtml = (sec.items || []).map(item => `
-        <div class="text-center p-4">
-          <div class="text-3xl sm:text-4xl font-extrabold text-brand mb-1">${item.value}</div>
-          <div class="text-xs sm:text-sm font-medium text-slate-600">${item.label}</div>
-        </div>
-      `).join('');
-
-      el.innerHTML = `
-        <div class="max-w-4xl mx-auto px-4">
-          <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">${sec.title}</h2>
-            <p class="text-sm text-slate-600">${sec.subtitle || ''}</p>
-          </div>
-          <div class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 shadow-sm">
-            ${statsHtml}
-          </div>
-        </div>
-      `;
-      return el;
+    function setCategoryFilter(cat) {
+      currentCategoryFilter = cat;
+      renderCatalogCategoryChips();
+      filterCatalog();
     }
 
-    function createContactElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id || 'sec-contact';
-      el.className = 'py-16 bg-white';
-      el.innerHTML = `
-        <div class="max-w-3xl mx-auto px-4">
-          <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">${sec.title}</h2>
-            <p class="text-sm text-slate-600">${sec.subtitle || ''}</p>
-          </div>
-          <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 sm:p-8">
-            <form onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Đội ngũ sẽ liên hệ trong 10 phút.');" class="space-y-4">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-xs font-medium text-slate-700 mb-1">Họ và tên *</label>
-                  <input type="text" required placeholder="Nguyễn Văn A" class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand">
-                </div>
-                <div>
-                  <label class="block text-xs font-medium text-slate-700 mb-1">Số điện thoại *</label>
-                  <input type="tel" required placeholder="0901 234 567" class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand">
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-slate-700 mb-1">Ghi chú yêu cầu</label>
-                <textarea rows="3" placeholder="Nhập nhu cầu tư vấn hoặc thời gian mong muốn..." class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand"></textarea>
-              </div>
-              <button type="submit" class="w-full py-3 bg-brand text-white font-semibold text-sm rounded-lg hover:opacity-95 shadow-sm transition">
-                Xác Nhận Gửi Yêu Cầu
-              </button>
-            </form>
-          </div>
-        </div>
-      `;
-      return el;
+    function filterCatalog() {
+      const search = (document.getElementById('catalogSearchInput')?.value || '').toLowerCase().trim();
+      const grid = document.getElementById('catalogGrid');
+      const empty = document.getElementById('catalogEmpty');
+      if (!grid) return;
+
+      const filtered = activeCatalog.filter(function(item) {
+        const matchCat = currentCategoryFilter === 'ALL' || item.category === currentCategoryFilter;
+        const matchSearch = !search || item.name.toLowerCase().includes(search) || item.description.toLowerCase().includes(search);
+        return matchCat && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (empty) empty.classList.add('hidden');
+      grid.innerHTML = filtered.map(function(item) {
+        return [
+          '<div class="p-6 rounded-xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm transition flex flex-col justify-between">',
+          '  <div>',
+          '    <div class="flex items-center justify-between mb-3">',
+          '      <span class="text-[11px] font-semibold uppercase tracking-wider text-brand bg-brand-light px-2.5 py-0.5 rounded">' + item.category + '</span>',
+          '      <span class="text-xs text-slate-500 font-medium">' + (item.duration_or_unit || '') + '</span>',
+          '    </div>',
+          '    <h3 class="text-base font-bold text-slate-900 mb-2">' + item.name + '</h3>',
+          '    <p class="text-xs text-slate-600 leading-relaxed mb-6">' + item.description + '</p>',
+          '  </div>',
+          '  <div class="pt-4 border-t border-slate-100 flex items-center justify-between">',
+          '    <div>',
+          '      <div class="text-[11px] text-slate-400">Chi phí trọn gói</div>',
+          '      <div class="text-base font-extrabold text-slate-900">' + formatVND(item.price) + '</div>',
+          '    </div>',
+          '    <button onclick="bookSpecificItem(\\'' + item.id + '\\')" class="px-3.5 py-2 bg-brand text-white text-xs font-semibold rounded-lg hover:opacity-95 shadow-sm transition">Đặt Lịch Ngay</button>',
+          '  </div>',
+          '</div>'
+        ].join('');
+      }).join('');
     }
 
-    function createGenericElement(sec) {
-      const el = document.createElement('section');
-      el.id = sec.id;
-      el.className = 'py-12 bg-white border-b border-slate-200';
-      el.innerHTML = `
-        <div class="max-w-4xl mx-auto px-4">
-          <h2 class="text-xl font-bold text-slate-900 mb-2">${sec.title}</h2>
-          <p class="text-sm text-slate-600">${sec.content || sec.subtitle || ''}</p>
-        </div>
-      `;
-      return el;
+    function populateBookingSelect() {
+      const sel = document.getElementById('bkItemSelect');
+      if (!sel) return;
+      sel.innerHTML = '<option value="">-- Chọn dịch vụ / tư vấn chung --</option>' +
+        activeCatalog.map(function(i) {
+          return '<option value="' + i.id + '">' + i.name + ' (' + formatVND(i.price) + ')</option>';
+        }).join('');
     }
 
-    // Initialize
-    loadClientSections();
+    function bookSpecificItem(itemId) {
+      switchView('booking');
+      const sel = document.getElementById('bkItemSelect');
+      if (sel) sel.value = itemId;
+    }
+
+    async function handleCreateBooking(e) {
+      e.preventDefault();
+      const btn = document.getElementById('bkSubmitBtn');
+      const successBox = document.getElementById('bkSuccessBox');
+      const name = document.getElementById('bkName').value.trim();
+      const phone = document.getElementById('bkPhone').value.trim();
+      const itemId = document.getElementById('bkItemSelect').value;
+      const scheduledDate = document.getElementById('bkDate').value;
+      const note = document.getElementById('bkNote').value.trim();
+
+      const selectedItem = activeCatalog.find(function(i) { return i.id === itemId; });
+      const itemName = selectedItem ? selectedItem.name : "Tư vấn tổng quát";
+
+      btn.disabled = true;
+      btn.textContent = "Đang gửi đăng ký...";
+
+      try {
+        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/client/submissions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ customerName: name, phone: phone, itemId: itemId, itemName: itemName, scheduledDate: scheduledDate, note: note })
+        });
+        const json = await res.json();
+        if (json.success) {
+          successBox.innerHTML = [
+            '<div class="font-bold text-sm mb-1">&check; ' + json.message + '</div>',
+            '<div>Mã lịch hẹn của bạn: <strong class="font-mono bg-white px-2 py-0.5 rounded border border-emerald-300">' + json.data.id + '</strong></div>',
+            '<div class="mt-2 text-[11px] text-emerald-700">Bạn có thể dùng SĐT <strong>' + phone + '</strong> để tra cứu tiến độ ở khung bên phải bất cứ lúc nào.</div>'
+          ].join('');
+          successBox.classList.remove('hidden');
+          document.getElementById('clientBookingForm').reset();
+          document.getElementById('lookupPhoneInput').value = phone;
+          handleLookup();
+        } else {
+          alert(json.error || "Có lỗi xảy ra khi đặt lịch");
+        }
+      } catch (err) {
+        alert("Lỗi kết nối máy chủ");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Xác Nhận Đặt Lịch Ngay";
+      }
+    }
+
+    async function handleLookup() {
+      const phone = (document.getElementById('lookupPhoneInput')?.value || '').trim();
+      const container = document.getElementById('lookupResults');
+      if (!phone) {
+        alert("Vui lòng nhập số điện thoại để tra cứu");
+        return;
+      }
+      container.innerHTML = '<div class="text-center py-6 text-xs text-slate-400">Đang tìm kiếm hồ sơ...</div>';
+
+      try {
+        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/client/submissions?phone=' + encodeURIComponent(phone));
+        const json = await res.json();
+        if (json.success && json.data.length > 0) {
+          container.innerHTML = json.data.map(function(sub) {
+            var statusPill = '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Đang Chờ Tiếp Nhận</span>';
+            if (sub.status === 'CONFIRMED') {
+              statusPill = '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Đã Xác Nhận Hẹn</span>';
+            } else if (sub.status === 'COMPLETED') {
+              statusPill = '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Đã Hoàn Tất</span>';
+            } else if (sub.status === 'CANCELLED') {
+              statusPill = '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-500">Đã Hủy</span>';
+            }
+
+            return [
+              '<div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-1.5">',
+              '  <div class="flex items-center justify-between">',
+              '    <span class="font-mono font-bold text-slate-800">' + sub.id + '</span>',
+              '    ' + statusPill,
+              '  </div>',
+              '  <div class="font-semibold text-slate-900">' + sub.itemName + '</div>',
+              '  <div class="text-slate-500 text-[11px]">Ngày hẹn: <strong class="text-slate-700">' + (sub.scheduledDate || 'Chưa định ngày') + '</strong></div>',
+              sub.note ? '  <div class="text-[11px] text-slate-500 italic bg-white p-2 rounded border border-slate-100">Ghi chú: ' + sub.note + '</div>' : '',
+              '</div>'
+            ].join('');
+          }).join('');
+        } else {
+          container.innerHTML = '<div class="text-center py-6 text-xs text-slate-500">Không tìm thấy lịch hẹn nào với SĐT này.</div>';
+        }
+      } catch (err) {
+        container.innerHTML = '<div class="text-center py-6 text-xs text-red-500">Lỗi khi tra cứu dữ liệu.</div>';
+      }
+    }
+
+    initClientApp();
   </script>
 </body>
 </html>
