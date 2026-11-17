@@ -1,0 +1,82 @@
+{
+  "projectId": "PRJ-DEFAULT",
+  "projectName": "Dự Án Mới",
+  "domain": "CLINIC",
+  "title": "Hệ Thống Nha Khoa & Phòng Khám Chuyên Khoa",
+  "userRequirement": "Xây dựng website phòng khám nha khoa cao cấp",
+  "architecturePattern": "Dynamic Section-Driven Modular Architecture",
+  "backendEngine": "Express.js RESTful Router (Stateless / Async)",
+  "database": {
+    "type": "Persistent JSON / Virtual Schema",
+    "primaryEntities": [
+      "sections",
+      "items",
+      "settings",
+      "audit_logs"
+    ]
+  },
+  "cachingStrategy": {
+    "engine": "In-Memory LRU Cache",
+    "ttlSeconds": 60,
+    "invalidationEvents": [
+      "section:updated",
+      "data:saved"
+    ]
+  },
+  "apiContracts": [
+    {
+      "method": "GET",
+      "endpoint": "/api/projects/:projectId/client/sections",
+      "access": "Public",
+      "description": "Khách hàng lấy danh sách section đang bật (active=true) để render động"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/projects/:projectId/client/data",
+      "access": "Public",
+      "description": "Lấy cấu hình tổng thể và thông tin thương hiệu"
+    },
+    {
+      "method": "GET",
+      "endpoint": "/api/projects/:projectId/admin/sections",
+      "access": "Admin",
+      "description": "Admin CMS lấy toàn bộ danh sách section kèm cờ bật/tắt"
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/projects/:projectId/admin/sections",
+      "access": "Admin",
+      "description": "Admin thêm mới section vào giao diện Client"
+    },
+    {
+      "method": "PUT",
+      "endpoint": "/api/projects/:projectId/admin/sections/:id",
+      "access": "Admin",
+      "description": "Admin cập nhật tiêu đề, nội dung, hoặc bật/tắt hiển thị section"
+    },
+    {
+      "method": "DELETE",
+      "endpoint": "/api/projects/:projectId/admin/sections/:id",
+      "access": "Admin",
+      "description": "Admin xóa hoàn toàn section khỏi cơ sở dữ liệu"
+    }
+  ],
+  "designTokens": {
+    "theme": "Clean Light",
+    "primaryColor": "#0d9488",
+    "backgroundColor": "#f8fafc",
+    "cardBackground": "#ffffff",
+    "textColor": "#0f172a",
+    "subtextColor": "#64748b",
+    "borderColor": "#e2e8f0",
+    "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+    "negativeConstraints": [
+      "Strict 90/10 ratio: 90% Clean Light base, 10% purposeful accent",
+      "NO neon cyan/dark blue matrix backgrounds (#0F172A, #38BDF8)",
+      "NO glowing neon box-shadows or saturated gradients",
+      "NO childish emojis in buttons and titles",
+      "70% reduction in meaningless marketing fluff"
+    ]
+  },
+  "generatedAt": "2026-11-17T06:21:05.617Z"
+}

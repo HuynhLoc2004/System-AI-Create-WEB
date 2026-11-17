@@ -19,3 +19,4 @@ Bạn là Trợ lý Kỹ sư Trưởng điều phối toàn diện 13 phòng ban
    node scripts/report_progress.js --dept "05_Frontend" --task "Xây dựng Camera Barcode Scanner" --file "src/components/Scanner.jsx" --status "DONE"
    ```
    Lệnh này sẽ tự động làm sáng đèn Sơ Đồ Quy Trình (Workflow) và cập nhật Task Board trên Web Dashboard (`http://localhost:5000`).
+

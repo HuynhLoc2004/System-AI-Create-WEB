@@ -939,6 +939,16 @@ function renderDashboard() {
   // Role Enforcement on UI
   enforceRoleUI(project);
 
+  // Update Live Preview Links
+  const clientBtn = document.getElementById("btnLiveClientPreview");
+  if (clientBtn) {
+    clientBtn.href = `/preview/${encodeURIComponent(project.id)}/client`;
+  }
+  const adminBtn = document.getElementById("btnLiveAdminPreview");
+  if (adminBtn) {
+    adminBtn.href = `/preview/${encodeURIComponent(project.id)}/admin`;
+  }
+
   // 0. Update Multi-Project & Environment Indicator
   const multiBadge = document.getElementById("multiProjectCountBadge");
   if (multiBadge) {
@@ -1896,44 +1906,10 @@ async function handleDispatchDirective() {
       if (!data.success) throw new Error(data.error || "Lỗi xử lý AI");
 
       const result = data.data;
-      if (liveText) liveText.textContent = `✅ AI 2 (${result.orchestration.deptName}) đã hoàn tất code vào ${result.codingResult.filePath}!`;
+      if (liveText) liveText.textContent = `✅ Multi-Stage Pipeline đã hoàn tất: ${result.generatedFiles ? result.generatedFiles.join(', ') : '4 tệp mã nguồn'}!`;
 
-      // Highlight target department on workflow canvas
-      activeDirectiveDept = result.orchestration.targetDept;
-
-      // Update local project files and tasks
-      project.files = project.files || {};
-      project.files[result.codingResult.filePath] = result.codingResult.fileContent;
-      
-      const newTaskId = `DIR-${Math.floor(100 + Math.random() * 900)}`;
-      project.tasks.unshift({
-        id: newTaskId,
-        dept: result.orchestration.deptName,
-        title: `[AI VIBE CODE] ${result.orchestration.taskTitle}`,
-        pic: `${result.orchestration.deptName} (AI Coder)`,
-        status: "DONE",
-        progress: 100,
-        note: `Tệp: ${result.codingResult.filePath} &bull; ${result.codingResult.changeSummary}`,
-        isDirective: true
-      });
-
-      if (project.deptStatuses) {
-        project.deptStatuses[result.orchestration.targetDept] = "DONE";
-      }
-
-      const totalTasks = project.tasks.length;
-      const doneTasks = project.tasks.filter(t => t.status === "DONE").length;
-      project.progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
-
-      project.history.unshift({
-        time: "Vừa xong",
-        dept: result.orchestration.deptName,
-        action: `[VIBE CODE] Đã sinh mã nguồn vào: ${result.codingResult.filePath} (${result.codingResult.explanation})`,
-        type: "success"
-      });
-
-      saveProjectsToStorage();
-      renderDashboard();
+      // Sync latest project state from server
+      await syncProjectsWithBackend();
 
       setTimeout(() => {
         if (liveBox) liveBox.style.display = "none";
@@ -1943,9 +1919,9 @@ async function handleDispatchDirective() {
         }
         document.getElementById("dispatchForm").reset();
         document.getElementById("dispatchModal").style.display = "none";
-        showToast(`⚡ AI đã viết trực tiếp vào file [${result.codingResult.filePath}] trên ổ đĩa máy tính! (VS Code đã cập nhật)`, "success");
-        // Open Virtual Code Studio to inspect the generated code
-        openVirtualStudio(result.codingResult.filePath);
+        showToast(`⚡ Multi-Stage Pipeline đã hoàn tất! Client Web & Admin CMS đã sẵn sàng.`, "success");
+        // Open Virtual Code Studio to inspect the generated client web
+        openVirtualStudio("public/client.html");
       }, 700);
 
     } catch (err) {
@@ -2159,6 +2135,53 @@ function initRealtimeHeartbeat() {
       evtSource.addEventListener("task:created", () => syncProjectsWithBackend());
       evtSource.addEventListener("task:status_updated", () => syncProjectsWithBackend());
       evtSource.addEventListener("project:file_updated", () => syncProjectsWithBackend());
+
+      // Lắng nghe sự kiện chuyển dịch trạng thái từng phòng ban theo thời gian thực
+      evtSource.addEventListener("dept:status_updated", (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (!data) return;
+          const project = getCurrentProject();
+          if (!project) return;
+
+          if (data.dept) {
+            project.deptStatuses = project.deptStatuses || {};
+            project.deptStatuses[data.dept] = data.status || "DONE";
+            activeDirectiveDept = data.dept;
+          }
+
+          if (data.message || data.task) {
+            project.history = project.history || [];
+            project.history.unshift({
+              time: data.timestamp || "Vừa xong",
+              dept: (data.dept || "PIPELINE").toUpperCase(),
+              action: `[${data.status}] ${data.task || ''} - ${data.message || ''}`,
+              type: data.status === "DONE" ? "success" : (data.status === "BLOCKED" ? "danger" : "warning")
+            });
+            renderActivityFeed(project);
+          }
+
+          renderWorkflowGraph(project);
+        } catch (e) {
+          console.error("dept:status_updated error", e);
+        }
+      });
+
+      // Lắng nghe sự kiện sinh mã nguồn hoàn tất từ Multi-Stage Pipeline
+      evtSource.addEventListener("vibe:code_generated", (event) => {
+        try {
+          syncProjectsWithBackend();
+          showToast("⚡ Multi-Stage AI Pipeline đã hoàn tất! Client Web & Admin CMS đã sẵn sàng.", "success");
+        } catch (e) {
+          console.error("vibe:code_generated error", e);
+        }
+      });
+
+      // Lắng nghe sự kiện cập nhật cấu hình/section từ Admin CMS
+      evtSource.addEventListener("project:data_updated", () => {
+        syncProjectsWithBackend();
+      });
+
       evtSource.onmessage = function(event) {
         try {
           const data = JSON.parse(event.data);

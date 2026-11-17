@@ -274,7 +274,7 @@ app.get("/api/projects/:id/export-zip", async (req, res) => {
   }
 });
 
-// 4. Phát lệnh AI Vibe Code 2-AI Dual Engine (Điều phối & Lập trình)
+// 4. Phát lệnh AI Vibe Code Multi-Stage Pipeline (13 phòng ban)
 app.post("/api/vibe/dispatch", async (req, res) => {
   try {
     const { projectId, requirement, adminKey } = req.body;
@@ -282,14 +282,14 @@ app.post("/api/vibe/dispatch", async (req, res) => {
       return res.status(400).json({ success: false, error: "Vui lòng chọn dự án và nhập yêu cầu kỹ thuật" });
     }
 
-    // Run the 2-AI pipeline (AI 1: Orchestrator PM/SA -> AI 2: Vibe Coder Specialist)
-    const result = await executeVibeCodePipeline(projectId, requirement, db);
+    // Run the 4-Stage Multi-Stage Pipeline (SA/DBA -> BE -> UIUX/FE -> SEC/QA)
+    const result = await executeVibeCodePipeline(projectId, requirement, db, broadcastEvent);
 
     await cache.invalidatePattern("projects:");
     db.logAudit("VIBE_CODE_DISPATCH", "Admin Master", {
       projectId,
-      targetDept: result.orchestration?.targetDept || "fe",
-      file: result.codingResult?.filePath || "unknown"
+      domain: result.domain,
+      files: result.generatedFiles
     });
 
     // Broadcast SSE to update Dashboard diagrams & tasks live
@@ -307,7 +307,7 @@ app.post("/api/vibe/dispatch", async (req, res) => {
 
     res.json({
       success: true,
-      message: `AI 1 (${result.orchestration.deptName}) và AI 2 đã code thành công vào tệp ${result.codingResult.filePath}!`,
+      message: `Multi-Stage AI Pipeline đã hoàn thành 4 tệp mã nguồn và khởi tạo hệ thống cho dự án!`,
       data: result
     });
   } catch (err) {
@@ -851,6 +851,185 @@ app.post("/api/trial/activate", async (req, res) => {
 app.get("/api/trial/leads", (req, res) => {
   const leads = db.getTrialLeads();
   res.json({ success: true, count: leads.length, data: leads });
+});
+
+// ========================================================
+// 12. DYNAMIC LIVE PREVIEW (CLIENT & ADMIN CMS)
+// ========================================================
+app.get("/preview/:projectId/client", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) {
+    return res.status(404).send("<h3 style='font-family:sans-serif;padding:24px;'>Không tìm thấy dự án</h3>");
+  }
+
+  let html = project.files && project.files["public/client.html"];
+  if (!html) {
+    html = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Khởi Tạo Giao Diện - ${project.name}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-50 text-zinc-900 flex items-center justify-center min-h-screen p-6 font-sans">
+  <div class="max-w-md w-full bg-white border border-zinc-200 rounded-xl p-8 shadow-sm text-center">
+    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+    <h2 class="text-xl font-semibold mb-2">Chưa Có Mã Nguồn Client</h2>
+    <p class="text-sm text-zinc-500 mb-6">Dự án [${project.name}] chưa được sinh giao diện client. Hãy bấm "Phát Lệnh AI" trên Dashboard để 13 phòng ban tự động xây dựng.</p>
+    <a href="/" class="inline-block px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-800 transition">Về Dashboard Điều Phối</a>
+  </div>
+</body>
+</html>`;
+  } else {
+    // Đảm bảo projectId đúng cho fetch động
+    html = html.replace(/window\.__PROJECT_ID__\s*=\s*['"][^'"]*['"]/, `window.__PROJECT_ID__ = "${project.id}"`);
+    if (!html.includes('window.__PROJECT_ID__')) {
+      html = html.replace('<head>', `<head><script>window.__PROJECT_ID__ = "${project.id}";</script>`);
+    }
+  }
+
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.send(html);
+});
+
+app.get("/preview/:projectId/admin", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) {
+    return res.status(404).send("<h3 style='font-family:sans-serif;padding:24px;'>Không tìm thấy dự án</h3>");
+  }
+
+  let html = project.files && project.files["public/admin.html"];
+  if (!html) {
+    html = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>CMS Quản Trị - ${project.name}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-50 text-zinc-900 flex items-center justify-center min-h-screen p-6 font-sans">
+  <div class="max-w-md w-full bg-white border border-zinc-200 rounded-xl p-8 shadow-sm text-center">
+    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    </div>
+    <h2 class="text-xl font-semibold mb-2">Chưa Có Trang Quản Trị CMS</h2>
+    <p class="text-sm text-zinc-500 mb-6">Dự án [${project.name}] chưa được sinh cổng Admin. Hãy bấm "Phát Lệnh AI" trên Dashboard để 13 phòng ban khởi tạo hệ thống.</p>
+    <a href="/" class="inline-block px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-800 transition">Về Dashboard Điều Phối</a>
+  </div>
+</body>
+</html>`;
+  } else {
+    html = html.replace(/window\.__PROJECT_ID__\s*=\s*['"][^'"]*['"]/, `window.__PROJECT_ID__ = "${project.id}"`);
+    if (!html.includes('window.__PROJECT_ID__')) {
+      html = html.replace('<head>', `<head><script>window.__PROJECT_ID__ = "${project.id}";</script>`);
+    }
+  }
+
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.send(html);
+});
+
+// Chuyển hướng /storefront sang trang client của dự án đầu tiên
+app.get("/storefront", (req, res) => {
+  const projects = db.getProjects();
+  const pid = (projects[0] && projects[0].id) || "PRJ-RETAIL-2026";
+  res.redirect(`/preview/${pid}/client`);
+});
+
+// ========================================================
+// 13. DYNAMIC SECTION-DRIVEN CMS REST APIS
+// ========================================================
+app.get("/api/projects/:projectId/client/sections", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  const sections = (project.data && project.data.sections) || [];
+  const activeSections = sections.filter(s => s.active !== false);
+  res.json({ success: true, projectId: project.id, data: activeSections });
+});
+
+app.get("/api/projects/:projectId/client/data", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  res.json({ success: true, projectId: project.id, data: project.data || {} });
+});
+
+app.get("/api/projects/:projectId/admin/sections", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  const sections = (project.data && project.data.sections) || [];
+  res.json({ success: true, projectId: project.id, data: sections });
+});
+
+app.post("/api/projects/:projectId/admin/sections", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  project.data = project.data || { sections: [], settings: {} };
+  project.data.sections = project.data.sections || [];
+
+  const newSection = {
+    id: "sec-" + Date.now().toString(36),
+    title: String(req.body.title || "Section Mới").trim(),
+    subtitle: req.body.subtitle ? String(req.body.subtitle).trim() : "",
+    type: req.body.type || "content",
+    content: req.body.content || "",
+    active: req.body.active !== undefined ? req.body.active : true,
+    items: req.body.items || [],
+    updatedAt: new Date().toISOString()
+  };
+
+  project.data.sections.push(newSection);
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "ADD_SECTION", section: newSection });
+  res.json({ success: true, message: "Đã thêm section mới", data: newSection, sections: project.data.sections });
+});
+
+app.put("/api/projects/:projectId/admin/sections/:id", (req, res) => {
+  const { projectId, id } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  project.data = project.data || { sections: [], settings: {} };
+  project.data.sections = project.data.sections || [];
+
+  const sec = project.data.sections.find(s => s.id === id);
+  if (!sec) return res.status(404).json({ success: false, error: "Không tìm thấy section " + id });
+
+  Object.assign(sec, req.body, { updatedAt: new Date().toISOString() });
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "UPDATE_SECTION", section: sec });
+  res.json({ success: true, message: "Đã cập nhật section", data: sec, sections: project.data.sections });
+});
+
+app.delete("/api/projects/:projectId/admin/sections/:id", (req, res) => {
+  const { projectId, id } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  project.data = project.data || { sections: [], settings: {} };
+  project.data.sections = (project.data.sections || []).filter(s => s.id !== id);
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "DELETE_SECTION", deletedId: id });
+  res.json({ success: true, message: "Đã xóa section", sections: project.data.sections });
+});
+
+app.put("/api/projects/:projectId/admin/data", (req, res) => {
+  const { projectId } = req.params;
+  const project = db.getProjectById(projectId);
+  if (!project) return res.status(404).json({ success: false, error: "Không tìm thấy dự án" });
+  project.data = { ...project.data, ...req.body };
+  db.save();
+
+  broadcastEvent("project:data_updated", { projectId: project.id, action: "UPDATE_DATA", data: project.data });
+  res.json({ success: true, message: "Đã lưu cấu hình", data: project.data });
 });
 
 // Fallback to index.html for SPA routes

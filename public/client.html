@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ Thống Nha Khoa & Phòng Khám Chuyên Khoa - Dự Án Mới</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              DEFAULT: '#0d9488',
+              hover: '#0d9488ee',
+              light: '#0d948815'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-brand text-white text-xs font-medium py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+    <span>Cam kết bảo mật & tiêu chuẩn y khoa/doanh nghiệp hàng đầu</span>
+    <span class="opacity-60">&bull;</span>
+    <span class="underline cursor-pointer">Hotline 24/7: 1900 6868</span>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-brand text-white flex items-center justify-center font-bold text-base shadow-sm">
+          C
+        </div>
+        <div>
+          <span class="font-bold text-slate-900 text-base tracking-tight">Dự Án Mới</span>
+          <span class="hidden sm:inline-block ml-2 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Live Client</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#sec-hero" class="hover:text-brand transition">Trang Chủ</a>
+        <a href="#sec-services" class="hover:text-brand transition">Dịch Vụ</a>
+        <a href="#sec-about" class="hover:text-brand transition">Cam Kết</a>
+        <a href="#sec-contact" class="hover:text-brand transition">Liên Hệ</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/preview/PRJ-DEFAULT/admin" target="_blank" class="text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-200 transition">
+          Cổng CMS Admin
+        </a>
+        <a href="#sec-contact" class="px-4 py-2 text-sm font-medium text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
+          Đặt Lịch Ngay
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dynamic Section Rendering Container -->
+  <main id="sections-container" class="flex-1">
+    <!-- Initial Skeleton Loader -->
+    <div id="loader" class="py-20 text-center text-slate-400 text-sm">
+      <div class="animate-spin inline-block w-6 h-6 border-2 border-brand border-t-transparent rounded-full mb-3"></div>
+      <div>Đang đồng bộ giao diện theo thời gian thực từ CSDL...</div>
+    </div>
+  </main>
+
+  <!-- Clean Minimal Footer -->
+  <footer class="bg-white border-t border-slate-200 py-10 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-slate-700">Dự Án Mới</span>
+        <span>&copy; 2026 Bản quyền thuộc về doanh nghiệp.</span>
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-slate-800">Chính Sách Bảo Mật</a>
+        <a href="#" class="hover:text-slate-800">Điều Khoản Dịch Vụ</a>
+        <a href="/preview/PRJ-DEFAULT/admin" class="text-brand hover:underline font-medium">Quản Trị Nội Dung (Admin)</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Dynamic Fetch & Section Renderer Logic -->
+  <script>
+    window.__PROJECT_ID__ = "PRJ-DEFAULT";
+    const defaultSections = [{"id":"sec-hero","type":"hero","title":"Chăm Sóc Nụ Cười Hoàn Hảo Cùng Đội Ngũ Chuyên Gia","subtitle":"Công nghệ nha khoa không đau chuẩn Châu Âu. Đặt lịch tư vấn và chụp phim CT miễn phí 100% hôm nay.","buttonText":"Đặt Lịch Khám Ngay","active":true},{"id":"sec-services","type":"services","title":"Dịch Vụ Điều Trị & Thẩm Mỹ Nổi Bật","subtitle":"Quy trình vô trùng tuyệt đối, bảo hành dịch vụ dài hạn.","active":true,"items":[{"title":"Trồng Răng Implant","desc":"Phục hình răng đã mất bền chắc trọn đời, ăn nhai tự nhiên."},{"title":"Niềng Răng Trong Suốt","desc":"Khay niềng thẩm mỹ công nghệ 3D, không lộ mắc cài."},{"title":"Tẩy Trắng Răng Laser","desc":"Trắng sáng bật 3-5 tone chỉ sau 45 phút, an toàn men răng."},{"title":"Nhổ Răng Khôn Sóng Siêu Âm","desc":"Kỹ thuật Piezotome không đau, hồi phục nhanh trong 48h."}]},{"id":"sec-about","type":"about","title":"Cam Kết Chất Lượng Dịch Vụ Chuẩn Y Khoa","subtitle":"Hơn 10.000 khách hàng đã tin tưởng lấy lại nụ cười rạng rỡ.","active":true,"items":[{"value":"100%","label":"Bác Sĩ Chuyên Khoa RHM"},{"value":"15+","label":"Năm Kinh Nghiệm Vận Hành"},{"value":"0 Đau","label":"Công Nghệ Gây Tê Siêu Âm"}]},{"id":"sec-contact","type":"contact","title":"Liên Hệ Đặt Lịch Khám & Tư Vấn Miễn Phí","subtitle":"Vui lòng để lại số điện thoại để chuyên viên tư vấn liên hệ trong vòng 10 phút.","phone":"1900 6868","email":"hotro@nhakhoachuyensau.vn","active":true}];
+
+    async function loadClientSections() {
+      const container = document.getElementById('sections-container');
+      let sections = defaultSections;
+
+      try {
+        const res = await fetch('/api/projects/' + window.__PROJECT_ID__ + '/client/sections');
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            sections = json.data;
+          }
+        }
+      } catch (err) {
+        console.warn('Load dynamic sections fallback to cache:', err);
+      }
+
+      renderSections(sections, container);
+    }
+
+    function renderSections(sections, container) {
+      container.innerHTML = '';
+
+      sections.forEach((sec, idx) => {
+        if (sec.active === false) return;
+
+        if (sec.type === 'hero') {
+          container.appendChild(createHeroElement(sec));
+        } else if (sec.type === 'services') {
+          container.appendChild(createServicesElement(sec));
+        } else if (sec.type === 'about') {
+          container.appendChild(createAboutElement(sec));
+        } else if (sec.type === 'contact') {
+          container.appendChild(createContactElement(sec));
+        } else {
+          container.appendChild(createGenericElement(sec));
+        }
+      });
+    }
+
+    function createHeroElement(sec) {
+      const el = document.createElement('section');
+      el.id = sec.id || 'sec-hero';
+      el.className = 'py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50 border-b border-slate-200/80';
+      el.innerHTML = `
+        <div class="max-w-4xl mx-auto px-4 text-center">
+          <span class="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-light px-3 py-1 rounded-full mb-4">
+            Đột Phá Công Nghệ &bull; Tiêu Chuẩn Hiện Đại
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-5">
+            ${sec.title}
+          </h1>
+          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
+            ${sec.subtitle || ''}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="#sec-contact" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-white bg-brand hover:opacity-95 rounded-lg shadow-sm transition">
+              ${sec.buttonText || 'Bắt Đầu Ngay'}
+            </a>
+            <a href="#sec-services" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition">
+              Tìm Hiểu Dịch Vụ
+            </a>
+          </div>
+        </div>
+      `;
+      return el;
+    }
+
+    function createServicesElement(sec) {
+      const el = document.createElement('section');
+      el.id = sec.id || 'sec-services';
+      el.className = 'py-16 bg-white border-b border-slate-200/80';
+      
+      const itemsHtml = (sec.items || []).map(item => `
+        <div class="p-6 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 hover:shadow-sm transition">
+          <div class="w-9 h-9 rounded-lg bg-brand-light text-brand flex items-center justify-center font-bold text-sm mb-4">
+            &check;
+          </div>
+          <h3 class="text-base font-semibold text-slate-900 mb-2">${item.title}</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.desc}</p>
+        </div>
+      `).join('');
+
+      el.innerHTML = `
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">${sec.title}</h2>
+            <p class="text-sm text-slate-600">${sec.subtitle || ''}</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            ${itemsHtml}
+          </div>
+        </div>
+      `;
+      return el;
+    }
+
+    function createAboutElement(sec) {
+      const el = document.createElement('section');
+      el.id = sec.id || 'sec-about';
+      el.className = 'py-16 bg-slate-50 border-b border-slate-200/80';
+
+      const statsHtml = (sec.items || []).map(item => `
+        <div class="text-center p-4">
+          <div class="text-3xl sm:text-4xl font-extrabold text-brand mb-1">${item.value}</div>
+          <div class="text-xs sm:text-sm font-medium text-slate-600">${item.label}</div>
+        </div>
+      `).join('');
+
+      el.innerHTML = `
+        <div class="max-w-4xl mx-auto px-4">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">${sec.title}</h2>
+            <p class="text-sm text-slate-600">${sec.subtitle || ''}</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 shadow-sm">
+            ${statsHtml}
+          </div>
+        </div>
+      `;
+      return el;
+    }
+
+    function createContactElement(sec) {
+      const el = document.createElement('section');
+      el.id = sec.id || 'sec-contact';
+      el.className = 'py-16 bg-white';
+      el.innerHTML = `
+        <div class="max-w-3xl mx-auto px-4">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">${sec.title}</h2>
+            <p class="text-sm text-slate-600">${sec.subtitle || ''}</p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 sm:p-8">
+            <form onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Đội ngũ sẽ liên hệ trong 10 phút.');" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-700 mb-1">Họ và tên *</label>
+                  <input type="text" required placeholder="Nguyễn Văn A" class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-700 mb-1">Số điện thoại *</label>
+                  <input type="tel" required placeholder="0901 234 567" class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand">
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-700 mb-1">Ghi chú yêu cầu</label>
+                <textarea rows="3" placeholder="Nhập nhu cầu tư vấn hoặc thời gian mong muốn..." class="w-full text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-brand"></textarea>
+              </div>
+              <button type="submit" class="w-full py-3 bg-brand text-white font-semibold text-sm rounded-lg hover:opacity-95 shadow-sm transition">
+                Xác Nhận Gửi Yêu Cầu
+              </button>
+            </form>
+          </div>
+        </div>
+      `;
+      return el;
+    }
+
+    function createGenericElement(sec) {
+      const el = document.createElement('section');
+      el.id = sec.id;
+      el.className = 'py-12 bg-white border-b border-slate-200';
+      el.innerHTML = `
+        <div class="max-w-4xl mx-auto px-4">
+          <h2 class="text-xl font-bold text-slate-900 mb-2">${sec.title}</h2>
+          <p class="text-sm text-slate-600">${sec.content || sec.subtitle || ''}</p>
+        </div>
+      `;
+      return el;
+    }
+
+    // Initialize
+    loadClientSections();
+  </script>
+</body>
+</html>
